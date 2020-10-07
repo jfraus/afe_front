@@ -1,0 +1,44 @@
+<div class="layout-topbar">
+
+    <a href="#" class="layout-menubutton" [ngClass]="{'layout-menubutton-active': app.menuActive}" (click)="app.onMenuButtonClick($event)">
+        <div class="layout-menubutton-icon"></div>
+    </a>
+
+    <div class="layout-topbar-grid">
+        <div class="layout-topbar-grid-column layout-topbar-grid-column-fixed">
+            <a href="#" class="layout-logo">
+                <img src="assets/layout/images/afe_logo.png"/>
+            </a>
+        </div>
+
+        <div class="layout-topbar-grid-column">
+            <app-menu [reset]="app.resetMenu"></app-menu>
+        </div>
+
+        <div class="layout-topbar-grid-column layout-topbar-grid-column-fixed">
+            <span class="layout-topbar-search">
+                <span class="md-inputfield">
+                    <input type="text" pInputText />
+                    <label>Search</label>
+                    <i class="material-icons"></i>
+                </span>
+            </span>
+        </div>
+
+        <div class="layout-topbar-grid-column layout-topbar-grid-column-fixed">
+            <a href="#" class="profile-menu-button" (click)="app.onTopbarUserMenuButtonClick($event)">
+                <img src="assets/layout/images/avatar.png" alt="sapphire-layout" />
+            </a>
+            <ul class="layout-profile-menu fadeInDown" [ngClass]="{'layout-profile-menu-active': app.topbarUserMenuActive}" (click)="app.onTopbarUserMenuClick($event)">
+
+                <li role="menuitem">
+                    <a href="#" class="ripplelink" (click)="app.onTopbarSubItemClick($event)">
+                        <i class="material-icons">cancel</i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,21 @@
+    <!-- if so that the empty array does not cause problems -->
+    <div *ngIf="validation_messages">
+        <!-- we go through all the validations -->
+        <div *ngFor="let validation of validation_messages">
+            <!-- loop through the array by the name of the form control -->
+            <div *ngFor="let vm of validation[formInputName]">
+                <!-- an array to find all possible problems -->
+                <div
+                    *ngIf="
+                        formGroup.get(formInputName).hasError(vm.type) &&
+                        (formGroup.get(formInputName).dirty ||
+                            formGroup.get(formInputName).touched)
+                    "
+                    class=" ui-messages-error" style="color: red;"
+                >
+                    {{ vm.message + (formGroup.get(formInputName).errors[vm.type].actualLength? ' to actual lenght ' + formGroup.get(formInputName).errors[vm.type].actualLength : '' ) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
