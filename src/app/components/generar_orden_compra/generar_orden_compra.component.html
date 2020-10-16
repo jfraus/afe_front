@@ -1,0 +1,68 @@
+<div class="card">
+    <div class="card-title">Generar Orden de Compra</div>
+
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-col p-field">
+                <span class="md-inputfield ">
+                    <input type="text" style="width: 100%;" pInputText>
+                    <label>Orden de compra</label>
+                </span>
+    
+            </div>
+            <div class="p-col p-field">
+                    <span class="md-inputfield ">
+                    <p-calendar [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [showIcon]="true"   name="beginDate"></p-calendar>
+                        <label>Mes de produción</label>
+                    </span>
+            </div>
+            <div class="p-col p-field">
+                <span class="md-inputfield ">
+                    <p-calendar [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [showIcon]="true"   name="beginDate"></p-calendar>
+                        <label>Fecha de vencimiento</label>
+                    </span>
+            </div>
+
+            <div class="p-col p-field">
+                <span class="md-inputfield ">
+                    <input type="text" style="width: 100%;" pInputText>
+                    <label>Orden de compra</label>
+                </span>
+            </div>
+        </div>
+</div>
+
+<div class="card">
+    <p-table [columns]="5" selectionMode="single" dataKey="idTabla"
+        [value]=""
+         sortMode="multiple" [style]="{'margin-bottom':'20px'}"
+        [responsive]="true" [rowHover]="true"
+        [paginator]="true" [responsive]="true" 
+        [rowsPerPageOptions]="[10,20,30,40,50]" [autoLayout]="true" [rows]="10" [pageLinks]="10"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Orden de Compra</th>
+                    <th>Mes de Produción</th>
+                    <th>Fecha de Vencimiento</th>
+                    <th>Total unidades</th>
+                    <th>Estatus</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-purchaseOrder>
+                <tr>
+                  <td style="text-align: center" [colSpan]="5">
+                  No se encontro información
+                  </td>
+                </tr>
+              </ng-template>
+            <ng-template pTemplate="body" let-purchaseOrder>
+                
+                <tr>
+                    <td>{{ purchaseOrder.code }}</td>
+                    <td>{{ purchaseOrder.name }}</td>
+                    <td>{{ purchaseOrder.category }}</td>
+                    <td>{{ purchaseOrder.quantity }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+</div>

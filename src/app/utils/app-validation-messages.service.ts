@@ -19,7 +19,7 @@ export class AppValidationMessagesService{
         return this._messagesMaxLenght;
     }
     set messagesMaxLenght(maxlenght){
-        this._messagesMaxLenght = `*Cannot be more than ${maxlenght} characters long`;
+        this._messagesMaxLenght = `*La longitud no puede ser mayor a ${maxlenght}`;
     }
 
     get messagesRequired(): String {
@@ -27,14 +27,14 @@ export class AppValidationMessagesService{
     }
 
     set messagesRequired(value){
-        this._messagesRequired = `*Required field`;
+        this._messagesRequired = `*Campo Requerido`;
     }
 
     get messagesMinLenght(): String{
         return this._messagesMinLenght;
     }
     set messagesMinLenght(minlenght) {
-        this._messagesMinLenght = `*Cannot be min than ${minlenght} characters long`;
+        this._messagesMinLenght = `*La longitud no puede ser menor a ${minlenght}`;
     }
 
 
@@ -42,7 +42,6 @@ export class AppValidationMessagesService{
     public getValidationMessagesWithName(name){
         let object = {};
         object[name] = [];
-        console.log(this._messagesRequired);
 
         if(this._messagesMaxLenght){
             object[name].push({

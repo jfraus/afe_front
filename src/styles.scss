@@ -6,3 +6,38 @@
   bottom: 0!important;
   width: 100%!important;
 }
+
+.input {
+  width: 100%;
+}
+
+.ui-dataview-layout-options .ui-button {
+  margin-left: .5em;
+}
+.ui-dataview .filter-container {
+  text-align: center;
+}
+.ui-widget-content {
+  border: white;
+}
+.ui-dropdown {
+  width: 75px;
+}
+.ui-dropdown .ui-dropdown-label.ui-inputtext {
+  color: white;
+}
+body{
+.ui-paginator {
+    .ui-dropdown {
+        background-image: linear-gradient(to bottom, grey, black), linear-gradient(to bottom, #ffffff, #ffffff);
+        .ui-dropdown-trigger {
+            .pi{
+                color: #ffffff;
+            }
+        }
+        .ui-dropdown-label {
+            background: none;
+        }
+    }
+}
+}

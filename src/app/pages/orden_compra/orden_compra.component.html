@@ -1,0 +1,110 @@
+
+<div *ngIf="visible">
+
+    <div class="card">
+        <div class="card-title">Ordenes de compra</div>
+
+        <form [formGroup]="formGroup" (ngSubmit)="search_purchaseOrder()">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-col p-field">
+                    <span class="md-inputfield ">
+                        <input type="text" formControlName="orderCode" style="width: 100%;" pInputText>
+                        <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup" [(formInputName)]="orderCodeName"></validations-input-component>
+                        <label>Orden de compra</label>
+                    </span>
+                </div>
+                <div class="p-col p-field">
+                    <div class="p-inputgroup">
+                        <span class="md-inputfield ">
+                        <p-calendar [style]="{'width':'100%'}" dateFormat="yy-mm" name="mesProduction" formControlName="mesProduction" [inputStyle]="{'width':'100%'}" [showIcon]="true"></p-calendar>
+                            <label>Mes de produción</label>
+                        </span>
+                        <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup" [(formInputName)]="mesProduction"></validations-input-component>
+
+                    </div>
+                </div>
+                <div class="p-col p-field">
+                    <button
+                        pButton
+                        type="button"
+                        label="Buscar"
+                        icon="pi pi-search"
+                        class="teal-btn"
+                        [disabled]="!searchButtonDisable"
+                        (click)="search_purchaseOrder()"
+                        style="width: auto"></button>
+                </div>
+            </div>
+
+        </form>
+        
+        
+
+    </div>
+
+    <div class="card">
+        <div class="p-grid">
+            <div class="p-col">
+                <button
+                    pButton
+                    type="button"
+                    label="Crear nueva OC"
+                    icon="pi pi-plus"
+                    class="ui-button-success"
+                    (click)="new_oc()"
+                    style="width: auto"></button>
+            </div>
+            <!-- <div class="p-col"></div>
+            <div class="p-col">
+                
+            </div> -->
+        </div>
+
+        <!-- Tabla con las ordenes de compras -->
+        <p-table [columns]="cols" selectionMode="single" dataKey="idTabla"
+        [value]="purchaseOrder" [loading]="loadingPurchaseOrder"
+         sortMode="multiple" [style]="{'margin-bottom':'20px'}"
+        [responsive]="true" [rowHover]="true"
+        [paginator]="true" [responsive]="true"
+        [rowsPerPageOptions]="[30,40,50]" [autoLayout]="true" [rows]="20" [pageLinks]="20"
+        >
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        {{col.header}}
+                    <p-sortIcon *ngIf="col.header!='Acción'" [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                  <td style="text-align: center" [attr.colspan]="columns.length+2">
+                  No se encontro información
+                  </td>
+                </tr>
+              </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        <span class="ui-column-title">{{col.header}}</span>
+                        <span *ngIf="col.field != 'action'; else elseAction">{{rowData[col.field]}}</span>
+                        <ng-template #elseAction>
+                            <button pButton  type="button" icon="ui-icon-edit" class="blue-grey-btn">
+                            </button>
+                            <button pButton type="button" icon="pi pi-check" class="blue-btn">
+                            </button>
+                            
+                        </ng-template>
+                    </td>
+                </tr>
+            </ng-template>
+    
+        </p-table>
+    </div>
+    
+</div>
+
+
+<div *ngIf="!visible">
+    <generar_orden_compra></generar_orden_compra>
+</div>

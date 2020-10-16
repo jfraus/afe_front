@@ -1,5 +1,6 @@
 body {
     .ui-inputtext {
+        width: 100%;
         background: transparent no-repeat;
         background-image: linear-gradient(to bottom, $primaryColor, $primaryColor), linear-gradient(to bottom, $inputBorderColor, $inputBorderColor);
         background-size: 0 2px, 100% 1px;
@@ -1277,6 +1278,7 @@ body {
     }
 
     .ui-calendar {
+        width: 100%!important;
         .ui-datepicker {
             min-width: auto;
         }
