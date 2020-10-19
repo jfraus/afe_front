@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { MessageService } from "primeng/api";
-import { PurchaseOrdenControllerService } from 'src/app/services/purchase_orden_controller.service';
+import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 @Component({
     selector: 'orden_compra',
-    templateUrl: './orden_compra.component.html',
-    styleUrls: ['./orden_compra.component.css'],
+    templateUrl: './orden-compra.component.html',
+    styleUrls: ['./orden-compra.component.css'],
     providers: [PurchaseOrdenControllerService]
 })
 export class OrdenCompraComponent implements OnInit {

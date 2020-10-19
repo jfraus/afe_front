@@ -92,8 +92,8 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { AppValidationMessagesService } from './utils/app-validation-messages.service';
 import { MessageService } from 'primeng/api';
 import { AppSubMenuComponent } from './template/menu/submenu/submenu.component';
-import { OrdenCompraComponent } from './pages/orden_compra/orden_compra.component';
-import { GenerarOrdenCompraComponent } from './components/generar_orden_compra/generar_orden_compra.component';
+import { OrdenCompraComponent } from './components/orden-compra/orden-compra.component';
+import { GenerarOrdenCompraComponent } from './components/orden-compra/generar-orden-compra/generar-orden-compra.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GenerarOrdenCompraComponent
