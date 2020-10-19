@@ -3,40 +3,45 @@
 
     <div class="card">
         <div class="card-title">Ordenes de compra</div>
+        <div class="ui-g ui-fluid">
+            <form [formGroup]="formGroup" class="form-group ui-g-12" (ngSubmit)="search_purchaseOrder()">
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="ui-g-12 ui-lg-12">
 
-        <form [formGroup]="formGroup" (ngSubmit)="search_purchaseOrder()">
-            <div class="p-fluid p-formgrid p-grid">
-                <div class="p-col p-field">
-                    <span class="md-inputfield ">
-                        <input type="text" formControlName="orderCode" style="width: 100%;" pInputText>
-                        <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup" [(formInputName)]="orderCodeName"></validations-input-component>
-                        <label>Orden de compra</label>
-                    </span>
-                </div>
-                <div class="p-col p-field">
-                    <div class="p-inputgroup">
-                        <span class="md-inputfield ">
-                        <p-calendar [style]="{'width':'100%'}" dateFormat="yy-mm" name="mesProduction" formControlName="mesProduction" [inputStyle]="{'width':'100%'}" [showIcon]="true"></p-calendar>
-                            <label>Mes de produción</label>
-                        </span>
-                        <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup" [(formInputName)]="mesProduction"></validations-input-component>
-
+                        <div class="ui-g-12 ui-lg-3">
+                            <span class="md-inputfield">
+                                <input type="text" formControlName="orderCode" style="width: 100%;" pInputText>
+                                <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup" [(formInputName)]="orderCodeName"></validations-input-component>
+                                <label>Orden de compra</label>
+                            </span>
+                        </div>
+                        <div class="ui-g-12 ui-lg-3">
+                            <div class="p-inputgroup">
+                                <span class="md-inputfield ">
+                                <p-calendar [style]="{'width':'100%'}" dateFormat="yy-mm" name="mesProduction" formControlName="mesProduction" [inputStyle]="{'width':'100%'}" [showIcon]="true"></p-calendar>
+                                    <label>Mes de produción</label>
+                                </span>
+                                <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup" [(formInputName)]="mesProduction"></validations-input-component>
+        
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-lg-3">
+                            <button
+                                pButton
+                                type="button"
+                                label="Buscar"
+                                icon="pi pi-search"
+                                class="teal-btn"
+                                [disabled]="!searchButtonDisable"
+                                (click)="search_purchaseOrder()"
+                                style="width: auto"></button>
+                        </div>
                     </div>
                 </div>
-                <div class="p-col p-field">
-                    <button
-                        pButton
-                        type="button"
-                        label="Buscar"
-                        icon="pi pi-search"
-                        class="teal-btn"
-                        [disabled]="!searchButtonDisable"
-                        (click)="search_purchaseOrder()"
-                        style="width: auto"></button>
-                </div>
-            </div>
+    
+            </form>
 
-        </form>
+        </div>
         
         
 
