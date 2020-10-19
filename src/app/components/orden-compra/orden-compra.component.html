@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-title">Ordenes de compra</div>
         <div class="ui-g ui-fluid">
-            <form [formGroup]="formGroup" class="form-group ui-g-12" (ngSubmit)="search_purchaseOrder()">
+            <form [formGroup]="formGroup" class="form-group ui-g-12" (ngSubmit)="SearchPurchaseOrder()">
                 <div class="p-fluid p-formgrid p-grid">
                     <div class="ui-g-12 ui-lg-12">
 
@@ -56,7 +56,7 @@
                     label="Crear nueva OC"
                     icon="pi pi-plus"
                     class="ui-button-success"
-                    (click)="new_oc()"
+                    (click)="NewOc()"
                     style="width: auto"></button>
             </div>
             <!-- <div class="p-col"></div>

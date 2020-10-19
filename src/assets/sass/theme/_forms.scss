@@ -1278,7 +1278,6 @@ body {
     }
 
     .ui-calendar {
-        width: 100%!important;
         .ui-datepicker {
             min-width: auto;
         }
@@ -1307,7 +1306,7 @@ body {
     .ui-fluid {
         .ui-calendar.ui-calendar-w-btn {
             .ui-inputtext {
-                width: 100%;
+                width: auto;
             }
         }
     }

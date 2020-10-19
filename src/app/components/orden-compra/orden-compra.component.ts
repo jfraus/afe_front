@@ -15,17 +15,14 @@ export class OrdenCompraComponent implements OnInit {
     loadingPurchaseOrder = true;
     cols = [];
     validations = [];
-    formGroup: FormGroup = new FormGroup({
-        orderCode: new FormControl(),
-        mesProduction: new FormControl()
-    });
+    formGroup: FormGroup;
     orderCodeName = "orderCode";
     mesProduction = 'mesProduction';
     searchButtonDisable = false;
 
     constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
-        this.tableOrderFull();
-        this.buildForm();
+        this.TableOrderFull();
+        this.BuildForm();
         this.cols = [
             { field: 'orderNumber', header: 'Orden de Compra' },
             { field: 'productionMonth', header: 'Mes de Produción' },
@@ -45,14 +42,14 @@ export class OrdenCompraComponent implements OnInit {
 
     }
 
-    private buildForm() {
+    private BuildForm() {
         this.formGroup = this.fb.group({
             orderCode: ['', [Validators.required, Validators.maxLength(7), Validators.minLength(7)]],
             mesProduction: ['', [Validators.required]]
         });
     }
 
-    tableOrderFull() {
+    TableOrderFull() {
         this.service.purchase_orders(null, null).subscribe((response) => {
             this.purchaseOrder = response;
             this.loadingPurchaseOrder = false;
@@ -66,11 +63,11 @@ export class OrdenCompraComponent implements OnInit {
         this.onChanges();
     }
 
-    new_oc() {
+    NewOc() {
         this.visible = false;
     }
 
-    search_purchaseOrder() {
+    SearchPurchaseOrder() {
         this, this.messageServices.clear();
         let fecha = new Date(this.formGroup.get('mesProduction').value);
         console.log(fecha.getFullYear());
