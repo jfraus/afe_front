@@ -1,5 +1,6 @@
 body {
     .ui-inputtext {
+        width: 100%;
         background: transparent no-repeat;
         background-image: linear-gradient(to bottom, $primaryColor, $primaryColor), linear-gradient(to bottom, $inputBorderColor, $inputBorderColor);
         background-size: 0 2px, 100% 1px;
@@ -1305,7 +1306,7 @@ body {
     .ui-fluid {
         .ui-calendar.ui-calendar-w-btn {
             .ui-inputtext {
-                width: 100%;
+                width: auto;
             }
         }
     }

@@ -92,9 +92,11 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { AppValidationMessagesService } from './utils/app-validation-messages.service';
 import { MessageService } from 'primeng/api';
 import { AppSubMenuComponent } from './template/menu/submenu/submenu.component';
+import { OrdenCompraComponent } from './components/orden-compra/orden-compra.component';
+import { GenerarOrdenCompraComponent } from './components/orden-compra/generar-orden-compra/generar-orden-compra.component';
 
 const sharedComponents = [
-    ValidationsInputComponent
+    ValidationsInputComponent,GenerarOrdenCompraComponent
 ];
 
 
@@ -186,6 +188,7 @@ const sharedComponents = [
         AppErrorComponent,
         AppAccessdeniedComponent,
         AppLoginComponent,
+        OrdenCompraComponent,
         ...sharedComponents
     ],
     providers: [

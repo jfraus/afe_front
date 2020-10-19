@@ -28,6 +28,7 @@
         "crypto-js": "^4.0.0",
         "intl": "1.2.5",
         "primeflex": "1.0.0-rc.1",
+        "primeicons": "^4.0.0",
         "primeng": "8.0.0",
         "quill": "1.1.8",
         "rxjs": "6.4.0",

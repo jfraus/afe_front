@@ -10,7 +10,8 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
 
         //Example inject headers
-        request = request.clone({headers: request.headers.set('Content-Type','application/json')});
+        request = request.clone({headers: request.headers.set('Content-Type','application/json'),withCredentials: true});
+        
 
         return next.handle(request).pipe(
             //You will need to handle the api reponse this is exmaple
