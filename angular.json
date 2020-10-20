@@ -43,12 +43,36 @@
                         ]
                     },
                     "configurations": {
-                        "production": {
+                        "local": {
                             "fileReplacements": [
-                                {
-                                    "replace": "src/environments/enviroment.dev.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
+                              {
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.local.ts"
+                              }
+                            ]
+                          },
+                          "dev": {
+                            "fileReplacements": [
+                              {
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/enviroment.dev.ts"
+                              }
+                            ]
+                          },
+                          "qa": {
+                            "fileReplacements": [
+                              {
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.qa.ts"
+                              }
+                            ]
+                          },
+                          "production": {
+                            "fileReplacements": [
+                              {
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                              }
                             ],
                             "optimization": true,
                             "outputHashing": "all",
