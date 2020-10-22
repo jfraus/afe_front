@@ -11,7 +11,7 @@
                         (formGroup.get(formInputName).dirty ||
                             formGroup.get(formInputName).touched)
                     "
-                    class=" ui-messages-error" style="color: red;"
+                    class="ui-message ui-messages-error  ui-corner-all" style="color: red;"
                 >
                     {{ vm.message + (formGroup.get(formInputName).errors[vm.type].actualLength? ' tu cantidad de caracteres actuales ' + formGroup.get(formInputName).errors[vm.type].actualLength : '' ) }}
 

@@ -1,3 +1,4 @@
+<p-toast key="error_empty_Table"></p-toast>
 <div *ngIf="visible">
     <div class="card">
         <div class="card-title">Ordenes de compra</div>
@@ -8,7 +9,7 @@
                 (ngSubmit)="SearchPurchaseOrder()">
                 <div class="p-fluid p-formgrid p-grid">
                     <div class="ui-g-12 ui-lg-12">
-                        <div class="ui-g-12 ui-lg-4">
+                        <div class="ui-g-12 ui-lg-3">
                             <span class="md-inputfield">
                                 <input
                                     type="text"
@@ -24,7 +25,7 @@
                                 <label>Orden de compra</label>
                             </span>
                         </div>
-                        <div class="ui-g-12 ui-lg-4">
+                        <div class="ui-g-12 ui-lg-3">
                             <div class="p-inputgroup">
                                 <span class="md-inputfield">
                                     <p-calendar
@@ -43,7 +44,7 @@
                                 </validations-input-component>
                             </div>
                         </div>
-                        <div class="ui-g-12 ui-lg-4">
+                        <div class="ui-g-12 ui-lg-3">
                             <button
                                 pButton
                                 type="button"
@@ -119,22 +120,16 @@
                             rowData[col.field]
                             }}</span>
                         <ng-template #elseAction>
-                            
-                            <!-- <button
+                            <button
                                 pButton
                                 type="button"
                                 icon="ui-icon-edit"
-                                (click)
                                 class="blue-grey-btn"></button>
                             <button
                                 pButton
                                 type="button"
                                 icon="pi pi-check"
-                                class="blue-btn"></button> -->
-
-                                <button pButton type="button" icon="ui-icon-format-list-bulleted" class="blue-grey-btn space-btn" (click)="ShowDetails(rowData)" >
-                                </button>
-                                
+                                class="blue-btn"></button>
                         </ng-template>
                     </td>
                 </tr>
@@ -144,8 +139,4 @@
 </div>
 <div *ngIf="!visible">
     <generar_orden_compra></generar_orden_compra>
-</div>
-
-<div *ngIf="!visibledetails">
-    <detalle-orden-compra></detalle-orden-compra>
 </div>

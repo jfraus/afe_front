@@ -4,12 +4,12 @@ import { MessageService } from "primeng/api";
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 @Component({
-    selector: 'orden_compra',
-    templateUrl: './orden-compra.component.html',
-    styleUrls: ['./orden-compra.component.css'],
+    selector: 'edtiar-orden_compra',
+    templateUrl: './editar-orden-compra.component.html',
+    styleUrls: ['./editar-orden-compra.component.css'],
     providers: [PurchaseOrdenControllerService]
 })
-export class OrdenCompraComponent implements OnInit {
+export class EditarOrdenCompraComponent implements OnInit {
 
     purchaseOrder = [];
     loadingPurchaseOrder = true;
@@ -19,7 +19,6 @@ export class OrdenCompraComponent implements OnInit {
     orderCodeName = "orderCode";
     mesProduction = 'mesProduction';
     searchButtonDisable = false;
-    visibledetails: boolean = true;
 
     constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
         this.TableOrderFull();
@@ -45,17 +44,13 @@ export class OrdenCompraComponent implements OnInit {
 
     private BuildForm() {
         this.formGroup = this.fb.group({
-            orderCode: ['', [ Validators.maxLength(7), Validators.minLength(7)]],
-            mesProduction: ['', []]
+            orderCode: ['', [Validators.required, Validators.maxLength(7), Validators.minLength(7)]],
+            mesProduction: ['', [Validators.required]]
         });
     }
 
     TableOrderFull() {
-        this.service.purchase_orders(null, null).subscribe((response) => {
-            this.purchaseOrder = response;
-            this.loadingPurchaseOrder = false;
-
-        });
+       
 
     }
 
@@ -69,37 +64,14 @@ export class OrdenCompraComponent implements OnInit {
     }
 
     SearchPurchaseOrder() {
-        this, this.messageServices.clear();
-        let fecha = new Date(this.formGroup.get('mesProduction').value);
-        console.log(fecha.getFullYear());
-
-        console.log(this.formGroup.get('orderCode').value,);
-        this.loadingPurchaseOrder = true;
-        this.service.purchase_orders(this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
-            if (response.lenght > 0) {
-
-                this.purchaseOrder = response;
-
-            } else {
-
-                this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros'});
-            }
-            this.loadingPurchaseOrder = false;
-            this.formGroup.get('orderCode').reset();
-            this.formGroup.get('mesProduction').reset();
-
-        });
+      
 
     }
 
     onChanges(): void {
         this.formGroup.valueChanges.subscribe(val => {
-            this.searchButtonDisable = ((this.formGroup.get(this.orderCodeName).value && this.formGroup.get(this.orderCodeName).valid ) || this.formGroup.get(this.mesProduction).value)? true: false;
+            this.searchButtonDisable = this.formGroup.valid;
         });
-    }
-
-    ShowDetails(detail){
-        console.log(detail);
     }
 
 }

@@ -94,6 +94,7 @@ import { MessageService } from 'primeng/api';
 import { AppSubMenuComponent } from './template/menu/submenu/submenu.component';
 import { OrdenCompraComponent } from './components/orden-compra/orden-compra.component';
 import { GenerarOrdenCompraComponent } from './components/orden-compra/generar-orden-compra/generar-orden-compra.component';
+import { DetalleOrdenCompraComponent } from './components/orden-compra/detalle-orden-compra/detalle-orden-compra.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GenerarOrdenCompraComponent
@@ -188,6 +189,7 @@ const sharedComponents = [
         AppErrorComponent,
         AppAccessdeniedComponent,
         AppLoginComponent,
+        DetalleOrdenCompraComponent,
         OrdenCompraComponent,
         ...sharedComponents
     ],
