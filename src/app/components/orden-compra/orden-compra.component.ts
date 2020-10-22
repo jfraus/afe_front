@@ -18,6 +18,7 @@ export class OrdenCompraComponent implements OnInit {
     formGroup: FormGroup;
     orderCodeName = "orderCode";
     mesProduction = 'mesProduction';
+    order: any;
     searchButtonDisable = false;
     visibledetails: boolean = true;
 
@@ -45,13 +46,13 @@ export class OrdenCompraComponent implements OnInit {
 
     private BuildForm() {
         this.formGroup = this.fb.group({
-            orderCode: ['', [ Validators.maxLength(7), Validators.minLength(7)]],
+            orderCode: ['', [Validators.maxLength(7), Validators.minLength(7)]],
             mesProduction: ['', []]
         });
     }
 
     TableOrderFull() {
-        this.service.purchase_orders(null, null).subscribe((response) => {
+        this.service.purchase_orders(null, null, null).subscribe((response) => {
             this.purchaseOrder = response;
             this.loadingPurchaseOrder = false;
 
@@ -75,14 +76,14 @@ export class OrdenCompraComponent implements OnInit {
 
         console.log(this.formGroup.get('orderCode').value,);
         this.loadingPurchaseOrder = true;
-        this.service.purchase_orders(this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
+        this.service.purchase_orders(null, this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
             if (response.lenght > 0) {
 
                 this.purchaseOrder = response;
 
             } else {
 
-                this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros'});
+                this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
             }
             this.loadingPurchaseOrder = false;
             this.formGroup.get('orderCode').reset();
@@ -94,12 +95,23 @@ export class OrdenCompraComponent implements OnInit {
 
     onChanges(): void {
         this.formGroup.valueChanges.subscribe(val => {
-            this.searchButtonDisable = ((this.formGroup.get(this.orderCodeName).value && this.formGroup.get(this.orderCodeName).valid ) || this.formGroup.get(this.mesProduction).value)? true: false;
+            this.searchButtonDisable = ((this.formGroup.get(this.orderCodeName).value && this.formGroup.get(this.orderCodeName).valid) || this.formGroup.get(this.mesProduction).value) ? true : false;
         });
     }
 
-    ShowDetails(detail){
-        console.log(detail);
+    ShowDetails(detail) {
+        this.service.purchase_orders(detail.id, null, null).subscribe((response) => {
+            console.log(response[0]);
+            this.order = response[0];
+            this.visible = false;
+            this.visibledetails = false;
+        });
+
+    }
+
+    CloseDetails() {
+        this.visible = true;
+        this.visibledetails = true;
     }
 
 }

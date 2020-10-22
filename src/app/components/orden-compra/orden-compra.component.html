@@ -142,10 +142,10 @@
         </p-table>
     </div>
 </div>
-<div *ngIf="!visible">
+<div *ngIf="!visible && visibledetails">
     <generar_orden_compra></generar_orden_compra>
 </div>
 
-<div *ngIf="!visibledetails">
-    <detalle-orden-compra></detalle-orden-compra>
+<div *ngIf="!visibledetails && !visible">
+    <detalle-orden-compra (close)="CloseDetails()" [order]="order"></detalle-orden-compra>
 </div>
