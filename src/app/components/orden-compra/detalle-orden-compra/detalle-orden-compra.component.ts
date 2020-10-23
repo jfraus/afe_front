@@ -12,15 +12,16 @@ export class DetalleOrdenCompraComponent implements OnInit{
     loadingPurchaseOrderDetail=true;
     @Output() close = new EventEmitter();
     @Input() order: any;
+    @Input() fechaProductionMonth = new Date();
+    @Input() fechaVencimiento = new Date();
 
     constructor(){
-
         this.cols = [
-            { field: 'model.code', header: 'Tipo' },
-            { field: 'productionMonth', header: 'Modelo' },
-            { field: 'dueDate', header: 'Color' },
-            { field: 'unitsQuantity', header: 'Color interior' },
-            { field: 'status', header: 'Canitdad' },
+            { field: 'model.type.type', header: 'Tipo' },
+            { field: 'model.code', header: 'Modelo' },
+            { field: 'color.code', header: 'Color' },
+            { field: 'color.interiorCode', header: 'Color interior' },
+            { field: 'quantity', header: 'Canitdad' },
         ];
 
     }

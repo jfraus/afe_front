@@ -20,4 +20,11 @@ export class PurchaseOrdenControllerService {
       }
     }
   }
+
+  PutPurchaseOrders(order): Observable<any>{
+    if(order){
+      return this.http.put<any>(`${environment.apiUrl}purchase/orders/`,order).pipe();
+    }
+  }
+
 }

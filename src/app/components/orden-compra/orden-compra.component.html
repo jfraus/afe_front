@@ -120,19 +120,20 @@
                             }}</span>
                         <ng-template #elseAction>
                             
-                            <!-- <button
+                            <button
                                 pButton
                                 type="button"
                                 icon="ui-icon-edit"
-                                (click)
+                                (click)="EditOrden(rowData)"
                                 class="blue-grey-btn"></button>
                             <button
                                 pButton
                                 type="button"
                                 icon="pi pi-check"
-                                class="blue-btn"></button> -->
+                                style="margin-left: 3px"
+                                class="blue-btn"></button>
 
-                                <button pButton type="button" icon="ui-icon-format-list-bulleted" class="blue-grey-btn space-btn" (click)="ShowDetails(rowData)" >
+                                <button pButton type="button" style="margin-left: 3px" icon="ui-icon-format-list-bulleted" class="blue-grey-btn space-btn" (click)="ShowDetails(rowData)" >
                                 </button>
                                 
                         </ng-template>
@@ -142,10 +143,14 @@
         </p-table>
     </div>
 </div>
-<div *ngIf="!visible && visibledetails">
+<div *ngIf="!visible && visibledetails && visibleEditable">
     <generar_orden_compra></generar_orden_compra>
 </div>
 
-<div *ngIf="!visibledetails && !visible">
-    <detalle-orden-compra (close)="CloseDetails()" [order]="order"></detalle-orden-compra>
+<div *ngIf="!visibledetails && !visible && visibleEditable">
+    <detalle-orden-compra (close)="CloseDetails()" [order]="order" [fechaVencimiento]="fechaVencimientoSelected" [fechaProductionMonth]="fechaProductionMonthSelected"></detalle-orden-compra>
+</div>
+
+<div *ngIf="!visible && !visibleEditable && visibledetails">
+    <edtiar-orden_compra (close)="CloseEditar()" [fechaVencimiento]="fechaVencimientoSelected" [productionMonth]="fechaProductionMonthSelected" [order]="order"></edtiar-orden_compra>
 </div>

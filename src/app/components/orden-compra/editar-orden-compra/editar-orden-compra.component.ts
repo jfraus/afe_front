@@ -1,3 +1,5 @@
+import { EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { MessageService } from "primeng/api";
@@ -12,66 +14,87 @@ import { AppValidationMessagesService } from 'src/app/utils/app-validation-messa
 export class EditarOrdenCompraComponent implements OnInit {
 
     purchaseOrder = [];
+
+    @Input() order: any;
+    @Input() productionMonth = new Date();
+    @Input() fechaVencimiento = new Date();
+    @Output() close = new EventEmitter();
+    
     loadingPurchaseOrder = true;
     cols = [];
     validations = [];
-    formGroup: FormGroup;
-    orderCodeName = "orderCode";
-    mesProduction = 'mesProduction';
+    formGroup = new FormGroup({
+        productionMonthForm: new FormControl(),
+        fechaVencimiento: new FormControl(),
+        orderCode:new  FormControl()
+    });
+    fechaVencimientoName = "fechaVencimiento";
+    productionMonthFormName = 'productionMonthForm';
     searchButtonDisable = false;
+    minDate = new Date();
 
     constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
-        this.TableOrderFull();
-        this.BuildForm();
+
+        let day = new Date();
+        this.minDate = new Date(day.getFullYear(),day.getMonth() ,1,0,0,0,0);
+        
         this.cols = [
-            { field: 'orderNumber', header: 'Orden de Compra' },
-            { field: 'productionMonth', header: 'Mes de Produción' },
-            { field: 'dueDate', header: 'Fecha de Vencimiento' },
-            { field: 'unitsQuantity', header: 'Total unidades' },
-            { field: 'status', header: 'Estatus' },
-            { field: 'action', header: 'Acción' },
+            { field: 'model.type.type', header: 'Tipo' },
+            { field: 'model.code', header: 'Modelo' },
+            { field: 'color.code', header: 'Color' },
+            { field: 'color.interiorCode', header: 'Color interior' },
+            { field: 'quantity', header: 'Canitdad' },
         ];
+        this.messages.messagesRequired = 'true';
+        this.validations.push(this.messages.getValidationMessagesWithName('productionMonthForm'));
 
         this.messages.messagesRequired = 'true';
-        this.messages.messagesMaxLenght = '7';
-        this.messages.messagesMinLenght = '7';
-        this.validations.push(this.messages.getValidationMessagesWithName('orderCode'));
-
-        this.messages.messagesRequired = 'true';
-        this.validations.push(this.messages.getValidationMessagesWithName('mesProduction'));
+        this.validations.push(this.messages.getValidationMessagesWithName('fechaVencimiento'));
 
     }
 
     private BuildForm() {
         this.formGroup = this.fb.group({
-            orderCode: ['', [Validators.required, Validators.maxLength(7), Validators.minLength(7)]],
-            mesProduction: ['', [Validators.required]]
+            productionMonthForm: [this.productionMonth, [Validators.required]],
+            fechaVencimiento: [this.fechaVencimiento, [Validators.required]],
+            orderCode:[this.order.orderNumber, []],
+            unitsQuantity: [this.order.unitsQuantity,[]]
         });
+        this.formGroup.controls['orderCode'].disable();
+        this.formGroup.controls['unitsQuantity'].disable();
     }
 
-    TableOrderFull() {
-       
-
-    }
+    
 
     visible: boolean = true;
     ngOnInit(): void {
-        this.onChanges();
+        this.BuildForm();
     }
 
-    NewOc() {
-        this.visible = false;
+
+    Save(){
+        if(this.formGroup.valid){
+            let promise = new Promise((resolved, reject) => {
+                let dateVencida = new Date(this.formGroup.get('fechaVencimiento').value);
+                let dateProduction = new Date(this.formGroup.get('productionMonthForm').value);
+                this.order.dueDate = dateVencida.getTime();
+                this.order.productionMonth = `${dateProduction.getFullYear()}${dateProduction.getMonth()+1}`;
+                resolved(this.order);
+            });
+
+            promise.then((succes) => {
+                this.service.PutPurchaseOrders(succes).subscribe((response) => {
+                    this.messageServices.clear();
+                    this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con exito'});
+                    this.close.emit(true);
+                });
+            });
+        }
+        
     }
 
-    SearchPurchaseOrder() {
-      
-
-    }
-
-    onChanges(): void {
-        this.formGroup.valueChanges.subscribe(val => {
-            this.searchButtonDisable = this.formGroup.valid;
-        });
+    Close(){
+        this.close.emit(true);
     }
 
 }

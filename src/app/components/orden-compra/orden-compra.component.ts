@@ -21,6 +21,9 @@ export class OrdenCompraComponent implements OnInit {
     order: any;
     searchButtonDisable = false;
     visibledetails: boolean = true;
+    visibleEditable = false;
+    fechaProductionMonthSelected = new Date();
+    fechaVencimientoSelected = new Date();
 
     constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
         this.TableOrderFull();
@@ -72,9 +75,6 @@ export class OrdenCompraComponent implements OnInit {
     SearchPurchaseOrder() {
         this, this.messageServices.clear();
         let fecha = new Date(this.formGroup.get('mesProduction').value);
-        console.log(fecha.getFullYear());
-
-        console.log(this.formGroup.get('orderCode').value,);
         this.loadingPurchaseOrder = true;
         this.service.purchase_orders(null, this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
             if (response.lenght > 0) {
@@ -101,10 +101,12 @@ export class OrdenCompraComponent implements OnInit {
 
     ShowDetails(detail) {
         this.service.purchase_orders(detail.id, null, null).subscribe((response) => {
-            console.log(response[0]);
             this.order = response[0];
+            this.fechaVencimientoSelected = new Date(response[0].dueDate);
+            this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), -30, 0, 0, 0, 0);
             this.visible = false;
             this.visibledetails = false;
+            this.visibleEditable = true;
         });
 
     }
@@ -112,6 +114,27 @@ export class OrdenCompraComponent implements OnInit {
     CloseDetails() {
         this.visible = true;
         this.visibledetails = true;
+        this.visibleEditable = true;
+    }
+
+    EditOrden(purchaseOrder) {
+
+        this.service.purchase_orders(purchaseOrder.id, null, null).subscribe((response) => {
+            this.order = response[0];
+            this.fechaVencimientoSelected = new Date(response[0].dueDate);
+            this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), -30, 0, 0, 0, 0);
+            this.visible = false;
+            this.visibledetails = true;
+            this.visibleEditable = false;
+        });
+
+    }
+
+    CloseEditar(){
+        this.visible = true;
+        this.visibledetails = true;
+        this.visibleEditable = true;
+        this.TableOrderFull();
     }
 
 }
