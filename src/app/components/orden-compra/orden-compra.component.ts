@@ -18,7 +18,12 @@ export class OrdenCompraComponent implements OnInit {
     formGroup: FormGroup;
     orderCodeName = "orderCode";
     mesProduction = 'mesProduction';
+    order: any;
     searchButtonDisable = false;
+    visibledetails: boolean = true;
+    visibleEditable = false;
+    fechaProductionMonthSelected = new Date();
+    fechaVencimientoSelected = new Date();
 
     constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
         this.TableOrderFull();
@@ -44,13 +49,13 @@ export class OrdenCompraComponent implements OnInit {
 
     private BuildForm() {
         this.formGroup = this.fb.group({
-            orderCode: ['', [Validators.required, Validators.maxLength(7), Validators.minLength(7)]],
-            mesProduction: ['', [Validators.required]]
+            orderCode: ['', [Validators.maxLength(7), Validators.minLength(7)]],
+            mesProduction: ['', []]
         });
     }
 
     TableOrderFull() {
-        this.service.purchase_orders(null, null).subscribe((response) => {
+        this.service.purchase_orders(null, null, null).subscribe((response) => {
             this.purchaseOrder = response;
             this.loadingPurchaseOrder = false;
 
@@ -70,18 +75,15 @@ export class OrdenCompraComponent implements OnInit {
     SearchPurchaseOrder() {
         this, this.messageServices.clear();
         let fecha = new Date(this.formGroup.get('mesProduction').value);
-        console.log(fecha.getFullYear());
-
-        console.log(this.formGroup.get('orderCode').value,);
         this.loadingPurchaseOrder = true;
-        this.service.purchase_orders(this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
+        this.service.purchase_orders(null, this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
             if (response.lenght > 0) {
 
                 this.purchaseOrder = response;
 
             } else {
 
-                this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros'});
+                this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
             }
             this.loadingPurchaseOrder = false;
             this.formGroup.get('orderCode').reset();
@@ -93,8 +95,46 @@ export class OrdenCompraComponent implements OnInit {
 
     onChanges(): void {
         this.formGroup.valueChanges.subscribe(val => {
-            this.searchButtonDisable = this.formGroup.valid;
+            this.searchButtonDisable = ((this.formGroup.get(this.orderCodeName).value && this.formGroup.get(this.orderCodeName).valid) || this.formGroup.get(this.mesProduction).value) ? true : false;
         });
+    }
+
+    ShowDetails(detail) {
+        this.service.purchase_orders(detail.id, null, null).subscribe((response) => {
+            this.order = response[0];
+            this.fechaVencimientoSelected = new Date(response[0].dueDate);
+            this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), -30, 0, 0, 0, 0);
+            this.visible = false;
+            this.visibledetails = false;
+            this.visibleEditable = true;
+        });
+
+    }
+
+    CloseDetails() {
+        this.visible = true;
+        this.visibledetails = true;
+        this.visibleEditable = true;
+    }
+
+    EditOrden(purchaseOrder) {
+
+        this.service.purchase_orders(purchaseOrder.id, null, null).subscribe((response) => {
+            this.order = response[0];
+            this.fechaVencimientoSelected = new Date(response[0].dueDate);
+            this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), -30, 0, 0, 0, 0);
+            this.visible = false;
+            this.visibledetails = true;
+            this.visibleEditable = false;
+        });
+
+    }
+
+    CloseEditar(){
+        this.visible = true;
+        this.visibledetails = true;
+        this.visibleEditable = true;
+        this.TableOrderFull();
     }
 
 }

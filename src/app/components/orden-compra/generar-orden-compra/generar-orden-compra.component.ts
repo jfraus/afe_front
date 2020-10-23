@@ -8,8 +8,25 @@ import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms"
 })
 export class GenerarOrdenCompraComponent implements OnInit {
    
-    constructor(){}
+    purchaseOrderDetail=[];
+    loadingPurchaseOrderDetail=true;
+    cols=[];
+
+    constructor(){
+        this.cols = [
+            { field: 'orderNumber', header: 'Tipo' },
+            { field: 'productionMonth', header: 'Modelo' },
+            { field: 'dueDate', header: 'Color' },
+            { field: 'unitsQuantity', header: 'Color interior' },
+            { field: 'status', header: 'Canitdad' },
+            { field: 'action', header: 'Acción' },
+        ];
+    }
     ngOnInit(): void {
+        
+    }
+
+    Add(){
         
     }
 
