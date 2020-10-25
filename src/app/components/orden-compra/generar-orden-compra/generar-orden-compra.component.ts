@@ -26,6 +26,7 @@ export class GenerarOrdenCompraComponent implements OnInit {
     searchButtonDisable = false;
     minDate = new Date();
     validations = [];
+    displayAdd: boolean;
 
     constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService){
         let day = new Date();
@@ -51,14 +52,11 @@ export class GenerarOrdenCompraComponent implements OnInit {
             
         })
     }
-    ngOnInit(): void {
-        
-    }
+    ngOnInit(): void {}
 
-    Add(){
-        
+    add(){
+        this.displayAdd =  true;         
     }
-
     private BuildForm() {
         this.formGroup = this.fb.group({
             productionMonthForm: ['', [Validators.required]],
@@ -71,6 +69,7 @@ export class GenerarOrdenCompraComponent implements OnInit {
 
     }
 
-
+    salir(){     
+    }
 }
 

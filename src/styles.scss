@@ -1,14 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-
 .layout-footer{
-    position: absolute !important;
   bottom: 0!important;
   width: 100%!important;
-}
-
-.input {
-  width: 100%;
 }
 
 .ui-dataview-layout-options .ui-button {
@@ -20,16 +14,11 @@
 .ui-widget-content {
   border: white;
 }
-.ui-dropdown {
-  width: 75px;
-}
-.ui-dropdown .ui-dropdown-label.ui-inputtext {
-  color: white;
-}
+
 body{
 .ui-paginator {
     .ui-dropdown {
-        background-image: linear-gradient(to bottom, grey, black), linear-gradient(to bottom, #ffffff, #ffffff);
+        background-image: linear-gradient(to bottom, grey, white), linear-gradient(to bottom, #ffffff, #ffffff);
         .ui-dropdown-trigger {
             .pi{
                 color: #ffffff;
