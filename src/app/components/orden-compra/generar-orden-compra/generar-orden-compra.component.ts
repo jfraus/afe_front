@@ -23,14 +23,13 @@ export class GenerarOrdenCompraComponent implements OnInit {
             { field: 'action', header: 'Acción' },
         ];
     }
-    ngOnInit(): void {
-        
+    ngOnInit(): void {}
+
+    add(){
+        this.displayAdd =  true;         
     }
 
-    Add(){
-        this.displayAdd =  true; 
-        
+    salir(){     
     }
-
 }
 
