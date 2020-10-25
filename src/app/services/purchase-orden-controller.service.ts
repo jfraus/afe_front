@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../../environments/environment";
-import { OrderList } from 'primeng/orderlist';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable()
@@ -30,5 +29,4 @@ export class PurchaseOrdenControllerService {
   PostPurchaseOrders(order): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}purchase/orders/`, order).pipe();
   }
-
 }

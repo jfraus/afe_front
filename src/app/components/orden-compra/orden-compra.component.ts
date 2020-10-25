@@ -44,7 +44,6 @@ export class OrdenCompraComponent implements OnInit {
 
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('mesProduction'));
-
     }
 
     private BuildForm() {
