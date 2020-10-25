@@ -70,6 +70,8 @@ export class OrdenCompraComponent implements OnInit {
 
     NewOc() {
         this.visible = false;
+        this.visibledetails = true;
+        this.visibleEditable = true;
     }
 
     SearchPurchaseOrder() {

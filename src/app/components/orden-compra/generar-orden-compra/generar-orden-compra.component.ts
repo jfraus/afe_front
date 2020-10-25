@@ -11,6 +11,7 @@ export class GenerarOrdenCompraComponent implements OnInit {
     purchaseOrderDetail=[];
     loadingPurchaseOrderDetail=true;
     cols=[];
+    displayAdd: boolean;
 
     constructor(){
         this.cols = [
@@ -22,13 +23,13 @@ export class GenerarOrdenCompraComponent implements OnInit {
             { field: 'action', header: 'Acción' },
         ];
     }
-    ngOnInit(): void {
-        
+    ngOnInit(): void {}
+
+    add(){
+        this.displayAdd =  true;         
     }
 
-    Add(){
-        
+    salir(){     
     }
-
 }
 
