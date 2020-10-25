@@ -1,55 +1,55 @@
-<p-dialog header="Agregar Pedido" (onHide)="Closed()" class="ui-g ui-fluid" [style]="{width: '90vw', height: '70vh'}" [(visible)]="display">
-    <div class="ui-g ui-fluid" style="height: 100%;">
+<p-dialog header="Agregar Pedido" (onHide)="closed()" [(visible)]="display">
+    <div class="ui-g ui-fluid">
         <form [(formGroup)]="addModel" class="ui-g-12">
             <div class="ui-g form-group">
                 <div class="ui-g-12 ui-lg-4">
                     <span class="md-inputfield"  >
-                        <p-dropdown formControlName="model" [options]="models"  [filter]="true" 
-                        [autoDisplayFirst]="true" [showClear]="true" styleClass="ui-dropdown" [autoWidth]="false"  (onChange)="selectOtherOption($event)" ></p-dropdown>
-                        <label>Modelo</label>
-                        <validations-input-component></validations-input-component>
-                    </span>
-                </div>
-                <div class="ui-g-12 ui-lg-4">
-                    <span class="md-inputfield"  >
-                        <p-dropdown  [options]="models"  [filter]="true" 
-                        [autoDisplayFirst]="false" [showClear]="true" styleClass="ui-dropdown" [autoWidth]="false"   optionLabel="description" (onChange)="selectOtherOption($event)" ></p-dropdown>
+                        <p-dropdown formControlName="model" [options]="models" [filter]="true" 
+                        [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectModel()"></p-dropdown>
                         <label>Modelo</label>
                         <validations-input-component></validations-input-component>
                     </span>
                 </div>
                 <div class="ui-g-12 ui-lg-4">
                     <span class="md-inputfield ">
-                        <input type="text" style="width: 100%;" [disabled]="true" pInputText>
-                        <label>Color interior</label>
-                    </span>
-                </div>
-                <div class="ui-g-12 ui-lg-4">
-                    <span class="md-inputfield ">
-                        <input type="text" style="width: 100%;" [disabled]="true" pInputText>
-                        <label>Planta</label>
-                    </span>
-                </div>
-                <div class="ui-g-12 ui-lg-3">
-                    <span class="md-inputfield ">
-                        <input type="text" style="width: 100%;" [disabled]="true" pInputText>
+                        <input type="text" formControlName="modelType" pInputText>
                         <label>Tipo de modelo</label>
                     </span>
                 </div>
                 <div class="ui-g-12 ui-lg-4">
                     <span class="md-inputfield ">
-                        <input type="text" style="width: 100%;"  pInputText>
+                        <input type="text" formControlName="plant" pInputText>
+                        <label>Planta</label>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield"  >
+                        <p-dropdown formControlName="color" [options]="colors" [filter]="true" 
+                        [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectColor()"></p-dropdown>
+                        <label>Color</label>
+                        <validations-input-component></validations-input-component>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="text" formControlName="internalColor" pInputText>
+                        <label>Color interior</label>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="text" formControlName="quantity" pInputText>
                         <label>Cantidad</label>
+                        <validations-input-component></validations-input-component>
                     </span>
                 </div>
             </div>
         </form>
     </div>
-
     <p-footer>
-        <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Agregar" 
+        <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Agregar" [disabled]="!addModel.valid"
         (click)="agregar()"></button>
         <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
-        (click)="Closed()"></button>
+        (click)="closed()"></button>
     </p-footer>
 </p-dialog>
