@@ -27,4 +27,9 @@ export class PurchaseOrdenControllerService {
     }
   }
 
+  PostFirstPurchaseOrders(): Observable<any>{
+    return this.http.post<any>(`${environment.apiUrl}purchase/orders/`,null).pipe();
+ 
+  }
+
 }

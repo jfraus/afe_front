@@ -1,32 +1,63 @@
 <div class="card">
     <div class="card-title">Generar Orden de Compra</div>
-        <div class="p-fluid p-formgrid p-grid">
-            <div class="ui-g-12 ui-lg-3">
-                <span class="md-inputfield ">
-                    <input type="text" style="width: 100%;" pInputText>
-                    <label>Orden de compra</label>
-                </span>
-            </div>
-            <div class="ui-g-12 ui-lg-3">
-                    <span class="md-inputfield ">
-                    <p-calendar [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [showIcon]="true"   name="beginDate"></p-calendar>
-                        <label>Mes de produción</label>
-                    </span>
-            </div>
-            <div class="ui-g-12 ui-lg-3">
-                <span class="md-inputfield ">
-                    <p-calendar [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [showIcon]="true"   name="beginDate"></p-calendar>
-                        <label>Fecha de vencimiento</label>
-                    </span>
-            </div>
+    <div class="p-fluid p-formgrid p-grid">
+            
+    
 
-            <div class="ui-g-12 ui-lg-3">
-                <span class="md-inputfield ">
-                    <input type="text" style="width: 100%;" pInputText>
-                    <label>Total unidades</label>
-                </span>
+        <form
+        [formGroup]="formGroup"
+        class="form-group ui-g-12"
+        >
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="ui-g-12 ui-lg-12">
+                <div class="ui-g-12 ui-lg-3">
+                    <span class="md-inputfield ">
+                        <input type="text" style="width: 100%;" [readOnly]="true" [disabled]="true" formControlName="orderCode"  pInputText>
+                        <label>Orden de compra</label>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-3">
+                    <div class="p-inputgroup">
+                        <span class="md-inputfield">
+                            <p-calendar
+                                [style]="{ width: '100%' }"
+                                dateFormat="yy-mm"
+                                name="mesProduction"
+                                [minDate]="minDate"
+                                formControlName="productionMonthForm"
+                                [inputStyle]="{ width: '100%' }"
+                                [showIcon]="true"></p-calendar>
+                            <label>Mes de produción</label>
+                        </span>
+                        <validations-input-component
+                            [validation_messages]="validations"
+                            [(formGroup)]="formGroup"
+                            [(formInputName)]="productionMonthFormName">
+                        </validations-input-component>
+                    </div>
+                </div>
+                <div class="ui-g-12 ui-lg-3">
+                    <span class="md-inputfield ">
+                        <p-calendar [style]="{'width':'100%'}"  [inputStyle]="{'width':'100%'}"  formControlName="fechaVencimiento" [showIcon]="true"></p-calendar>
+                            <label>Fecha de vencimiento</label>
+                        </span>
+                    <validations-input-component  [validation_messages]="validations"
+                    [(formGroup)]="formGroup"
+                    [(formInputName)]="fechaVencimientoName"></validations-input-component>
+                </div>
+                <div class="ui-g-12 ui-lg-3">
+                    <span class="md-inputfield ">
+                        <input type="text" style="width: 100%;" [readOnly]="true" [disabled]="true"  formControlName="unitsQuantity"   pInputText>
+                        <label>Total unidades</label>
+                    </span>
+                </div>
             </div>
         </div>
+    </form>
+
+        
+
+    </div>
 </div>
 
 
