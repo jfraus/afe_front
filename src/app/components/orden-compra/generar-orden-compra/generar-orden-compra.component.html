@@ -91,28 +91,16 @@
             </ng-template>
         </p-table>
         <div class="p-fluid p-formgrid p-grid">
-            <div class="ui-g-12 ui-lg-3">
-                <button
-                    pButton
-                    type="button"
-                    label="Agregar"
-                    icon="pi
-                    pi-plus"
-                    class="ui-button-success"
-                    (click)="Add()"
-                    style="width: auto"></button>
+            <div class="ui-g-12 ui-lg-2">
+                <button pButton type="button" label="Guardar" (click)="Save()" icon="ui-icon-save" class="ui-button-success" style="width:auto"></button>
             </div>
-            <div class="ui-g-11 ui-lg-2">
-                <button
-                    pButton
-                    type="button"
-                    label="Agregar"
-                    icon="pi
-                    pi-plus"
-                    class="ui-button-success"
-                    (click)="Add()"
-                    style="width: auto"></button>
+            <div class="ui-g-12 ui-lg-2">
+                <button pButton type="button" label="Salir" (click)="Close()" icon="ui-icon-close" class="ui-button-danger" style="width:auto"></button>
             </div>
         </div>
         
+</div>
+
+<div>
+    <agregar-pedido-modelo [display]="displayAdd" (close)="displayAdd=false"></agregar-pedido-modelo>
 </div>

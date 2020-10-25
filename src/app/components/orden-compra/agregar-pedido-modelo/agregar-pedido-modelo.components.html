@@ -1,0 +1,55 @@
+<p-dialog header="Agregar Pedido" (onHide)="Closed()" class="ui-g ui-fluid" [style]="{width: '90vw', height: '70vh'}" [(visible)]="display">
+    <div class="ui-g ui-fluid" style="height: 100%;">
+        <form [(formGroup)]="addModel" class="ui-g-12">
+            <div class="ui-g form-group">
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield"  >
+                        <p-dropdown formControlName="model" [options]="models"  [filter]="true" 
+                        [autoDisplayFirst]="true" [showClear]="true" styleClass="ui-dropdown" [autoWidth]="false"  (onChange)="selectOtherOption($event)" ></p-dropdown>
+                        <label>Modelo</label>
+                        <validations-input-component></validations-input-component>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield"  >
+                        <p-dropdown  [options]="models"  [filter]="true" 
+                        [autoDisplayFirst]="false" [showClear]="true" styleClass="ui-dropdown" [autoWidth]="false"   optionLabel="description" (onChange)="selectOtherOption($event)" ></p-dropdown>
+                        <label>Modelo</label>
+                        <validations-input-component></validations-input-component>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="text" style="width: 100%;" [disabled]="true" pInputText>
+                        <label>Color interior</label>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="text" style="width: 100%;" [disabled]="true" pInputText>
+                        <label>Planta</label>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-3">
+                    <span class="md-inputfield ">
+                        <input type="text" style="width: 100%;" [disabled]="true" pInputText>
+                        <label>Tipo de modelo</label>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="text" style="width: 100%;"  pInputText>
+                        <label>Cantidad</label>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <p-footer>
+        <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Agregar" 
+        (click)="agregar()"></button>
+        <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+        (click)="Closed()"></button>
+    </p-footer>
+</p-dialog>

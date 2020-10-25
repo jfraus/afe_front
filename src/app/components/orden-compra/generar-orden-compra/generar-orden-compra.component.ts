@@ -11,6 +11,7 @@ export class GenerarOrdenCompraComponent implements OnInit {
     purchaseOrderDetail=[];
     loadingPurchaseOrderDetail=true;
     cols=[];
+    displayAdd: boolean;
 
     constructor(){
         this.cols = [
@@ -27,6 +28,7 @@ export class GenerarOrdenCompraComponent implements OnInit {
     }
 
     Add(){
+        this.displayAdd =  true; 
         
     }
 
