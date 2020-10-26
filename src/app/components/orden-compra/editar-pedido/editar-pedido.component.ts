@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { SelectItem } from 'primeng/api';
 import { Model } from 'src/app/models/model.model';
@@ -10,22 +10,29 @@ import { AppValidationMessagesService } from 'src/app/utils/app-validation-messa
 
 
 @Component({
-    selector: 'agregar-pedido-modelo',
-    templateUrl: './agregar-pedido-modelo.components.html',
-    styleUrls: ['./agregar-pedido-modelo.components.css'],
+    selector: 'editar-pedido-modelo',
+    templateUrl: './editar-pedido.component.html',
+    styleUrls: ['./editar-pedido.component.css'],
     providers: [ModelControllerService,ModelColorControllerService,PurchaseOrdenControllerService]
 })
-export class AgregarPedidoModeloComponent {
+export class EditarPedidoModeloComponent implements OnInit {
     @Input() display: boolean;
     @Output() close = new EventEmitter();
     colors: SelectItem[] = [];
     models: SelectItem[] = [];
-    addModel: FormGroup;
+    addModel: FormGroup = new FormGroup({
+        model: new FormControl(),
+        plant: new FormControl(),
+        modelType: new FormControl(),
+        color: new FormControl(),
+        internalColor: new FormControl(),
+        quantity: new FormControl()
+    });
     validations=[];
     @Input() purchaseOrderId;
+    @Input() pedido: PurchaseOrderDetail;
 
     constructor(private fb: FormBuilder,private servicesPurchase: PurchaseOrdenControllerService,private serviceColor: ModelColorControllerService,private messages: AppValidationMessagesService, private services: ModelControllerService){
-        this.BuildForm();
         this.fillModel();
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('model'));
@@ -35,17 +42,24 @@ export class AgregarPedidoModeloComponent {
 
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('quantity'));
+        this.pedido = {color: {id:0,code:'',interiorCode:''},model: {id:0, code: '',type:{id:0,type:''},plant: {abbreviation: '',id:1,salesCode:''}},quantity:0,purchaseOrderId:0 };
     }
+    ngOnInit(): void {
+    }
+    
 
-    private BuildForm() {
+    public BuildForm(pedido) {
+        
         this.addModel = this.fb.group({
-            model: ['', [Validators.required]],
-            plant:new FormControl({value:'', disabled:true}),
-            modelType:new FormControl({value:'', disabled:true}),
-            color: new FormControl('', Validators.required),
-            internalColor: new FormControl({value:'', disabled:true}),
-            quantity: new FormControl('', Validators.required)
+            model: [pedido.model, [Validators.required]],
+            plant:new FormControl({value:pedido.model.plant.abbreviation, disabled:true}),
+            modelType:new FormControl({value:pedido.model.type.type, disabled:true}),
+            color: new FormControl(pedido.color, Validators.required),
+            internalColor: new FormControl({value:pedido.color.interiorCode, disabled:true}),
+            quantity: new FormControl(pedido.quantity, Validators.required),
+            id: new FormControl(pedido.id)
         });
+
     }
 
     fillModel(){
@@ -53,6 +67,15 @@ export class AgregarPedidoModeloComponent {
             this.models = rs.map(r => (
                 { label: r.code, value: r}
             ))
+        })
+    }
+
+    fillColor(){
+        this.serviceColor.get(this.addModel.get('model').value.id).subscribe((response) => {
+            this.colors = response.map(r => ({
+                label: r.code,
+                value: r
+            }));
         })
     }
 
@@ -67,6 +90,7 @@ export class AgregarPedidoModeloComponent {
                 value: r
             }));
         })
+
     }
 
     selectColor():void{
@@ -77,7 +101,7 @@ export class AgregarPedidoModeloComponent {
 
     agregar(){
         if(this.addModel.valid){
-
+            
             let promise = new Promise((resolved) => {
                 let postObject: Model = {
                     code: this.addModel.value.model.code,
@@ -89,6 +113,7 @@ export class AgregarPedidoModeloComponent {
                 };
                 
                 let detail: PurchaseOrderDetail = {
+                    id: this.addModel.value.id,
                     purchaseOrderId: this.purchaseOrderId,
                     quantity: this.addModel.get('quantity').value,
                     color: this.addModel.value.color,
@@ -100,7 +125,7 @@ export class AgregarPedidoModeloComponent {
             });
 
             promise.then((detail: PurchaseOrderDetail) => {
-                this.servicesPurchase.postPurchaseOrderDetail(detail).subscribe((response) => {
+                this.servicesPurchase.putPurchaseOrderDetail(detail).subscribe((response) => {
                     this.closed();
                 })
 
