@@ -12,7 +12,7 @@
             <div class="ui-g-12 ui-lg-12">
                 <div class="ui-g-12 ui-lg-3">
                     <span class="md-inputfield ">
-                        <input type="text" style="width: 100%;" [readOnly]="true" [disabled]="true" formControlName="orderCode"  pInputText>
+                        <input type="text" style="width: 100%;" [readOnly]="true" formControlName="orderCode"  pInputText>
                         <label>Orden de compra</label>
                     </span>
                 </div>
@@ -28,26 +28,26 @@
                                 [inputStyle]="{ width: '100%' }"
                                 [showIcon]="true"></p-calendar>
                             <label>Mes de produción</label>
+                            <validations-input-component
+                                [validation_messages]="validations"
+                                [(formGroup)]="formGroup"
+                                [(formInputName)]="productionMonthFormName">
+                            </validations-input-component>
                         </span>
-                        <validations-input-component
-                            [validation_messages]="validations"
-                            [(formGroup)]="formGroup"
-                            [(formInputName)]="productionMonthFormName">
-                        </validations-input-component>
                     </div>
                 </div>
                 <div class="ui-g-12 ui-lg-3">
                     <span class="md-inputfield ">
-                        <p-calendar [style]="{'width':'100%'}"  [inputStyle]="{'width':'100%'}"  formControlName="fechaVencimiento" [showIcon]="true"></p-calendar>
+                        <p-calendar [style]="{'width':'100%'}" [maxDate]="minDate" [minDate]="minVencimiento" [inputStyle]="{'width':'100%'}"  formControlName="fechaVencimiento" [showIcon]="true"></p-calendar>
                             <label>Fecha de vencimiento</label>
+                            <validations-input-component  [validation_messages]="validations"
+                            [(formGroup)]="formGroup"
+                            [(formInputName)]="fechaVencimientoName"></validations-input-component>
                         </span>
-                    <validations-input-component  [validation_messages]="validations"
-                    [(formGroup)]="formGroup"
-                    [(formInputName)]="fechaVencimientoName"></validations-input-component>
                 </div>
                 <div class="ui-g-12 ui-lg-3">
                     <span class="md-inputfield ">
-                        <input type="text" style="width: 100%;" [readOnly]="true" [disabled]="true"  formControlName="unitsQuantity"   pInputText>
+                        <input type="text" style="width: 100%;" [readOnly]="true"  formControlName="unitsQuantity"   pInputText>
                         <label>Total unidades</label>
                     </span>
                 </div>

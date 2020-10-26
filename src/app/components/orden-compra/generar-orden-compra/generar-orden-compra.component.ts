@@ -18,7 +18,7 @@ export class GenerarOrdenCompraComponent implements OnInit {
     @ViewChild(EditarPedidoModeloComponent, {static: true}) editarComponent: EditarPedidoModeloComponent;
 
     purchaseOrderDetail=[];
-    loadingPurchaseOrderDetail=true;
+    loadingPurchaseOrderDetail=false;
     cols=[];
     @Output() close = new EventEmitter();
     pedido: PurchaseOrderDetail;
@@ -34,6 +34,7 @@ export class GenerarOrdenCompraComponent implements OnInit {
     productionMonthFormName = 'productionMonthForm';
     searchButtonDisable = false;
     minDate = new Date();
+    minVencimiento = new Date();
     validations = [];
     order: PurchaseOrder = {id: 0,orderNumber:'',productionMonth:'',unitsQuantity:1,dueDate: 1};
     displayAdd: boolean;
@@ -42,7 +43,9 @@ export class GenerarOrdenCompraComponent implements OnInit {
     constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService){
         let day = new Date();
         this.minDate = new Date(day.getFullYear(),day.getMonth() ,1,0,0,0,0);
+        this.minVencimiento = new Date(day.getFullYear(),day.getMonth() -1,1,0,0,0,0);
         
+        this.BuildForm();
         this.cols = [
             { field: 'model.type.type', header: 'Tipo' },
             { field: 'model.code', header: 'Modelo' },
@@ -89,8 +92,8 @@ export class GenerarOrdenCompraComponent implements OnInit {
             orderCode:['', []],
             unitsQuantity: ['',[]]
         });
-        this.formGroup.controls['orderCode'].disable();
-        this.formGroup.controls['unitsQuantity'].disable();
+        this.formGroup.get('orderCode').disable();
+        this.formGroup.get('unitsQuantity').disable();
 
     }
 
