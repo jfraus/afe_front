@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { Model } from 'src/app/models/model.model';
 import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
@@ -32,7 +32,7 @@ export class EditarPedidoModeloComponent implements OnInit {
     @Input() purchaseOrderId;
     @Input() pedido: PurchaseOrderDetail;
 
-    constructor(private fb: FormBuilder,private servicesPurchase: PurchaseOrdenControllerService,private serviceColor: ModelColorControllerService,private messages: AppValidationMessagesService, private services: ModelControllerService){
+    constructor(public messageServices: MessageService,private fb: FormBuilder,private servicesPurchase: PurchaseOrdenControllerService,private serviceColor: ModelColorControllerService,private messages: AppValidationMessagesService, private services: ModelControllerService){
         this.fillModel();
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('model'));
@@ -126,6 +126,8 @@ export class EditarPedidoModeloComponent implements OnInit {
 
             promise.then((detail: PurchaseOrderDetail) => {
                 this.servicesPurchase.putPurchaseOrderDetail(detail).subscribe((response) => {
+                    this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con exito'});
+
                     this.closed();
                 })
 
