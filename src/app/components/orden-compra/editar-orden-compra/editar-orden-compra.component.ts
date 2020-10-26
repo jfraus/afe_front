@@ -1,10 +1,12 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, ViewChild } from '@angular/core';
 import { Output } from '@angular/core';
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { MessageService } from "primeng/api";
+import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
+import { EditarPedidoModeloComponent } from '../editar-pedido/editar-pedido.component';
 @Component({
     selector: 'editar-orden_compra',
     templateUrl: './editar-orden-compra.component.html',
@@ -12,6 +14,7 @@ import { AppValidationMessagesService } from 'src/app/utils/app-validation-messa
     providers: [PurchaseOrdenControllerService]
 })
 export class EditarOrdenCompraComponent implements OnInit {
+    @ViewChild(EditarPedidoModeloComponent, {static: true}) editarComponent: EditarPedidoModeloComponent;
 
     purchaseOrder = [];
 
@@ -19,7 +22,9 @@ export class EditarOrdenCompraComponent implements OnInit {
     @Input() productionMonth = new Date();
     @Input() fechaVencimiento = new Date();
     @Output() close = new EventEmitter();
-    
+    pedido: PurchaseOrderDetail;
+    displayAdd: boolean;
+    displayEdit: boolean;
     loadingPurchaseOrder = true;
     cols = [];
     validations = [];
@@ -46,6 +51,7 @@ export class EditarOrdenCompraComponent implements OnInit {
             { field: 'color.code', header: 'Color' },
             { field: 'color.interiorCode', header: 'Color interior' },
             { field: 'quantity', header: 'Cantidad' },
+            { field: 'action', header: 'Acción' },
         ];
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('productionMonthForm'));
@@ -53,6 +59,22 @@ export class EditarOrdenCompraComponent implements OnInit {
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('fechaVencimiento'));
 
+    }
+    closedEditarPedido(){
+        this.displayEdit = false;
+        this.fillTable();
+    }
+    fillTable(){
+        this.loadingPurchaseOrder = true;
+        this.service.purchase_orders(this.order.id,null,null).subscribe((response) =>
+        {
+            this.loadingPurchaseOrder = false;
+            this.order.detail = response[0].detail;
+        });
+    }
+    closedAgregar(){
+        this.displayAdd = false;
+        this.fillTable();
     }
 
     private BuildForm() {
@@ -65,8 +87,36 @@ export class EditarOrdenCompraComponent implements OnInit {
         this.formGroup.controls['orderCode'].disable();
         this.formGroup.controls['unitsQuantity'].disable();
     }
+    editarDetail(detail){
+        let promise = new Promise((resolve) => {
+            this.pedido = {
+                id: detail.id,
+                color: detail.color,
+                model: detail.model,
+                quantity: detail.quantity
+            }
+            resolve(this.pedido);
+        });
 
-    
+        promise.then((detail) => {
+            let promiseForm = new Promise((resolve) => {
+            this.editarComponent.BuildForm(this.pedido);
+            resolve(true);
+            });
+
+            promiseForm.then((succes) => {
+                this.editarComponent.fillColor();
+                this.displayEdit = true;
+            })
+
+        });
+
+    }
+    add(){
+        this.displayAdd =  true;
+    }
+
+
 
     visible: boolean = true;
     ngOnInit(): void {
@@ -88,11 +138,10 @@ export class EditarOrdenCompraComponent implements OnInit {
                 this.service.PutPurchaseOrders(succes).subscribe((response) => {
                     this.messageServices.clear();
                     this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con exito'});
-                    this.close.emit(true);
                 });
             });
         }
-        
+
     }
 
     Close(){
