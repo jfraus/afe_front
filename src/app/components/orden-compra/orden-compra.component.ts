@@ -104,7 +104,10 @@ export class OrdenCompraComponent implements OnInit {
         this.service.purchase_orders(detail.id, null, null).subscribe((response) => {
             this.order = response[0];
             this.fechaVencimientoSelected = new Date(response[0].dueDate);
-            this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), -30, 0, 0, 0, 0);
+            if(response[0].productionMonth){
+
+                this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), -30, 0, 0, 0, 0);
+            }
             this.visible = false;
             this.visibledetails = false;
             this.visibleEditable = true;
@@ -123,7 +126,10 @@ export class OrdenCompraComponent implements OnInit {
         this.service.purchase_orders(purchaseOrder.id, null, null).subscribe((response) => {
             this.order = response[0];
             this.fechaVencimientoSelected = new Date(response[0].dueDate);
-            this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), -30, 0, 0, 0, 0);
+            if(response[0].productionMonth){
+
+                this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), -30, 0, 0, 0, 0);
+            }
             this.visible = false;
             this.visibledetails = true;
             this.visibleEditable = false;

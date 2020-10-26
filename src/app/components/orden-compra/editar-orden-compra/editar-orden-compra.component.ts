@@ -58,7 +58,7 @@ export class EditarOrdenCompraComponent implements OnInit {
     private BuildForm() {
         this.formGroup = this.fb.group({
             productionMonthForm: [this.productionMonth, [Validators.required]],
-            fechaVencimiento: [this.fechaVencimiento, [Validators.required]],
+            fechaVencimiento: [(this.fechaVencimiento.getDate())? this.fechaVencimiento: null, [Validators.required]],
             orderCode:[this.order.orderNumber, []],
             unitsQuantity: [this.order.unitsQuantity,[]]
         });

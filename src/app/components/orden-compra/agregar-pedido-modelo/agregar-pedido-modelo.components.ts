@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { Model } from 'src/app/models/model.model';
 import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
@@ -24,7 +24,7 @@ export class AgregarPedidoModeloComponent {
     validations=[];
     @Input() purchaseOrderId;
 
-    constructor(private fb: FormBuilder,private servicesPurchase: PurchaseOrdenControllerService,private serviceColor: ModelColorControllerService,private messages: AppValidationMessagesService, private services: ModelControllerService){
+    constructor(public messageServices: MessageService,private fb: FormBuilder,private servicesPurchase: PurchaseOrdenControllerService,private serviceColor: ModelColorControllerService,private messages: AppValidationMessagesService, private services: ModelControllerService){
         this.BuildForm();
         this.fillModel();
         this.messages.messagesRequired = 'true';
@@ -101,6 +101,8 @@ export class AgregarPedidoModeloComponent {
 
             promise.then((detail: PurchaseOrderDetail) => {
                 this.servicesPurchase.postPurchaseOrderDetail(detail).subscribe((response) => {
+                    this.messageServices.add({key: 'error', severity:'success', summary: 'Guardado con exito'});
+
                     this.closed();
                 })
 
