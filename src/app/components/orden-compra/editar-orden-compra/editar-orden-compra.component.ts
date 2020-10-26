@@ -32,12 +32,14 @@ export class EditarOrdenCompraComponent implements OnInit {
     productionMonthFormName = 'productionMonthForm';
     searchButtonDisable = false;
     minDate = new Date();
+    minVencimiento = new Date();
 
     constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
 
         let day = new Date();
         this.minDate = new Date(day.getFullYear(),day.getMonth() ,1,0,0,0,0);
-        
+        this.minVencimiento = new Date(day.getFullYear(),day.getMonth() -1,1,0,0,0,0);
+
         this.cols = [
             { field: 'model.type.type', header: 'Tipo' },
             { field: 'model.code', header: 'Modelo' },
