@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { MessageService } from 'primeng/api';
-import { PurchaseOrder } from 'src/app/models/PurchaseOrder';
-import { PurchaseOrderDetail } from 'src/app/models/PurchaseOrderDetail';
+import { PurchaseOrder } from 'src/app/models/purchase-order.model';
+import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 import { resolve } from 'url';
@@ -69,7 +69,6 @@ export class GenerarOrdenCompraComponent implements OnInit {
         this.loadingPurchaseOrderDetail = true;
         this.service.purchase_orders(this.order.id,null,null).subscribe((response) =>
         {
-            console.log(response);
             
             this.loadingPurchaseOrderDetail = false;
             this.purchaseOrderDetail = response[0].detail;
@@ -112,7 +111,6 @@ export class GenerarOrdenCompraComponent implements OnInit {
 
     editarDetail(detail){
         let promise = new Promise((resolve) => {
-            console.log('detail',detail);
             this.pedido = {
                 id: detail.id,
                 color: detail.color,

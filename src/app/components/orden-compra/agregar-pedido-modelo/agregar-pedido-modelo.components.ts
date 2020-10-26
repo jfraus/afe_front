@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { SelectItem } from 'primeng/api';
-import { Model } from 'src/app/models/Model';
-import { PurchaseOrderDetail } from 'src/app/models/PurchaseOrderDetail';
+import { Model } from 'src/app/models/model.model';
+import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
 import { ModelControllerService } from 'src/app/services/model-controller.service';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
@@ -71,7 +71,6 @@ export class AgregarPedidoModeloComponent {
 
     selectColor():void{
         let color = this.addModel.get('color').value;
-        console.log(color);
         
         this.addModel.get('internalColor').setValue(color !== null ? color.interiorCode: '');
     }
@@ -97,7 +96,6 @@ export class AgregarPedidoModeloComponent {
                         id: postObject.id
                     }
                 };
-                console.log(detail);
                 resolved(detail);
             });
 

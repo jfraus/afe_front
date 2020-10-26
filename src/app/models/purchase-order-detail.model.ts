@@ -1,9 +1,9 @@
-import { Model } from './Model';
-import { ModelColor } from './ModelColor'
+import { Model } from './model.model';
+import { Color } from './color.model'
 
 export interface PurchaseOrderDetail{
         id?: number,
-        color: ModelColor
+        color: Color
         model: Model,
         purchaseOrderId?: number,
         quantity: number

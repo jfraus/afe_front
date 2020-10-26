@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { SelectItem } from 'primeng/api';
-import { Model } from 'src/app/models/Model';
-import { PurchaseOrderDetail } from 'src/app/models/PurchaseOrderDetail';
+import { Model } from 'src/app/models/model.model';
+import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
 import { ModelControllerService } from 'src/app/services/model-controller.service';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
@@ -101,7 +101,6 @@ export class EditarPedidoModeloComponent implements OnInit {
 
     agregar(){
         if(this.addModel.valid){
-            console.log("model",this.addModel.value);
             
             let promise = new Promise((resolved) => {
                 let postObject: Model = {
