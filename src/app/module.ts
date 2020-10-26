@@ -97,6 +97,7 @@ import { GenerarOrdenCompraComponent } from './components/orden-compra/generar-o
 import { DetalleOrdenCompraComponent } from './components/orden-compra/detalle-orden-compra/detalle-orden-compra.component';
 import { EditarOrdenCompraComponent } from './components/orden-compra/editar-orden-compra/editar-orden-compra.component';
 import { AgregarPedidoModeloComponent } from './components/orden-compra/agregar-pedido-modelo/agregar-pedido-modelo.components';
+import { EditarPedidoModeloComponent } from './components/orden-compra/editar-pedido/editar-pedido.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GenerarOrdenCompraComponent
@@ -195,6 +196,7 @@ const sharedComponents = [
         EditarOrdenCompraComponent,
         OrdenCompraComponent,
         AgregarPedidoModeloComponent,
+        EditarPedidoModeloComponent,
         ...sharedComponents
     ],
     providers: [

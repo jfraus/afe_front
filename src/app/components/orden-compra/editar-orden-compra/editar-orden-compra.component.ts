@@ -6,7 +6,7 @@ import { MessageService } from "primeng/api";
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 @Component({
-    selector: 'edtiar-orden_compra',
+    selector: 'editar-orden_compra',
     templateUrl: './editar-orden-compra.component.html',
     styleUrls: ['./editar-orden-compra.component.css'],
     providers: [PurchaseOrdenControllerService]
@@ -43,7 +43,7 @@ export class EditarOrdenCompraComponent implements OnInit {
             { field: 'model.code', header: 'Modelo' },
             { field: 'color.code', header: 'Color' },
             { field: 'color.interiorCode', header: 'Color interior' },
-            { field: 'quantity', header: 'Canitdad' },
+            { field: 'quantity', header: 'Cantidad' },
         ];
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('productionMonthForm'));

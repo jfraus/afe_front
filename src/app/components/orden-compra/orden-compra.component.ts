@@ -138,5 +138,12 @@ export class OrdenCompraComponent implements OnInit {
         this.TableOrderFull();
     }
 
+    closeGenerar(){
+        this.visible = true;
+        this.visibledetails = true;
+        this.visibleEditable = true;
+        this.TableOrderFull();
+    }
+
 }
 

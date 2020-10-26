@@ -1,4 +1,4 @@
-<p-dialog header="Agregar Pedido" (onHide)="closed()" [(visible)]="display">
+<p-dialog header="Editar Pedido" (onHide)="closed()" [(visible)]="display">
     <div class="ui-g ui-fluid">
         <form [(formGroup)]="addModel" class="ui-g-12">
             <div class="ui-g form-group">
@@ -25,7 +25,7 @@
                 <div class="ui-g-12 ui-lg-4">
                     <span class="md-inputfield"  >
                         <p-dropdown formControlName="color" [options]="colors" [filter]="true" 
-                        [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectColor()"></p-dropdown>
+                        [autoDisplayFirst]="false"[showClear]="true" appendTo="body"  (onChange)="selectColor()"></p-dropdown>
                         <label>Color</label>
                         <validations-input-component [formGroup]="addModel" formInputName="color" [validation_messages]="validations"></validations-input-component>
                     </span>

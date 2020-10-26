@@ -144,7 +144,7 @@
     </div>
 </div>
 <div *ngIf="!visible && visibledetails && visibleEditable">
-    <generar_orden_compra></generar_orden_compra>
+    <generar_orden_compra (close)="closeGenerar()"></generar_orden_compra>
 </div>
 
 <div *ngIf="!visibledetails && !visible && visibleEditable">
@@ -152,5 +152,5 @@
 </div>
 
 <div *ngIf="!visible && !visibleEditable && visibledetails">
-    <edtiar-orden_compra (close)="CloseEditar()" [fechaVencimiento]="fechaVencimientoSelected" [productionMonth]="fechaProductionMonthSelected" [order]="order"></edtiar-orden_compra>
+    <editar-orden_compra (close)="CloseEditar()" [fechaVencimiento]="fechaVencimientoSelected" [productionMonth]="fechaProductionMonthSelected" [order]="order"></editar-orden_compra>
 </div>
