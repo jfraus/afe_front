@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
-import { MessageService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 @Component({
     selector: 'orden_compra',
     templateUrl: './orden-compra.component.html',
     styleUrls: ['./orden-compra.component.css'],
-    providers: [PurchaseOrdenControllerService]
+    providers: [PurchaseOrdenControllerService,ConfirmationService]
 })
 export class OrdenCompraComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class OrdenCompraComponent implements OnInit {
     fechaProductionMonthSelected = new Date();
     fechaVencimientoSelected = new Date();
 
-    constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
+    constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
         this.TableOrderFull();
         this.BuildForm();
         this.cols = [
@@ -119,6 +119,25 @@ export class OrdenCompraComponent implements OnInit {
         this.visible = true;
         this.visibledetails = true;
         this.visibleEditable = true;
+    }
+
+    enviarOc(oc){
+        this.confirmationService.confirm({
+            message: '¿Seguro qué desea enviar este registro?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.service.enviarPurchaseOrder(oc.id).subscribe((response) => {
+                    console.log(response);
+                    this.TableOrderFull();
+                    this.messageServices.add({ key: 'error', severity: 'success', summary: 'Se ha enviado el registro' });
+                });
+            },
+            reject: () => {
+                
+            }
+        });
+       
     }
 
     EditOrden(purchaseOrder) {
