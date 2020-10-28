@@ -80,7 +80,6 @@ export class OrdenCompraComponent implements OnInit {
             let fecha = new Date(this.formGroup.get('mesProduction').value);
             this.loadingPurchaseOrder = true;
             this.service.purchase_orders(null, this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
-                console.log(response.length);
                 
                 if (response.length > 0) {
                     this.purchaseOrder = response;
@@ -96,7 +95,6 @@ export class OrdenCompraComponent implements OnInit {
         }else{
             this.loadingPurchaseOrder = true;
             this.service.purchase_orders(null, this.formGroup.get('orderCode').value,null).subscribe((response) => {
-                console.log(response.length);
                 
                 if (response.length > 0) {
                     this.purchaseOrder = response;
