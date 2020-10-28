@@ -16,8 +16,18 @@ export class PurchaseOrdenControllerService {
       if(ordenNumber && productionMonth){
           return this.http.get<any>(`${environment.apiUrl}purchase/orders/?orderNumber=${ordenNumber}&&productionMonth=${productionMonth}`).pipe();
       }else {
+
+        if(ordenNumber) {
+          return this.http.get<any>(`${environment.apiUrl}purchase/orders/?orderNumber=${ordenNumber}`).pipe();
+        }
+        if(productionMonth) {
+          return this.http.get<any>(`${environment.apiUrl}purchase/orders/?productionMonth=${productionMonth}`).pipe();
+
+        }
         return this.http.get<any>(`${environment.apiUrl}purchase/orders/`).pipe();
       }
+
+      
     }
   }
 

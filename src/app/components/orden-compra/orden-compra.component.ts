@@ -75,22 +75,41 @@ export class OrdenCompraComponent implements OnInit {
 
     SearchPurchaseOrder() {
         this, this.messageServices.clear();
-        let fecha = new Date(this.formGroup.get('mesProduction').value);
-        this.loadingPurchaseOrder = true;
-        this.service.purchase_orders(null, this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
-            if (response.lenght > 0) {
+        if(this.formGroup.get('mesProduction').value){
 
-                this.purchaseOrder = response;
-
-            } else {
-
-                this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
-            }
-            this.loadingPurchaseOrder = false;
-            this.formGroup.get('orderCode').reset();
-            this.formGroup.get('mesProduction').reset();
-
-        });
+            let fecha = new Date(this.formGroup.get('mesProduction').value);
+            this.loadingPurchaseOrder = true;
+            this.service.purchase_orders(null, this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
+                
+                if (response.length > 0) {
+                    this.purchaseOrder = response;
+    
+                } else {
+                    this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
+                }
+                this.loadingPurchaseOrder = false;
+                this.formGroup.get('orderCode').reset();
+                this.formGroup.get('mesProduction').reset();
+    
+            });
+        }else{
+            this.loadingPurchaseOrder = true;
+            this.service.purchase_orders(null, this.formGroup.get('orderCode').value,null).subscribe((response) => {
+                
+                if (response.length > 0) {
+                    this.purchaseOrder = response;
+    
+                } else {
+                    this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
+                }
+                this.loadingPurchaseOrder = false;
+                this.formGroup.get('orderCode').reset();
+                this.formGroup.get('mesProduction').reset();
+    
+            });
+        }
+        
+       
 
     }
 
