@@ -7,12 +7,13 @@ import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 import { resolve } from 'url';
 import { EditarPedidoModeloComponent } from '../editar-pedido/editar-pedido.component';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'generar_orden_compra',
     templateUrl: './generar-orden-compra.component.html',
     styleUrls: ['./generar-orden-compra.component.css'],
-    providers:[PurchaseOrdenControllerService]
+    providers:[PurchaseOrdenControllerService,ConfirmationService]
 })
 export class GenerarOrdenCompraComponent implements OnInit {
     @ViewChild(EditarPedidoModeloComponent, {static: true}) editarComponent: EditarPedidoModeloComponent;
@@ -40,7 +41,7 @@ export class GenerarOrdenCompraComponent implements OnInit {
     displayAdd: boolean;
     displayEdit: boolean;
 
-    constructor(public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService){
+    constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService){
         let day = new Date();
         this.minDate = new Date(day.getFullYear(),day.getMonth() ,1,0,0,0,0);
         this.minVencimiento = new Date(day.getFullYear(),day.getMonth() -1,1,0,0,0,0);
@@ -72,7 +73,6 @@ export class GenerarOrdenCompraComponent implements OnInit {
         this.loadingPurchaseOrderDetail = true;
         this.service.purchase_orders(this.order.id,null,null).subscribe((response) =>
         {
-            
             this.loadingPurchaseOrderDetail = false;
             this.purchaseOrderDetail = response[0].detail;
         });
@@ -110,6 +110,24 @@ export class GenerarOrdenCompraComponent implements OnInit {
     closedAgregar(){
         this.displayAdd = false;
         this.fillTable();
+    }
+
+    eliminarDetail(detail){
+        
+        this.confirmationService.confirm({
+            message: '¿Seguro qué desea eliminar este registro?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.service.deletedPurchaseOrderDetail(detail.id).subscribe((response) => {
+                    this.fillTable();
+                });
+            },
+            reject: () => {
+                
+            }
+        });
+    
     }
 
     editarDetail(detail){

@@ -39,4 +39,13 @@ export class PurchaseOrdenControllerService {
     return this.http.put<any>(`${environment.apiUrl}purchase/orders/update-detail`,PurchaseOrderDetail).pipe(); 
   }
 
+  deletedPurchaseOrderDetail(purchaseOrderDetailId: string){
+    return this.http.delete<any>(`${environment.apiUrl}purchase/orders/delete-detail?purchaseOrderDetailId=${purchaseOrderDetailId}`).pipe();
+  }
+
+  enviarPurchaseOrder(purchaseOrderId: string){
+    return this.http.put<any>(`${environment.apiUrl}purchase/orders/change-status?purchaseOrderId=${purchaseOrderId}`,null).pipe(); 
+
+  }
+
 }
