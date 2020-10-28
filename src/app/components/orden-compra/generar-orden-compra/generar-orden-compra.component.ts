@@ -120,7 +120,6 @@ export class GenerarOrdenCompraComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.service.deletedPurchaseOrderDetail(detail.id).subscribe((response) => {
-                    console.log(response);
                     this.fillTable();
                 });
             },

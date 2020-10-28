@@ -128,7 +128,6 @@ export class OrdenCompraComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.service.enviarPurchaseOrder(oc.id).subscribe((response) => {
-                    console.log(response);
                     this.TableOrderFull();
                     this.messageServices.add({ key: 'error', severity: 'success', summary: 'Se ha enviado el registro' });
                 });
