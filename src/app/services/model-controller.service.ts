@@ -11,5 +11,8 @@ export class ModelControllerService {
   get(excludeModel: boolean){
           return this.http.get<any>(`${environment.apiUrl}models/?excludeModel=${excludeModel}`).pipe();
     }
+  put(model){
+    return this.http.put<any>(`${environment.apiUrl}models/exclud-model`,model).pipe();
+  }
 
 }
