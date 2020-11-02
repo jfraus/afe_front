@@ -6,12 +6,14 @@ import { AppAccessdeniedComponent } from './pages/app.accessdenied.component';
 import { AppLoginComponent } from './pages/app.login.component';
 import { AppMainComponent } from './main.component';
 import { OrdenCompraComponent } from './components/orden-compra/orden-compra.component';
+import { ModeloVentaDirectaComponent } from './components/modelo-venta-directa/modelo-venta-directa.component';
 
 export const routes: Routes = [
     { path: '',
     component: AppMainComponent,
     children: [
-        {path: 'orden-compra', component: OrdenCompraComponent}
+        {path: 'orden-compra', component: OrdenCompraComponent},
+        {path: 'venta-directa', component: ModeloVentaDirectaComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full',},

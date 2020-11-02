@@ -98,6 +98,8 @@ import { DetalleOrdenCompraComponent } from './components/orden-compra/detalle-o
 import { EditarOrdenCompraComponent } from './components/orden-compra/editar-orden-compra/editar-orden-compra.component';
 import { AgregarPedidoModeloComponent } from './components/orden-compra/agregar-pedido-modelo/agregar-pedido-modelo.components';
 import { EditarPedidoModeloComponent } from './components/orden-compra/editar-pedido/editar-pedido.component';
+import { ModeloVentaDirectaComponent } from './components/modelo-venta-directa/modelo-venta-directa.component';
+import { AgregarModelComponent } from './components/modelo-venta-directa/agregar-model/agregar-model.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GenerarOrdenCompraComponent
@@ -197,6 +199,8 @@ const sharedComponents = [
         OrdenCompraComponent,
         AgregarPedidoModeloComponent,
         EditarPedidoModeloComponent,
+        ModeloVentaDirectaComponent,
+        AgregarModelComponent,
         ...sharedComponents
     ],
     providers: [

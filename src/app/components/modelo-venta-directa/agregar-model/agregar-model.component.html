@@ -1,0 +1,47 @@
+<p-dialog header="Agregar Pedido" (onHide)="closed()" [(visible)]="display">
+    <div class="ui-g ui-fluid">
+        <form [(formGroup)]="formGroup" class="ui-g-12">
+            <div class="ui-g form-group">
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield"  >
+                        <input type="text" formControlName="plant" pInputText>
+                        <label>Planta</label>
+                        <validations-input-component [formGroup]="formGroup" formInputName="plant" [validation_messages]="validations"></validations-input-component>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="text" formControlName="type" pInputText>
+                        <label>Tipo Modelo</label>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <p-dropdown formControlName="model" [options]="model" (onChange)="selectedChange($event)" [filter]="true" 
+                        [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                        <label>Modelo*</label>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield"  >
+                        <input type="text" formControlName="year" pInputText>
+                        <label>Año modelo</label>
+                        <validations-input-component [formGroup]="formGroup" formInputName="year" [validation_messages]="validations"></validations-input-component>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="text" formControlName="description" pInputText>
+                        <label>Descripción</label>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <p-footer>
+        <button class= "ui-button-success" (click)="add()" type="button" pButton icon="ui-icon-save" label="Agregar" 
+        ></button>
+        <button class="ui-button-danger" (click)="closed()" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+        ></button>
+    </p-footer>
+</p-dialog>
