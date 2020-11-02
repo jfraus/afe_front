@@ -44,7 +44,6 @@ export class ModeloVentaDirectaComponent {
                 type: x.type.type
             }));
 
-            console.log(this.models);
             
         });
         this.service.get(false).subscribe((response) => {
@@ -71,7 +70,7 @@ export class ModeloVentaDirectaComponent {
                 });
             },
             reject: () => {
-                
+
             }
         });
        
