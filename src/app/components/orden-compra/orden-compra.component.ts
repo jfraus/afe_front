@@ -141,20 +141,36 @@ export class OrdenCompraComponent implements OnInit {
     }
 
     enviarOc(oc){
-        this.confirmationService.confirm({
-            message: '¿Seguro qué desea enviar este registro?',
-            header: 'Confirmación',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.service.enviarPurchaseOrder(oc.id).subscribe((response) => {
-                    this.TableOrderFull();
-                    this.messageServices.add({ key: 'error', severity: 'success', summary: 'Se ha enviado el registro' });
+
+        let check = false;
+        this.service.purchase_orders(oc.id,null,null).subscribe((response) => {
+            console.log(response[0].detail.length);
+            
+            if(response[0].detail.length > 0){
+                this.confirmationService.confirm({
+                    message: '¿Seguro qué desea enviar este registro?',
+                    header: 'Confirmación',
+                    icon: 'pi pi-exclamation-triangle',
+                    accept: () => {
+                        this.service.enviarPurchaseOrder(oc.id).subscribe((response) => {
+                            this.TableOrderFull();
+                            this.messageServices.add({ key: 'error', severity: 'success', summary: 'Se ha enviado el registro' });
+                        });
+                    },
+                    reject: () => {
+                        
+                    }
                 });
-            },
-            reject: () => {
-                
+            }else{
+            this.messageServices.add({ key: 'error', severity: 'info', summary: 'La orden de compra no tiene pedidos' });
+
             }
         });
+
+        
+            
+
+        
        
     }
 
