@@ -81,7 +81,7 @@ export class AgregarPedidoModeloComponent {
     async agregar() {
         if (this.addModel.valid) {
 
-            let pormesaVALID = new Promise((resolved) => {
+            let validPromise = new Promise((resolved) => {
                 this.servicesPurchase.purchase_orders(this.purchaseOrderId, null, null).subscribe((response) => {
                     let array = response[0].detail;
                     array.forEach(element => {
@@ -93,7 +93,7 @@ export class AgregarPedidoModeloComponent {
                     resolved(true)
                 });
             })
-            pormesaVALID.then((rs) => {
+            validPromise.then((rs) => {
                 if (rs) {
                 
                     let promise = new Promise((resolved) => {

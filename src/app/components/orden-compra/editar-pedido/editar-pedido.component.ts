@@ -41,6 +41,7 @@ export class EditarPedidoModeloComponent implements OnInit {
         this.validations.push(this.messages.getValidationMessagesWithName('color'));
 
         this.messages.messagesRequired = 'true';
+        this.messages.messagesPattern = 'numericos';
         this.validations.push(this.messages.getValidationMessagesWithName('quantity'));
         this.pedido = {color: {id:0,code:'',interiorCode:''},model: {id:0, code: '',type:{id:0,type:''},plant: {abbreviation: '',id:1,salesCode:''}},quantity:0,purchaseOrderId:0 };
     }
@@ -71,7 +72,7 @@ export class EditarPedidoModeloComponent implements OnInit {
                 modelType:new FormControl({value:pedido.model.type.type, disabled:true}),
                 color: [pedido.color, [Validators.required]],
                 internalColor: new FormControl({value:pedido.color.interiorCode, disabled:false}),
-                quantity: new FormControl(pedido.quantity, Validators.required),
+                quantity: new FormControl(pedido.quantity, [Validators.required,Validators.pattern('^[0-9]*$')]),
                 id: new FormControl(pedido.id)
             });
         })
@@ -130,7 +131,7 @@ export class EditarPedidoModeloComponent implements OnInit {
     agregar(){
         if (this.addModel.valid) {
 
-            let pormesaVALID = new Promise((resolved) => {
+            let validPromise = new Promise((resolved) => {
                 this.servicesPurchase.purchase_orders(this.purchaseOrderId, null, null).subscribe((response) => {
                     let array = response[0].detail;
                     array.forEach(element => {
@@ -142,7 +143,7 @@ export class EditarPedidoModeloComponent implements OnInit {
                     resolved(true)
                 });
             })
-            pormesaVALID.then((rs) => {
+            validPromise.then((rs) => {
                 if (rs) {
                 
                     let promise = new Promise((resolved) => {
