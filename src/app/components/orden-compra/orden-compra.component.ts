@@ -144,7 +144,6 @@ export class OrdenCompraComponent implements OnInit {
 
         let check = false;
         this.service.purchase_orders(oc.id,null,null).subscribe((response) => {
-            console.log(response[0].detail.length);
             
             if(response[0].detail.length > 0){
                 this.confirmationService.confirm({
