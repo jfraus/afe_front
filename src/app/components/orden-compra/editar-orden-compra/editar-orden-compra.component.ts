@@ -14,7 +14,7 @@ import { EditarPedidoModeloComponent } from '../editar-pedido/editar-pedido.comp
     providers: [PurchaseOrdenControllerService,ConfirmationService]
 })
 export class EditarOrdenCompraComponent implements OnInit {
-    @ViewChild(EditarPedidoModeloComponent, {static: true}) editarComponent: EditarPedidoModeloComponent;
+    @ViewChild(EditarPedidoModeloComponent, {static: false}) editarComponent: EditarPedidoModeloComponent;
 
     purchaseOrder = [];
 
@@ -38,11 +38,15 @@ export class EditarOrdenCompraComponent implements OnInit {
     searchButtonDisable = false;
     minDate = new Date();
     minVencimiento = new Date();
+    maxDateVencimiento= new Date();
 
     constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
 
         let day = new Date();
         this.minDate = new Date(day.getFullYear(),day.getMonth() ,1,0,0,0,0);
+
+        this.maxDateVencimiento = new Date(day.getFullYear(),day.getMonth()+1 ,-1,0,0,0,0);
+
         this.minVencimiento = new Date(day.getFullYear(),day.getMonth() -1,1,0,0,0,0);
 
         this.cols = [
@@ -101,11 +105,12 @@ export class EditarOrdenCompraComponent implements OnInit {
         promise.then((detail) => {
             let promiseForm = new Promise((resolve) => {
             this.editarComponent.BuildForm(this.pedido);
-            resolve(true);
+            resolve(detail);
             });
 
             promiseForm.then((succes) => {
-                this.editarComponent.fillColor();
+                
+                // this.editarComponent.fillColorId(this.pedido.model.id);
                 this.displayEdit = true;
             })
 
@@ -164,6 +169,8 @@ export class EditarOrdenCompraComponent implements OnInit {
     Close(){
         this.close.emit(true);
     }
+
+    
 
 }
 
