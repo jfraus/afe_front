@@ -39,7 +39,7 @@
         </form>
     </div>
     <p-footer>
-        <button class= "ui-button-success" (click)="add()" type="button" pButton icon="ui-icon-save" label="Agregar" 
+        <button class= "ui-button-success" [disabled]="addDisable" (click)="add()" type="button" pButton icon="ui-icon-save" label="Agregar" 
         ></button>
         <button class="ui-button-danger" (click)="closed()" type="button" pButton icon="ui-icon-close" label="Cancelar" 
         ></button>
