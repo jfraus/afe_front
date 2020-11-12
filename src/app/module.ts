@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppRoutes } from './routes';
+import { ConsultaContratosComponentComponent } from './components/contratos/consulta-contratos.component';
 
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -100,6 +101,7 @@ import { AgregarPedidoModeloComponent } from './components/orden-compra/agregar-
 import { EditarPedidoModeloComponent } from './components/orden-compra/editar-pedido/editar-pedido.component';
 import { ModeloVentaDirectaComponent } from './components/modelo-venta-directa/modelo-venta-directa.component';
 import { AgregarModelComponent } from './components/modelo-venta-directa/agregar-model/agregar-model.component';
+import { EditarAgregarContratosComponent } from './components/contratos/contratos-editar-agregar/editar-agregar-contratos.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GenerarOrdenCompraComponent
@@ -201,6 +203,8 @@ const sharedComponents = [
         EditarPedidoModeloComponent,
         ModeloVentaDirectaComponent,
         AgregarModelComponent,
+        ConsultaContratosComponentComponent,
+        EditarAgregarContratosComponent,
         ...sharedComponents
     ],
     providers: [

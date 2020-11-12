@@ -13,7 +13,7 @@ export class ErrorToastService{
     }
 
     private openToast(error){
-
-        this.messageServices.add({key: 'error',severity: 'error', summary: error.message, detail: `status code ${error.status}`});
+        
+        this.messageServices.add({key: 'error',severity: 'error', summary: error.error.message, detail: `Codigo de error ${error.status}`});
     }
 }
