@@ -12,7 +12,7 @@ export class AppValidationMessagesService{
     }
 
     set messagesPattern(pattern){
-        this._messagesPattern = `It does not comply with the correct format of ${pattern}`;
+        this._messagesPattern = `*No puede contener caracteres ${pattern}`;
     }
 
     get messagesMaxLenght(): String {

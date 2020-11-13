@@ -35,6 +35,7 @@ export class GenerarOrdenCompraComponent implements OnInit {
     productionMonthFormName = 'productionMonthForm';
     searchButtonDisable = false;
     minDate = new Date();
+    maxDateVencimiento = new Date();
     minVencimiento = new Date();
     validations = [];
     order: PurchaseOrder = {id: 0,orderNumber:'',productionMonth:'',unitsQuantity:1,dueDate: 1};
@@ -43,6 +44,8 @@ export class GenerarOrdenCompraComponent implements OnInit {
 
     constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService){
         let day = new Date();
+        this.maxDateVencimiento = new Date(day.getFullYear(),day.getMonth()+1 ,-1,0,0,0,0);
+
         this.minDate = new Date(day.getFullYear(),day.getMonth() ,1,0,0,0,0);
         this.minVencimiento = new Date(day.getFullYear(),day.getMonth() -1,1,0,0,0,0);
         

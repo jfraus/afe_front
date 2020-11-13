@@ -14,9 +14,9 @@ export const routes: Routes = [
     component: AppMainComponent,
     children: [
         {path: 'orden-compra', component: OrdenCompraComponent},
-        {path: 'venta-directa', component: ModeloVentaDirectaComponent},
+        {path: 'modelos-venta-directa', component: ModeloVentaDirectaComponent},
         {path: 'contratos', component: ConsultaContratosComponentComponent},
-        
+
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full',},
