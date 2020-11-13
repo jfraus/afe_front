@@ -30,7 +30,7 @@ export class EditarAgregarContratosComponent {
     @Input() purchaseOrderId;
 
     constructor(private messages: AppValidationMessagesService,public serviceDistribution: DistributionControllerService,public messageServices: MessageService,private utilDate: FormatDate,private fb: FormBuilder,private servicesCountry: CountryControllerService, private serviceDealer: DealerControllerService, private serviceSale: SaleContractControllerService){
-        this.BuildForm();
+        this.buildForm();
         this.fillCountry();
 
 
@@ -42,7 +42,7 @@ export class EditarAgregarContratosComponent {
 
     }
 
-    private BuildForm() {
+    private buildForm() {
         this.addModel = this.fb.group({
             country: ['', [Validators.required]],
             dealer: new FormControl('', Validators.required),
