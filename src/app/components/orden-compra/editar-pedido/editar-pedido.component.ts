@@ -41,7 +41,7 @@ export class EditarPedidoModeloComponent implements OnInit {
         this.validations.push(this.messages.getValidationMessagesWithName('color'));
 
         this.messages.messagesRequired = 'true';
-        this.messages.messagesPattern = 'numericos';
+        this.messages.messagesPattern = 'alfabeticos';
         this.validations.push(this.messages.getValidationMessagesWithName('quantity'));
         this.pedido = {color: {id:0,code:'',interiorCode:''},model: {id:0, code: '',type:{id:0,type:''},plant: {abbreviation: '',id:1,salesCode:''}},quantity:0,purchaseOrderId:0 };
     }
@@ -144,7 +144,7 @@ export class EditarPedidoModeloComponent implements OnInit {
                 });
             })
             validPromise.then((rs) => {
-                if (rs) {
+                if (true) {
                 
                     let promise = new Promise((resolved) => {
                         let postObject: Model = {
@@ -157,6 +157,7 @@ export class EditarPedidoModeloComponent implements OnInit {
                         };
     
                         let detail: PurchaseOrderDetail = {
+                            id:this.addModel.get('id').value,
                             purchaseOrderId: this.purchaseOrderId,
                             quantity: this.addModel.get('quantity').value,
                             color: this.addModel.value.color,

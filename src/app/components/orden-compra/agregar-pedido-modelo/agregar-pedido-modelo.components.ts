@@ -35,7 +35,7 @@ export class AgregarPedidoModeloComponent {
         this.validations.push(this.messages.getValidationMessagesWithName('color'));
 
         this.messages.messagesRequired = 'true';
-        this.messages.messagesPattern = 'numericos';
+        this.messages.messagesPattern = 'alfabeticos';
         this.validations.push(this.messages.getValidationMessagesWithName('quantity'));
     }
 
