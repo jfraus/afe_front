@@ -22,6 +22,8 @@ export class ConsultaContratosComponentComponent implements OnInit {
     searchValue: any;
     formGroup: FormGroup;
     visableAgregarEditar: boolean;
+    displayEdtiar: boolean = false;
+    contratoSelected: any;
 
 
     constructor(public messageServices: MessageService,private services: SaleContractControllerService,private fb: FormBuilder){
@@ -93,6 +95,14 @@ export class ConsultaContratosComponentComponent implements OnInit {
 
     visibleAgregar(){
         this.visableAgregarEditar = true;
+    }
+
+    editarContrato(contrato){
+        this.contratoSelected = contrato;
+        console.log(contrato);
+        
+        this.displayEdtiar = true;
+        
     }
 
     closeEditarAgregar(){

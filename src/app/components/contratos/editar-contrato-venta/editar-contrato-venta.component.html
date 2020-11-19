@@ -1,66 +1,73 @@
-<div *ngIf="!displayEdtiar">
-  <div class="card">
-    <div class="card-title">Contratos de Venta HDM</div>
+<div class="card">
+    <div class="card-title">Editar Contratos de Venta HDM</div>
     <div class="ui-g ui-fluid">
-      <form class="form-group ui-g-12" [formGroup]="formGroup">
+      <form class="form-group ui-g-12">
         <div class="p-fluid p-formgrid p-grid">
           <div class="ui-g-12 ui-lg-12">
-            <div class="ui-g-12 ui-lg-4">
+            <div class="ui-g-12 ui-lg-4 margin">
               <span class="md-inputfield">
                 <input
                   type="text"
                   style="width: 100%"
-                  formControlName="contracNumber"
                   pInputText
+                  [disabled]="true"
+                  [(ngModel)]="contrato.contracNumber"
+                  [ngModelOptions]="{standalone: true}"
                 />
-                <validations-input-component> </validations-input-component>
                 <label>Contrato de Venta</label>
               </span>
             </div>
-            <div class="ui-g-12 ui-lg-4">
-              <div class="p-inputgroup">
-                <span class="md-inputfield">
-                  <p-calendar
-                    dateFormat="dd-mm-yy"
-                    name="createDate"
-                    [showButtonBar]="true"
-                    formControlName="createDate"
-                    [inputStyle]="{ width: '100%' }"
-                    [showIcon]="true"
-                  ></p-calendar>
-                  <label>Fecha de Creacion Inicio</label>
-                </span>
-                <validations-input-component> </validations-input-component>
-              </div>
+            <div class="ui-g-12 ui-lg-4 margin">
+              <span class="md-inputfield">
+                <input
+                  type="text"
+                  style="width: 100%"
+                  pInputText
+                  [disabled]="true"
+                  [(ngModel)]="contrato.country.name"
+                  [ngModelOptions]="{standalone: true}"
+                />
+                <label>Pais</label>
+              </span>
             </div>
-            <div class="ui-g-12 ui-lg-4">
-              <div class="p-inputgroup">
-                <span class="md-inputfield">
-                  <p-calendar
-                    dateFormat="dd-mm-yy"
-                    name="createDateEnd"
-                    formControlName="createDateEnd"
-                    [showButtonBar]="true"
-                    [inputStyle]="{ width: '100%' }"
-                    [showIcon]="true"
-                  ></p-calendar>
-                  <label>Fecha de Creacion Final</label>
-                </span>
-                <validations-input-component> </validations-input-component>
-              </div>
+            <div class="ui-g-12 ui-lg-4 margin">
+              <span class="md-inputfield">
+                <input
+                  type="text"
+                  style="width: 100%"
+                  [disabled]="true"
+                  [(ngModel)]="contrato.dealer.name"
+                  [ngModelOptions]="{standalone: true}"
+                  pInputText
+                />
+                <label>Dealer</label>
+              </span>
             </div>
-  
-            <div class="ui-g-12 ui-lg-4">
-              <button
-                pButton
-                type="button"
-                label="Buscar"
-                [disabled]="searchDisable"
-                (click)="search()"
-                icon="pi pi-search"
-                class="teal-btn"
-                style="width: auto"
-              ></button>
+            <div class="ui-g-12 ui-lg-4 margin">
+              <span class="md-inputfield">
+                <input
+                  type="text"
+                  style="width: 100%"
+                  [disabled]="true"
+                  [(ngModel)]="contrato.createDate"
+                  [ngModelOptions]="{standalone: true}"
+                  pInputText
+                />
+                <label>Fecha de Creacion</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4 margin">
+              <span class="md-inputfield">
+                <input
+                  type="text"
+                  style="width: 100%"
+                  [disabled]="true"
+                  [(ngModel)]="contrato.quantity"
+                  [ngModelOptions]="{standalone: true}"
+                  pInputText
+                />
+                <label>Total Pedido</label>
+              </span>
             </div>
           </div>
         </div>
@@ -75,8 +82,8 @@
           pButton
           type="button"
           label="Agregar"
-          (click)="visibleAgregar()"
           icon="pi pi-plus"
+          (click)="viewAgregar()"
           class="ui-button-success"
           style="width: auto"
         ></button>
@@ -85,8 +92,7 @@
   
     <!-- Tabla con las ordenes de compras -->
     <p-table
-      [columns]="cols"
-      [value]="dataTable"
+    [columns]="cols"
       selectionMode="single"
       dataKey="idTabla"
       sortMode="multiple"
@@ -113,7 +119,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage" let-columns>
         <tr>
-          <td style="text-align: center" [attr.colspan]="columns.length + 2">
+          <td style="text-align: center" [attr.colspan]=" columns.length + 2">
             No se encontro información
           </td>
         </tr>
@@ -131,7 +137,6 @@
                   pButton
                   type="button"
                   icon="ui-icon-edit"
-                  (click)="editarContrato(rowData)"
                   class="blue-grey-btn"
                 ></button>
                 <button
@@ -157,6 +162,8 @@
       </ng-template>
     </p-table>
   </div>
+
+  <editar-agregar-pedido (close)="closedAgregar()" [display]="displayAgregar"></editar-agregar-pedido>
   
   <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
     <p-footer>
@@ -178,14 +185,4 @@
       ></button>
     </p-footer>
   </p-confirmDialog>
-</div>
-
-<editar-agregar-contratos
-  (close)="closeEditarAgregar()"
-  [(display)]="visableAgregarEditar"
-></editar-agregar-contratos>
-
-<div *ngIf="displayEdtiar">
-  <editar-contrato-venta [contrato]="contratoSelected">
-  </editar-contrato-venta>
-</div>
+  
