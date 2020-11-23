@@ -25,6 +25,7 @@ export class ConsultaContratosComponentComponent implements OnInit {
     displayEdtiar: boolean = false;
     contratoSelected: any;
     detail: any;
+    displayDetalle =false;
 
 
     constructor(public messageServices: MessageService,private services: SaleContractControllerService,private fb: FormBuilder){
@@ -50,6 +51,26 @@ export class ConsultaContratosComponentComponent implements OnInit {
             createDate: ['', []],
             createDateEnd: ['', []],
         });
+    }
+
+    showDetail(contrato){
+        this.contratoSelected = contrato;
+        this.services.get(null,null,null,contrato.id).subscribe((response) => {
+            let Rcontrato = response[0];
+            this.contratoSelected = response[0];
+            if(response[0].detail){
+                this.detail = Rcontrato.detail.map(r => ({
+                    ...r,
+                    carrierName: r.carrier.name,
+                    modelType: r.model.type.type,
+                    modelCode: r.model.code,
+                    colorCode: r.color.code,
+                    coloInterior: r.color.interiorCode,
+                }));
+            }
+            this.displayDetalle = true;
+        })
+        
     }
 
     onChanges(): void {
