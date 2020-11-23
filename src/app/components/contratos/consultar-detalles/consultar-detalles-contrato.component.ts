@@ -4,11 +4,11 @@ import { SaleContractControllerService } from 'src/app/services/sale-contract-co
 
 @Component({
   selector: 'ver-detalles-contrato-component',
-  templateUrl: './ver-detalles-contrato.component.html',
-  styleUrls: ['./ver-detalles-contrato.component.css'],
+  templateUrl: './consultar-detalles-contrato.component.html',
+  styleUrls: ['./consultar-detalles-contrato.component.css'],
   providers: [SaleContractControllerService]
 })
-export class VerDetallesContratoComponent {
+export class ConsultarDetallesContratoComponent {
   @Input() contrato: any;
   @Input() detail: any;
   @Output() close = new EventEmitter();
