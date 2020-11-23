@@ -16,6 +16,8 @@ export const routes: Routes = [
         {path: 'orden-compra', component: OrdenCompraComponent},
         {path: 'modelos-venta-directa', component: ModeloVentaDirectaComponent},
         {path: 'contratos', component: ConsultaContratosComponentComponent},
+        
+
 
     ]
     },

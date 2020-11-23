@@ -22,6 +22,9 @@ export class ConsultaContratosComponentComponent implements OnInit {
     searchValue: any;
     formGroup: FormGroup;
     visableAgregarEditar: boolean;
+    displayEdtiar: boolean = false;
+    contratoSelected: any;
+    detail: any;
 
 
     constructor(public messageServices: MessageService,private services: SaleContractControllerService,private fb: FormBuilder){
@@ -60,13 +63,13 @@ export class ConsultaContratosComponentComponent implements OnInit {
       }
 
     fillTable(){
-        this.services.get(null,null,null).subscribe((response)=>{
+        this.services.get(null,null,null,null).subscribe((response)=>{
             this.tableMap(response);
         });
     }
     search(){
         if(this.formGroup.valid){
-            this.services.get(this.formGroup.get('contracNumber').value,this.formGroup.get('createDate').value,this.formGroup.get('createDateEnd').value).subscribe((response) => {
+            this.services.get(this.formGroup.get('contracNumber').value,this.formGroup.get('createDate').value,this.formGroup.get('createDateEnd').value,null).subscribe((response) => {
                 if(response.length > 0){
                     this.tableMap(response);
                 }else{
@@ -95,9 +98,34 @@ export class ConsultaContratosComponentComponent implements OnInit {
         this.visableAgregarEditar = true;
     }
 
+    editarContrato(contrato){
+        this.contratoSelected = contrato;
+        this.services.get(null,null,null,contrato.id).subscribe((response) => {
+            let Rcontrato = response[0];
+            this.contratoSelected = response[0];
+            if(response[0].detail){
+                this.detail = Rcontrato.detail.map(r => ({
+                    ...r,
+                    carrierName: r.carrier.name,
+                    modelType: r.model.type.type,
+                    modelCode: r.model.code,
+                    colorCode: r.color.code,
+                    coloInterior: r.color.interiorCode,
+                }));
+            }
+            this.displayEdtiar = true;
+        })
+        
+        
+    }
+
     closeEditarAgregar(){
         this.fillTable();
         this.visableAgregarEditar = false;
+    }
+
+    eliminarDetail(detail){
+        
     }
 
 }
