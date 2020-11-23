@@ -76,7 +76,6 @@ export class EditarAgregarPedidoComponent implements OnInit {
 
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes);
         if (changes.detail) {
             if (changes.detail.currentValue) {
                 this.addModel.get('model').setValue(this.detail.model);
@@ -122,7 +121,6 @@ export class EditarAgregarPedidoComponent implements OnInit {
 
     actualizarDetail(){
         if (this.addModel.valid) {
-            console.log("actualizar",this.detail);
             this.serviceSale.putDetail({
                 carrier: {
                     id: this.addModel.get('carrier').value.id
@@ -137,7 +135,6 @@ export class EditarAgregarPedidoComponent implements OnInit {
                 quantity: this.addModel.get('cantidad').value,
                 saleContractId: this.saleContractId
             }).subscribe((response) => {
-                console.log(response);
                 this.messageServices.add({ key: 'error', severity: 'success', summary: 'Actualizado con exito' });
                 this.closed();
             });
@@ -174,8 +171,6 @@ export class EditarAgregarPedidoComponent implements OnInit {
 
     selectCarrier() {
         let carrier = this.addModel.get('carrier').value;
-        console.log(carrier);
-
         this.addModel.get('nombrecarrier').setValue(carrier !== null ? carrier.name : '');
     }
 
@@ -234,7 +229,6 @@ export class EditarAgregarPedidoComponent implements OnInit {
                 quantity: this.addModel.get('cantidad').value,
                 saleContractId: this.saleContractId
             }).subscribe((response) => {
-                console.log(response);
                 this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con exito' });
                 this.closed();
             });
