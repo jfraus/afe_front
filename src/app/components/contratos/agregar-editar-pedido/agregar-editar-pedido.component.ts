@@ -229,7 +229,7 @@ export class EditarAgregarPedidoComponent implements OnInit {
                 quantity: this.addModel.get('cantidad').value,
                 saleContractId: this.saleContractId
             }).subscribe((response) => {
-                this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con exito' });
+                this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con éxito' });
                 this.closed();
             });
         }
