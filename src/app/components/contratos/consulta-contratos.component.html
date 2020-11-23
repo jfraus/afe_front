@@ -1,4 +1,4 @@
-<div *ngIf="!displayEdtiar">
+<div *ngIf="!displayEdtiar && !displayDetalle">
   <div class="card">
     <div class="card-title">Contratos de Venta HDM</div>
     <div class="ui-g ui-fluid">
@@ -28,7 +28,7 @@
                     [inputStyle]="{ width: '100%' }"
                     [showIcon]="true"
                   ></p-calendar>
-                  <label>Fecha de Creacion Inicio</label>
+                  <label>Fecha de Creación Inicio</label>
                 </span>
                 <validations-input-component> </validations-input-component>
               </div>
@@ -44,7 +44,7 @@
                     [inputStyle]="{ width: '100%' }"
                     [showIcon]="true"
                   ></p-calendar>
-                  <label>Fecha de Creacion Final</label>
+                  <label>Fecha de Creación Final</label>
                 </span>
                 <validations-input-component> </validations-input-component>
               </div>
@@ -146,9 +146,10 @@
                 <button
                   pButton
                   type="button"
-                  icon="ui-icon-delete"
+                  (click)="showDetail(rowData)"
+                  icon="ui-icon-format-list-bulleted"
                   style="margin-left: 3px"
-                  class="ui-button-danger"
+                  class="blue-grey-btn space-btn"
                 ></button>
               </div>
             </ng-template>
@@ -186,6 +187,14 @@
 ></editar-agregar-contratos>
 
 <div *ngIf="displayEdtiar">
-  <editar-contrato-venta (close)="displayEdtiar=false" [detail]="detail" [contrato]="contratoSelected">
+  <editar-contrato-venta
+    (close)="displayEdtiar = false"
+    [detail]="detail"
+    [contrato]="contratoSelected"
+  >
   </editar-contrato-venta>
+</div>
+
+<div *ngIf="!displayEdtiar && displayDetalle">
+  <ver-detalles-contrato-component [contrato]="contratoSelected" [detail]="detail" (close)="displayDetalle=false"> </ver-detalles-contrato-component>
 </div>
