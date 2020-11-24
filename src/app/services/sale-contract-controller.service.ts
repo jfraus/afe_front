@@ -41,7 +41,12 @@ export class SaleContractControllerService {
     }
 
     deletedDetail(id){
-      return this.http.delete<any>(`${environment.apiUrl}/sale/contracts/delete-detail?id=${id}`).pipe();
+      return this.http.delete<any>(`${environment.apiUrl}sale/contracts/delete-detail?id=${id}`).pipe();
+
+    }
+
+    putEnviar(contrato){
+      return this.http.put<any>(`${environment.apiUrl}sale/contracts/send`,contrato).pipe();
 
     }
   
