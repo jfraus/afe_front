@@ -49,6 +49,7 @@ export class OrderByVinComponent implements OnInit {
 
     }
     ngOnInit(): void {
+        this.onChanges();
     }
     async saveExcel(contrato) {
         let workbook = new Excel.Workbook();
@@ -159,6 +160,16 @@ export class OrderByVinComponent implements OnInit {
 
     }
 
+    onChanges(): void {
+        this.formGroup.valueChanges.subscribe(val => {
+          if(val.contracNumber || (val.createDate && val.createDateEnd)){
+              this.searchDisable = false;
+          }else{
+              this.searchDisable = true;
+          }
+        });
+      }
+
     
     private BuildForm() {
         this.formGroup = this.fb.group({
@@ -186,6 +197,19 @@ export class OrderByVinComponent implements OnInit {
                 dealerName: x.dealer.name,
             }));
         })
+    }
+
+    search(){
+        if(this.formGroup.valid){
+            this.services.get(this.formGroup.get('contracNumber').value,this.formGroup.get('createDate').value,this.formGroup.get('createDateEnd').value,null).subscribe((response) => {
+                if(response.length > 0){
+                    this.tableMap(response);
+                }else{
+                    this.messageServices.clear();
+                    this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
+                }
+            });
+        }
     }
 
 
