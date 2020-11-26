@@ -76,7 +76,7 @@ export class ConsultaContratosComponentComponent implements OnInit {
     sendContrato(contrato){
         this.services.putEnviar(contrato).subscribe((response) => {
             this.messageServices.clear();
-            this.messageServices.add({ key: 'error', severity: 'success', summary: 'El contrato se ha enviado' });
+            this.messageServices.add({ key: 'success', severity: 'success', summary: 'El contrato se ha enviado' });
             this.fillTable();
         });
     }
