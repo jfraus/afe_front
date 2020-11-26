@@ -30,6 +30,9 @@ export class SaleContractControllerService {
     return this.http.post<any>(`${environment.apiUrl}sale/contracts/`, selcContractDto).pipe();
   }
 
+  putEnviar(contrato) {
+    return this.http.put<any>(`${environment.apiUrl}sale/contracts/send`, contrato).pipe();
+  }
   postCreateDetail(detail) {
     return this.http.post<any>(`${environment.apiUrl}sale/contracts/create-detail`, detail).pipe();
   }
@@ -42,4 +45,6 @@ export class SaleContractControllerService {
   deletedDetail(id) {
     return this.http.delete<any>(`${environment.apiUrl}/sale/contracts/delete-detail?id=${id}`).pipe();
   }
+
+
 }
