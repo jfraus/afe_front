@@ -8,6 +8,7 @@ import { AppMainComponent } from './main.component';
 import { OrdenCompraComponent } from './components/orden-compra/orden-compra.component';
 import { ModeloVentaDirectaComponent } from './components/modelo-venta-directa/modelo-venta-directa.component';
 import { ConsultaContratosComponentComponent } from './components/contratos/consulta-contratos.component';
+import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
 
 export const routes: Routes = [
     { path: '',
@@ -16,6 +17,7 @@ export const routes: Routes = [
         {path: 'orden-compra', component: OrdenCompraComponent},
         {path: 'modelos-venta-directa', component: ModeloVentaDirectaComponent},
         {path: 'contratos', component: ConsultaContratosComponentComponent},
+        {path: 'order-by-vin', component: OrderByVinComponent},
         
 
 

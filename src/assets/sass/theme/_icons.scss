@@ -39,6 +39,8 @@
     &.pi-sort {@include icon-override("sort");}
     &.pi-sort-up {@include icon-override("keyboard_arrow_up");}
     &.pi-sort-down {@include icon-override("keyboard_arrow_down");}
+    &.pi-file-excel {@include icon-override("file_excel");}
+
 }
 
 .#{$iconPrefix}-3d-rotation { @include icon-override("3d_rotation"); }
