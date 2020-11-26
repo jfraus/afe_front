@@ -105,6 +105,7 @@ import { EditarAgregarContratosComponent } from './components/contratos/contrato
 import { EditarContratoVentaComponent } from './components/contratos/editar-contrato-venta/editar-contrato-venta.component';
 import { EditarAgregarPedidoComponent } from './components/contratos/agregar-editar-pedido/agregar-editar-pedido.component';
 import {  ConsultarDetallesContratoComponent } from './components/contratos/consultar-detalles/consultar-detalles-contrato.component';
+import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GenerarOrdenCompraComponent
@@ -211,6 +212,7 @@ const sharedComponents = [
         EditarContratoVentaComponent,
         EditarAgregarPedidoComponent,
         ConsultarDetallesContratoComponent,
+        OrderByVinComponent,
         ...sharedComponents
     ],
     providers: [
