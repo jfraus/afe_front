@@ -50,8 +50,7 @@ export class AgregarModelComponent {
         this.service.get(false).subscribe((response) => {
             this.model = response.map(r => (
                 { label: r.code, value: r }
-            ))
-
+            ));
         });
     }
 
@@ -69,7 +68,6 @@ export class AgregarModelComponent {
             this.formGroup.get('description').reset();
             this.formGroup.get('type').reset();
             this.formGroup.get('year').reset();
-
         }
     }
 
