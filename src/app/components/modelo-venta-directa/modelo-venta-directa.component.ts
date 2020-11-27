@@ -50,7 +50,7 @@ export class ModeloVentaDirectaComponent {
             this.modelSelects = response.map(r => (
                 { label: r.code, value: r}
             ));
-            
+            this.modelSelects = this.modelSelects.filter((x)=> x.value.type.type === "KK");
         });
 
     }

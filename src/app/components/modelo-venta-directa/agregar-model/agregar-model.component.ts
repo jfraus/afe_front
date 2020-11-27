@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Dropdown } from 'primeng/dropdown';
 import { ModelControllerService } from 'src/app/services/model-controller.service';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
@@ -43,13 +44,13 @@ export class AgregarModelComponent {
     closed() {
         this.formGroup.reset();
         this.close.emit(true);
+        this.addDisable = true;
     }
     fillSelect() {
         this.service.get(false).subscribe((response) => {
             this.model = response.map(r => (
                 { label: r.code, value: r }
-            ))
-
+            ));
         });
     }
 

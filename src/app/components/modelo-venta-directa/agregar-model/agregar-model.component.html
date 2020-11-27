@@ -1,4 +1,4 @@
-<p-dialog header="Agregar Pedido" (onHide)="closed()" [(visible)]="display">
+<p-dialog header="Agregar modelo" (onHide)="closed()" [(visible)]="display">
     <div class="ui-g ui-fluid">
         <form [(formGroup)]="formGroup" class="ui-g-12">
             <div class="ui-g form-group">
@@ -17,7 +17,7 @@
                 </div>
                 <div class="ui-g-12 ui-lg-4">
                     <span class="md-inputfield ">
-                        <p-dropdown formControlName="model" [options]="model" (onChange)="selectedChange($event)" [filter]="true" 
+                        <p-dropdown #dd formControlName="model" [resetFilterOnHide]="true" [options]="model" (onChange)="selectedChange($event,dd)" [filter]="true" 
                         [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
                         <label>Modelo*</label>
                     </span>
