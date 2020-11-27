@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ModelControllerService } from 'src/app/services/model-controller.service';
@@ -11,12 +11,13 @@ import { AppValidationMessagesService } from 'src/app/utils/app-validation-messa
     styleUrls: ['./modelo-venta-directa.component.css'],
     providers:[ModelControllerService,ConfirmationService]
 })
-export class ModeloVentaDirectaComponent {
+export class ModeloVentaDirectaComponent implements OnInit{
     formGroup:  FormGroup;
     visible: boolean;
     modelSelects= [];
     cols =[];
     models=[];
+    searchButtonDisable: boolean = true;
     constructor(private service: ModelControllerService,public confirmationService: ConfirmationService,public messageServices: MessageService, private fb: FormBuilder, private messages: AppValidationMessagesService){
         this.cols = [
             { field: 'code', header: 'Modelo' },
@@ -28,9 +29,22 @@ export class ModeloVentaDirectaComponent {
         this.BuildForm();
         this.fillTable();
     }
+    ngOnInit(): void {
+        this.onChanges();
+    }
     private BuildForm() {
         this.formGroup = this.fb.group({
             modelCode: ['', [Validators.required]],
+        });
+    }
+
+    search(){
+
+    }
+
+    onChanges(): void {
+        this.formGroup.valueChanges.subscribe(val => {
+            this.searchButtonDisable = (this.formGroup.get("modelCode").value) ? false : true;
         });
     }
 

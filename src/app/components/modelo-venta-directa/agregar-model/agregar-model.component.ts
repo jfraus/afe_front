@@ -43,6 +43,7 @@ export class AgregarModelComponent {
 
     closed() {
         this.formGroup.reset();
+        this.addDisable = true;
         this.close.emit(true);
         this.addDisable = true;
     }
