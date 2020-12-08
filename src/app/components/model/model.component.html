@@ -1,0 +1,89 @@
+<div>
+    <div class="card">
+        <div class="card-title">Modelos KK que HDM venderá directamente a HM</div>
+
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="ui-g-12 ui-lg-3">
+                <button
+                    pButton
+                    type="button"
+                    label="Agregar"
+                    icon="pi
+                    pi-plus"
+                    (click)="addModel()"
+                    class="ui-button-success"
+                    style="width: auto"></button>
+            </div>
+        </div>
+
+        <!-- Tabla con las ordenes de compras -->
+        <p-table
+            #dt
+            [columns]="cols"
+            selectionMode="single"
+            dataKey="idTabla"
+            [value]="models"
+            sortMode="multiple"
+            [style]="{ 'margin-bottom': '20px' }"
+            [responsive]="true"
+            [rowHover]="true"v
+            [paginator]="true"
+            [responsive]="true"
+            [rowsPerPageOptions]="[10, 20, 30,40,50,60]"
+            [autoLayout]="true"
+            [rows]="10"
+            [pageLinks]="20">
+            [12:53 PM] Aimel Avalos
+            <ng-template pTemplate="caption" class="p-input-icon-left">
+                
+                <div style="text-align: right" class="p-input-icon-left">        
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input id="buscar" type="text" pInputText size="50" placeholder="Buscar"  (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns"
+                        [pSortableColumn]="col.field">
+                        {{ col.header }}
+                        <p-sortIcon
+                            *ngIf="col.header != 'Acción'"
+                            [field]="col.field"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td style="text-align: center"
+                        [attr.colspan]="columns.length + 2">
+                        No se encontro información
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr [pSelectableRow]="rowData">
+                    <td *ngFor="let col of columns">
+                        <span class="ui-column-title">{{ col.header }}</span>
+                        <span *ngIf="col.field != 'action'; else elseAction">{{
+                            rowData[col.field]
+                            }}</span>
+                        <ng-template #elseAction>
+                                    <button pButton type="button" style="margin-left: 3px" (click)="deleted(rowData)" icon="ui-icon-delete" class="ui-button-danger"  >
+                                    </button>
+                        </ng-template>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<add-model-component [(model)]="modelSelects" [(display)]="visible" (close)="fillTable()"></add-model-component>
+
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+    <p-footer>
+        <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Si" 
+        (click)="cd.accept()"></button>
+        <button class= "ui-button-danger" type="button" pButton icon="pi pi-times" label="No" 
+        (click)="cd.reject()"></button>
+    </p-footer>
+  </p-confirmDialog>

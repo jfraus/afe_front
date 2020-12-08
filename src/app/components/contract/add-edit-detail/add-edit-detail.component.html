@@ -1,0 +1,157 @@
+<div *ngIf="!edit">
+    <p-dialog header="Agregar Pedido" (onHide)="closed()" [(visible)]="display">
+        <div class="ui-g ui-fluid">
+            <form [(formGroup)]="addModel" class="ui-g-12">
+                <div class="ui-g form-group">
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield"  >
+                            <p-dropdown formControlName="model" [options]="model" [filter]="true" 
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectModel()"></p-dropdown>
+                            <label>Modelo*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="model" [validation_messages]="validations"></validations-input-component>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                            <input type="text" formControlName="modelType" pInputText>
+                            <label>Tipo Modelo</label>
+                        </span>
+                    </div>
+                    
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield"  >
+                            <p-dropdown formControlName="color" [options]="color" [filter]="true" 
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectColor()"></p-dropdown>
+                            <label>Color*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="color" [validation_messages]="validations"></validations-input-component>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                            <input type="text" formControlName="colorInterior" pInputText>
+                            <label>Color Interior</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield"  >
+                            <p-dropdown formControlName="carrierType" [options]="tipocarrier" [filter]="true" 
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectTCarrier()"></p-dropdown>
+                            <label>Tipo Carrier*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="tipocarrier" [validation_messages]="validations"></validations-input-component>
+                        </span>
+                    </div>
+    
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield"  >
+                            <p-dropdown formControlName="carrier" [options]="carrier" [filter]="true" 
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectCarrier()"></p-dropdown>
+                            <label>Carrier*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="carrier" [validation_messages]="validations"></validations-input-component>
+                        </span>
+                    </div>
+    
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                            <input type="text" formControlName="carrierName" pInputText>
+                            <label>Nombre Carrier</label>
+                        </span>
+                    </div>
+                    
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                            <input type="text" formControlName="quantity" pInputText>
+                            <label>Cantidad*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="cantidad" [validation_messages]="validations"></validations-input-component>
+    
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <p-footer>
+            <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Agregar" [disabled]="!addModel.valid"
+            (click)="add()"></button>
+            <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+            (click)="closed()"></button>
+        </p-footer>
+    </p-dialog>
+</div>
+
+<div *ngIf="edit">
+    <p-dialog header="Editar Pedido" (onHide)="closed()" [(visible)]="display">
+        <div class="ui-g ui-fluid">
+            <form [(formGroup)]="addModel" class="ui-g-12">
+                <div class="ui-g form-group">
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield"  >
+                            <p-dropdown formControlName="model" [options]="model" [filter]="true" 
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectModel()"></p-dropdown>
+                            <label>Modelo*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="model" [validation_messages]="validations"></validations-input-component>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                            <input type="text" formControlName="modelType" pInputText>
+                            <label>Tipo Modelo</label>
+                        </span>
+                    </div>
+                    
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield"  >
+                            <p-dropdown formControlName="color" [options]="color" [filter]="true" 
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectColor()"></p-dropdown>
+                            <label>Color*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="color" [validation_messages]="validations"></validations-input-component>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                            <input type="text" formControlName="colorInterior" pInputText>
+                            <label>Color Interior</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield"  >
+                            <p-dropdown formControlName="carrierType" [options]="tipocarrier" [filter]="true" 
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectTCarrier()"></p-dropdown>
+                            <label>Tipo Carrier*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="tipocarrier" [validation_messages]="validations"></validations-input-component>
+                        </span>
+                    </div>
+    
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield"  >
+                            <p-dropdown formControlName="carrier" [options]="carrier" [filter]="true" 
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectCarrier()"></p-dropdown>
+                            <label>Carrier*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="carrier" [validation_messages]="validations"></validations-input-component>
+                        </span>
+                    </div>
+    
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                            <input type="text" formControlName="carrierName" pInputText>
+                            <label>Nombre Carrier</label>
+                        </span>
+                    </div>
+                    
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                            <input type="text" formControlName="quantity" pInputText>
+                            <label>Cantidad*</label>
+                            <validations-input-component [formGroup]="addModel" formInputName="cantidad" [validation_messages]="validations"></validations-input-component>
+    
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <p-footer>
+            <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar" [disabled]="!addModel.valid"
+            (click)="updateDetail()"></button>
+            <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+            (click)="closed()"></button>
+        </p-footer>
+    </p-dialog>
+</div>
