@@ -5,7 +5,7 @@ import { AppErrorComponent } from './pages/app.error.component';
 import { AppAccessdeniedComponent } from './pages/app.accessdenied.component';
 import { AppLoginComponent } from './pages/app.login.component';
 import { AppMainComponent } from './main.component';
-import { PurchaseOrderComponent } from './components/orden-compra/purchase-order.component';
+import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
 import { ModelComponent } from './components/model/model.component';
 import { ContractComponent } from './components/contract/contract.component';
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';

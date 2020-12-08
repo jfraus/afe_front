@@ -93,12 +93,11 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { AppValidationMessagesService } from './utils/app-validation-messages.service';
 import { MessageService } from 'primeng/api';
 import { AppSubMenuComponent } from './template/menu/submenu/submenu.component';
-import { PurchaseOrderComponent } from './components/orden-compra/purchase-order.component';
-import { GeneratePurchaseOrderComponent } from './components/orden-compra/generar-orden-compra/generate-purchase-order.component';
-import { DetailPurchaseOrderComponent } from './components/orden-compra/detail-purchase-order/detail-purchase-order.component';
-import { EditPurchaseOrderComponent } from './components/orden-compra/edit-purchase-order/edit-purchase-order.component';
-import { AddDetailModelComponent } from './components/orden-compra/add-detail-model/add-detail-model.components';
-import { EditDetailModelComponent } from './components/orden-compra/edit-detail/edit-detail-model.component';
+import { GeneratePurchaseOrderComponent } from './components/purchase-order/generate-purchase-order/generate-purchase-order.component';
+import { DetailPurchaseOrderComponent } from './components/purchase-order/detail-purchase-order/detail-purchase-order.component';
+import { EditPurchaseOrderComponent } from './components/purchase-order/edit-purchase-order/edit-purchase-order.component';
+import { AddDetailModelComponent } from './components/purchase-order/add-detail-model/add-detail-model.components';
+import { EditDetailModelComponent } from './components/purchase-order/edit-detail/edit-detail-model.component';
 import { ModelComponent } from './components/model/model.component';
 import { AddModelComponent } from './components/model/add-model/add-model.component';
 import { EditAddContractComponent } from './components/contract/edit-add-contracts/edit-add-contracts.component';
@@ -106,6 +105,7 @@ import { EditSaleContractComponent } from './components/contract/edit-sale-contr
 import { EditAddDetailComponent } from './components/contract/add-edit-detail/add-edit-detail.component';
 import {  DetailsContractComponent } from './components/contract/details-contract/details-contract.component';
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
+import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent
