@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppRoutes } from './routes';
-import { ConsultaContratosComponentComponent } from './components/contratos/consulta-contratos.component';
+import { ContractComponent } from './components/contract/contract.component';
 
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -93,22 +93,22 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { AppValidationMessagesService } from './utils/app-validation-messages.service';
 import { MessageService } from 'primeng/api';
 import { AppSubMenuComponent } from './template/menu/submenu/submenu.component';
-import { OrdenCompraComponent } from './components/orden-compra/orden-compra.component';
-import { GenerarOrdenCompraComponent } from './components/orden-compra/generar-orden-compra/generar-orden-compra.component';
-import { DetalleOrdenCompraComponent } from './components/orden-compra/detalle-orden-compra/detalle-orden-compra.component';
-import { EditarOrdenCompraComponent } from './components/orden-compra/editar-orden-compra/editar-orden-compra.component';
-import { AgregarPedidoModeloComponent } from './components/orden-compra/agregar-pedido-modelo/agregar-pedido-modelo.components';
-import { EditarPedidoModeloComponent } from './components/orden-compra/editar-pedido/editar-pedido.component';
-import { ModeloVentaDirectaComponent } from './components/modelo-venta-directa/modelo-venta-directa.component';
-import { AgregarModelComponent } from './components/modelo-venta-directa/agregar-model/agregar-model.component';
-import { EditarAgregarContratosComponent } from './components/contratos/contratos-editar-agregar/editar-agregar-contratos.component';
-import { EditarContratoVentaComponent } from './components/contratos/editar-contrato-venta/editar-contrato-venta.component';
-import { EditarAgregarPedidoComponent } from './components/contratos/agregar-editar-pedido/agregar-editar-pedido.component';
-import {  ConsultarDetallesContratoComponent } from './components/contratos/consultar-detalles/consultar-detalles-contrato.component';
+import { PurchaseOrderComponent } from './components/orden-compra/purchase-order.component';
+import { GeneratePurchaseOrderComponent } from './components/orden-compra/generar-orden-compra/generate-purchase-order.component';
+import { DetailPurchaseOrderComponent } from './components/orden-compra/detail-purchase-order/detail-purchase-order.component';
+import { EditPurchaseOrderComponent } from './components/orden-compra/edit-purchase-order/edit-purchase-order.component';
+import { AddDetailModelComponent } from './components/orden-compra/add-detail-model/add-detail-model.components';
+import { EditDetailModelComponent } from './components/orden-compra/edit-detail/edit-detail-model.component';
+import { ModelComponent } from './components/model/model.component';
+import { AddModelComponent } from './components/model/add-model/add-model.component';
+import { EditAddContractComponent } from './components/contract/edit-add-contracts/edit-add-contracts.component';
+import { EditSaleContractComponent } from './components/contract/edit-sale-contract/edit-sale-contract.component';
+import { EditAddDetailComponent } from './components/contract/add-edit-detail/add-edit-detail.component';
+import {  DetailsContractComponent } from './components/contract/details-contract/details-contract.component';
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
 
 const sharedComponents = [
-    ValidationsInputComponent,GenerarOrdenCompraComponent
+    ValidationsInputComponent,GeneratePurchaseOrderComponent
 ];
 
 
@@ -200,18 +200,18 @@ const sharedComponents = [
         AppErrorComponent,
         AppAccessdeniedComponent,
         AppLoginComponent,
-        DetalleOrdenCompraComponent,
-        EditarOrdenCompraComponent,
-        OrdenCompraComponent,
-        AgregarPedidoModeloComponent,
-        EditarPedidoModeloComponent,
-        ModeloVentaDirectaComponent,
-        AgregarModelComponent,
-        ConsultaContratosComponentComponent,
-        EditarAgregarContratosComponent,
-        EditarContratoVentaComponent,
-        EditarAgregarPedidoComponent,
-        ConsultarDetallesContratoComponent,
+        DetailPurchaseOrderComponent,
+        EditPurchaseOrderComponent,
+        PurchaseOrderComponent,
+        AddDetailModelComponent,
+        EditDetailModelComponent,
+        ModelComponent,
+        AddModelComponent,
+        ContractComponent,
+        EditAddContractComponent,
+        EditSaleContractComponent,
+        EditAddDetailComponent,
+        DetailsContractComponent,
         OrderByVinComponent,
         ...sharedComponents
     ],
