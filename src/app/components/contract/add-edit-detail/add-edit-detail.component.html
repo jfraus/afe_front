@@ -13,7 +13,7 @@
                     </div>
                     <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield ">
-                            <input type="text" formControlName="typeModelo" pInputText>
+                            <input type="text" formControlName="modelType" pInputText>
                             <label>Tipo Modelo</label>
                         </span>
                     </div>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield"  >
-                            <p-dropdown formControlName="typecarrier" [options]="tipocarrier" [filter]="true" 
+                            <p-dropdown formControlName="carrierType" [options]="tipocarrier" [filter]="true" 
                             [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectTCarrier()"></p-dropdown>
                             <label>Tipo Carrier*</label>
                             <validations-input-component [formGroup]="addModel" formInputName="tipocarrier" [validation_messages]="validations"></validations-input-component>
@@ -52,7 +52,7 @@
     
                     <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield ">
-                            <input type="text" formControlName="namecarrier" pInputText>
+                            <input type="text" formControlName="carrierName" pInputText>
                             <label>Nombre Carrier</label>
                         </span>
                     </div>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield ">
-                            <input type="text" formControlName="typeModelo" pInputText>
+                            <input type="text" formControlName="modelType" pInputText>
                             <label>Tipo Modelo</label>
                         </span>
                     </div>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield"  >
-                            <p-dropdown formControlName="typecarrier" [options]="tipocarrier" [filter]="true" 
+                            <p-dropdown formControlName="carrierType" [options]="tipocarrier" [filter]="true" 
                             [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectTCarrier()"></p-dropdown>
                             <label>Tipo Carrier*</label>
                             <validations-input-component [formGroup]="addModel" formInputName="tipocarrier" [validation_messages]="validations"></validations-input-component>
@@ -131,7 +131,7 @@
     
                     <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield ">
-                            <input type="text" formControlName="namecarrier" pInputText>
+                            <input type="text" formControlName="carrierName" pInputText>
                             <label>Nombre Carrier</label>
                         </span>
                     </div>

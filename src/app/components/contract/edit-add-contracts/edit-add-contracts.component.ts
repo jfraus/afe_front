@@ -46,7 +46,7 @@ export class EditAddContractComponent {
         this.addModel = this.fb.group({
             country: ['', [Validators.required]],
             dealer: new FormControl('', Validators.required),
-            nameDealer:new FormControl({value:'', disabled:true}),
+            dealerName:new FormControl({value:'', disabled:true}),
             codpais:new FormControl({value:'', disabled:true}),
             port:new FormControl({value:'', disabled:true}),
             contractNumber: new FormControl({value:'', disabled:true}),
@@ -97,7 +97,7 @@ export class EditAddContractComponent {
         let promise = new Promise((resolved) => {
             dealer = this.addModel.get('dealer').value;        
             let isSelected = dealer !== null;
-            this.addModel.get('nameDealer').setValue(isSelected ? dealer.name : '');
+            this.addModel.get('dealerName').setValue(isSelected ? dealer.name : '');
             resolved(true);
         });
 

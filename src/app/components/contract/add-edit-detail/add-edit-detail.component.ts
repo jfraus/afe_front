@@ -79,7 +79,7 @@ export class EditAddDetailComponent implements OnInit {
         if (changes.detail) {
             if (changes.detail.currentValue) {
                 this.addModel.get('model').setValue(this.detail.model);
-                this.addModel.get('typeModelo').setValue(this.detail.model.type.type);
+                this.addModel.get('modelType').setValue(this.detail.model.type.type);
 
                 this.addModel.get('tipocarrier').setValue(this.detail.carrier.carrierType);
                 this.addModel.get('quantity').setValue(this.detail.quantity);
@@ -111,7 +111,7 @@ export class EditAddDetailComponent implements OnInit {
                             this.addModel.get('color').setValue(this.detail.color);
                             this.addModel.get('colorInterior').setValue(this.detail.color.interiorCode);
                             this.addModel.get('carrier').setValue(this.detail.carrier);
-                            this.addModel.get('namecarrier').setValue(this.detail.carrierName);
+                            this.addModel.get('carrierName').setValue(this.detail.carrierName);
                         }, 500);
                     })
                 });
@@ -148,18 +148,18 @@ export class EditAddDetailComponent implements OnInit {
             model: ['', [Validators.required]],
             color: ['', [Validators.required]],
             quantity: ['', [Validators.required, Validators.maxLength(7), Validators.pattern('^[0-9]*$')]],
-            typecarrier: ['', [Validators.required]],
+            carrierType: ['', [Validators.required]],
             carrier: ['', [Validators.required]],
             colorInterior: new FormControl({ value: '', disabled: true }),
-            typeModelo: new FormControl({ value: '', disabled: true }),
-            contactNumber: new FormControl({ value: '', disabled: true }),
-            namecarrier: new FormControl({ value: '', disabled: true }),
+            modelType: new FormControl({ value: '', disabled: true }),
+            contractNumber : new FormControl({ value: '', disabled: true }),
+            carrierName: new FormControl({ value: '', disabled: true }),
         });
     }
 
     selectTCarrier() {
 
-        let type = this.addModel.get('typecarrier').value;
+        let type = this.addModel.get('carrierType').value;
         this.serviceCarrier.get(type).subscribe((response) => {
             this.carrier = response.map(r => ({
                 label: r.carrierCode, value: r
@@ -171,7 +171,7 @@ export class EditAddDetailComponent implements OnInit {
 
     selectCarrier() {
         let carrier = this.addModel.get('carrier').value;
-        this.addModel.get('namecarrier').setValue(carrier !== null ? carrier.name : '');
+        this.addModel.get('carrierName').setValue(carrier !== null ? carrier.name : '');
     }
 
 
@@ -194,7 +194,7 @@ export class EditAddDetailComponent implements OnInit {
         let promise = new Promise((resolved) => {
             model = this.addModel.get('model').value;
             let isSelected = model !== null;
-            this.addModel.get('typeModelo').setValue(isSelected ? model.type.type : '');
+            this.addModel.get('modelType').setValue(isSelected ? model.type.type : '');
             resolved(true);
         });
 

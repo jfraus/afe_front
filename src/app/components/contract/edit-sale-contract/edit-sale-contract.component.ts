@@ -82,7 +82,7 @@ export class EditSaleContractComponent {
     });
   }
 
-  updateDetalle(detail) {
+  updateDetail(detail) {
     this.detailEdtiar = detail;
     this.edit = true;
     this.displayAdd = true;

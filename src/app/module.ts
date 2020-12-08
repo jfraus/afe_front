@@ -103,7 +103,7 @@ import { AddModelComponent } from './components/model/add-model/add-model.compon
 import { EditAddContractComponent } from './components/contract/edit-add-contracts/edit-add-contracts.component';
 import { EditSaleContractComponent } from './components/contract/edit-sale-contract/edit-sale-contract.component';
 import { EditAddDetailComponent } from './components/contract/add-edit-detail/add-edit-detail.component';
-import {  DetailsContractComponent } from './components/contract/details-contract/details-contract.component';
+import {  ContractDetailsComponent } from './components/contract/details-contract/details-contract.component';
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
 import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
 
@@ -211,7 +211,7 @@ const sharedComponents = [
         EditAddContractComponent,
         EditSaleContractComponent,
         EditAddDetailComponent,
-        DetailsContractComponent,
+        ContractDetailsComponent,
         OrderByVinComponent,
         ...sharedComponents
     ],

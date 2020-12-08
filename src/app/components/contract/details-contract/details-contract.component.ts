@@ -8,7 +8,7 @@ import { SaleContractControllerService } from 'src/app/services/sale-contract-co
   styleUrls: ['./details-contract.component.css'],
   providers: [SaleContractControllerService]
 })
-export class DetailsContractComponent {
+export class ContractDetailsComponent {
   @Input() contrato: any;
   @Input() detail: any;
   @Output() close = new EventEmitter();
