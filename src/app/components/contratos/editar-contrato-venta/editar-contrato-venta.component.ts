@@ -27,6 +27,7 @@ export class EditarContratoVentaComponent {
       { field: 'quantity', header: 'Pedido' },
       { field: 'action', header: 'Acción' },
     ];
+    this.detail = [];
   }
 
   viewAgregar() {
@@ -86,6 +87,7 @@ export class EditarContratoVentaComponent {
 
   salir(){
     this.close.emit(true);
+    this.detail = [];
   }
 
 }

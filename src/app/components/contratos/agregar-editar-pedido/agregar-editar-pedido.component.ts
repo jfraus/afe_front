@@ -84,7 +84,7 @@ export class EditarAgregarPedidoComponent implements OnInit {
                 this.addModel.get('tipocarrier').setValue(this.detail.carrier.carrierType);
                 this.addModel.get('cantidad').setValue(this.detail.quantity);
 
-                
+
 
                 let promiseModel = new Promise((resolved) => {
                     this.serviceModelColor.get(this.detail.model.id).subscribe((response) => {
@@ -107,19 +107,19 @@ export class EditarAgregarPedidoComponent implements OnInit {
                     });
 
                     promiseCarrier.then((sc) => {
-                        setTimeout(() => { 
+                        setTimeout(() => {
                             this.addModel.get('color').setValue(this.detail.color);
                             this.addModel.get('colorInterior').setValue(this.detail.color.interiorCode);
                             this.addModel.get('carrier').setValue(this.detail.carrier);
                             this.addModel.get('nombrecarrier').setValue(this.detail.carrierName);
-                         }, 500);
+                        }, 500);
                     })
                 });
             }
         }
     }
 
-    actualizarDetail(){
+    actualizarDetail() {
         if (this.addModel.valid) {
             this.serviceSale.putDetail({
                 carrier: {
@@ -177,9 +177,12 @@ export class EditarAgregarPedidoComponent implements OnInit {
 
     fill() {
         this.servicesModel.get(true).subscribe((response) => {
+
             this.model = response.map(r => (
                 { label: r.code, value: r }
             ));
+            this.model = this.model.filter(x => x.value.type.type == 'KK');
+
         });
 
     }
@@ -191,7 +194,7 @@ export class EditarAgregarPedidoComponent implements OnInit {
         let promise = new Promise((resolved) => {
             model = this.addModel.get('model').value;
             let isSelected = model !== null;
-            this.addModel.get('tipoModelo').setValue(isSelected ? model.code : '');
+            this.addModel.get('tipoModelo').setValue(isSelected ? model.type.type : '');
             resolved(true);
         });
 
@@ -216,21 +219,44 @@ export class EditarAgregarPedidoComponent implements OnInit {
 
     agregar() {
         if (this.addModel.valid) {
-            this.serviceSale.postCreateDetail({
-                carrier: {
-                    id: this.addModel.get('carrier').value.id
-                },
-                color: {
-                    id: this.addModel.get('color').value.id
-                },
-                model: {
-                    id: this.addModel.get('model').value.id
-                },
-                quantity: this.addModel.get('cantidad').value,
-                saleContractId: this.saleContractId
-            }).subscribe((response) => {
-                this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con éxito' });
-                this.closed();
+
+            let validPromise = new Promise((resolved) => {
+                this.serviceSale.get(null, null, null, this.saleContractId).subscribe((response) => {
+                    let array = response[0].detail;
+                    if(array){
+                        array.forEach(element => {
+                            if (element.color.id === this.addModel.value.color.id && element.model.id === this.addModel.value.model.id) {
+                                resolved(false)
+    
+                            }
+                        });
+                    }
+                    resolved(true)
+                });
+            });
+                validPromise.then((rs) => {
+                    if (rs) {
+
+                        this.serviceSale.postCreateDetail({
+                            carrier: {
+                                id: this.addModel.get('carrier').value.id
+                            },
+                            color: {
+                                id: this.addModel.get('color').value.id
+                            },
+                            model: {
+                                id: this.addModel.get('model').value.id
+                            },
+                            quantity: this.addModel.get('cantidad').value,
+                            saleContractId: this.saleContractId
+                        }).subscribe((response) => {
+                            this.messageServices.add({ key: 'success', severity: 'success', summary: 'Guardado con éxito' });
+                            this.closed();
+                        });
+                }else{
+                    this.messageServices.add({key: 'error', severity:'info', summary: 'La combinación de modelo color ya existe en los pedidos'});
+
+                }
             });
         }
     }

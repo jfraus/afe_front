@@ -54,6 +54,8 @@ export class ConsultaContratosComponentComponent implements OnInit {
     }
 
     showDetail(contrato){
+        this.detail = [];
+
         this.contratoSelected = contrato;
         this.services.get(null,null,null,contrato.id).subscribe((response) => {
             let Rcontrato = response[0];
@@ -128,6 +130,7 @@ export class ConsultaContratosComponentComponent implements OnInit {
     }
 
     editarContrato(contrato){
+        this.detail = [];
         this.contratoSelected = contrato;
         this.services.get(null,null,null,contrato.id).subscribe((response) => {
             let Rcontrato = response[0];
