@@ -254,7 +254,7 @@ export class EditarAgregarPedidoComponent implements OnInit {
                             this.closed();
                         });
                 }else{
-                    this.messageServices.add({key: 'error', severity:'info', summary: 'La combinación de modelo color ya existe en los pedidos'});
+                    this.messageServices.add({key: 'error', severity:'info', summary: 'La combinación Modelo-Color ya existen en el Contrato de Venta.'});
 
                 }
             });
