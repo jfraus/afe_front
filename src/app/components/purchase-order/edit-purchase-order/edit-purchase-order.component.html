@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div><div class="ui-g-12 ui-lg-2">
-                <button pButton type="button" label="Guardar" (click)="Save()" icon="ui-icon-save" class="ui-button-success" style="width:auto"></button>
+                <button pButton type="button" label="Guardar" (click)="Save()" [disabled]="!this.formGroup.valid" icon="ui-icon-save" class="ui-button-success" style="width:auto"></button>
             </div>
         </form>
 
@@ -83,6 +83,7 @@
                 label="Agregar"
                 icon="pi
                 pi-plus"
+                [disabled]="!(btnAddDisable && this.formGroup.valid)"
                 class="ui-button-success"
                 (click)="add()"
                 style="width: auto"></button>

@@ -38,7 +38,7 @@
                 </div>
                 <div class="ui-g-12 ui-lg-3">
                     <span class="md-inputfield ">
-                        <p-calendar [style]="{'width':'100%'}" [maxDate]="maxDateExpired" [minDate]="minExpired" [inputStyle]="{'width':'100%'}"  formControlName="fechaVencimiento" [showIcon]="true"></p-calendar>
+                        <p-calendar [style]="{'width':'100%'}" [maxDate]="maxDateExpired" [minDate]="minExpired" [inputStyle]="{'width':'100%'}"  formControlName="dateExpired" [showIcon]="true"></p-calendar>
                             <label>Fecha de vencimiento</label>
                             <validations-input-component  [validation_messages]="validations"
                             [(formGroup)]="formGroup"
@@ -72,6 +72,7 @@
                 icon="pi
                 pi-plus"
                 class="ui-button-success"
+                [disabled]="!(btnAdDisable && this.formGroup.valid)"
                 (click)="add()"
                 style="width: auto"></button>
         </div>

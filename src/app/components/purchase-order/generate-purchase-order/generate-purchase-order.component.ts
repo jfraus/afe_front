@@ -40,6 +40,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
     validations = [];
     order: PurchaseOrder = {id: 0,orderNumber:'',productionMonth:'',unitsQuantity:1,dueDate: 1};
     displayAdd: boolean;
+    btnAdDisable: boolean = false;
     displayEdit: boolean;
 
     constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService){
@@ -58,6 +59,9 @@ export class GeneratePurchaseOrderComponent implements OnInit {
             { field: 'quantity', header: 'Cantidad' },
             { field: 'action', header: 'Acción' },
         ];
+
+
+        
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('productionMonthForm'));
 
@@ -69,8 +73,9 @@ export class GeneratePurchaseOrderComponent implements OnInit {
             this.formGroup.get('unitsQuantity').setValue(response.unitsQuantity);
             this.order.id = response.id;
             
-        })
+        });
     }
+
 
     fillTable(){
         this.loadingPurchaseOrderDetail = true;
@@ -102,6 +107,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
 
     closed(){     
         this.close.emit(true);
+        this.btnAdDisable = false;
     }
 
     onChanges(): void {
@@ -177,6 +183,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
             promise.then((succes) => {
                 this.service.PutPurchaseOrders(succes).subscribe((response) => {
                     this.messageServices.clear();
+                    this.btnAdDisable = true;
                     this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con exito'});
                 });
             });

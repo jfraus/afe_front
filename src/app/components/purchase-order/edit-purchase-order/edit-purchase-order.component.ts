@@ -39,6 +39,7 @@ export class EditPurchaseOrderComponent implements OnInit {
     minDate = new Date();
     minExpired = new Date();
     maxDateExpired= new Date();
+    btnAddDisable = false;
 
     constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
 
@@ -62,6 +63,7 @@ export class EditPurchaseOrderComponent implements OnInit {
 
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('dateExpired'));
+        
 
     }
     closedEditarPedido(){
@@ -90,6 +92,11 @@ export class EditPurchaseOrderComponent implements OnInit {
         });
         this.formGroup.controls['orderCode'].disable();
         this.formGroup.controls['unitsQuantity'].disable();
+        if(this.order.dueDate && this.order.productionMonth){
+            this.btnAddDisable = true;
+        }
+        
+        
     }
     updateDetail(detail){
         let promise = new Promise((resolve) => {
@@ -159,6 +166,7 @@ export class EditPurchaseOrderComponent implements OnInit {
             promise.then((succes) => {
                 this.service.PutPurchaseOrders(succes).subscribe((response) => {
                     this.messageServices.clear();
+                    this.btnAddDisable = true;
                     this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con exito'});
                 });
             });
