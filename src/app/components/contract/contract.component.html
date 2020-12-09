@@ -122,9 +122,9 @@
         <tr [pSelectableRow]="rowData">
           <td *ngFor="let col of columns">
             <span class="ui-column-title">{{ col.header }}</span>
-            <span *ngIf="col.field != 'action'; else elseAction">{{
-              rowData[col.field]
-            }}</span>
+            <span *ngIf="col.field != 'action'; else elseAction">
+              {{rowData[col.field]}}
+            </span>
             <ng-template #elseAction>
               <div *ngIf="rowData.status === 'CREADO'">
                 <button

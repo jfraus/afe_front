@@ -1,6 +1,6 @@
 <div *ngIf="!displayEdtiar && !displayDetalle">
     <div class="card">
-      <div class="card-title">Contratos de Venta HDM</div>
+      <div class="card-title">Order by Vin</div>
       <div class="ui-g ui-fluid">
         <form class="form-group ui-g-12" [formGroup]="formGroup">
           <div class="p-fluid p-formgrid p-grid">
@@ -69,19 +69,6 @@
     </div>
   
     <div class="card">
-      <div class="p-fluid p-formgrid p-grid">
-        <div class="ui-g-12 ui-lg-3">
-          <button
-            pButton
-            type="button"
-            label="Agregar"
-            icon="pi pi-plus"
-            class="ui-button-success"
-            style="width: auto"
-          ></button>
-        </div>
-      </div>
-  
       <!-- Tabla con las ordenes de compras -->
       <p-table
         [columns]="cols"

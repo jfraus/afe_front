@@ -24,6 +24,7 @@ export class AddDetailModelComponent {
     addModel: FormGroup;
     validations = [];
     @Input() purchaseOrderId;
+    
 
     constructor(public messageServices: MessageService, private fb: FormBuilder, private servicesPurchase: PurchaseOrdenControllerService, private serviceColor: ModelColorControllerService, private messages: AppValidationMessagesService, private services: ModelControllerService) {
         this.BuildForm();
@@ -120,7 +121,6 @@ export class AddDetailModelComponent {
                     promise.then((detail: PurchaseOrderDetail) => {
                         this.servicesPurchase.postPurchaseOrderDetail(detail).subscribe((response) => {
                             this.messageServices.add({key: 'error', severity:'success', summary: 'Guardado con exito'});
-    
                             this.closed();
                         })
     

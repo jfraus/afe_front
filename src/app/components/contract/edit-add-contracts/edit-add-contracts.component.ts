@@ -121,7 +121,7 @@ export class EditAddContractComponent {
     add(){
         if(this.addModel.valid){
             this.serviceSale.post(this.addModel.value).subscribe((response) => {
-                this.messageServices.add({key: 'error', severity:'success', summary: 'Guardado con exito'});
+                this.messageServices.add({key: 'error', severity:'success', summary: 'Guardado con exito',detail: `El numero del contrato creado es ${response.contracNumber}`});
                 this.closed();
             });
         }
