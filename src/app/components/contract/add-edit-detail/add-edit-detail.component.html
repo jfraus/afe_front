@@ -34,7 +34,7 @@
                     </div>
                     <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield"  >
-                            <p-dropdown formControlName="carrierType" [options]="tipocarrier" [filter]="true" 
+                            <p-dropdown formControlName="carrierType" [options]="carrierType" [filter]="true" 
                             [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectTCarrier()"></p-dropdown>
                             <label>Tipo Carrier*</label>
                             <validations-input-component [formGroup]="addModel" formInputName="tipocarrier" [validation_messages]="validations"></validations-input-component>
@@ -113,10 +113,10 @@
                     </div>
                     <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield"  >
-                            <p-dropdown formControlName="carrierType" [options]="tipocarrier" [filter]="true" 
+                            <p-dropdown formControlName="carrierType" [options]="carrierType" [filter]="true" 
                             [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectTCarrier()"></p-dropdown>
                             <label>Tipo Carrier*</label>
-                            <validations-input-component [formGroup]="addModel" formInputName="tipocarrier" [validation_messages]="validations"></validations-input-component>
+                            <validations-input-component [formGroup]="addModel" formInputName="carrierType" [validation_messages]="validations"></validations-input-component>
                         </span>
                     </div>
     
@@ -140,15 +140,14 @@
                         <span class="md-inputfield ">
                             <input type="text" formControlName="quantity" pInputText>
                             <label>Cantidad*</label>
-                            <validations-input-component [formGroup]="addModel" formInputName="cantidad" [validation_messages]="validations"></validations-input-component>
-    
+                            <validations-input-component [formGroup]="addModel" formInputName="cantidad" [validation_messages]="validations"></validations-input-component>    
                         </span>
                     </div>
                 </div>
             </form>
         </div>
         <p-footer>
-            <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar" [disabled]="!addModel.valid"
+            <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Modificar" [disabled]="!addModel.valid"
             (click)="updateDetail()"></button>
             <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
             (click)="closed()"></button>

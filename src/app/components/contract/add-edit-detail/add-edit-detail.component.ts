@@ -1,18 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { MessageService, SelectItem } from 'primeng/api';
-import { Model } from 'src/app/models/model.model';
-import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
+import { from } from 'rxjs';
 import { CarrierControllerService } from 'src/app/services/carrier-controller.service';
-import { CountryControllerService } from 'src/app/services/country-controller.service';
 import { DealerControllerService } from 'src/app/services/dealer-controller.service';
-import { DistributionControllerService } from 'src/app/services/distribution-controller.service';
 import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
 import { ModelControllerService } from 'src/app/services/model-controller.service';
-import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { SaleContractControllerService } from 'src/app/services/sale-contract-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 import { FormatDate } from 'src/app/utils/format-date';
+import { CarrierType } from 'src/app/enums/carrier-type.enum';
 
 
 @Component({
@@ -23,35 +20,35 @@ import { FormatDate } from 'src/app/utils/format-date';
 })
 export class EditAddDetailComponent implements OnInit {
 
-    //AGREGAR
+    //ADD
     @Input() display: boolean;
     @Output() close = new EventEmitter();
     model: SelectItem[] = [];
     color: SelectItem[] = [];
-    tipocarrier: SelectItem[] = [];
+    carrierType: SelectItem[] = [];
     carrier: SelectItem[] = [];
     @Input() saleContractId: any;
     addModel: FormGroup;
     validations = [];
     @Input() purchaseOrderId;
 
-    //EDITAR
+    //EDIT
     @Input() edit: boolean;
     modelEdit: FormGroup;
     @Input() detail: any;
 
-
-
-
-    constructor(private serviceCarrier: CarrierControllerService, private messages: AppValidationMessagesService, public serviceModelColor: ModelColorControllerService, public messageServices: MessageService, private utilDate: FormatDate, private fb: FormBuilder, private servicesModel: ModelControllerService, private serviceDealer: DealerControllerService, private serviceSale: SaleContractControllerService) {
-
-
-        // AGREGAR
+    constructor(private serviceCarrier: CarrierControllerService, 
+        private messages: AppValidationMessagesService, 
+        public serviceModelColor: ModelColorControllerService, 
+        public messageServices: MessageService, 
+        private utilDate: FormatDate,
+        private fb: FormBuilder, 
+        private servicesModel: ModelControllerService, 
+        private serviceDealer: DealerControllerService, 
+        private serviceSale: SaleContractControllerService) {
+        
         this.buildForm();
         this.fill();
-
-        this.tipocarrier = [{ label: 'Madrina', value: 'T' }, { label: 'Oceano', value: 'O' }, { label: 'Rail', value: 'R' }];
-
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('model'));
 
@@ -65,26 +62,28 @@ export class EditAddDetailComponent implements OnInit {
         this.messages.messagesMaxLenght = '7';
         this.messages.messagesPattern = 'alfabeticos';
         this.validations.push(this.messages.getValidationMessagesWithName('quantity'));
-
-
-
-
-    }
-    ngOnInit(): void {
     }
 
-
+    ngOnInit(): void {}
+    
+    fill() {
+        for (var cType in CarrierType) {
+            this.carrierType.push({label: cType, value:cType[0]});
+        }
+        this.servicesModel.get(true).subscribe((response) => {
+            this.model = response.map(r => (
+                { label: r.code, value: r }
+            ));
+        });
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.detail) {
             if (changes.detail.currentValue) {
                 this.addModel.get('model').setValue(this.detail.model);
                 this.addModel.get('modelType').setValue(this.detail.model.type.type);
-
-                this.addModel.get('tipocarrier').setValue(this.detail.carrier.carrierType);
+                this.addModel.get('carrierType').setValue(this.detail.carrier.carrierType);
                 this.addModel.get('quantity').setValue(this.detail.quantity);
-
-
 
                 let promiseModel = new Promise((resolved) => {
                     this.serviceModelColor.get(this.detail.model.id).subscribe((response) => {
@@ -141,8 +140,6 @@ export class EditAddDetailComponent implements OnInit {
         }
     }
 
-
-
     private buildForm() {
         this.addModel = this.fb.group({
             model: ['', [Validators.required]],
@@ -158,36 +155,18 @@ export class EditAddDetailComponent implements OnInit {
     }
 
     selectTCarrier() {
-
         let type = this.addModel.get('carrierType').value;
         this.serviceCarrier.get(type).subscribe((response) => {
             this.carrier = response.map(r => ({
                 label: r.carrierCode, value: r
             }));
         });
-
-
     }
 
     selectCarrier() {
         let carrier = this.addModel.get('carrier').value;
         this.addModel.get('carrierName').setValue(carrier !== null ? carrier.name : '');
     }
-
-
-    fill() {
-        this.servicesModel.get(true).subscribe((response) => {
-
-            this.model = response.map(r => (
-                { label: r.code, value: r }
-            ));
-            this.model = this.model.filter(x => x.value.type.type == 'KK');
-
-        });
-
-    }
-
-
 
     selectModel() {
         let model;
@@ -209,17 +188,13 @@ export class EditAddDetailComponent implements OnInit {
         });
     }
 
-
-
     selectColor(): void {
         let color = this.addModel.get('color').value;
-
         this.addModel.get('colorInterior').setValue(color !== null ? color.interiorCode : '');
     }
 
     add() {
         if (this.addModel.valid) {
-
             let validPromise = new Promise((resolved) => {
                 this.serviceSale.get(null, null, null, this.saleContractId).subscribe((response) => {
                     let array = response[0].detail;
@@ -227,7 +202,6 @@ export class EditAddDetailComponent implements OnInit {
                         array.forEach(element => {
                             if (element.color.id === this.addModel.value.color.id && element.model.id === this.addModel.value.model.id) {
                                 resolved(false)
-    
                             }
                         });
                     }
@@ -236,7 +210,6 @@ export class EditAddDetailComponent implements OnInit {
             });
                 validPromise.then((rs) => {
                     if (rs) {
-
                         this.serviceSale.postCreateDetail({
                             carrier: {
                                 id: this.addModel.get('carrier').value.id
@@ -254,8 +227,7 @@ export class EditAddDetailComponent implements OnInit {
                             this.closed();
                         });
                 }else{
-                    this.messageServices.add({key: 'error', severity:'info', summary: 'La combinación Modelo-Color ya existen en el Contrato de Venta.'});
-
+                    this.messageServices.add({key: 'error', severity:'warn', summary: 'Advertencia', detail: 'La combinación Modelo-Color ya existe en el Contrato de Venta'});
                 }
             });
         }
@@ -265,7 +237,6 @@ export class EditAddDetailComponent implements OnInit {
         this.addModel.reset();
         this.color = [];
         this.carrier = [];
-        this.edit = false;
         this.close.emit(false);
     }
 }

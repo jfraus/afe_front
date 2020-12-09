@@ -11,7 +11,7 @@ import { SaleContractControllerService } from 'src/app/services/sale-contract-co
 export class EditSaleContractComponent {
   @Input() contract: any;
   @Input() detail: any;
-  detailEdtiar: any;
+  detailEdit: any;
   edit: boolean = false;
   displayAdd: boolean;
   cols = [];
@@ -31,27 +31,12 @@ export class EditSaleContractComponent {
   }
 
   viewAdd() {
+    this.edit = false;
     this.displayAdd = true;
-  }
-
-  eliminarDetail(detail) {
-
   }
 
   closedAdd() {
     this.displayAdd = false;
-    this.services.get(null, null, null, this.contract.id).subscribe((response) => {
-      let details = response[0];
-      this.contract = response[0];
-      this.detail = details.detail.map(r => ({
-        ...r,
-        carrierName: r.carrier.name,
-        modelType: r.model.type.type,
-        modelCode: r.model.code,
-        colorCode: r.color.code,
-        coloInterior: r.color.interiorCode,
-      }));
-    });
   }
 
   deletedDetail(detail) {
@@ -84,7 +69,7 @@ export class EditSaleContractComponent {
   }
 
   updateDetail(detail) {
-    this.detailEdtiar = detail;
+    this.detailEdit = detail;
     this.edit = true;
     this.displayAdd = true;
   }
@@ -93,5 +78,4 @@ export class EditSaleContractComponent {
     this.close.emit(true);
     this.detail = [];
   }
-
 }
