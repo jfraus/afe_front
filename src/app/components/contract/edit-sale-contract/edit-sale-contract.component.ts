@@ -42,6 +42,7 @@ export class EditSaleContractComponent {
     this.displayAdd = false;
     this.services.get(null, null, null, this.contract.id).subscribe((response) => {
       let details = response[0];
+      this.contract = response[0];
       this.detail = details.detail.map(r => ({
         ...r,
         carrierName: r.carrier.name,
