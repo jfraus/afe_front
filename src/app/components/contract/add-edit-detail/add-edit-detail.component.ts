@@ -78,13 +78,48 @@ export class EditAddDetailComponent implements OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+
+        if(this.detail && this.edit){
+            this.addModel.get('model').setValue(this.detail.model);
+            this.addModel.get('modelType').setValue(this.detail.model.type.type);
+            this.addModel.get('carrierType').setValue(this.detail.carrier.carrierType);
+            this.addModel.get('quantity').setValue(this.detail.quantity);
+            let promiseModel = new Promise((resolved) => {
+                this.serviceModelColor.get(this.detail.model.id).subscribe((response) => {
+                    this.color = response.map(r => ({
+                        label: r.code, value: r
+                    }));
+                    resolved(this.detail.color);
+                });
+
+            });
+
+            promiseModel.then((succes) => {
+                let promiseCarrier = new Promise((resolved) => {
+                    this.serviceCarrier.get(this.detail.carrier.carrierType).subscribe((response) => {
+                        this.carrier = response.map(r => ({
+                            label: r.carrierCode, value: r
+                        }));
+                        resolved(true);
+                    });
+                });
+
+                promiseCarrier.then((sc) => {
+                    setTimeout(() => {
+                        this.addModel.get('color').setValue(this.detail.color);
+                        this.addModel.get('colorInterior').setValue(this.detail.color.interiorCode);
+                        this.addModel.get('carrier').setValue(this.detail.carrier);
+                        this.addModel.get('carrierName').setValue(this.detail.carrierName);
+                    }, 500);
+                })
+            });
+        }
         if (changes.detail) {
             if (changes.detail.currentValue) {
                 this.addModel.get('model').setValue(this.detail.model);
                 this.addModel.get('modelType').setValue(this.detail.model.type.type);
                 this.addModel.get('carrierType').setValue(this.detail.carrier.carrierType);
                 this.addModel.get('quantity').setValue(this.detail.quantity);
-
                 let promiseModel = new Promise((resolved) => {
                     this.serviceModelColor.get(this.detail.model.id).subscribe((response) => {
                         this.color = response.map(r => ({
@@ -111,11 +146,12 @@ export class EditAddDetailComponent implements OnInit {
                             this.addModel.get('colorInterior').setValue(this.detail.color.interiorCode);
                             this.addModel.get('carrier').setValue(this.detail.carrier);
                             this.addModel.get('carrierName').setValue(this.detail.carrierName);
-                        }, 500);
+                        }, 10);
                     })
                 });
             }
         }
+
     }
 
     updateDetail() {
@@ -134,8 +170,8 @@ export class EditAddDetailComponent implements OnInit {
                 quantity: this.addModel.get('quantity').value,
                 saleContractId: this.saleContractId
             }).subscribe((response) => {
-                this.messageServices.add({ key: 'success', severity: 'success', summary: 'Actualizado con exito' });
-                this.closed();
+                this.messageServices.add({ key: 'success', severity: 'success', summary: 'Actualizado con éxito' });
+                this.closedRefresh();
             });
         }
     }
@@ -224,7 +260,7 @@ export class EditAddDetailComponent implements OnInit {
                             saleContractId: this.saleContractId
                         }).subscribe((response) => {
                             this.messageServices.add({ key: 'success', severity: 'success', summary: 'Guardado con éxito' });
-                            this.closed();
+                            this.closedRefresh();
                         });
                 }else{
                     this.messageServices.add({key: 'error', severity:'warn', summary: 'Advertencia', detail: 'La combinación Modelo-Color ya existe en el Contrato de Venta'});
@@ -238,6 +274,15 @@ export class EditAddDetailComponent implements OnInit {
         this.color = [];
         this.carrier = [];
         this.close.emit(false);
+    }
+
+    closedRefresh(){
+
+        this.addModel.reset();
+        this.color = [];
+        this.carrier = [];
+        this.close.emit(true);
+        
     }
 }
 

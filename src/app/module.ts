@@ -106,9 +106,10 @@ import { EditAddDetailComponent } from './components/contract/add-edit-detail/ad
 import {  ContractDetailsComponent } from './components/contract/details-contract/details-contract.component';
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
 import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
+import { pipeStringDate } from './utils/pipeStringDate.pipe';
 
 const sharedComponents = [
-    ValidationsInputComponent,GeneratePurchaseOrderComponent
+    ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
 ];
 
 

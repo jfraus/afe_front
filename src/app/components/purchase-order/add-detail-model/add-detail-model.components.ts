@@ -120,7 +120,7 @@ export class AddDetailModelComponent {
     
                     promise.then((detail: PurchaseOrderDetail) => {
                         this.servicesPurchase.postPurchaseOrderDetail(detail).subscribe((response) => {
-                            this.messageServices.add({key: 'error', severity:'success', summary: 'Guardado con exito'});
+                            this.messageServices.add({key: 'error', severity:'success', summary: 'Guardado con éxito'});
                             this.closed();
                         })
     

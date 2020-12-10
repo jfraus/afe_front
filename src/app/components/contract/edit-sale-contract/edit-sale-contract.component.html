@@ -168,11 +168,11 @@
 </div>
 
 <add-edit-detail
-  (close)="closedAdd()"
+  (close)="closedAdd($event)"
   [saleContractId]="contract.id"
   [display]="displayAdd"
   [(edit)]="edit"
-  [detail]="detailEdit"
+  [(detail)]="detailEdit"
 ></add-edit-detail>
 
 <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
