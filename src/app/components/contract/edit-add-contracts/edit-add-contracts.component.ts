@@ -74,6 +74,10 @@ export class EditAddContractComponent {
             pais = this.addModel.get('country').value;
             let isSelected = pais !== null;
             this.addModel.get('dealer').setValue(null);
+            this.addModel.get('port').setValue(null);
+            this.addModel.get('dealerName').setValue(null);
+            this.addModel.get('createdDate').setValue(this.utilDate.formatDate(new Date()));
+
             this.addModel.get('codpais').setValue(isSelected ? pais.countryCode : '');
             this.serviceDealer.get(pais.id).subscribe((response) => {
                 this.dealer = response.map(r => (
