@@ -56,12 +56,7 @@ export class EditAddContractComponent {
 
    
     fillCountry(){
-        this.serviceDealer.get().subscribe((response) => {
-            this.dealer = response.map(r => (
-                { label: r.number, value: r}
-            ));
-            
-        })
+        
         this.servicesCountry.get().subscribe((response) => {
             this.country = response.map(r => (
                 { label: r.name, value: r}
@@ -78,7 +73,13 @@ export class EditAddContractComponent {
         let promise = new Promise((resolved) => {
             pais = this.addModel.get('country').value;
             let isSelected = pais !== null;
+            this.addModel.get('dealer').setValue(null);
             this.addModel.get('codpais').setValue(isSelected ? pais.countryCode : '');
+            this.serviceDealer.get(pais.id).subscribe((response) => {
+                this.dealer = response.map(r => (
+                    { label: r.number, value: r}
+                ));
+            });
             resolved(true);
         });
 
@@ -121,7 +122,7 @@ export class EditAddContractComponent {
     add(){
         if(this.addModel.valid){
             this.serviceSale.post(this.addModel.value).subscribe((response) => {
-                this.messageServices.add({key: 'error', severity:'success', summary: 'Guardado con éxito',detail: `El numero del contrato creado es ${response.contracNumber}`});
+                this.messageServices.add({key: 'error', severity:'success', summary: 'Guardado con exito',detail: `El numero del contrato creado es ${response.contracNumber}`});
                 this.closed();
             });
         }
@@ -129,6 +130,7 @@ export class EditAddContractComponent {
 
     closed(){
         this.addModel.reset();
+        this.dealer = [];
         this.close.emit(false);
     }
 }
