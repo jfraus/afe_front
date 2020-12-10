@@ -155,5 +155,9 @@ export class ContractComponent implements OnInit {
         this.fillTable();
         this.visiableAddEdit = false;
     }
+    closedEditar(){
+        this.fillTable();
+        this.displayEdtiar= false;
+    }
 }
 

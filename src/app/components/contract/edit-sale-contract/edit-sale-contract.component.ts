@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { SaleContractControllerService } from 'src/app/services/sale-contract-controller.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class EditSaleContractComponent {
   cols = [];
   @Output() close = new EventEmitter();
 
-  constructor(public confirmationService: ConfirmationService, private services: SaleContractControllerService) {
+  constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private services: SaleContractControllerService) {
     this.cols = [
       { field: 'carrierName', header: 'Carrier' },
       { field: 'modelType', header: 'Tipo' },
@@ -35,7 +35,25 @@ export class EditSaleContractComponent {
     this.displayAdd = true;
   }
 
-  closedAdd() {
+  closedAdd(event) {
+    
+    if(event){
+      this.services.get(null, null, null, this.contract.id).subscribe((response) => {
+        let details = response[0];
+        this.contract = details;
+        if(details){
+          this.detail = details.detail.map(r => ({
+            ...r,
+            carrierName: r.carrier.name,
+            modelType: r.model.type.type,
+            modelCode: r.model.code,
+            colorCode: r.color.code,
+            coloInterior: r.color.interiorCode,
+          }));
+        }
+      });
+    }
+    this.detailEdit = null;
     this.displayAdd = false;
   }
 
@@ -49,7 +67,7 @@ export class EditSaleContractComponent {
         this.services.deletedDetail(detail.id).subscribe((response) => {
           this.services.get(null, null, null, this.contract.id).subscribe((response) => {
             let details = response[0];
-            if(detail){
+            if(details.detail){
               this.detail = details.detail.map(r => ({
                 ...r,
                 carrierName: r.carrier.name,
@@ -59,6 +77,9 @@ export class EditSaleContractComponent {
                 coloInterior: r.color.interiorCode,
               }));
             }
+            this.messageServices.add({ key: 'success', severity: 'success', summary: 'Eliminado con éxito' });
+
+
           });
         });
       },

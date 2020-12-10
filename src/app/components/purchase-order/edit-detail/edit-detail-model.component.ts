@@ -66,15 +66,17 @@ export class EditDetailModelComponent implements OnInit {
         });
 
         promesa.then((succes) => {
-            this.addModel = this.fb.group({
-                model: [pedido.model, [Validators.required]],
-                plant:new FormControl({value:pedido.model.plant.abbreviation, disabled:true}),
-                modelType:new FormControl({value:pedido.model.type.type, disabled:true}),
-                color: [pedido.color, [Validators.required]],
-                internalColor: new FormControl({value:pedido.color.interiorCode, disabled:false}),
-                quantity: new FormControl(pedido.quantity, [Validators.required,Validators.pattern('^[0-9]*$')]),
-                id: new FormControl(pedido.id)
-            });
+            setTimeout((sc)=>{
+                this.addModel = this.fb.group({
+                    model: [pedido.model, [Validators.required]],
+                    plant:new FormControl({value:pedido.model.plant.abbreviation, disabled:true}),
+                    modelType:new FormControl({value:pedido.model.type.type, disabled:true}),
+                    color: [pedido.color, [Validators.required]],
+                    internalColor: new FormControl({value:pedido.color.interiorCode, disabled:false}),
+                    quantity: new FormControl(pedido.quantity, [Validators.required,Validators.pattern('^[0-9]*$')]),
+                    id: new FormControl(pedido.id)
+                });
+            },10);
         })
         
         
@@ -170,7 +172,7 @@ export class EditDetailModelComponent implements OnInit {
     
                     promise.then((detail: PurchaseOrderDetail) => {
                         this.servicesPurchase.putPurchaseOrderDetail(detail).subscribe((response) => {
-                            this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con exito'});
+                            this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con éxito'});
         
                             this.closed();
                         });

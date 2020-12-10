@@ -123,7 +123,12 @@
           <td *ngFor="let col of columns">
             <span class="ui-column-title">{{ col.header }}</span>
             <span *ngIf="col.field != 'action'; else elseAction">
-              {{rowData[col.field]}}
+              <div *ngIf="col.field == 'createDate'; else elseDate">
+                {{rowData[col.field] | pipeStringDate}}
+              </div>
+              <ng-template #elseDate>
+                {{rowData[col.field]}}
+              </ng-template>
             </span>
             <ng-template #elseAction>
               <div *ngIf="rowData.status === 'CREADO'">
@@ -189,7 +194,7 @@
 
 <div *ngIf="displayEdtiar">
   <edit-sale-contract-component
-    (close)="displayEdtiar = false"
+    (close)="closedEditar()"
     [(detail)]="detail"
     [contract]="contratoSelected"
   >

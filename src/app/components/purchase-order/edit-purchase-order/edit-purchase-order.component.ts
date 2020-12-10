@@ -136,6 +136,8 @@ export class EditPurchaseOrderComponent implements OnInit {
             accept: () => {
                 this.service.deletedPurchaseOrderDetail(detail.id).subscribe((response) => {
                     this.fillTable();
+                    this.messageServices.add({key: 'success', severity:'success', summary: 'Eliminado con éxito'});
+
                 });
             },
             reject: () => {
@@ -167,7 +169,7 @@ export class EditPurchaseOrderComponent implements OnInit {
                 this.service.PutPurchaseOrders(succes).subscribe((response) => {
                     this.messageServices.clear();
                     this.btnAddDisable = true;
-                    this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con exito'});
+                    this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con éxito'});
                 });
             });
         }

@@ -184,7 +184,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
                 this.service.PutPurchaseOrders(succes).subscribe((response) => {
                     this.messageServices.clear();
                     this.btnAdDisable = true;
-                    this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con exito'});
+                    this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con éxito'});
                 });
             });
         }

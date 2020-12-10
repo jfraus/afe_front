@@ -75,7 +75,7 @@ export class AddModelComponent {
     add() {
         this.service.put({ id: this.modelSelected.id, excluded: true }).subscribe((response) => {
             this.closed();
-            this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con exito' });
+            this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con éxito' });
         })
     }
 
