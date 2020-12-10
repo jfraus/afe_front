@@ -9,8 +9,8 @@ import { FormatDate } from '../utils/format-date';
 export class DealerControllerService {
   constructor(private http: HttpClient, public dateUtils: FormatDate) {  }
 
-  get(){
-      return this.http.get<any>(`${environment.apiUrl}dealer/`).pipe();
+  get(countryId: string){
+      return this.http.get<any>(`${environment.apiUrl}dealer/?countryId=${countryId}`).pipe();
     }
   
 

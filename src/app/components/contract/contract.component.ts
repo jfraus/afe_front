@@ -16,6 +16,7 @@ import { resolve } from 'url';
     providers:[SaleContractControllerService,ConfirmationService]
 })
 export class ContractComponent implements OnInit {
+
     cols=[];
     dataTable= [];
     searchDisable = true;
@@ -25,7 +26,7 @@ export class ContractComponent implements OnInit {
     displayEdtiar: boolean = false;
     contratoSelected: any;
     detail: any;
-    displayDetalle =false;
+    displayDetalle = false;
 
 
     constructor(public messageServices: MessageService,private services: SaleContractControllerService,private fb: FormBuilder){

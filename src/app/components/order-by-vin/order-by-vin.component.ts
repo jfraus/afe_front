@@ -40,7 +40,7 @@ export class OrderByVinComponent implements OnInit {
             { field: 'createDate', header: 'Fecha de creación' },
             { field: 'quantity', header: 'Pedido' },
             { field: 'totalUnitsAssigned', header: 'Falta por asignar' },
-            { field: 'port', header: 'Order by VIN' },
+            { field: '', header: 'Order by VIN' },
             { field: 'status', header: 'Estatus' },
             { field: 'action', header: 'Acción' },
         ];
