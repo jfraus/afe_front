@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { FormatDate } from '../utils/format-date';
@@ -12,4 +12,9 @@ export class VinControllerService {
   getReportORderByVin(id){
     return this.http.get<any>(`${environment.apiUrl}vin/report-orderbyvin?id=${id}`).pipe();
   }
+
+  sendYms(){
+    return this.http.post<string>(`${environment.apiUrl}order-by-vin`,null).pipe();
+  }
+
 }

@@ -69,6 +69,19 @@
     </div>
   
     <div class="card">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="ui-g-12 ui-lg-3">
+          <button
+            pButton
+            type="button"
+            label="Enviar YMS"
+            (click)="sendYms()"
+            class="ui-button-success"
+            style="width: auto"
+          ></button>
+        </div>
+      </div>
+      
       <!-- Tabla con las ordenes de compras -->
       <p-table
         [columns]="cols"

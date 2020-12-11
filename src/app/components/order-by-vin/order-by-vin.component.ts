@@ -51,6 +51,7 @@ export class OrderByVinComponent implements OnInit {
     ngOnInit(): void {
         this.onChanges();
     }
+    
     async saveExcel(contrato) {
         let workbook = new Excel.Workbook();
         let worksheet = workbook.addWorksheet('Car Data');
@@ -148,16 +149,11 @@ export class OrderByVinComponent implements OnInit {
         });
 
         promiseData.then((solved) => {
-
             workbook.xlsx.writeBuffer().then((data) => {
                 let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                 fs.saveAs(blob, `Reporte Order by VIN ${contrato.contracNumber}.xlsx`);
           });
         });
-        
-
-        
-
     }
 
     onChanges(): void {
@@ -170,7 +166,6 @@ export class OrderByVinComponent implements OnInit {
         });
       }
 
-    
     private BuildForm() {
         this.formGroup = this.fb.group({
             contracNumber: ['', []],
@@ -210,6 +205,12 @@ export class OrderByVinComponent implements OnInit {
                 }
             });
         }
+    }
+
+    sendYms(){
+        this.serviceVin.sendYms().subscribe((response) => {
+            this.messageServices.add({ key: 'error', severity: 'success', summary: 'Enviado!' });
+        });
     }
 
 
