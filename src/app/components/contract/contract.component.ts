@@ -136,6 +136,14 @@ export class ContractComponent implements OnInit {
         this.visiableAddEdit = true;
     }
 
+    asigUnits(){
+        this.services.postAsigunits().subscribe((response) => {
+            this.messageServices.clear();
+            this.fillTable();
+            this.messageServices.add({ key: 'error', severity: 'success', summary: 'Contratos asignados' });
+        });
+    }
+
     updateContract(contract){
         this.detail = [];
         this.contratoSelected = contract;
