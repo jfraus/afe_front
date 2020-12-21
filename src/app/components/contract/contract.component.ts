@@ -29,7 +29,8 @@ export class ContractComponent implements OnInit {
     displayDetalle = false;
 
 
-    constructor(public messageServices: MessageService,private services: SaleContractControllerService,private fb: FormBuilder){
+    constructor(public messageServices: MessageService,private services: SaleContractControllerService,private fb: FormBuilder,
+        private confirmService: ConfirmationService){
         this.cols = [
             { field: 'contracNumber', header: 'Contrato de Venta' },
             { field: 'countryName', header: 'País' },
@@ -77,11 +78,16 @@ export class ContractComponent implements OnInit {
     }
 
     sendContrato(contract){
-        this.services.putEnviar(contract).subscribe((response) => {
-            this.messageServices.clear();
-            this.messageServices.add({ key: 'success', severity: 'success', summary: 'El contrato se ha enviado' });
-            this.fillTable();
-        });
+        this.confirmService.confirm({
+            message: '¿Esta seguro de envíar este Contrato de Venta?',
+            accept: () => {
+                this.services.putEnviar(contract).subscribe((response) => {
+                    this.messageServices.clear();
+                    this.messageServices.add({ key: 'success', severity: 'success', summary: 'El contrato se ha enviado' });
+                    this.fillTable();
+                });
+            }
+        })        
     }
 
     onChanges(): void {
@@ -121,7 +127,7 @@ export class ContractComponent implements OnInit {
             this.dataTable = this.dataTable.map((x) => ({
                 ...x,
                 countryName: x.country.name,
-                dealerName: x.dealer.name,
+                dealerName: x.dealer.number+' '+x.dealer.name,
             }));
         })
     }
