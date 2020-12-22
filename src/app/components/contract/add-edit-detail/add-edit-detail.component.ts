@@ -67,8 +67,8 @@ export class EditAddDetailComponent implements OnInit {
     ngOnInit(): void {}
     
     fill() {
-        for (var cType in CarrierType) {
-            this.carrierType.push({label: cType, value:cType[0]});
+        for (let cType in CarrierType) {
+            this.carrierType.push({label: cType, value:CarrierType[''+cType+'']});
         }
         this.servicesModel.get(true).subscribe((response) => {
             this.model = response.map(r => (
@@ -197,6 +197,7 @@ export class EditAddDetailComponent implements OnInit {
                 label: r.carrierCode, value: r
             }));
         });
+        this.addModel.get('carrierName').setValue('');
     }
 
     selectCarrier() {
@@ -210,6 +211,8 @@ export class EditAddDetailComponent implements OnInit {
             model = this.addModel.get('model').value;
             let isSelected = model !== null;
             this.addModel.get('modelType').setValue(isSelected ? model.type.type : '');
+            this.addModel.get('color').setValue('');
+            this.addModel.get('colorInterior').setValue('');
             resolved(true);
         });
 
@@ -277,12 +280,10 @@ export class EditAddDetailComponent implements OnInit {
     }
 
     closedRefresh(){
-
         this.addModel.reset();
         this.color = [];
         this.carrier = [];
         this.close.emit(true);
-        
     }
 }
 
