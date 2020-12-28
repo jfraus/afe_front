@@ -769,7 +769,7 @@ body {
   }
 }
 .login-body {
-  background-image: url("../../layout/images/login/bg-login.jpg");
+  /* background-image: url("../../layout/images/login/bg-login.jpg"); */
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;

@@ -18,9 +18,6 @@ export const routes: Routes = [
         {path: 'modelos-venta-directa', component: ModelComponent},
         {path: 'contratos', component: ContractComponent},
         {path: 'order-by-vin', component: OrderByVinComponent},
-        
-
-
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full',},
