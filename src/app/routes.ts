@@ -14,9 +14,9 @@ export const routes: Routes = [
     { path: '',
     component: AppMainComponent,
     children: [
-        {path: 'orden-compra', component: PurchaseOrderComponent},
-        {path: 'modelos-venta-directa', component: ModelComponent},
-        {path: 'contratos', component: ContractComponent},
+        {path: 'purchase-order', component: PurchaseOrderComponent},
+        {path: 'model', component: ModelComponent},
+        {path: 'contract', component: ContractComponent},
         {path: 'order-by-vin', component: OrderByVinComponent},
     ]
     },
