@@ -9,15 +9,16 @@ import { PurchaseOrderComponent } from './components/purchase-order/purchase-ord
 import { ModelComponent } from './components/model/model.component';
 import { ContractComponent } from './components/contract/contract.component';
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
+import { AuthGuardService } from './utils/auth-guard-.service';
 
 export const routes: Routes = [
     { path: '',
     component: AppMainComponent,
     children: [
-        {path: 'purchase-order', component: PurchaseOrderComponent},
-        {path: 'model', component: ModelComponent},
-        {path: 'contract', component: ContractComponent},
-        {path: 'order-by-vin', component: OrderByVinComponent},
+        {path: 'purchase-order', component: PurchaseOrderComponent, canActivate: [AuthGuardService]},
+        {path: 'model', component: ModelComponent, canActivate: [AuthGuardService]},
+        {path: 'contract', component: ContractComponent , canActivate: [AuthGuardService]},
+        {path: 'order-by-vin', component: OrderByVinComponent, canActivate: [AuthGuardService]},
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full',},
