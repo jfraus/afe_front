@@ -19,6 +19,9 @@ export class ErrorToastService{
 
     public errorLogin(){
         this.messageServices.add({key: 'error',severity: 'error', summary: "Error", detail: `Credenciales Invalidas`});
+    }
 
+    public errorToken(){
+        this.messageServices.add({key: 'error',severity: 'error', summary: "Error", detail: `Session expired`});
     }
 }

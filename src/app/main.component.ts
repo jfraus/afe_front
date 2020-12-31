@@ -1,6 +1,8 @@
 import { Component, OnDestroy, Renderer2, OnInit, NgZone } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AuthService } from './utils/auth.service';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-main',
@@ -49,11 +51,18 @@ export class AppMainComponent implements OnDestroy, OnInit {
 
     configDialogActive: boolean;
 
-    constructor(public renderer: Renderer2, public zone: NgZone,public aut: AuthService) {
+    constructor(public messageServices: MessageService,private router: Router, public renderer: Renderer2, public zone: NgZone, public aut: AuthService) {
     }
 
     ngOnInit() {
-        this.zone.runOutsideAngular(() => {this.bindRipple(); });
+        this.zone.runOutsideAngular(() => { this.bindRipple(); });
+        if (!localStorage.getItem("token")) {
+            this.router.navigateByUrl("/accessdenied")
+        }else{
+            setTimeout(() => {
+                this.messageServices.add({key: 'error',severity: 'success', summary: 'Bienvenido', detail: `${localStorage.getItem("fullname")}`});
+            }, 3600);
+        }
     }
 
     bindRipple() {
@@ -88,7 +97,7 @@ export class AppMainComponent implements OnDestroy, OnInit {
         const mozMatchesSelector = 'mozMatchesSelector';
         const msMatchesSelector = 'msMatchesSelector';
         const p = Element.prototype;
-        const f = p[matches] || p[webkitMatchesSelector] || p[mozMatchesSelector] || p[msMatchesSelector] || function(s) {
+        const f = p[matches] || p[webkitMatchesSelector] || p[mozMatchesSelector] || p[msMatchesSelector] || function (s) {
             return [].indexOf.call(document.querySelectorAll(s), this) !== -1;
         };
         return f.call(el, selector);
@@ -245,6 +254,7 @@ export class AppMainComponent implements OnDestroy, OnInit {
     }
 
     onTopbarSubItemClick(event) {
+        this.aut.logout();
         event.preventDefault();
     }
 

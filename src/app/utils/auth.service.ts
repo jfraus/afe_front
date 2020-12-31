@@ -13,10 +13,13 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-    constructor(private router: Router,private http: HttpClient, public messageServices: MessageService) { }
+    constructor(private router: Router, private http: HttpClient, public messageServices: MessageService) { }
     logout(): void {
         localStorage.setItem("isLoggedIn", 'false');
         localStorage.removeItem('token');
+        localStorage.removeItem("fullname");
+        this.router.navigateByUrl("/login");
+
     }
 
     login(username: string, password: string) {
@@ -24,7 +27,8 @@ export class AuthService {
         this.getLogin(username, password).subscribe(response => {
             localStorage.setItem('isLoggedIn', "true");
             localStorage.setItem('token', response.access_token);
-            this.router.navigateByUrl("/purchase-order").then(() => {});
+            localStorage.setItem("fullname", response.fullName);
+            this.router.navigateByUrl("/").then(() => { });
             this.messageServices.add({ key: 'error', severity: 'success', summary: "Bienvenido", detail: `${response.fullName}` });
         });
     }
