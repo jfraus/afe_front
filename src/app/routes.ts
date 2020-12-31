@@ -9,7 +9,7 @@ import { PurchaseOrderComponent } from './components/purchase-order/purchase-ord
 import { ModelComponent } from './components/model/model.component';
 import { ContractComponent } from './components/contract/contract.component';
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
-import { AuthGuardService } from './utils/auth-guard-.service';
+import { AuthGuardService } from './utils/auth-guard.service';
 
 export const routes: Routes = [
     { path: '',

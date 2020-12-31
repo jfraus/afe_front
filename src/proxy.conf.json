@@ -1,0 +1,11 @@
+{
+    "/security/oauth/token": {
+      "target": "http://10.45.149.139:8082",
+      "changeOrigin": true,
+      "secure": false,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/security/oauth/token": ""
+      }
+    }
+  }

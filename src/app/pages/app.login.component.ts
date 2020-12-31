@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup,Validators } from '@angular/forms'; 
+import { Router, CanActivate, ActivatedRouteSnapshot,RouterStateSnapshot } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AppValidationMessagesService } from '../utils/app-validation-messages.service';
+import { AuthService } from '../utils/auth.service';
 
 
 @Component({
@@ -11,7 +14,7 @@ import { AppValidationMessagesService } from '../utils/app-validation-messages.s
 export class AppLoginComponent {
   formGroup:  FormGroup;
   validations: any = [];
-  constructor(private fb: FormBuilder,private messages: AppValidationMessagesService){
+  constructor(private router: Router,private AuthService: AuthService,private fb: FormBuilder,private messages: AppValidationMessagesService,public messageServices: MessageService){
     this.BuildForm();
     this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('username'));
@@ -24,6 +27,14 @@ export class AppLoginComponent {
         username: ['', [Validators.required]],
         password: ['', [Validators.required]],
     });
+    
+    
+}
+login(){
+  if(this.formGroup.valid){ 
+    this.AuthService.login(this.formGroup.get('username').value,this.formGroup.get('password').value)
+  
+  }
 }
 
 }

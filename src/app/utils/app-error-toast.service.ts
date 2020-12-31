@@ -16,4 +16,9 @@ export class ErrorToastService{
         
         this.messageServices.add({key: 'error',severity: 'error', summary: error.error.message, detail: `Codigo de error ${error.status}`});
     }
+
+    public errorLogin(){
+        this.messageServices.add({key: 'error',severity: 'error', summary: "Error", detail: `Credenciales Invalidas`});
+
+    }
 }

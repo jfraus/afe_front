@@ -10,9 +10,25 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
 
         //Example inject headers
-        request = request.clone({headers: request.headers.set('Content-Type','application/json'),withCredentials: true});
-        
-
+        if(request.headers.get("Content-Type") !== 'application/x-www-form-urlencoded'){
+            request = request.clone({headers: request.headers.set('Content-Type','application/json'),withCredentials: true});
+            request = request.clone({headers: request.headers.set('Authorization',`Bearer ${localStorage.getItem("token")}`),withCredentials: true});
+        }else{
+            return next.handle(request).pipe(
+                //You will need to handle the api reponse this is exmaple
+                map((event: HttpEvent<any>) => {
+                    if(event instanceof HttpResponse){
+                    }
+                    return event;
+                }),
+                //You will need to handle the error this is exmaple
+                catchError((error: HttpErrorResponse) => {
+                    
+                    this.servicesError.errorLogin();
+                    return throwError(error)
+                })
+            );
+        }
         return next.handle(request).pipe(
             //You will need to handle the api reponse this is exmaple
             map((event: HttpEvent<any>) => {

@@ -107,7 +107,8 @@ import {  ContractDetailsComponent } from './components/contract/details-contrac
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
 import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
 import { pipeStringDate } from './utils/pipeStringDate.pipe';
-import { AuthGuardService } from './utils/auth-guard-.service';
+import { AuthGuardService } from './utils/auth-guard.service';
+import { AuthService } from './utils/auth.service';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -224,7 +225,8 @@ const sharedComponents = [
         ErrorToastService,
         MessageService,
         BreadcrumbService,
-        AuthGuardService
+        AuthGuardService,
+        AuthService
     ],
     bootstrap: [AppComponent]
 })
