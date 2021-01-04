@@ -169,6 +169,16 @@
                   class="blue-grey-btn space-btn"
                 ></button>
               </div>
+              <div *ngIf="rowData.status === 'FINALIZADO'">
+                <button
+                  pButton
+                  type="button"
+                  (click)="showDetail(rowData)"
+                  icon="ui-icon-format-list-bulleted"
+                  style="margin-left: 3px"
+                  class="blue-grey-btn space-btn"
+                ></button>
+              </div>
             </ng-template>
           </td>
         </tr>
