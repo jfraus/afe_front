@@ -1,37 +1,19 @@
 
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-
-
 
 @Injectable({
     providedIn: "root"
 })
 export class AuthService {
 
-    constructor(private router: Router,private http: HttpClient, public messageServices: MessageService) { }
-    logout(): void {
-        localStorage.setItem("isLoggedIn", 'false');
-        localStorage.removeItem('token');
+    constructor(private router: Router, private http: HttpClient, public messageServices: MessageService) { 
     }
 
-    login(username: string, password: string) {
-
-        this.getLogin(username, password).subscribe(response => {
-            localStorage.setItem('isLoggedIn', "true");
-            localStorage.setItem('token', response.access_token);
-            this.router.navigateByUrl("/purchase-order").then(() => {});
-            this.messageServices.add({ key: 'error', severity: 'success', summary: "Bienvenido", detail: `${response.fullName}` });
-        });
-    }
-
-
-    getLogin(username, password) {
-
+    getLogin(username:string, password:string) {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -51,6 +33,17 @@ export class AuthService {
         return this.http.post<any>(`${environment.apiUrlSecurity}`, params.toString(), httpOptions);
     }
 
+    login(username:string, password:string) {
+        this.getLogin(username, password).subscribe(response => {
+            localStorage.setItem('isLoggedIn', "true");
+            localStorage.setItem('token', response.access_token);
+            this.router.navigateByUrl("/purchase-order").then(() => {});
+            this.messageServices.add({ key: 'error', severity: 'success', summary: "Bienvenido", detail: `${response.fullName}` });
+        });
+    }
 
-
+    logout(): void {
+        localStorage.setItem("isLoggedIn", 'false');
+        localStorage.removeItem('token');
+    }
 } 
