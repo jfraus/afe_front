@@ -1,5 +1,6 @@
 import { Component, OnDestroy, Renderer2, OnInit, NgZone } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { AuthService } from './utils/auth.service';
 
 @Component({
     selector: 'app-main',
@@ -48,7 +49,8 @@ export class AppMainComponent implements OnDestroy, OnInit {
 
     configDialogActive: boolean;
 
-    constructor(public renderer: Renderer2, public zone: NgZone) {}
+    constructor(public renderer: Renderer2, public zone: NgZone,public aut: AuthService) {
+    }
 
     ngOnInit() {
         this.zone.runOutsideAngular(() => {this.bindRipple(); });

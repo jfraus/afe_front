@@ -27,7 +27,7 @@ export class AppValidationMessagesService{
     }
 
     set messagesRequired(value){
-        this._messagesRequired = `*Campo Requerido`;
+        this._messagesRequired = `*Campo requerido`;
     }
 
     get messagesMinLenght(): String{
@@ -68,7 +68,6 @@ export class AppValidationMessagesService{
             })
         }
         return object;
-
     }
 
 }

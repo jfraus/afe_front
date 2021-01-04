@@ -14,8 +14,11 @@ export class AppMenuComponent implements OnInit {
     constructor(public app: AppMainComponent) {}
 
     ngOnInit() {
-
+        this.model = [
+            {label: 'Dashboard', routerLink: ['/']},
+        ];
     }
+
 }
 
 
