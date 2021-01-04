@@ -10,49 +10,29 @@ import { AuthService } from "./auth.service";
 export class HttpConfigInterceptor implements HttpInterceptor {
     constructor(private aut: AuthService,private router: Router, public servicesError: ErrorToastService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-        //Example inject headers
-        if (request.headers.get("Content-Type") !== 'application/x-www-form-urlencoded') {
-            request = request.clone({ headers: request.headers.set('Content-Type', 'application/json'), withCredentials: true });
-            request = request.clone({ headers: request.headers.set('Authorization', `Bearer ${localStorage.getItem("token")}`), withCredentials: true });
-        } else {
+        if(request.headers.get("Content-Type") !== 'application/x-www-form-urlencoded'){
+            request = request.clone({headers: request.headers.set('Content-Type','application/json'), withCredentials: true});
+            request = request.clone({headers: request.headers.set('Authorization',`Bearer ${localStorage.getItem("token")}`), withCredentials: true});
+        }else{
             return next.handle(request).pipe(
-                //You will need to handle the api reponse this is exmaple
                 map((event: HttpEvent<any>) => {
                     if (event instanceof HttpResponse) {
                     }
                     return event;
                 }),
-                //You will need to handle the error this is exmaple
                 catchError((error: HttpErrorResponse) => {
-
-                    this.servicesError.errorLogin();
+                    if (error.status === 401) {
+                        //Invalid token
+                        this.servicesError.errorToken();
+                        this.aut.logout();
+                        this.router.navigateByUrl('/accessdenied');
+                        return throwError(error)
+                    } else {
+                        this.servicesError.executeError(error);
+                    }
                     return throwError(error)
                 })
             );
         }
-        return next.handle(request).pipe(
-            //You will need to handle the api reponse this is exmaple
-
-            map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-
-                }
-                return event;
-            }),
-            //You will need to handle the error this is exmaple
-            catchError((error: HttpErrorResponse) => {
-                if (error.status === 401) {
-                    //TOKEN INVALID
-                    this.servicesError.errorToken();
-                    this.aut.logout();
-                    this.router.navigateByUrl('/accessdenied');
-                    return throwError(error)
-                } else {
-                    this.servicesError.executeError(error);
-                }
-                return throwError(error)
-            })
-        );
     }
 }

@@ -21,11 +21,11 @@ export const routes: Routes = [
         {path: 'order-by-vin', component: OrderByVinComponent, canActivate: [AuthGuardService]},
     ]
     },
-    {path: 'error', component: AppErrorComponent, pathMatch   : 'full',},
+    {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
     {path: 'accessdenied', component: AppAccessdeniedComponent},
     {path: '404', component: AppNotfoundComponent},
     {path: 'login', component: AppLoginComponent},
-    {path: '**', redirectTo: '/404',pathMatch   : 'full',},
+    {path: '**', redirectTo: '/404',pathMatch   : 'full'},
 
 ];
 
