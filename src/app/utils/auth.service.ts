@@ -10,9 +10,8 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-    constructor(private router: Router, private http: HttpClient, public messageServices: MessageService) { 
-    }
-
+    constructor(private router: Router, private http: HttpClient, public messageServices: MessageService) { }
+  
     getLogin(username:string, password:string) {
         const httpOptions = {
             headers: new HttpHeaders({
@@ -33,11 +32,12 @@ export class AuthService {
         return this.http.post<any>(`${environment.apiUrlSecurity}`, params.toString(), httpOptions);
     }
 
-    login(username:string, password:string) {
+    login(username: string, password: string) {
         this.getLogin(username, password).subscribe(response => {
             localStorage.setItem('isLoggedIn', "true");
             localStorage.setItem('token', response.access_token);
-            this.router.navigateByUrl("/purchase-order").then(() => {});
+            localStorage.setItem("fullname", response.fullName);
+            this.router.navigateByUrl("/").then(() => { });
             this.messageServices.add({ key: 'error', severity: 'success', summary: "Bienvenido", detail: `${response.fullName}` });
         });
     }
@@ -45,5 +45,7 @@ export class AuthService {
     logout(): void {
         localStorage.setItem("isLoggedIn", 'false');
         localStorage.removeItem('token');
+        localStorage.removeItem("fullname");
+        this.router.navigateByUrl("/login");
     }
 } 
