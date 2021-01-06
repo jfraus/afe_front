@@ -4,14 +4,14 @@ import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { MenuControllerService } from '../services/menu-controller.service';
 
 @Injectable({
     providedIn: "root"
 })
 export class AuthService {
 
-    constructor(private router: Router, private http: HttpClient, public messageServices: MessageService) { }
-  
+    constructor(private menuServices: MenuControllerService,private router: Router, private http: HttpClient, public messageServices: MessageService) { }
     getLogin(username:string, password:string) {
         const httpOptions = {
             headers: new HttpHeaders({
@@ -38,6 +38,7 @@ export class AuthService {
             localStorage.setItem('token', response.access_token);
             localStorage.setItem("fullname", response.fullName);
             this.router.navigateByUrl("/").then(() => { });
+            this.convertMenu();
             this.messageServices.add({ key: 'error', severity: 'success', summary: "Bienvenido", detail: `${response.fullName}` });
         });
     }
@@ -46,6 +47,19 @@ export class AuthService {
         localStorage.setItem("isLoggedIn", 'false');
         localStorage.removeItem('token');
         localStorage.removeItem("fullname");
+        sessionStorage.clear();
         this.router.navigateByUrl("/login");
+    }
+
+    convertMenu(){
+        this.menuServices.get().subscribe(response => {
+        let menuData = response.view;
+        menuData = menuData.map(view => ({
+            label: view.view, routerLink: [`/${view.route}`]
+        }));
+        console.log(menuData);
+        
+        sessionStorage.setItem("menu",JSON.stringify(menuData));
+        });
     }
 } 

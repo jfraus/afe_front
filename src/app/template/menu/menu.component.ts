@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/utils/auth.service';
 import { AppMainComponent } from './../../main.component';
 
 @Component({
@@ -11,12 +12,18 @@ export class AppMenuComponent implements OnInit {
 
     model: any[];
 
-    constructor(public app: AppMainComponent) {}
+    constructor(public app: AppMainComponent, private aut: AuthService) {}
 
     ngOnInit() {
-        this.model = [
-            {label: 'Dashboard', routerLink: ['/']},
-        ];
+        setTimeout(() => {
+            
+            console.log("Menu creacion");
+            if(sessionStorage.getItem("menu")){
+                this.model = JSON.parse(sessionStorage.getItem("menu"));
+            }else{
+                this.aut.logout();
+            }
+        }, 1000);
     }
 
 }
