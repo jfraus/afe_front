@@ -109,6 +109,7 @@ import { PurchaseOrderComponent } from './components/purchase-order/purchase-ord
 import { pipeStringDate } from './utils/pipeStringDate.pipe';
 import { AuthGuardService } from './utils/auth-guard.service';
 import { AuthService } from './utils/auth.service';
+import { MenuControllerService } from './services/menu-controller.service';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -226,7 +227,8 @@ const sharedComponents = [
         MessageService,
         BreadcrumbService,
         AuthGuardService,
-        AuthService
+        AuthService,
+        MenuControllerService
     ],
     bootstrap: [AppComponent]
 })

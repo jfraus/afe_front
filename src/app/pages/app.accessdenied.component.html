@@ -7,12 +7,17 @@
         <div class="exception-detail">
             <h1>ACCESS DENIED</h1>
             <div *ngIf="!token ;else notoken">
-                <p>Your token is no longer valid.</p>
+                <p>Tu token no es valido.</p>
             </div>
             <ng-template #notoken>
-                <p>You do not have the necessary permissons.</p>
+                <p>No tienes los permisos necesarios.</p>
             </ng-template>
-            <p-button label="GO TO  LOGIN" [routerLink]="['/login']"></p-button>
+            <div *ngIf="!token ">
+                <p-button label="Regresar a Login" [routerLink]="['/login']"></p-button>
+            </div>
+            <div *ngIf="!permissions ">
+                <p-button label="Regresar" [routerLink]="['/']"></p-button>
+            </div>
         </div>
     </div>
 </div>

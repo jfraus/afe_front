@@ -60,7 +60,9 @@ export class AppMainComponent implements OnDestroy, OnInit {
             this.router.navigateByUrl("/accessdenied")
         }else{
             setTimeout(() => {
-                this.messageServices.add({key: 'error',severity: 'success', summary: 'Bienvenido', detail: `${localStorage.getItem("fullname")}`});
+                if(localStorage.getItem("fullname")){
+                    this.messageServices.add({key: 'error',severity: 'success', summary: 'Bienvenido', detail: `${localStorage.getItem("fullname")}`});
+                }
             }, 3600);
         }
     }

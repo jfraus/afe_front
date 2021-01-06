@@ -15,13 +15,27 @@ export class AuthGuardService implements CanActivate {
  
     canActivate(route: ActivatedRouteSnapshot,
                 state: RouterStateSnapshot): boolean {
-        if (!this.isLoggedIn())  {
+        
+        if (!this.isLoggedIn() || !this.checkPermissions(state))  {
             //redirect to login/home page etc
             //return false to cancel the navigation
             this.router.navigateByUrl('/accessdenied');
             return false;
         } 
         return true;
+    }
+
+    public checkPermissions(state): boolean{
+        let menu = JSON.parse(sessionStorage.getItem("menu"));
+        if(state.url === "/"){
+            return true;
+        }else{
+            if(menu.find(element => element.routerLink[0] === state.url)){
+                return true;
+            }
+        }
+        sessionStorage.setItem("permRouter","false");
+        return false;
     }
 }
  
