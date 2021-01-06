@@ -15,9 +15,6 @@ export class AuthGuardService implements CanActivate {
  
     canActivate(route: ActivatedRouteSnapshot,
                 state: RouterStateSnapshot): boolean {
-        console.log(state);
-        
-        console.log(this.isLoggedIn(),this.checkPermissions(state));
         
         if (!this.isLoggedIn() || !this.checkPermissions(state))  {
             //redirect to login/home page etc
@@ -33,9 +30,6 @@ export class AuthGuardService implements CanActivate {
         if(state.url === "/"){
             return true;
         }else{
-            console.log("entry conditon");
-            console.log(menu);
-            
             if(menu.find(element => element.routerLink[0] === state.url)){
                 return true;
             }

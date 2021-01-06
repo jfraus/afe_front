@@ -17,7 +17,6 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         setTimeout(() => {
             
-            console.log("Menu creacion");
             if(sessionStorage.getItem("menu")){
                 this.model = JSON.parse(sessionStorage.getItem("menu"));
             }else{

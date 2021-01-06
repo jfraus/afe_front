@@ -57,8 +57,6 @@ export class AuthService {
         menuData = menuData.map(view => ({
             label: view.view, routerLink: [`/${view.route}`]
         }));
-        console.log(menuData);
-        
         sessionStorage.setItem("menu",JSON.stringify(menuData));
         });
     }
