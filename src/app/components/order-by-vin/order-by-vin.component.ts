@@ -39,9 +39,9 @@ export class OrderByVinComponent implements OnInit {
             { field: 'countryName', header: 'País' },
             { field: 'createDate', header: 'Fecha de creación' },
             { field: 'quantity', header: 'Pedido' },
-            { field: 'totalUnitsAssigned', header: 'Falta por asignar' },
-            { field: '', header: 'Order by VIN' },
-            { field: 'status', header: 'Estatus' },
+            { field: 'totalUnitsAssigned', header: 'Unidades Asignadas' },
+            { field: 'orderByVin', header: 'Order by VIN' },
+            { field: 'statusOrder', header: 'Estatus' },
             { field: 'action', header: 'Acción' },
         ];
         this.BuildForm();
@@ -56,7 +56,7 @@ export class OrderByVinComponent implements OnInit {
         let workbook = new Excel.Workbook();
         let worksheet = workbook.addWorksheet('Car Data');
         const title = ["Reporte de Order by VIN","","Contrato de Venta",contrato.contracNumber];
-        const header = ["Contrato de Venta", "País", "Fecha de Creación de contrato de venta", "VIN", "Tipo", "Modelo","Color","Color Interior","No. Dealear","Nombre de dealer","No. Carrier","Nombre de Carrier","Order by VIN(status)"]
+        const header = ["Contrato de Venta", "País", "Fecha de Creación de contrato de venta", "VIN", "Tipo", "Modelo","Color","Color Interior","No. Dealer","Nombre de dealer","No. Carrier","Nombre de Carrier","Order by VIN(status)"]
         
         //AGREGANDO EL TITULO
         let titleRowTitle = worksheet.addRow([]);
@@ -129,7 +129,16 @@ export class OrderByVinComponent implements OnInit {
         let promiseData = new Promise((resolve, reject) => {
             datos.forEach(element => {
                 element.forEach(iteam => {
-                    let row = worksheet.addRow([iteam.contractNumber,iteam.country,iteam.creationDateSales,iteam.vin,iteam.model.type.type,iteam.model.code,iteam.color.code,iteam.color.interiorCode,iteam.dealer.number,iteam.dealer.name,iteam.carrier.carrierCode,iteam.carrier.name,iteam.statusOrderByVin]);
+                    if(iteam.totalUnitsAssigned < iteam.quantity){
+                        iteam.statusOrder = "Por completar";
+                    }
+                    if(iteam.totalUnitsAssigned === 0){
+                        iteam.statusOrder = "Pendiente";
+                    }
+                    if(iteam.totalUnitsAssigned === iteam.quantity && iteam.quantity !== 0){
+                        iteam.statusOrder = "Enviado";
+                    }
+                    let row = worksheet.addRow([iteam.contractNumber,iteam.country,iteam.creationDateSales,iteam.vin,iteam.model.type.type,iteam.model.code,iteam.color.code,iteam.color.interiorCode,iteam.dealer.number,iteam.dealer.name,iteam.carrier.carrierCode,iteam.carrier.name,iteam.statusOrder]);
                     row.eachCell((cell, number) => {
                         cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
                     });
@@ -191,6 +200,20 @@ export class OrderByVinComponent implements OnInit {
                 countryName: x.country.name,
                 dealerName: x.dealer.name,
             }));
+            this.dataTable.forEach(iteam => {
+                if(iteam.totalUnitsAssigned === 0){
+                    iteam.statusOrder = "Pendiente";
+                    return;
+                }
+                if(iteam.totalUnitsAssigned === iteam.quantity  && iteam.quantity !== 0){
+                    iteam.statusOrder = "Enviado";
+                    return;
+                }
+                if(iteam.totalUnitsAssigned < iteam.quantity){
+                    iteam.statusOrder = "Por completar";
+                    return;
+                }
+            })
         })
     }
 
