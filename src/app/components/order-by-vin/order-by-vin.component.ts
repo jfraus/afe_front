@@ -130,15 +130,7 @@ export class OrderByVinComponent implements OnInit {
         let promiseData = new Promise((resolve, reject) => {
             datos.forEach(element => {
                 element.forEach(iteam => {
-                    if(iteam.totalUnitsAssigned < iteam.quantity){
-                        iteam.statusOrder =  StatusOrderType.PorCompletar;
-                    }
-                    if(iteam.totalUnitsAssigned === 0){
-                        iteam.statusOrder =  StatusOrderType.Pendiente;
-                    }
-                    if(iteam.totalUnitsAssigned === iteam.quantity && iteam.quantity !== 0){
-                        iteam.statusOrder =  StatusOrderType.Enviado;
-                    }
+                iteam.statusOrder = this.statusOrderByVin(iteam.totalUnitsAssigned,iteam.quantity);
                     let row = worksheet.addRow([iteam.contractNumber,iteam.country,iteam.creationDateSales,iteam.vin,iteam.model.type.type,iteam.model.code,iteam.color.code,iteam.color.interiorCode,iteam.dealer.number,iteam.dealer.name,iteam.carrier.carrierCode,iteam.carrier.name,iteam.statusOrder]);
                     row.eachCell((cell, number) => {
                         cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
@@ -176,6 +168,18 @@ export class OrderByVinComponent implements OnInit {
         });
       }
 
+      public statusOrderByVin(numberTotal: Number, numberQuantity: Number): String{
+        if(numberTotal < numberQuantity){
+           return StatusOrderType.PorCompletar;
+        }
+        if( numberTotal === 0){
+            return StatusOrderType.Pendiente;
+        }
+        if(numberTotal === numberQuantity && numberQuantity !== 0){
+        return StatusOrderType.Enviado;
+        }
+      }
+
     private BuildForm() {
         this.formGroup = this.fb.group({
             contracNumber: ['', []],
@@ -202,18 +206,7 @@ export class OrderByVinComponent implements OnInit {
                 dealerName: x.dealer.name,
             }));
             this.dataTable.forEach(iteam => {
-                if(iteam.totalUnitsAssigned === 0){
-                    iteam.statusOrder = StatusOrderType.Pendiente;
-                    return;
-                }
-                if(iteam.totalUnitsAssigned === iteam.quantity  && iteam.quantity !== 0){
-                    iteam.statusOrder = StatusOrderType.Enviado;
-                    return;
-                }
-                if(iteam.totalUnitsAssigned < iteam.quantity){
-                    iteam.statusOrder = StatusOrderType.PorCompletar;
-                    return;
-                }
+                iteam.statusOrder = this.statusOrderByVin(iteam.totalUnitsAssigned,iteam.quantity);
             })
         })
     }
