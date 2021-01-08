@@ -22,4 +22,5 @@ export class ErrorToastService{
     public errorToken(){
         this.messageServices.add({key: 'error',severity: 'error', summary: 'Error', detail: 'La sesión expiro'});
     }
+    
 }

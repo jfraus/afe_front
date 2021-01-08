@@ -22,6 +22,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     return event;
                 }),
                 catchError((error: HttpErrorResponse) => {
+                    if(error.status === 400 && error.error.error == "invalid_grant"){
+                        this.servicesError.errorLogin();
+                        return throwError(error)
+                    }
                     if (error.status === 401) {
                         //Invalid token
                         this.servicesError.errorToken();
@@ -43,6 +47,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     return event;
                 }),
                 catchError((error: HttpErrorResponse) => {
+                    if(error.status === 400 && error.error.error == "invalid_grant"){
+                        this.servicesError.errorLogin();
+                        return throwError(error)
+                    }
                     if (error.status === 401) {
                         //Invalid token
                         this.servicesError.errorToken();
