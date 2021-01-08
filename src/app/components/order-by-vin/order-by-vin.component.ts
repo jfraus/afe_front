@@ -11,6 +11,7 @@ import { resolve } from 'url';
 import * as Excel from "exceljs/dist/exceljs.min.js";
 import * as fs from 'file-saver';
 import { VinControllerService } from 'src/app/services/vin-controller.service';
+import { StatusOrderType } from 'src/app/enums/status-order-by-vin.enum';
 
 
 
@@ -130,13 +131,13 @@ export class OrderByVinComponent implements OnInit {
             datos.forEach(element => {
                 element.forEach(iteam => {
                     if(iteam.totalUnitsAssigned < iteam.quantity){
-                        iteam.statusOrder = "Por completar";
+                        iteam.statusOrder =  StatusOrderType.PorCompletar;
                     }
                     if(iteam.totalUnitsAssigned === 0){
-                        iteam.statusOrder = "Pendiente";
+                        iteam.statusOrder =  StatusOrderType.Pendiente;
                     }
                     if(iteam.totalUnitsAssigned === iteam.quantity && iteam.quantity !== 0){
-                        iteam.statusOrder = "Enviado";
+                        iteam.statusOrder =  StatusOrderType.Enviado;
                     }
                     let row = worksheet.addRow([iteam.contractNumber,iteam.country,iteam.creationDateSales,iteam.vin,iteam.model.type.type,iteam.model.code,iteam.color.code,iteam.color.interiorCode,iteam.dealer.number,iteam.dealer.name,iteam.carrier.carrierCode,iteam.carrier.name,iteam.statusOrder]);
                     row.eachCell((cell, number) => {
@@ -202,15 +203,15 @@ export class OrderByVinComponent implements OnInit {
             }));
             this.dataTable.forEach(iteam => {
                 if(iteam.totalUnitsAssigned === 0){
-                    iteam.statusOrder = "Pendiente";
+                    iteam.statusOrder = StatusOrderType.Pendiente;
                     return;
                 }
                 if(iteam.totalUnitsAssigned === iteam.quantity  && iteam.quantity !== 0){
-                    iteam.statusOrder = "Enviado";
+                    iteam.statusOrder = StatusOrderType.Enviado;
                     return;
                 }
                 if(iteam.totalUnitsAssigned < iteam.quantity){
-                    iteam.statusOrder = "Por completar";
+                    iteam.statusOrder = StatusOrderType.PorCompletar;
                     return;
                 }
             })
