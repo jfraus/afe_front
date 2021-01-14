@@ -119,7 +119,6 @@ export class EditAddContractComponent {
 
     selectColor():void{
         let color = this.addModel.get('color').value;
-        
         this.addModel.get('internalColor').setValue(color !== null ? color.interiorCode: '');
     }
 
