@@ -44,11 +44,12 @@ export class EditPurchaseOrderComponent implements OnInit {
     constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
 
         let day = new Date();
-        this.minDate = new Date(day.getFullYear(),day.getMonth() ,1,0,0,0,0);
+        this.minDate = new Date(day.getFullYear(),day.getMonth()-2 ,1,0,0,0,0);
 
         this.maxDateExpired = new Date(day.getFullYear(),day.getMonth()+1 ,-1,0,0,0,0);
 
-        this.minExpired = new Date(day.getFullYear(),day.getMonth() -1,1,0,0,0,0);
+        this.minExpired = new Date(day.getFullYear(),day.getMonth()-1 -1,1,0,0,0,0);
+
 
         this.cols = [
             { field: 'model.type.type', header: 'Tipo' },
@@ -99,6 +100,7 @@ export class EditPurchaseOrderComponent implements OnInit {
         
     }
     updateDetail(detail){
+
         let promise = new Promise((resolve) => {
             this.detail = {
                 id: detail.id,

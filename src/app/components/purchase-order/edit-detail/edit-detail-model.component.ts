@@ -132,7 +132,6 @@ export class EditDetailModelComponent implements OnInit {
 
     agregar(){
         if (this.addModel.valid) {
-
             let validPromise = new Promise((resolved) => {
                 this.servicesPurchase.purchase_orders(this.purchaseOrderId, null, null).subscribe((response) => {
                     let array = response[0].detail;
@@ -146,8 +145,7 @@ export class EditDetailModelComponent implements OnInit {
                 });
             })
             validPromise.then((rs) => {
-                if (true) {
-                
+                if (rs) {
                     let promise = new Promise((resolved) => {
                         let postObject: Model = {
                             code: this.addModel.value.model.code,

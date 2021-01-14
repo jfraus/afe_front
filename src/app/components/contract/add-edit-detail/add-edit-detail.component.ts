@@ -187,6 +187,8 @@ export class EditAddDetailComponent implements OnInit {
             modelType: new FormControl({ value: '', disabled: true }),
             contractNumber : new FormControl({ value: '', disabled: true }),
             carrierName: new FormControl({ value: '', disabled: true }),
+            totalUnitsAssigned: new FormControl({ value: 0, disabled: true }),
+
         });
     }
 
@@ -260,7 +262,8 @@ export class EditAddDetailComponent implements OnInit {
                                 id: this.addModel.get('model').value.id
                             },
                             quantity: this.addModel.get('quantity').value,
-                            saleContractId: this.saleContractId
+                            saleContractId: this.saleContractId,
+                            totalUnitsAssigned: 0
                         }).subscribe((response) => {
                             this.messageServices.add({ key: 'success', severity: 'success', summary: 'Guardado con éxito' });
                             this.closedRefresh();
