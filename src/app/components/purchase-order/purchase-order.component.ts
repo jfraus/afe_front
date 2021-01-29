@@ -87,7 +87,6 @@ export class PurchaseOrderComponent implements OnInit {
                 } else {
                     this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
                     this.purchaseOrder = [];
-                    console.log(this.purchaseOrder);
 
                 }
                 this.loadingPurchaseOrder = false;
@@ -105,7 +104,6 @@ export class PurchaseOrderComponent implements OnInit {
                 } else {
                     this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
                     this.purchaseOrder = [];
-                    console.log(this.purchaseOrder);
                     
 
                 }
