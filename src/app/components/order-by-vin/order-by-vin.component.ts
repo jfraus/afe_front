@@ -219,6 +219,7 @@ export class OrderByVinComponent implements OnInit {
                 }else{
                     this.messageServices.clear();
                     this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
+                    this.dataTable  = [];
                 }
             });
         }
