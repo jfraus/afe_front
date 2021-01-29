@@ -86,6 +86,9 @@ export class PurchaseOrderComponent implements OnInit {
     
                 } else {
                     this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
+                    this.purchaseOrder = [];
+                    console.log(this.purchaseOrder);
+
                 }
                 this.loadingPurchaseOrder = false;
                 this.formGroup.get('orderCode').reset();
@@ -101,6 +104,10 @@ export class PurchaseOrderComponent implements OnInit {
     
                 } else {
                     this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
+                    this.purchaseOrder = [];
+                    console.log(this.purchaseOrder);
+                    
+
                 }
                 this.loadingPurchaseOrder = false;
                 this.formGroup.get('orderCode').reset();
