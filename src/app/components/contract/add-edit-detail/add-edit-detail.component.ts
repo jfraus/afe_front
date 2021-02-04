@@ -269,7 +269,7 @@ export class EditAddDetailComponent implements OnInit {
                             this.closedRefresh();
                         });
                 }else{
-                    this.messageServices.add({key: 'error', severity:'warn', summary: 'Advertencia', detail: 'La combinación Modelo-Color ya existe en el Contrato de Venta'});
+                    this.messageServices.add({key: 'error', severity:'info', summary: 'Advertencia', detail: 'La combinación Modelo-Color ya existe en el Contrato de Venta'});
                 }
             });
         }

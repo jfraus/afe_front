@@ -78,6 +78,7 @@ export class EditPurchaseOrderComponent implements OnInit {
         {
             this.loadingPurchaseOrder = false;
             this.order.detail = response[0].detail;
+            this.formGroup.get('unitsQuantity').setValue(response[0].unitsQuantity);
         });
     }
     closedAgregar(){
@@ -162,7 +163,10 @@ export class EditPurchaseOrderComponent implements OnInit {
         if(this.formGroup.valid){
             let promise = new Promise((resolved, reject) => {
                 let dateVencida = new Date(this.formGroup.get('dateExpired').value);
+                dateVencida.setHours(-6,0,0,0);
                 let dateProduction = new Date(this.formGroup.get('productionMonthForm').value);
+                
+                
                 this.order.dueDate = dateVencida.getTime();
                 this.order.productionMonth = `${dateProduction.getFullYear()}${this.dateUtil.getMonth(dateProduction)}`;
                 
