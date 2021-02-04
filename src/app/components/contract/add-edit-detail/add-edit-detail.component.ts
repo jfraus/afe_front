@@ -268,8 +268,6 @@ export class EditAddDetailComponent implements OnInit {
                             this.messageServices.add({ key: 'success', severity: 'success', summary: 'Guardado con éxito' });
                             this.closedRefresh();
                         });
-                }else{
-                    this.messageServices.add({key: 'error', severity:'warn', summary: 'Advertencia', detail: 'La combinación Modelo-Color ya existe en el Contrato de Venta'});
                 }
             });
         }

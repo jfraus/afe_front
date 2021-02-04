@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms"
 import { ConfirmationService, MessageService } from "primeng/api";
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
+import { FormatDate } from "src/app/utils/format-date";
 @Component({
     selector: 'purchase-order-component',
     templateUrl: './purchase-order.component.html',
@@ -25,7 +26,7 @@ export class PurchaseOrderComponent implements OnInit {
     fechaProductionMonthSelected = new Date();
     fechaVencimientoSelected = new Date();
 
-    constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
+    constructor(public dateUtil: FormatDate,public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
         this.TableOrderFull();
         this.BuildForm();
         this.cols = [
@@ -56,6 +57,10 @@ export class PurchaseOrderComponent implements OnInit {
     TableOrderFull() {
         this.service.purchase_orders(null, null, null).subscribe((response) => {
             this.purchaseOrder = response;
+            this.purchaseOrder = this.purchaseOrder.map(iteam => ({
+                ...iteam,
+                dueDate: this.dateUtil.formatDateWithoutTime(iteam.dueDate)
+            }))
             this.loadingPurchaseOrder = false;
 
         });
@@ -184,8 +189,7 @@ export class PurchaseOrderComponent implements OnInit {
             this.order = response[0];
             this.fechaVencimientoSelected = new Date(response[0].dueDate);
             if(response[0].productionMonth){
-
-                this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), -30, 0, 0, 0, 0);
+                this.fechaProductionMonthSelected = new Date(response[0].productionMonth.substring(0, 4), response[0].productionMonth.substring(4, 6), 0, 0, 0, 0, 0);
             }
             this.visible = false;
             this.visibledetails = true;

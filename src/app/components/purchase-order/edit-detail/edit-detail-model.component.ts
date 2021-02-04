@@ -132,20 +132,6 @@ export class EditDetailModelComponent implements OnInit {
 
     agregar(){
         if (this.addModel.valid) {
-            let validPromise = new Promise((resolved) => {
-                this.servicesPurchase.purchase_orders(this.purchaseOrderId, null, null).subscribe((response) => {
-                    let array = response[0].detail;
-                    array.forEach(element => {
-                        if (element.color.id === this.addModel.value.color.id && element.model.id === this.addModel.value.model.id) {
-                            resolved(false)
-                            
-                        }
-                    });
-                    resolved(true)
-                });
-            })
-            validPromise.then((rs) => {
-                if (rs) {
                     let promise = new Promise((resolved) => {
                         let postObject: Model = {
                             code: this.addModel.value.model.code,
@@ -176,13 +162,7 @@ export class EditDetailModelComponent implements OnInit {
                         });
         
                     });
-    
-                }else{
-                    this.messageServices.add({key: 'error', severity:'info', summary: 'La combinacion de modelo color ya existe en los pedidos'});
 
-                    
-                }
-            });
         }
     }
 

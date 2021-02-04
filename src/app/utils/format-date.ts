@@ -15,4 +15,11 @@ export class FormatDate {
     getMonth(date: Date){
         return date.getMonth() < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1;
     }
+
+    formatDateWithoutTime(date: string){
+        if(date){
+            return date.substring(0,10 );
+        }
+        return '';        
+    }
 }
