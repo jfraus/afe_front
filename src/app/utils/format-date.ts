@@ -11,4 +11,8 @@ export class FormatDate {
         
         return `${dateOutput.getFullYear()}-${dateOutput.getMonth()+1}-${dateOutput.getDate()} ${dateOutput.getHours()}:${dateOutput.getMinutes()}:${dateOutput.getMilliseconds()}`
     }
+
+    getMonth(date: Date){
+        return date.getMonth() < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1;
+    }
 }

@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
+import { FormatDate } from 'src/app/utils/format-date';
 import { EditDetailModelComponent } from '../edit-detail/edit-detail-model.component';
 @Component({
     selector: 'edit-purchase-order-component',
@@ -41,7 +42,7 @@ export class EditPurchaseOrderComponent implements OnInit {
     maxDateExpired= new Date();
     btnAddDisable = false;
 
-    constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
+    constructor(public dateUtil: FormatDate,public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
 
         let day = new Date();
         this.minDate = new Date(day.getFullYear(),day.getMonth()-2 ,1,0,0,0,0);
@@ -163,7 +164,8 @@ export class EditPurchaseOrderComponent implements OnInit {
                 let dateVencida = new Date(this.formGroup.get('dateExpired').value);
                 let dateProduction = new Date(this.formGroup.get('productionMonthForm').value);
                 this.order.dueDate = dateVencida.getTime();
-                this.order.productionMonth = `${dateProduction.getFullYear()}${dateProduction.getMonth()+1}`;
+                this.order.productionMonth = `${dateProduction.getFullYear()}${this.dateUtil.getMonth(dateProduction)}`;
+                
                 resolved(this.order);
             });
 
