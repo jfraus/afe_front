@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { MessageService } from 'primeng/api';
 import { PurchaseOrder } from 'src/app/models/purchase-order.model';
 import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
-import { resolve } from 'url';
 import { EditDetailModelComponent } from '../edit-detail/edit-detail-model.component';
 import { ConfirmationService } from 'primeng/api';
+import { FormatDate } from 'src/app/utils/format-date';
 
 @Component({
     selector: 'generate-purchase-order-component',
@@ -43,7 +43,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
     btnAdDisable: boolean = false;
     displayEdit: boolean;
 
-    constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService){
+    constructor(private dateUtil: FormatDate, public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService){
         let day = new Date();
         this.maxDateExpired = new Date(day.getFullYear(),day.getMonth()+1 ,-1,0,0,0,0);
         this.minDate = new Date(day.getFullYear(),day.getMonth()-2 ,1,0,0,0,0);
@@ -175,7 +175,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
                 let dateProduction = new Date(this.formGroup.get('productionMonthForm').value);
                 this.order.dueDate = dateVencida.getTime();
                 this.order.orderNumber = this.formGroup.get('orderCode').value;
-                this.order.productionMonth = `${dateProduction.getFullYear()}${dateProduction.getMonth()+1}`;
+                this.order.productionMonth =  `${dateProduction.getFullYear()}${this.dateUtil.getMonth(dateProduction)}`;
                 resolved(this.order);
             });
 
