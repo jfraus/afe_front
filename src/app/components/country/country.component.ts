@@ -29,13 +29,11 @@ export class CountryComponent implements OnInit {
 
   searchCountries(): void {
     this.countryController.get().subscribe(data => {
-      this.countries = data;
-      console.log(JSON.stringify(data));
-      
+      this.countries = data;      
     });
   }
 
   updateCountry(): void {
-    
+
   }
 }
