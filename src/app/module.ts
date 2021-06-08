@@ -110,6 +110,7 @@ import { pipeStringDate } from './utils/pipeStringDate.pipe';
 import { AuthGuardService } from './utils/auth-guard.service';
 import { AuthService } from './utils/auth.service';
 import { MenuControllerService } from './services/menu-controller.service';
+import { CountryComponent } from './components/country/country.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -217,7 +218,8 @@ const sharedComponents = [
         EditAddDetailComponent,
         ContractDetailsComponent,
         OrderByVinComponent,
-        ...sharedComponents
+        ...sharedComponents,
+        CountryComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

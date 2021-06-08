@@ -10,6 +10,7 @@ import { ModelComponent } from './components/model/model.component';
 import { ContractComponent } from './components/contract/contract.component';
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
 import { AuthGuardService } from './utils/auth-guard.service';
+import { CountryComponent } from './components/country/country.component';
 
 export const routes: Routes = [
     { path: '',
@@ -19,6 +20,7 @@ export const routes: Routes = [
         {path: 'model', component: ModelComponent, canActivate: [AuthGuardService]},
         {path: 'contract', component: ContractComponent , canActivate: [AuthGuardService]},
         {path: 'order-by-vin', component: OrderByVinComponent, canActivate: [AuthGuardService]},
+        {path: 'country', component: CountryComponent, canActivate: [AuthGuardService]},
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
