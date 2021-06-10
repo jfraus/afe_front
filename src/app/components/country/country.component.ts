@@ -40,7 +40,6 @@ export class CountryComponent implements OnInit {
   }
 
   updateCountry(country: Country): void {
-    console.log('display', JSON.stringify(country));
     this.country = country;
     
     this.diplayUpdate = true;
