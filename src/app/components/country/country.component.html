@@ -68,3 +68,13 @@
     </ng-template>
   </p-table>
 </div>
+
+<div *ngIf="diplayUpdate">
+  <app-edit-country
+  (close)="closedEditar()"
+  [(display)]="visiableAddEdit"
+  [country]="country"
+>
+    
+  </app-edit-country>
+</div>

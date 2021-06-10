@@ -1,0 +1,97 @@
+<p-dialog header="Editar COFIDI" (onHide)="closed()" [(visible)]="display">
+  <div class="ui-g ui-fluid">
+    <form [(formGroup)]="editCountry" class="ui-g-12">
+      <div class="ui-g form-group">
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input
+              type="text"
+              style="width: 100%"
+              pInputText
+              [disabled]="true"
+              [(ngModel)]="country.countryCode"
+              [ngModelOptions]="{ standalone: true }"
+            />
+            <label>Código país</label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input
+              type="text"
+              style="width: 100%"
+              pInputText
+              [disabled]="true"
+              [(ngModel)]="country.globalCode"
+              [ngModelOptions]="{ standalone: true }"
+            />
+            <label>Código global</label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input
+              type="text"
+              style="width: 100%"
+              [disabled]="true"
+              [(ngModel)]="country.isoCode"
+              [ngModelOptions]="{ standalone: true }"
+              pInputText
+            />
+            <label>País</label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input
+              type="text"
+              style="width: 100%"
+              [disabled]="true"
+              [(ngModel)]="country.name"
+              [ngModelOptions]="{ standalone: true }"
+              pInputText
+            />
+            <label>Código ISO</label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input
+              type="text"
+              style="width: 100%"
+              [(ngModel)]="country.cofidiCode"
+              pInputText
+              formControlName="cofidiCode"
+            />
+            <label>Clave COFIDI</label>
+            <validations-input-component 
+              [formGroup]="editCountry" 
+              formInputName="cofidiCode" 
+              [validation_messages]="validations"
+            >
+            </validations-input-component>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <p-footer>
+    <button 
+      class= "ui-button-success" 
+      type="button" 
+      pButton 
+      icon="ui-icon-save" 
+      label="Agregar" 
+      (click)="update(country)"
+      [disabled]="!editCountry.valid"
+    ></button>
+    <button 
+      class="ui-button-danger" 
+      type="button" 
+      pButton 
+      icon="ui-icon-close" 
+      label="Cancelar" 
+      (click)="closed()"
+    ></button>
+  </p-footer>
+</p-dialog>
