@@ -1,6 +1,6 @@
-<p-dialog header="Editar COFIDI" (onHide)="closed()" [(visible)]="display">
+<p-dialog header="Editar País" (onHide)="closed()" [(visible)]="display">
   <div class="ui-g ui-fluid">
-    <form [(formGroup)]="editCountry" class="ui-g-12">
+    <form [(formGroup)]="countryForm" class="ui-g-12">
       <div class="ui-g form-group">
         <div class="ui-g-12 ui-lg-4">
           <span class="md-inputfield">
@@ -65,7 +65,7 @@
             />
             <label>Clave COFIDI</label>
             <validations-input-component 
-              [formGroup]="editCountry" 
+              [formGroup]="countryForm" 
               formInputName="cofidiCode" 
               [validation_messages]="validations"
             >
@@ -83,7 +83,7 @@
       icon="ui-icon-save" 
       label="Agregar" 
       (click)="update(country)"
-      [disabled]="!editCountry.valid"
+      [disabled]="!countryForm.valid"
     ></button>
     <button 
       class="ui-button-danger" 

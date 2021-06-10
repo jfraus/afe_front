@@ -16,8 +16,8 @@ export class CountryComponent implements OnInit {
   countries = [];
   loadingCountries = false;
   @Output() close = new EventEmitter();
-  diplayUpdate: boolean = false;
-  visiableAddEdit: boolean = false;
+  displayUpdate: boolean = false;
+  visibleEdit: boolean = false;
   country: Country;
 
   constructor(private countryController: CountryControllerService) { }
@@ -41,14 +41,11 @@ export class CountryComponent implements OnInit {
 
   updateCountry(country: Country): void {
     this.country = country;
-    
-    this.diplayUpdate = true;
-    this.visiableAddEdit = true;
+    this.displayUpdate = true;
+    this.visibleEdit = true;
   }
 
   closedEditar() {
-    console.log('closed');
-    
-    this.diplayUpdate = false;
+    this.displayUpdate = false;
   }
 }

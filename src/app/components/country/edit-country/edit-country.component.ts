@@ -11,20 +11,21 @@ import { AppValidationMessagesService } from 'src/app/utils/app-validation-messa
   styles: [],
   providers: [CountryControllerService]
 })
-export class EditCountryComponent {
+export class EditCountryComponent implements OnInit {
 
   @Input() country: Country;
   @Output() close = new EventEmitter();
   @Input() display: boolean;
   validations = [];
-  editCountry: FormGroup;
+  countryForm: FormGroup;
 
   constructor(private countryService: CountryControllerService,
               private messageServices: MessageService,
               private formBuilder: FormBuilder,
-              private messages: AppValidationMessagesService) { 
+              private messages: AppValidationMessagesService) { }
 
-    this.editCountry = this.formBuilder.group({
+  ngOnInit() {
+    this.countryForm = this.formBuilder.group({
       cofidiCode: ['', [Validators.maxLength(10), Validators.pattern('[a-zA-Z0-9]+')]],
     });
 
@@ -39,7 +40,7 @@ export class EditCountryComponent {
 
   update(country: Country) {
     
-    if(this.editCountry.valid) {
+    if(this.countryForm.valid) {
       this.countryService.put(country).subscribe(response => {
         if(response !== null) {
           this.closed();
