@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { EventEmitter } from 'events';
 import { Table } from 'primeng/table';
+import { Country } from 'src/app/models/country.model';
 import { CountryControllerService } from 'src/app/services/country-controller.service';
 
 @Component({
@@ -13,6 +15,10 @@ export class CountryComponent implements OnInit {
   cols = [];
   countries = [];
   loadingCountries = false;
+  @Output() close = new EventEmitter();
+  displayUpdate: boolean = false;
+  visibleEdit: boolean = false;
+  country: Country;
 
   constructor(private countryController: CountryControllerService) { }
 
@@ -33,7 +39,13 @@ export class CountryComponent implements OnInit {
     });
   }
 
-  updateCountry(): void {
+  updateCountry(country: Country): void {
+    this.country = country;
+    this.displayUpdate = true;
+    this.visibleEdit = true;
+  }
 
+  closedEditar() {
+    this.displayUpdate = false;
   }
 }
