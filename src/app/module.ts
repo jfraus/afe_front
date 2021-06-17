@@ -224,7 +224,6 @@ const sharedComponents = [
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},
-        // {provide: APP_BASE_HREF, useValue: '/afe-cr-app'},
         AppValidationMessagesService,
         ErrorToastService,
         MessageService,
