@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, APP_BASE_HREF } from '@angular/common';
 import { AppRoutes } from './routes';
 import { ContractComponent } from './components/contract/contract.component';
 
@@ -110,6 +110,7 @@ import { pipeStringDate } from './utils/pipeStringDate.pipe';
 import { AuthGuardService } from './utils/auth-guard.service';
 import { AuthService } from './utils/auth.service';
 import { MenuControllerService } from './services/menu-controller.service';
+import { CotizacionComponent } from './components/cotizacion/cotizacion/cotizacion.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -217,11 +218,13 @@ const sharedComponents = [
         EditAddDetailComponent,
         ContractDetailsComponent,
         OrderByVinComponent,
+        CotizacionComponent,
         ...sharedComponents
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},
+        // {provide: APP_BASE_HREF, useValue: '/afe-cr-app'},
         AppValidationMessagesService,
         ErrorToastService,
         MessageService,
