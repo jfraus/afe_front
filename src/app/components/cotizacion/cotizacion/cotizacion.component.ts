@@ -18,13 +18,13 @@ export class CotizacionComponent implements OnInit {
 
     constructor(private fb: FormBuilder, private datePipe: DatePipe) {
         this.cols = [
-            { field: 'contracNumber', header: 'No. de Cotizaciones' },
+            { field: 'contracNumber', header: 'No. de cotización' },
             { field: 'countryName', header: 'Planta' },
             { field: 'createDate', header: 'Modelo' },
             { field: 'quantity', header: 'Tipo de modelo' },
             { field: 'totalUnitsAssigned', header: 'Precio' },
             { field: 'orderByVin', header: 'Moneda' },
-            { field: 'statusOrder', header: 'Fecha de cotizacion' },
+            { field: 'statusOrder', header: 'Fecha de cotización' },
             { field: 'action', header: 'Fecha inicial' },
             { field: 'as', header: 'Fecha final' },
         ];
