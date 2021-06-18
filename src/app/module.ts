@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, APP_BASE_HREF } from '@angular/common';
 import { AppRoutes } from './routes';
 import { ContractComponent } from './components/contract/contract.component';
 
@@ -110,6 +110,7 @@ import { pipeStringDate } from './utils/pipeStringDate.pipe';
 import { AuthGuardService } from './utils/auth-guard.service';
 import { AuthService } from './utils/auth.service';
 import { MenuControllerService } from './services/menu-controller.service';
+import { QuoteComponent } from './components/quote/quote.component';
 import { CountryComponent } from './components/country/country.component';
 import { EditCountryComponent } from './components/country/edit-country/edit-country.component';
 
@@ -219,9 +220,10 @@ const sharedComponents = [
         EditAddDetailComponent,
         ContractDetailsComponent,
         OrderByVinComponent,
-        ...sharedComponents,
+        QuoteComponent,
         CountryComponent,
-        EditCountryComponent
+        EditCountryComponent,
+        ...sharedComponents,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

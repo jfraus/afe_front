@@ -1,3 +1,4 @@
+import { QuoteComponent } from './components/quote/quote.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { AppNotfoundComponent } from './pages/app.notfound.component';
@@ -20,7 +21,8 @@ export const routes: Routes = [
         {path: 'model', component: ModelComponent, canActivate: [AuthGuardService]},
         {path: 'contract', component: ContractComponent , canActivate: [AuthGuardService]},
         {path: 'order-by-vin', component: OrderByVinComponent, canActivate: [AuthGuardService]},
-        {path: 'country', component: CountryComponent, canActivate: [AuthGuardService]},
+        {path: 'quote', component: QuoteComponent, canActivate: [AuthGuardService]},
+        {path: 'country', component: CountryComponent, canActivate: [AuthGuardService]}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
