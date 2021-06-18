@@ -1,4 +1,4 @@
-import { QuoteComponent } from './components/quote/quote/quote.component';
+import { QuoteComponent } from './components/quote/quote.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { AppNotfoundComponent } from './pages/app.notfound.component';

@@ -102,7 +102,7 @@ export class QuoteComponent implements OnInit {
             workbook.xlsx.writeBuffer().then((data) => {
                 const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                 const dateString = this.datePipe.transform(this.date, 'yyyy-MM-dd');
-                fs.saveAs(blob, `COTIZACIONES ${dateString}.xlsx`);
+                fs.saveAs(blob, `COTIZACIONES-${dateString}.xlsx`);
             });
         });
     }
