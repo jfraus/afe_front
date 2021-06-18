@@ -42,49 +42,15 @@ export class CotizacionComponent implements OnInit {
     }
 
     async saveExcel(contrato) {
+        // EXCEL JS https://github.com/exceljs/exceljs#readme
         let workbook = new Excel.Workbook();
         let dates = this.datePipe.transform(this.date, 'yyyy-MM-dd');
         let worksheet = workbook.addWorksheet(`COTIZACIONES-${dates}`);
-        // const title = ["Reporte de Order by VIN","","Contrato de Venta",contrato.contracNumber];
         const header = ["No. De Cotización", "Planta", "Modelo", "Tipo de Modelo", "Precio"];
-        // AGREGANDO EL TITULO
-        // let titleRowTitle = worksheet.addRow([]);
-        // Add new row
-        // let titleRow = worksheet.addRow(title);
-        // titleRow.font = { name: 'Calibri', family: 4, size: 11, bold: true };
-        // worksheet.mergeCells('A1:D2');
-        // Set font, sizek and style in title row.
-        // titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
-
-        // titleRow.eachCell((cell, number) => {
-
-        //     cell.fill = {
-        //         type: 'pattern',
-        //         pattern: 'solid',
-        //         fgColor: { argb: '5B9BD5' },
-        //         bgColor: { argb: '5B9BD5' }
-        //     }
-
-        // ESTILO DEL TITULO PARA LOS BORDES
-        //     if (number == 1) {
-        //         cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' } }
-        //     }
-        //     if (number == 2 || number == 3) {
-        //         cell.border = { top: { style: 'thin' }, bottom: { style: 'thin' } }
-        //     }
-        //     if (number == 4) {
-        //         cell.border = { top: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
-        //     }
-
-        // });
-
         worksheet.getRow(2).height = 36.00;
         worksheet.getCell('A2').alignment = { vertical: 'middle', horizontal: 'center' };
         worksheet.getCell('C2').alignment = { vertical: 'middle', horizontal: 'center' };
         worksheet.getCell('D2').alignment = { vertical: 'middle', horizontal: 'center' };
-
-
-
         // Blank Row
         worksheet.addRow([]);
         // Add Header Row
@@ -97,19 +63,12 @@ export class CotizacionComponent implements OnInit {
                 pattern: 'solid',
                 fgColor: { argb: '8497B0' },
                 bgColor: { argb: 'FF0000FF' }
-            }
+            };
             cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
         });
-
-
-
-
         let promise = new Promise((resolve, reject) => {
-            // this.serviceVin.getReportORderByVin(contrato.id).subscribe((response)=> {
-            //     resolve(response);
-            // });
+            // PROMESA PARA CAPTURAR LOS DATOS DEL REST Y PODER INSERTARLOS EN EL EXCEL
         });
-        //LLENAR LA DATA
 
         let datos = [];
         datos.push(await promise);
@@ -117,17 +76,19 @@ export class CotizacionComponent implements OnInit {
         let promiseData = new Promise((resolve, reject) => {
             datos.forEach(element => {
                 element.forEach(iteam => {
-                    iteam.statusOrder = this.statusOrderByVin(iteam.totalUnitsAssigned, iteam.quantity);
-                    let row = worksheet.addRow([iteam.contractNumber, iteam.country, iteam.creationDateSales, iteam.vin, iteam.model.type.type, iteam.model.code, iteam.color.code, iteam.color.interiorCode, iteam.dealer.number, iteam.dealer.name, iteam.carrier.carrierCode, iteam.carrier.name, iteam.statusOrder]);
-                    row.eachCell((cell, number) => {
-                        cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
+                    let row = worksheet.addRow([iteam.contracNumber, iteam.planta, iteam.model, iteam.model.type.type, iteam.price]);
+                    row.eachCell((cell) => {
+                        cell.border = { top: { style: 'thin' }, 
+                        left: { style: 'thin' },
+                        bottom: { style: 'thin' },
+                        right: { style: 'thin' } }
                     });
                 });
             });
-            worksheet.columns.forEach(function (column, i) {
-                var maxLength = 0;
-                column["eachCell"]({ includeEmpty: true }, function (cell) {
-                    var columnLength = cell.value ? cell.value.toString().length : 10;
+            worksheet.columns.forEach( (column, i) =>{
+                let maxLength = 0;
+                column['eachCell']({ includeEmpty: true },  (cell) => {
+                    const columnLength = cell.value ? cell.value.toString().length : 10;
                     if (columnLength > maxLength) {
                         maxLength = columnLength + 2;
                     }
