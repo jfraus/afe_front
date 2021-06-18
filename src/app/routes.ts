@@ -1,4 +1,4 @@
-import { CotizacionComponent } from './components/cotizacion/cotizacion/cotizacion.component';
+import { QuoteComponent } from './components/quote/quote/quote.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { AppNotfoundComponent } from './pages/app.notfound.component';
@@ -21,7 +21,7 @@ export const routes: Routes = [
         {path: 'model', component: ModelComponent, canActivate: [AuthGuardService]},
         {path: 'contract', component: ContractComponent , canActivate: [AuthGuardService]},
         {path: 'order-by-vin', component: OrderByVinComponent, canActivate: [AuthGuardService]},
-        {path: 'cotizacion', component: CotizacionComponent, canActivate: [AuthGuardService]},
+        {path: 'quote', component: QuoteComponent, canActivate: [AuthGuardService]},
         {path: 'country', component: CountryComponent, canActivate: [AuthGuardService]}
     ]
     },

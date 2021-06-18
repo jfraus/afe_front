@@ -4,12 +4,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import * as Excel from "exceljs/dist/exceljs.min.js";
 import * as fs from 'file-saver';
 @Component({
-    selector: 'app-cotizacion',
-    templateUrl: './cotizacion.component.html',
-    styleUrls: ['./cotizacion.component.scss'],
+    selector: 'app-quote',
+    templateUrl: './quote.component.html',
+    styleUrls: ['./quote.component.scss'],
     providers: [DatePipe]
 })
-export class CotizacionComponent implements OnInit {
+export class QuoteComponent implements OnInit {
 
     cols = [];
     dataTable = [];

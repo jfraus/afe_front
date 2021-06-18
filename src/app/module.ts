@@ -110,7 +110,7 @@ import { pipeStringDate } from './utils/pipeStringDate.pipe';
 import { AuthGuardService } from './utils/auth-guard.service';
 import { AuthService } from './utils/auth.service';
 import { MenuControllerService } from './services/menu-controller.service';
-import { CotizacionComponent } from './components/cotizacion/cotizacion/cotizacion.component';
+import { QuoteComponent } from './components/quote/quote/quote.component';
 import { CountryComponent } from './components/country/country.component';
 import { EditCountryComponent } from './components/country/edit-country/edit-country.component';
 
@@ -220,7 +220,7 @@ const sharedComponents = [
         EditAddDetailComponent,
         ContractDetailsComponent,
         OrderByVinComponent,
-        CotizacionComponent,
+        QuoteComponent,
         CountryComponent,
         EditCountryComponent,
         ...sharedComponents,
