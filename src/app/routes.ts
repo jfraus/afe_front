@@ -20,7 +20,7 @@ export const routes: Routes = [
         {path: 'model', component: ModelComponent, canActivate: [AuthGuardService]},
         {path: 'contract', component: ContractComponent , canActivate: [AuthGuardService]},
         {path: 'order-by-vin', component: OrderByVinComponent, canActivate: [AuthGuardService]},
-        {path: 'cotizacion', component: CotizacionComponent}
+        {path: 'cotizacion', component: CotizacionComponent, canActivate: [AuthGuardService]}
 
     ]
     },
