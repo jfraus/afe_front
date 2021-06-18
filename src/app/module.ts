@@ -111,6 +111,8 @@ import { AuthGuardService } from './utils/auth-guard.service';
 import { AuthService } from './utils/auth.service';
 import { MenuControllerService } from './services/menu-controller.service';
 import { CotizacionComponent } from './components/cotizacion/cotizacion/cotizacion.component';
+import { CountryComponent } from './components/country/country.component';
+import { EditCountryComponent } from './components/country/edit-country/edit-country.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -219,7 +221,9 @@ const sharedComponents = [
         ContractDetailsComponent,
         OrderByVinComponent,
         CotizacionComponent,
-        ...sharedComponents
+        CountryComponent,
+        EditCountryComponent,
+        ...sharedComponents,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
