@@ -34,8 +34,10 @@ export class CountryComponent implements OnInit {
   }
 
   searchCountries(): void {
+    this.loadingCountries = true;
     this.countryController.get().subscribe(data => {
-      this.countries = data;      
+      this.countries = data;
+      this.loadingCountries = false;   
     });
   }
 
