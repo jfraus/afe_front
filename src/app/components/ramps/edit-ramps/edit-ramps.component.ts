@@ -25,7 +25,7 @@ export class EditRampsComponent implements OnInit {
 
   ngOnInit() {
     this.rampForm = this.formBuilder.group({
-      code: [{disabled: true}, [Validators.maxLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$')]],
+      code: [{value: '', disabled: true}, [Validators.maxLength(3), Validators.pattern('^[a-zA-Z0-9 ]*$')]],
       city: ['', [Validators.maxLength(50), Validators.pattern('^[a-zA-Z0-9 ]*$')]],
       state: ['', [Validators.maxLength(50), Validators.pattern('^[a-zA-Z0-9 ]*$')]],
       port: ['', [Validators.maxLength(4), Validators.pattern('[0-9]+')]],
