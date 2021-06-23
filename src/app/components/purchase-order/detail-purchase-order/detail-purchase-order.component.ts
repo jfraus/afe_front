@@ -21,7 +21,8 @@ export class DetailPurchaseOrderComponent implements OnInit{
             { field: 'model.code', header: 'Modelo' },
             { field: 'color.code', header: 'Color' },
             { field: 'color.interiorCode', header: 'Color interior' },
-            { field: 'quantity', header: 'Canitdad' },
+            { field: 'quantity', header: 'Pedido' },
+            { field: 'assigned', header: 'Asignado' },
         ];
 
     }

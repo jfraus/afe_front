@@ -2,32 +2,44 @@
     <div class="card-title">Detalle Orden de Compra</div>
 <br>
         <div class="p-fluid p-formgrid p-grid">
-            <div class="ui-g-12 ui-lg-3">
-                <span class="md-inputfield ">
-                    <input type="text" style="width: 100%;"  [disabled]="true" [readOnly]="true" [ngModel]="order.orderNumber" pInputText>
-                    <label>Orden de compra</label>
-                </span>
-            </div>
-            <div class="ui-g-12 ui-lg-3">
+            <div class="ui-g-12 ui-lg-12">                         
+                <div class="ui-g-12 ui-lg-4">
                     <span class="md-inputfield ">
-                    <p-calendar [style]="{'width':'100%'}" dateFormat="yy-mm" [disabled]="true" [ngModel]="dateProductionMonth" [inputStyle]="{'width':'100%'}" [showIcon]="true"></p-calendar>
-                        <label>Mes de produción</label>
+                        <input type="text" style="width: 100%;"  [disabled]="true" [readOnly]="true" [ngModel]="order.orderNumber" pInputText>
+                        <label>Orden de compra</label>
                     </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                        <p-calendar [style]="{'width':'100%'}" dateFormat="yy-mm" [disabled]="true" [ngModel]="dateProductionMonth" [inputStyle]="{'width':'100%'}" [showIcon]="true"></p-calendar>
+                            <label>Mes de produción</label>
+                        </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <p-calendar [style]="{'width':'100%'}"  [ngModel]="dateExpired"  [disabled]="true" [inputStyle]="{'width':'100%'}" [showIcon]="true"></p-calendar>
+                            <label>Fecha de vencimiento</label>
+                        </span>
+                </div>
             </div>
-            <div class="ui-g-12 ui-lg-3">
-                <span class="md-inputfield ">
-                    <p-calendar [style]="{'width':'100%'}"  [ngModel]="dateExpired"  [disabled]="true" [inputStyle]="{'width':'100%'}" [showIcon]="true"></p-calendar>
-                        <label>Fecha de vencimiento</label>
+        </div>
+
+        <div class="p-fluid p-formgrid p-grid">   
+            <div class="ui-g-12 ui-lg-12">         
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="text" style="width: 100%;" [disabled]="true" [readOnly]="true" [ngModel]="order.unitsQuantity" pInputText>
+                        <label>Total pedido</label>
                     </span>
+                </div>
+                
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="text" style="width: 100%;" [disabled]="true" [readOnly]="true" [ngModel]="order.unitsAssigned" pInputText>
+                        <label>Total asignado</label>
+                    </span>
+                </div>
             </div>
-
-            <div class="ui-g-12 ui-lg-3">
-                <span class="md-inputfield ">
-                    <input type="text" style="width: 100%;" [disabled]="true" [readOnly]="true" [ngModel]="order.unitsQuantity" pInputText>
-                    <label>Total unidades</label>
-                </span>
-            </div>
-
         </div>
 </div>
 
@@ -77,7 +89,7 @@
                     <td>{{ purchaseOrderDetail.color.code }}</td>
                     <td>{{ purchaseOrderDetail.color.interiorCode }}</td>
                     <td>{{ purchaseOrderDetail.quantity }}</td>
-
+                    <td>{{ purchaseOrderDetail.assigned}}</td>
                 </tr>
             </ng-template>
         </p-table>
