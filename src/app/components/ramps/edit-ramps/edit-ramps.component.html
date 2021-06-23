@@ -1,0 +1,100 @@
+<p-dialog header="Editar Rampa" (onHide)="closed()" [(visible)]="display">
+  <div class="ui-g ui-fluid">
+    <form [(formGroup)]="rampForm" class="ui-g-12">
+      <div class="ui-g form-group">
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input
+              type="text"
+              style="width: 100%"
+              pInputText
+              [disabled]="true"
+              [(ngModel)]="ramp.code"
+              formControlName="code"
+            />
+            <label>Código rampa</label>
+            <validations-input-component 
+              [formGroup]="rampForm" 
+              formInputName="code" 
+              [validation_messages]="validations"
+            >
+            </validations-input-component>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input
+              type="text"
+              style="width: 100%"
+              pInputText
+              [(ngModel)]="ramp.city"
+              formControlName="city"
+            />
+            <label>Ciudad</label>
+            <validations-input-component 
+              [formGroup]="rampForm" 
+              formInputName="city" 
+              [validation_messages]="validations"
+            >
+            </validations-input-component>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input
+              type="text"
+              style="width: 100%"
+              [(ngModel)]="ramp.state"
+              pInputText
+              formControlName="state"
+            />
+            <label>Estado</label>
+            <validations-input-component 
+              [formGroup]="rampForm" 
+              formInputName="state" 
+              [validation_messages]="validations"
+            >
+            </validations-input-component>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input
+              type="text"
+              style="width: 100%"
+              [(ngModel)]="ramp.port"
+              pInputText
+              formControlName="port"
+            />
+            <label>Puerto Aduanal</label>
+            <validations-input-component 
+              [formGroup]="rampForm" 
+              formInputName="port" 
+              [validation_messages]="validations"
+            >
+            </validations-input-component>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <p-footer>
+    <button 
+      class= "ui-button-success" 
+      type="button" 
+      pButton 
+      icon="ui-icon-save" 
+      label="Actualizar" 
+      (click)="update(ramp)"
+      [disabled]="!rampForm.valid"
+    ></button>
+    <button 
+      class="ui-button-danger" 
+      type="button" 
+      pButton 
+      icon="ui-icon-close" 
+      label="Cancelar" 
+      (click)="closed()"
+    ></button>
+  </p-footer>
+</p-dialog>

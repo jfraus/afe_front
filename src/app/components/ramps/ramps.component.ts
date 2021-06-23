@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { EventEmitter } from 'events';
 import { Ramp } from 'src/app/models/ramp.model';
 import { RampsControllerService } from 'src/app/services/ramps-controller.service';
 
@@ -11,8 +12,14 @@ import { RampsControllerService } from 'src/app/services/ramps-controller.servic
 export class RampsComponent implements OnInit {
 
   cols = [];
+  ramp: Ramp;
   ramps: Ramp[] = [];
+  visibleEdit: boolean = false;
   loadingRamps: boolean = false;
+  displayUpdate: boolean = false;
+  @Output() close = new EventEmitter();
+  
+
   constructor(private rampsService: RampsControllerService) { }
 
   ngOnInit() {
@@ -34,6 +41,13 @@ export class RampsComponent implements OnInit {
   }
 
   updateRamp(ramp: Ramp) {
+    this.ramp = ramp;
+    this.visibleEdit = true;
+    this.displayUpdate = true;
+  }
 
+  closedEditar() {
+    this.searchRamps();
+    this.displayUpdate = false;
   }
 }

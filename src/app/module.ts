@@ -114,6 +114,7 @@ import { QuoteComponent } from './components/quote/quote.component';
 import { CountryComponent } from './components/country/country.component';
 import { EditCountryComponent } from './components/country/edit-country/edit-country.component';
 import { RampsComponent } from './components/ramps/ramps.component';
+import { EditRampsComponent } from './components/ramps/edit-ramps/edit-ramps.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -223,8 +224,9 @@ const sharedComponents = [
         OrderByVinComponent,
         QuoteComponent,
         CountryComponent,
-        RampsComponent,
         EditCountryComponent,
+        RampsComponent,
+        EditRampsComponent,
         ...sharedComponents,
     ],
     providers: [

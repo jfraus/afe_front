@@ -69,3 +69,11 @@
   </ng-template>
 </p-table>
 </div>
+<div *ngIf="displayUpdate">
+  <app-edit-ramps
+    (close)="closedEditar()"
+    [(display)]="visibleEdit"
+    [ramp]="ramp"
+  >
+  </app-edit-ramps>
+</div>
