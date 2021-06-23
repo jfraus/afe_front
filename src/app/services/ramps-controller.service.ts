@@ -13,4 +13,8 @@ export class RampsControllerService {
   get(){
     return this.http.get<Ramp[]>(`${environment.apiUrl}ramps/`).pipe();
   }
+
+  put(ramp: Ramp) {
+    return this.http.put<Ramp>(`${environment.apiUrl}ramps/`, ramp).pipe();
+  }
 }
