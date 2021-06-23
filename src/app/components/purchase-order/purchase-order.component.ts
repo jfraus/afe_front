@@ -33,7 +33,8 @@ export class PurchaseOrderComponent implements OnInit {
             { field: 'orderNumber', header: 'Orden de Compra' },
             { field: 'productionMonth', header: 'Mes de Produción' },
             { field: 'dueDate', header: 'Fecha de Vencimiento' },
-            { field: 'unitsQuantity', header: 'Total unidades' },
+            { field: 'unitsQuantity', header: 'Total Pedido' },
+            { field: 'unitsAssigned', header: 'Total Asignado' },
             { field: 'status', header: 'Estatus' },
             { field: 'action', header: 'Acción' },
         ];
@@ -157,7 +158,7 @@ export class PurchaseOrderComponent implements OnInit {
             
             if(response[0].detail.length > 0){
                 this.confirmationService.confirm({
-                    message: '¿Seguro qué desea enviar este registro?',
+                    message: 'Deseas enviar OC, una vez enviada no se podrá editar.',
                     header: 'Confirmación',
                     icon: 'pi pi-exclamation-triangle',
                     accept: () => {

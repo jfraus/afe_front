@@ -1,6 +1,6 @@
 <div *ngIf="visible">
   <div class="card">
-    <div class="card-title">Ordenes de compra</div>
+    <div class="card-title">Catálogo de órdenes de compra</div>
     <div class="ui-g ui-fluid">
       <form
         [formGroup]="formGroup"
@@ -71,7 +71,7 @@
         <button
           pButton
           type="button"
-          label="Crear nueva OC"
+          label="Crear OC HSA"
           icon="pi
                     pi-plus"
           class="ui-button-success"
@@ -164,7 +164,7 @@
                 
               </div>
 
-              <div *ngIf="rowData.status === 'Enviada'">
+              <div *ngIf="rowData.status === 'Abierta'">
                 <button
                   pButton
                   type="button"
