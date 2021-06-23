@@ -33,8 +33,10 @@ export class RampsComponent implements OnInit {
   }
 
   searchRamps() {
+    this.loadingRamps = true;
     this.rampsService.get().subscribe(data => {      
-      this.ramps = data;    
+      this.ramps = data;   
+      this.loadingRamps = false;
     });
   }
 
