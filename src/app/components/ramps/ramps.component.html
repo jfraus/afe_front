@@ -1,0 +1,71 @@
+<div class="card">
+  <div class="card-title">Catálogo de países</div>
+  <p-table
+    [columns]="cols"
+    selectionMode="single"
+    dataKey="idTabla"
+    [value]="ramps"
+    [loading]="loadingRamps"
+    sortMode="multiple"
+    [style]="{ 'margin-bottom': '20px' }"
+    [responsive]="true"
+    [rowHover]="true"
+    [paginator]="true"
+    [responsive]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    [autoLayout]="true"
+    [rows]="20"
+    [pageLinks]="20"
+    #dt
+    [filterDelay]="0" 
+    [globalFilterFields]="['code', 'city']"
+  >
+  <ng-template pTemplate="caption">
+    <div class="table-header">
+      <span class="p-input-icon-left">
+        Buscar por pais
+        <i class="pi pi-search"></i>
+          <input 
+            pInputText 
+            type="text" 
+            (input)="dt.filterGlobal($event.target.value, 'contains')" 
+          />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{ col.header }}
+      </th>
+      <th>
+        Acción
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage" let-columns>
+    <tr>
+      <td style="text-align: center" [attr.colspan]="columns.length + 2">
+        No se encontro información
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}
+      </td>
+      <td>
+        <button
+          pButton
+          type="button"
+          icon="pi pi-pencil"
+          (click)="updateRamp(rowData)"
+          style="margin-left: 3px"
+          class="blue-grey-btn"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>
