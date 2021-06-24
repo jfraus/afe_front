@@ -1,24 +1,17 @@
 <div class="card">
     <div class="card-title">Editar Orden de Compra</div>
 <br>
-
-        <div class="p-fluid p-formgrid p-grid">
-            
-    
-
-            <form
-            [formGroup]="formGroup"
-            class="form-group ui-g-12"
-            >
+    <div class="p-fluid p-formgrid p-grid">
+        <form [formGroup]="formGroup" class="form-group ui-g-12" >
             <div class="p-fluid p-formgrid p-grid">
                 <div class="ui-g-12 ui-lg-12">
-                    <div class="ui-g-12 ui-lg-3">
+                    <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield ">
                             <input type="text" style="width: 100%;" [readOnly]="true"  formControlName="orderCode"  pInputText>
                             <label>Orden de compra</label>
                         </span>
                     </div>
-                    <div class="ui-g-12 ui-lg-3">
+                    <div class="ui-g-12 ui-lg-4">
                         <div class="p-inputgroup">
                             <span class="md-inputfield">
                                 <p-calendar
@@ -38,7 +31,7 @@
                             </validations-input-component>
                         </div>
                     </div>
-                    <div class="ui-g-12 ui-lg-3">
+                    <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield ">
                             <p-calendar [style]="{'width':'100%'}"  [maxDate]="maxDateExpired" [minDate]="minExpired" [inputStyle]="{'width':'100%'}"  formControlName="dateExpired" [showIcon]="true"></p-calendar>
                                 <label>Fecha de vencimiento</label>
@@ -46,22 +39,28 @@
                         <validations-input-component  [validation_messages]="validations"
                         [(formGroup)]="formGroup"
                         [(formInputName)]="dateExpired"></validations-input-component>
-                    </div>
-                    <div class="ui-g-12 ui-lg-3">
+                    </div>                    
+                </div>
+                <div class="ui-g-12 ui-lg-12">
+                    <div class="ui-g-12 ui-lg-4">
                         <span class="md-inputfield ">
                             <input type="text" style="width: 100%;" [readOnly]="true" formControlName="unitsQuantity"   pInputText>
-                            <label>Total unidades</label>
+                            <label>Total pedido</label>
                         </span>
                     </div>
-                </div>
-            </div><div class="ui-g-12 ui-lg-2">
-                <button pButton type="button" label="Guardar" (click)="Save()" [disabled]="!this.formGroup.valid" icon="ui-icon-save" class="ui-button-success" style="width:auto"></button>
-            </div>
-        </form>
-
-            
     
-        </div>
+                    <div class="ui-g-12 ui-lg-4">
+                        <span class="md-inputfield ">
+                            <input type="text" style="width: 100%;" [readOnly]="true" formControlName="unitsAssigned"   pInputText>
+                            <label>Total asignado</label>
+                        </span>
+                    </div>
+    
+                    <button pButton type="button" label="Guardar" (click)="Save()" [disabled]="!this.formGroup.valid" icon="ui-icon-save" class="ui-button-success" style="width:auto"></button>
+                </div>
+            </div>            
+        </form>
+     </div>
 </div>
 <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
     <p-footer>
@@ -132,6 +131,7 @@
                     <td>{{ purchaseOrderDetail.color.code }}</td>
                     <td>{{ purchaseOrderDetail.color.interiorCode }}</td>
                     <td>{{ purchaseOrderDetail.quantity }}</td>
+                    <td>{{ purchaseOrderDetail.assigned }}</td>
                     <td>
                         <button
                         pButton

@@ -57,7 +57,8 @@ export class EditPurchaseOrderComponent implements OnInit {
             { field: 'model.code', header: 'Modelo' },
             { field: 'color.code', header: 'Color' },
             { field: 'color.interiorCode', header: 'Color interior' },
-            { field: 'quantity', header: 'Cantidad' },
+            { field: 'quantity', header: 'Pedido' },
+            { field: 'assigned', header: 'Asignado' },
             { field: 'action', header: 'Acción' },
         ];
         this.messages.messagesRequired = 'true';
@@ -91,10 +92,12 @@ export class EditPurchaseOrderComponent implements OnInit {
             productionMonthForm: [this.productionMonth, [Validators.required]],
             dateExpired: [(this.dateExpired.getDate())? this.dateExpired: null, [Validators.required]],
             orderCode:[this.order.orderNumber, []],
-            unitsQuantity: [this.order.unitsQuantity,[]]
+            unitsQuantity: [this.order.unitsQuantity,[]],
+            unitsAssigned: [this.order.unitsAssigned,[]]
         });
         this.formGroup.controls['orderCode'].disable();
         this.formGroup.controls['unitsQuantity'].disable();
+        this.formGroup.controls['unitsAssigned'].disable();
         if(this.order.dueDate && this.order.productionMonth){
             this.btnAddDisable = true;
         }
