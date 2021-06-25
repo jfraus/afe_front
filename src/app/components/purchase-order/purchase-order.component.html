@@ -67,17 +67,25 @@
 
   <div class="card">
     <div class="p-fluid p-formgrid p-grid">
-      <div class="ui-g-12 ui-lg-3">
-        <button
-          pButton
-          type="button"
-          label="Crear OC HSA"
-          icon="pi
-                    pi-plus"
-          class="ui-button-success"
-          (click)="NewOc()"
-          style="width: auto"
-        ></button>
+      
+        <div class="ui-g-12 ui-lg-1">
+          <button pButton type="button"
+            label="Crear OC HSA"
+            icon="pi pi-plus"
+            class="ui-button-success"
+            (click)="NewOc()"
+            style="width: auto"
+          ></button>
+        </div>
+
+        <div class="ui-g-12 ui-lg-2">
+          <button pButton type="button"
+            label="Asignar OC Manual"            
+            icon="pi pi-check"
+            class="blue-grey-btn"
+            (click)="sendAssignment()"
+            style="width: auto">
+          </button>        
       </div>
     </div>
 

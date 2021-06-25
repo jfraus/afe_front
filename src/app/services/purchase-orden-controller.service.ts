@@ -58,4 +58,8 @@ export class PurchaseOrdenControllerService {
 
   }
 
+  sendAssignment(){
+    return this.http.post<string>(`${environment.apiUrl}purchase/orders/assigned-units`,null).pipe();    
+  }
+
 }

@@ -24,10 +24,10 @@ export class CountryComponent implements OnInit {
 
   ngOnInit() {
     this.cols = [
-      {field: 'countryCode', header: 'Código de pais'},
+      {field: 'countryCode', header: 'Código de país'},
       {field: 'globalCode', header: 'Código Global'},
       {field: 'isoCode', header: 'Código ISO'},
-      {field: 'name', header: 'Pais'},
+      {field: 'name', header: 'País'},
       {field: 'cofidiCode', header: 'Clave COFIDI'}
     ]
     this.searchCountries();
