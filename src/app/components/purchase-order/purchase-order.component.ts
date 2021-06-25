@@ -93,7 +93,6 @@ export class PurchaseOrderComponent implements OnInit {
                 } else {
                     this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
                     this.purchaseOrder = [];
-
                 }
                 this.loadingPurchaseOrder = false;
                 this.formGroup.get('orderCode').reset();
@@ -110,8 +109,6 @@ export class PurchaseOrderComponent implements OnInit {
                 } else {
                     this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
                     this.purchaseOrder = [];
-                    
-
                 }
                 this.loadingPurchaseOrder = false;
                 this.formGroup.get('orderCode').reset();
@@ -119,9 +116,6 @@ export class PurchaseOrderComponent implements OnInit {
     
             });
         }
-        
-       
-
     }
 
     onChanges(): void {
@@ -176,12 +170,6 @@ export class PurchaseOrderComponent implements OnInit {
 
             }
         });
-
-        
-            
-
-        
-       
     }
 
     EditOrden(purchaseOrder) {
@@ -211,6 +199,12 @@ export class PurchaseOrderComponent implements OnInit {
         this.visibledetails = true;
         this.visibleEditable = true;
         this.TableOrderFull();
+    }
+
+    sendAssignment(): void {
+        this.service.sendAssignment().subscribe((response) =>{
+            this.messageServices.add({ key: 'error', severity: 'success', summary: 'Enviado!' });
+        });
     }
 
 }
