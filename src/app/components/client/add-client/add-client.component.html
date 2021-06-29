@@ -1,0 +1,134 @@
+<div class="card">
+  <div class="ui-g ui-fluid">
+    <p-accordion [multiple]="true" [activeIndex]="index">
+      <p-accordionTab header="Datos del cliente/Consignado a">
+        <form [(formGroup)]="addForm">
+          <div class="ui-g form-group">
+            <div class="ui-g-12 ui-lg-2">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="cofidiCode" pInputText>
+                <label>Clave de cliente COFIDI</label>
+                <validations-input-component [formGroup]="addForm" formInputName="cofidiCode" [validation_messages]="validations"></validations-input-component>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-5">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="name" pInputText>
+                <label>Nombre del cliente</label>
+                <validations-input-component [formGroup]="addForm" formInputName="name" [validation_messages]="validations"></validations-input-component>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-5">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="contactName" pInputText>
+                <label>Atención a</label>
+                <validations-input-component [formGroup]="addForm" formInputName="contactName" [validation_messages]="validations"></validations-input-component>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield">
+                <p-dropdown formControlName="country" [options]="countries" [filter]="true" optionLabel="name"
+                [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                <label>País</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="city" pInputText>
+                <label>Ciudad</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="state" pInputText>
+                <label>Estado</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-6">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="street" pInputText>
+                <label>Calle</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-3">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="streetNumber" pInputText>
+                <label>Número</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-3">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="zipCode" pInputText>
+                <label>Código postal</label>
+              </span>
+            </div>
+          </div>
+        </form>
+      </p-accordionTab>
+      <p-accordionTab header="Notificación a">
+        <form [(formGroup)]="notifyForm">
+          <div class="ui-g form-group">
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="notifyClientName" pInputText>
+                <label>Notificar a</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="contactName" pInputText>
+                <label>Atención a</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="city" pInputText>
+                <label>Ciudad</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="state" pInputText>
+                <label>Estado</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-6">
+              <span class="md-inputfield ">
+                <input type="text" formControlName="address" pInputText>
+                <label>Dirección</label>
+              </span>
+            </div>
+          </div>
+        </form>
+      </p-accordionTab>
+      <p-accordionTab header="Especificación para facturación">
+        <form [(formGroup)]="invoiceForm">
+          <div class="ui-g form-group">
+            <div class="ui-g-12 ui-lg-6">
+              <span class="md-inputfield">
+                <p-dropdown formControlName="paymentMethod" [options]="models" [filter]="true" 
+                [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                <label>Método de pago</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-6">
+              <span class="md-inputfield">
+                <p-dropdown formControlName="paymentTerm" [options]="models" [filter]="true" 
+                [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                <label>Término de pago</label>
+              </span>
+            </div>
+          </div>
+        </form>    
+      </p-accordionTab>
+    </p-accordion>
+    <div class="ui-g-12 ui-lg-2">
+      <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar" 
+      (click)="save()"></button>
+    </div>
+    <div class="ui-g-12 ui-lg-2">
+      <a class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+      routerLink="/client"></a>
+    </div>
+  </div>
+</div>

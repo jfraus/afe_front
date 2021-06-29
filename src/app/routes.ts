@@ -13,6 +13,8 @@ import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.comp
 import { AuthGuardService } from './utils/auth-guard.service';
 import { CountryComponent } from './components/country/country.component';
 import { RampsComponent } from './components/ramps/ramps.component';
+import { ClientComponent } from './components/client/client.component';
+import { AddClientComponent } from './components/client/add-client/add-client.component';
 
 export const routes: Routes = [
     { path: '',
@@ -24,7 +26,9 @@ export const routes: Routes = [
         {path: 'order-by-vin', component: OrderByVinComponent, canActivate: [AuthGuardService]},
         {path: 'quote', component: QuoteComponent, canActivate: [AuthGuardService]},
         {path: 'country', component: CountryComponent, canActivate: [AuthGuardService]},
-        {path: 'ramps', component: RampsComponent, canActivate: [AuthGuardService]}
+        {path: 'ramps', component: RampsComponent, canActivate: [AuthGuardService]},
+        {path: 'client', component: ClientComponent, canActivate: [AuthGuardService]},
+        {path: 'client-add', component: AddClientComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
