@@ -24,8 +24,4 @@ export class ClientComponent implements OnInit {
       {field: 'paymentTerm', header: 'Pago/Payment Terms'}
     ]
   }
-
-  newClient(){
-  
-  }
 }
