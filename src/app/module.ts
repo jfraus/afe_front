@@ -103,7 +103,7 @@ import { AddModelComponent } from './components/model/add-model/add-model.compon
 import { EditAddContractComponent } from './components/contract/edit-add-contracts/edit-add-contracts.component';
 import { EditSaleContractComponent } from './components/contract/edit-sale-contract/edit-sale-contract.component';
 import { EditAddDetailComponent } from './components/contract/add-edit-detail/add-edit-detail.component';
-import {  ContractDetailsComponent } from './components/contract/details-contract/details-contract.component';
+import { ContractDetailsComponent } from './components/contract/details-contract/details-contract.component';
 import { OrderByVinComponent } from './components/order-by-vin/order-by-vin.component';
 import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
 import { pipeStringDate } from './utils/pipeStringDate.pipe';
@@ -115,11 +115,12 @@ import { CountryComponent } from './components/country/country.component';
 import { EditCountryComponent } from './components/country/edit-country/edit-country.component';
 import { RampsComponent } from './components/ramps/ramps.component';
 import { EditRampsComponent } from './components/ramps/edit-ramps/edit-ramps.component';
+import { ClientComponent } from './components/client/client.component';
+import { AddClientComponent } from './components/client/add-client/add-client.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
 ];
-
 
 
 @NgModule({
@@ -194,7 +195,6 @@ const sharedComponents = [
         TreeModule,
         TreeTableModule,
         VirtualScrollerModule
-
     ],
     declarations: [
         AppComponent,
@@ -227,6 +227,8 @@ const sharedComponents = [
         EditCountryComponent,
         RampsComponent,
         EditRampsComponent,
+        ClientComponent,
+        AddClientComponent,
         ...sharedComponents,
     ],
     providers: [

@@ -1,0 +1,56 @@
+<div class="card">
+  <div class="card-title">Catálogo de clientes</div>
+  <div class="p-fluid p-formgrid p-grid">
+    <div class="ui-g-12 ui-lg-2 ui-lg-offset-10">
+      <a class="ui-button-success" type="button" pButton icon="pi pi-plus" label="Agregar cliente" 
+         routerLink="/client-add">
+      </a>
+    </div>
+  </div>
+  <p-table #dt [columns]="cols"
+    selectionMode="single" [value]="clients"
+    [loading]="loadingClients" sortMode="single" 
+    [responsive]="true" [rowHover]="true" [paginator]="true"
+    [rowsPerPageOptions]="[10, 20, 30, 40, 50]" [autoLayout]="true"
+    [rows]="20" [pageLinks]="20" [filterDelay]="0" [globalFilterFields]="['name']">
+    <ng-template pTemplate="caption">
+      <div class="table-header">
+        <span class="p-input-icon-left">
+          Buscar por cliente
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{ col.header }}
+        </th>
+        <th>
+          Acción
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td style="text-align: center" [attr.colspan]="columns.length + 2">
+          No se encontro información
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td *ngFor="let col of columns">
+          {{rowData[col.field]}}
+        </td>
+        <td>
+          <button pButton type="button" icon="pi pi-pencil" class="blue-grey-btn" style="margin-left: 3px" 
+            (click)="updateCountry(rowData)">
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+

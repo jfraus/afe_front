@@ -26,7 +26,12 @@ export class AddDetailModelComponent {
     @Input() purchaseOrderId;
     
 
-    constructor(public messageServices: MessageService, private fb: FormBuilder, private servicesPurchase: PurchaseOrdenControllerService, private serviceColor: ModelColorControllerService, private messages: AppValidationMessagesService, private services: ModelControllerService) {
+    constructor(public messageServices: MessageService, 
+                private fb: FormBuilder, 
+                private servicesPurchase: PurchaseOrdenControllerService, 
+                private serviceColor: ModelColorControllerService, 
+                private messages: AppValidationMessagesService, 
+                private services: ModelControllerService) {
         this.BuildForm();
         this.fillModel();
         this.messages.messagesRequired = 'true';
@@ -75,7 +80,6 @@ export class AddDetailModelComponent {
 
     selectColor(): void {
         let color = this.addModel.get('color').value;
-
         this.addModel.get('internalColor').setValue(color !== null ? color.interiorCode : '');
     }
 
@@ -96,7 +100,6 @@ export class AddDetailModelComponent {
             })
             validPromise.then((rs) => {
                 if (rs) {
-                
                     let promise = new Promise((resolved) => {
                         let postObject: Model = {
                             code: this.addModel.value.model.code,
@@ -127,20 +130,9 @@ export class AddDetailModelComponent {
                     })
     
                 }else{
-                    this.messageServices.add({key: 'error', severity:'info', summary: 'La combinacion de modelo color ya existe en los pedidos'});
-
-                    
+                    this.messageServices.add({key: 'error', severity:'info', summary: 'La combinacion de modelo color ya existe en los pedidos'});   
                 }
             });
-
-            
-
-
-
-
-
-
-
         }
     }
 
@@ -148,7 +140,5 @@ export class AddDetailModelComponent {
         this.addModel.reset();
         this.close.emit(false);
     }
-
-
 }
 
