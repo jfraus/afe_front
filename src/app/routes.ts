@@ -15,6 +15,7 @@ import { CountryComponent } from './components/country/country.component';
 import { RampsComponent } from './components/ramps/ramps.component';
 import { ClientComponent } from './components/client/client.component';
 import { AddClientComponent } from './components/client/add-client/add-client.component';
+import { InvoiceDetailComponent } from './components/invoice/invoice-detail/invoice-detail.component';
 
 export const routes: Routes = [
     { path: '',
@@ -28,6 +29,7 @@ export const routes: Routes = [
         {path: 'country', component: CountryComponent, canActivate: [AuthGuardService]},
         {path: 'ramps', component: RampsComponent, canActivate: [AuthGuardService]},
         {path: 'client', component: ClientComponent, canActivate: [AuthGuardService]},
+        {path: 'invoice-detail', component: InvoiceDetailComponent},
         {path: 'client-add', component: AddClientComponent}
     ]
     },
