@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ClientService } from 'src/app/services/client-controller.service';
+import { Client } from 'src/app/models/client.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client',
@@ -8,20 +11,35 @@ import { Component, OnInit } from '@angular/core';
 export class ClientComponent implements OnInit {
 
   cols = [];
-  clients = [];
+  clients:Client[] = [];
   loadingClients:boolean = false;
 
-  constructor() { }
+  constructor(private clientService:ClientService,
+              private router: Router) { }
 
   ngOnInit() {
     this.cols = [
       {field: 'cofidiCode', header: 'Clave de cliente'},
       {field: 'name', header: 'Nombre'},
-      {field: 'country', header: 'País del cliente'},
+      {field: 'country.name', header: 'País del cliente'},
       {field: 'city', header: 'Ciudad'},
       {field: 'state', header: 'Estado'},
-      {field: 'paymentMethod', header: 'Método de pago'},
-      {field: 'paymentTerm', header: 'Pago/Payment Terms'}
+      {field: 'paymentMethod.methodName', header: 'Método de pago'},
+      {field: 'paymentTerm.paymentTerm', header: 'Términos de pago'}
     ]
+  }
+
+  loadClients(){
+    this.loadingClients = true;
+    this.clientService.getClients().subscribe(data => {
+      this.clients = data;
+      this.loadingClients = false;
+    });
+  }
+
+  updateClient(client:Client){
+    //Agregar una nueva ruta para el mismo componente de Agregar, 
+    //pero que reciba el id del cliente 
+    this.router.navigate(['/']);
   }
 }
