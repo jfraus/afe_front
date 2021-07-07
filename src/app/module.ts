@@ -117,6 +117,7 @@ import { RampsComponent } from './components/ramps/ramps.component';
 import { EditRampsComponent } from './components/ramps/edit-ramps/edit-ramps.component';
 import { ClientComponent } from './components/client/client.component';
 import { AddClientComponent } from './components/client/add-client/add-client.component';
+import { InvoiceDetailComponent } from './components/invoice/invoice-detail/invoice-detail.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -229,6 +230,7 @@ const sharedComponents = [
         EditRampsComponent,
         ClientComponent,
         AddClientComponent,
+        InvoiceDetailComponent,
         ...sharedComponents,
     ],
     providers: [
