@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
-  styleUrls: ['./client.component.css']
+  styleUrls: ['./client.component.css'],
+  providers:[ClientService]
 })
 export class ClientComponent implements OnInit {
 
@@ -18,21 +19,24 @@ export class ClientComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.loadClients();
     this.cols = [
       {field: 'cofidiCode', header: 'Clave de cliente'},
       {field: 'name', header: 'Nombre'},
-      {field: 'country.name', header: 'País del cliente'},
+      {field: 'country.name', header: 'País del cliente', element: true},
       {field: 'city', header: 'Ciudad'},
       {field: 'state', header: 'Estado'},
       {field: 'paymentMethod.methodName', header: 'Método de pago'},
       {field: 'paymentTerm.paymentTerm', header: 'Términos de pago'}
-    ]
+    ]    
   }
-
+  
   loadClients(){
     this.loadingClients = true;
     this.clientService.getClients().subscribe(data => {
       this.clients = data;
+      console.log(data);
+      console.log(this.clients);
       this.loadingClients = false;
     });
   }
