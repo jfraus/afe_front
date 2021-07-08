@@ -1,4 +1,4 @@
-export class PaymentTerm {
-    id: number;
-    paymentTerm: string;
+export interface PaymentTerm {
+    id: number,
+    paymentTerm: string
 }
