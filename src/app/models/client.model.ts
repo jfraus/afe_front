@@ -1,4 +1,5 @@
 import { Country } from "./country.model"
+import { NotificationClient } from "./NotificationClient.model"
 import { PaymentMethod } from "./payment-method.model"
 import { PaymentTerm } from "./payment-term.model"
 
@@ -11,7 +12,9 @@ export interface Client {
     city: string,
     state:string,
     street:string,
+    streetNumber:string,
     zipCode: string,
+    notificationClient: NotificationClient,
     paymentMethod: PaymentMethod,
     paymentTerm: PaymentTerm,
     exportCountries: Country[]

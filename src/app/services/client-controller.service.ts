@@ -11,5 +11,9 @@ export class ClientService {
   getClients(): Observable<Client[]>{
       return this.http.get<Client[]>(`${environment.apiUrl}client/`).pipe();
   }
-  
+
+  postClient(client:Client){
+    return this.http.post<any>(`${environment.apiUrl}client/`,client).pipe();
+  }
+
 }
