@@ -40,8 +40,6 @@ export class ClientComponent implements OnInit {
   }
 
   updateClient(client:Client){
-    //Agregar una nueva ruta para el mismo componente de Agregar, 
-    //pero que reciba el id del cliente 
     this.router.navigate(['/']);
   }
 }
