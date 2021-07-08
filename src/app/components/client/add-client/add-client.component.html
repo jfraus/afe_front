@@ -83,30 +83,30 @@
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield ">
-                <input type="text" formControlName="contactName" pInputText>
+                <input type="text" formControlName="notifyContactName" pInputText>
                 <label>Atención a</label>
-                <validations-input-component [formGroup]="notifyForm" formInputName="contactName" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="notifyForm" formInputName="notifyContactName" [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield ">
-                <input type="text" formControlName="city" pInputText>
+                <input type="text" formControlName="notifyCity" pInputText>
                 <label>Ciudad</label>
-                <validations-input-component [formGroup]="notifyForm" formInputName="city" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="notifyForm" formInputName="notifyCity" [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield ">
-                <input type="text" formControlName="state" pInputText>
+                <input type="text" formControlName="notifyState" pInputText>
                 <label>Estado</label>
-                <validations-input-component [formGroup]="notifyForm" formInputName="state" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="notifyForm" formInputName="notifyState" [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-6">
               <span class="md-inputfield ">
-                <input type="text" formControlName="address" pInputText>
+                <input type="text" formControlName="notifyAddress" pInputText>
                 <label>Dirección</label>
-                <validations-input-component [formGroup]="notifyForm" formInputName="address" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="notifyForm" formInputName="notifyAddress" [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
           </div>
@@ -146,7 +146,7 @@
       <div class="ui-g-6 ui-lg-4">
         <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar" 
         [disabled] = "!(clientForm.valid && notifyForm.valid && invoiceForm.valid)" 
-        (click)="save()"></button>
+        (click)="saveClient()"></button>
       </div>
       <div class="ui-g-6 ui-lg-4">
         <a class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
