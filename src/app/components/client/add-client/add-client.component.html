@@ -1,6 +1,6 @@
 <div class="card">
   <div class="ui-g ui-fluid">
-    <p-accordion [multiple]="true" [activeIndex]="index">
+    <p-accordion [multiple]="true">
       <p-accordionTab header="Datos del cliente/Consignado a">
         <form [(formGroup)]="clientForm">
           <div class="ui-g form-group">
@@ -8,64 +8,73 @@
               <span class="md-inputfield ">
                 <input type="text" formControlName="cofidiCode" pInputText>
                 <label>Clave de cliente COFIDI</label>
-                <validations-input-component [formGroup]="clientForm" formInputName="cofidiCode" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="clientForm" formInputName="cofidiCode"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-5">
               <span class="md-inputfield ">
                 <input type="text" formControlName="name" pInputText>
                 <label>Nombre del cliente</label>
-                <validations-input-component [formGroup]="clientForm" formInputName="name" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="clientForm" formInputName="name"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-5">
               <span class="md-inputfield ">
                 <input type="text" formControlName="contactName" pInputText>
                 <label>Atención a</label>
-                <validations-input-component [formGroup]="clientForm" formInputName="contactName" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="clientForm" formInputName="contactName"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield">
                 <p-dropdown formControlName="country" [options]="countries" [filter]="true" optionLabel="name"
-                [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                  [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
                 <label>País</label>
-                <validations-input-component [formGroup]="clientForm" formInputName="country" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="clientForm" formInputName="country"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield ">
                 <input type="text" formControlName="city" pInputText>
                 <label>Ciudad</label>
-                <validations-input-component [formGroup]="clientForm" formInputName="city" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="clientForm" formInputName="city"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield ">
                 <input type="text" formControlName="state" pInputText>
                 <label>Estado</label>
-                <validations-input-component [formGroup]="clientForm" formInputName="state" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="clientForm" formInputName="state"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-6">
               <span class="md-inputfield ">
                 <input type="text" formControlName="street" pInputText>
                 <label>Calle</label>
-                <validations-input-component [formGroup]="clientForm" formInputName="street" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="clientForm" formInputName="street"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-3">
               <span class="md-inputfield ">
                 <input type="text" formControlName="streetNumber" pInputText>
                 <label>Número</label>
-                <validations-input-component [formGroup]="clientForm" formInputName="streetNumber" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="clientForm" formInputName="streetNumber"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-3">
               <span class="md-inputfield ">
                 <input type="text" formControlName="zipCode" pInputText>
                 <label>Código postal</label>
-                <validations-input-component [formGroup]="clientForm" formInputName="zipCode" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="clientForm" formInputName="zipCode"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
           </div>
@@ -78,35 +87,40 @@
               <span class="md-inputfield ">
                 <input type="text" formControlName="notifyClientName" pInputText>
                 <label>Notificar a</label>
-                <validations-input-component [formGroup]="notifyForm" formInputName="notifyClientName" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="notifyForm" formInputName="notifyClientName"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield ">
                 <input type="text" formControlName="notifyContactName" pInputText>
                 <label>Atención a</label>
-                <validations-input-component [formGroup]="notifyForm" formInputName="notifyContactName" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="notifyForm" formInputName="notifyContactName"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield ">
                 <input type="text" formControlName="notifyCity" pInputText>
                 <label>Ciudad</label>
-                <validations-input-component [formGroup]="notifyForm" formInputName="notifyCity" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="notifyForm" formInputName="notifyCity"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield ">
                 <input type="text" formControlName="notifyState" pInputText>
                 <label>Estado</label>
-                <validations-input-component [formGroup]="notifyForm" formInputName="notifyState" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="notifyForm" formInputName="notifyState"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-6">
               <span class="md-inputfield ">
                 <input type="text" formControlName="notifyAddress" pInputText>
                 <label>Dirección</label>
-                <validations-input-component [formGroup]="notifyForm" formInputName="notifyAddress" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="notifyForm" formInputName="notifyAddress"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
           </div>
@@ -117,40 +131,43 @@
           <div class="ui-g form-group">
             <div class="ui-g-12 ui-lg-6">
               <span class="md-inputfield">
-                <p-dropdown formControlName="paymentMethod" [options]="paymentMethods" [filter]="true" optionLabel="methodName"
-                [autoDisplayFirst]="false" [showClear]="true"></p-dropdown>
+                <p-dropdown formControlName="paymentMethod" [options]="paymentMethods" [filter]="true"
+                  optionLabel="methodName" [autoDisplayFirst]="false" [showClear]="true"></p-dropdown>
                 <label>Método de pago</label>
-                <validations-input-component [formGroup]="invoiceForm" formInputName="paymentMethod" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="invoiceForm" formInputName="paymentMethod"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-6">
               <span class="md-inputfield">
-                <p-dropdown formControlName="paymentTerm" [options]="paymentTerms" [filter]="true" optionLabel="paymentTerm"
-                [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                <p-dropdown formControlName="paymentTerm" [options]="paymentTerms" [filter]="true"
+                  optionLabel="paymentTerm" [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
                 <label>Término de pago</label>
-                <validations-input-component [formGroup]="invoiceForm" formInputName="paymentTerm" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="invoiceForm" formInputName="paymentTerm"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-6">
               <span class="md-inputfield">
-                <p-multiSelect [options]="countries" formControlName="country" optionLabel="name" [virtualScroll]="true" defaultLabel="Seleccionar"></p-multiSelect>
+                <p-multiSelect [options]="countries" formControlName="country" optionLabel="name" [virtualScroll]="true"
+                  defaultLabel="Seleccionar"></p-multiSelect>
                 <label>Paises de exportación</label>
-                <validations-input-component [formGroup]="invoiceForm" formInputName="country" [validation_messages]="validations"></validations-input-component>
+                <validations-input-component [formGroup]="invoiceForm" formInputName="country"
+                  [validation_messages]="validations"></validations-input-component>
               </span>
             </div>
           </div>
-        </form>    
+        </form>
       </p-accordionTab>
     </p-accordion>
     <div class="ui-g-12 ui-lg-6 ui-lg-offset-8">
       <div class="ui-g-6 ui-lg-4">
-        <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar" 
-        [disabled] = "!(clientForm.valid && notifyForm.valid && invoiceForm.valid)" 
-        (click)="saveClient()"></button>
+        <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar"
+          [disabled]="!(clientForm.valid && notifyForm.valid && invoiceForm.valid)" (click)="saveClient()"></button>
       </div>
       <div class="ui-g-6 ui-lg-4">
-        <a class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
-        routerLink="/client"></a>
+        <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" (click)="cancel()">
+        </button>
       </div>
     </div>
   </div>

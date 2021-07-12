@@ -29,8 +29,9 @@ export const routes: Routes = [
         {path: 'country', component: CountryComponent, canActivate: [AuthGuardService]},
         {path: 'ramps', component: RampsComponent, canActivate: [AuthGuardService]},
         {path: 'client', component: ClientComponent, canActivate: [AuthGuardService]},
-        {path: 'invoice-detail', component: InvoiceDetailComponent},
-        {path: 'client-add', component: AddClientComponent}
+        {path: 'client-add', component: AddClientComponent},
+        {path: 'client-edit/:id', component: AddClientComponent},
+        {path: 'invoice-detail', component: InvoiceDetailComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},

@@ -2,17 +2,14 @@
   <div class="card-title">Catálogo de clientes</div>
   <div class="p-fluid p-formgrid p-grid">
     <div class="ui-g-12 ui-lg-3">
-      <a class="ui-button-success" type="button" pButton icon="pi pi-plus" label="Agregar cliente" 
-         routerLink="/client-add">
+      <a class="ui-button-success" type="button" pButton icon="pi pi-plus" label="Agregar cliente"
+        routerLink="/client-add">
       </a>
     </div>
   </div>
-  <p-table #dt [columns]="cols"
-    selectionMode="single" [value]="clients"
-    [loading]="loadingClients" sortMode="single" 
-    [responsive]="true" [rowHover]="true" [paginator]="true"
-    [rowsPerPageOptions]="[10, 20, 30, 40, 50]" [autoLayout]="true"
-    [rows]="20" [pageLinks]="20" [filterDelay]="0" [globalFilterFields]="['name']">
+  <p-table #dt [columns]="cols" selectionMode="single" [value]="clients" [loading]="loadingClients" sortMode="single"
+    [responsive]="true" [rowHover]="true" [paginator]="true" [rowsPerPageOptions]="[10, 20, 30, 40, 50]"
+    [autoLayout]="true" [rows]="20" [pageLinks]="20" [filterDelay]="0" [globalFilterFields]="['name']">
     <ng-template pTemplate="caption">
       <div class="table-header">
         <span class="p-input-icon-left">
@@ -43,21 +40,18 @@
       <tr [pSelectableRow]="rowData">
         <td *ngFor="let col of columns">
           <span *ngIf="col.subfield === undefined; else elseBlock">
-            {{rowData[col.field]}}  
+            {{rowData[col.field]}}
           </span>
           <ng-template #elseBlock>
             {{rowData[col.field] [col.subfield]}}
-            </ng-template>          
+          </ng-template>
         </td>
         <td>
-          <button pButton type="button" icon="pi pi-pencil" class="blue-grey-btn" style="margin-left: 3px" 
+          <button pButton type="button" icon="pi pi-pencil" class="blue-grey-btn" style="margin-left: 3px"
             (click)="updateClient(rowData)">
           </button>
         </td>
       </tr>
     </ng-template>
   </p-table>
-
-
 </div>
-

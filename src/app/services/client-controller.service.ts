@@ -16,4 +16,12 @@ export class ClientService {
     return this.http.post<any>(`${environment.apiUrl}client/`,client).pipe();
   }
 
+  getClient(id : number) : Observable<Client>{
+    return this.http.get<Client>(`${environment.apiUrl}client/?id=${id}`).pipe();
+  }
+
+  putClient(client:Client){
+    return this.http.put<any>(`${environment.apiUrl}client/`,client).pipe();
+  }
+  
 }
