@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from 'src/app/models/client.model';
 import { NotificationClient } from 'src/app/models/NotificationClient.model';
@@ -10,13 +10,13 @@ import { CountryControllerService } from 'src/app/services/country-controller.se
 import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'add-client',
   templateUrl: './add-client.component.html',
   styleUrls: ['./add-client.component.css'],
-  providers : [CountryControllerService, InvoiceService, ClientService]
+  providers: [CountryControllerService, InvoiceService, ClientService]
 })
 export class AddClientComponent implements OnInit {
 
@@ -28,16 +28,22 @@ export class AddClientComponent implements OnInit {
   paymentTerms: PaymentTerm[] = [];
   validations = [];
 
-  constructor(private formBuilder: FormBuilder, 
-              private countryService: CountryControllerService,
-              private invoiceService: InvoiceService,
-              private validationMessages: AppValidationMessagesService,
-              private clientService: ClientService,
-              public messageServices: MessageService,
-              private router: Router) { }
+  constructor(private formBuilder: FormBuilder,
+    private countryService: CountryControllerService,
+    private invoiceService: InvoiceService,
+    private validationMessages: AppValidationMessagesService,
+    private clientService: ClientService,
+    public messageServices: MessageService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe(params =>
+      this.loadClient(params)
+    );
+  }
 
   ngOnInit() {
     this.clientForm = this.formBuilder.group({
+      id:[''],
       cofidiCode: ['', [Validators.required, Validators.maxLength(10)]],
       name: ['', [Validators.required, Validators.maxLength(200)]],
       contactName: ['', [Validators.required, Validators.maxLength(254)]],
@@ -50,6 +56,7 @@ export class AddClientComponent implements OnInit {
     });
 
     this.notifyForm = this.formBuilder.group({
+      id:[''],
       notifyContactName: ['', [Validators.required, Validators.maxLength(254)]],
       notifyClientName: ['', [Validators.required, Validators.maxLength(254)]],
       notifyAddress: ['', [Validators.required, Validators.maxLength(254)]],
@@ -71,12 +78,12 @@ export class AddClientComponent implements OnInit {
     this.validations.push(this.validationMessages.getValidationMessagesWithName('name'));
     this.validationMessages.messagesRequired = 'true';
     this.validationMessages.messagesMaxLenght = '254';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('contactName'));    
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('contactName'));
     this.validationMessages.messagesRequired = 'true';
     this.validations.push(this.validationMessages.getValidationMessagesWithName('country'));
     this.validationMessages.messagesRequired = 'true';
     this.validationMessages.messagesMaxLenght = '150';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('city'));    
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('city'));
     this.validationMessages.messagesRequired = 'true';
     this.validationMessages.messagesMaxLenght = '150';
     this.validations.push(this.validationMessages.getValidationMessagesWithName('state'));
@@ -87,7 +94,7 @@ export class AddClientComponent implements OnInit {
     this.validationMessages.messagesMaxLenght = '20';
     this.validations.push(this.validationMessages.getValidationMessagesWithName('streetNumber'));
     this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '5';    
+    this.validationMessages.messagesMaxLenght = '5';
     this.validations.push(this.validationMessages.getValidationMessagesWithName('zipCode'));
     this.validationMessages.messagesRequired = 'true';
     this.validationMessages.messagesMaxLenght = '254';
@@ -114,33 +121,56 @@ export class AddClientComponent implements OnInit {
     this.loadPaymentTerms();
   }
 
-  loadCountries():void{
+  private loadClient(params: any) {
+    if (params.id !== undefined) {
+      this.clientService.getClient(params.id).subscribe(response => {        
+        this.clientForm.patchValue(response);        
+        let notifyInfo = {
+          id: response.notificationClient.id,
+          notifyClientName: response.notificationClient.contactName,
+          notifyContactName: response.notificationClient.contactName,
+          notifyCity: response.notificationClient.city,
+          notifyState: response.notificationClient.state,
+          notifyAddress: response.notificationClient.address
+        }        
+        this.notifyForm.patchValue(notifyInfo);        
+        let invoice = {
+          paymentMethod:response.paymentMethod,
+          paymentTerm: response.paymentTerm,
+          country: response.exportCountries
+        }
+        this.invoiceForm.patchValue(invoice);
+      });
+    }
+  }
+
+  loadCountries(): void {
     this.countryService.get().subscribe(data => {
       this.countries = data;
     });
   }
 
-  loadPaymentMethods():void{
+  loadPaymentMethods(): void {
     this.invoiceService.getPaymentMethods().subscribe(data => {
       this.paymentMethods = data;
     });
   }
 
-  loadPaymentTerms():void{
+  loadPaymentTerms(): void {
     this.invoiceService.getPaymentTerms().subscribe(data => {
       this.paymentTerms = data;
     });
   }
 
-  saveClient(){
-    if(this.clientForm.valid && this.notifyForm.valid && this.invoiceForm.valid){
-      
-      let notifyClient : NotificationClient = {
-        id: undefined,
+  saveClient() {
+    if (this.clientForm.valid && this.notifyForm.valid && this.invoiceForm.valid) {
+      let id =  this.clientForm.value.id;
+      let notifyClient: NotificationClient = {
+        id: this.notifyForm.value.id,
         notifyClientName: this.notifyForm.value.notifyClientName,
-	      contactName:  this.notifyForm.value.notifyContactName,
-        address:  this.notifyForm.value.notifyAddress,
-        city:  this.notifyForm.value.notifyCity,
+        contactName: this.notifyForm.value.notifyContactName,
+        address: this.notifyForm.value.notifyAddress,
+        city: this.notifyForm.value.notifyCity,
         state: this.notifyForm.value.notifyState
       }
 
@@ -153,10 +183,11 @@ export class AddClientComponent implements OnInit {
         id: this.invoiceForm.value.paymentTerm.id,
         paymentTerm: undefined
       }
+      
       let exportCountries: Country[] = this.invoiceForm.value.country;
-        
-      let client : Client = {
-        id: undefined,
+
+      let client: Client = {
+        id: this.clientForm.value.id,
         cofidiCode: this.clientForm.value.cofidiCode,
         name: this.clientForm.value.name,
         contactName: this.clientForm.value.contactName,
@@ -169,13 +200,24 @@ export class AddClientComponent implements OnInit {
         notificationClient: notifyClient,
         paymentMethod: paymentMethod,
         paymentTerm: paymentTerm,
-        exportCountries : exportCountries
+        exportCountries: exportCountries
       }
-      
-      this.clientService.postClient(client).subscribe((response) =>{
-        this.messageServices.add({key: 'error', severity:'success', summary: 'Guardado con éxito'});
-        this.router.navigate(['/client']);
-      })
+
+      if (id == '') {
+        this.clientService.postClient(client).subscribe((response) => {
+          this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con éxito' });
+          this.router.navigate(['/client']);
+        })
+      } else {
+        this.clientService.putClient(client).subscribe((response) => {
+          this.messageServices.add({ key: 'error', severity: 'success', summary: 'Actualizado con éxito' });
+          this.router.navigate(['/client']);
+        })
+      }
     }
+  }
+
+  cancel() {
+    this.router.navigate(['client']);
   }
 }

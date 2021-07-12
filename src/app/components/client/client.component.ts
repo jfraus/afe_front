@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
 export class ClientComponent implements OnInit {
 
   cols = [];
-  clients:Client[] = [];
+  clients:Client[] = [];  
   loadingClients:boolean = false;
-
+  
   constructor(private clientService:ClientService,
               private router: Router) { }
 
@@ -23,7 +23,7 @@ export class ClientComponent implements OnInit {
     this.cols = [
       {field: 'cofidiCode', header: 'Clave de cliente'},
       {field: 'name', header: 'Nombre'},
-      {field: 'country', subfield:'name', header: 'Pais del cliente'},
+      {field: 'country', subfield:'name', header: 'País del cliente'},
       {field: 'city', header: 'Ciudad'},
       {field: 'state', header: 'Estado'},
       {field: 'paymentMethod', subfield:'methodName', header: 'Método de pago'},
@@ -39,7 +39,7 @@ export class ClientComponent implements OnInit {
     });
   }
 
-  updateClient(client:Client){
-    this.router.navigate(['/']);
+  updateClient(client:Client) {
+    this.router.navigate(['client-edit', client.id]);  
   }
 }
