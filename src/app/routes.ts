@@ -29,10 +29,10 @@ export const routes: Routes = [
         {path: 'quote', component: QuoteComponent, canActivate: [AuthGuardService]},
         {path: 'country', component: CountryComponent, canActivate: [AuthGuardService]},
         {path: 'ramps', component: RampsComponent, canActivate: [AuthGuardService]},
-        {path: 'client', component: ClientComponent, canActivate: [AuthGuardService]},
-        {path: 'invoice-detail', component: InvoiceDetailComponent},
+        {path: 'client', component: ClientComponent, canActivate: [AuthGuardService]},        
         {path: 'client-add', component: AddClientComponent},
-        {path: 'invoice', component: InvoiceComponent}
+        {path: 'invoice', component: InvoiceComponent},
+        {path: 'invoice-detail', component: InvoiceDetailComponent},
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
