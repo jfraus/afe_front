@@ -16,6 +16,7 @@ import { RampsComponent } from './components/ramps/ramps.component';
 import { ClientComponent } from './components/client/client.component';
 import { AddClientComponent } from './components/client/add-client/add-client.component';
 import { InvoiceDetailComponent } from './components/invoice/invoice-detail/invoice-detail.component';
+import { InvoiceComponent } from './components/invoice/invoice.component';
 
 export const routes: Routes = [
     { path: '',
@@ -28,10 +29,10 @@ export const routes: Routes = [
         {path: 'quote', component: QuoteComponent, canActivate: [AuthGuardService]},
         {path: 'country', component: CountryComponent, canActivate: [AuthGuardService]},
         {path: 'ramps', component: RampsComponent, canActivate: [AuthGuardService]},
-        {path: 'client', component: ClientComponent, canActivate: [AuthGuardService]},
+        {path: 'client', component: ClientComponent, canActivate: [AuthGuardService]},        
         {path: 'client-add', component: AddClientComponent},
-        {path: 'client-edit/:id', component: AddClientComponent},
-        {path: 'invoice-detail', component: InvoiceDetailComponent}
+        {path: 'invoice', component: InvoiceComponent},
+        {path: 'invoice-detail', component: InvoiceDetailComponent},
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
