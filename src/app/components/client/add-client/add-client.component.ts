@@ -28,7 +28,6 @@ export class AddClientComponent implements OnInit {
   paymentTerms: PaymentTerm[] = [];
   validations = [];
   title:string;
-  editClient : boolean ;
 
   constructor(private formBuilder: FormBuilder,
     private countryService: CountryControllerService,
@@ -126,7 +125,6 @@ export class AddClientComponent implements OnInit {
   private loadClient(params: any) {
     if (params.id !== undefined) {
       this.title="Editar Cliente";
-      this.editClient = true;
       this.clientService.getClient(params.id).subscribe(response => {                
         setTimeout(() => this.clientForm.patchValue(response), 600);
         let notifyInfo = {
@@ -147,21 +145,13 @@ export class AddClientComponent implements OnInit {
       });
     }else{
       this.title="Agregar Cliente";
-      this.editClient = false;
     }
   }
 
   loadCountries(): void {
-    this.countries =[];
-    if (this.editClient) {
-      this.countryService.getCountriesExport().subscribe(data => {
-        this.countries = data;                
-      });
-    }else{
-      this.countryService.getCountriesExport().subscribe(data => {
-        this.countries = data;        
-      });
-    }
+    this.countryService.get().subscribe(data => {
+      this.countries = data;        
+    });  
   }
 
   loadPaymentMethods(): void {
