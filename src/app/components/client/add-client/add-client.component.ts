@@ -27,6 +27,7 @@ export class AddClientComponent implements OnInit {
   paymentMethods: PaymentMethod[] = [];
   paymentTerms: PaymentTerm[] = [];
   validations = [];
+  title:string;
 
   constructor(private formBuilder: FormBuilder,
     private countryService: CountryControllerService,
@@ -41,7 +42,7 @@ export class AddClientComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.clientForm = this.formBuilder.group({
       id:[''],
       cofidiCode: ['', [Validators.required, Validators.maxLength(10)]],
@@ -123,8 +124,10 @@ export class AddClientComponent implements OnInit {
 
   private loadClient(params: any) {
     if (params.id !== undefined) {
+      this.title="Editar Cliente";
       this.clientService.getClient(params.id).subscribe(response => {        
-        this.clientForm.patchValue(response);        
+        //this.clientForm.patchValue(response); 
+        setTimeout(() => this.clientForm.patchValue(response), 600);
         let notifyInfo = {
           id: response.notificationClient.id,
           notifyClientName: response.notificationClient.contactName,
@@ -139,8 +142,10 @@ export class AddClientComponent implements OnInit {
           paymentTerm: response.paymentTerm,
           country: response.exportCountries
         }
-        this.invoiceForm.patchValue(invoice);
+        setTimeout(() => this.invoiceForm.patchValue(invoice), 600);
       });
+    }else{
+      this.title="Agregar Cliente";
     }
   }
 
@@ -217,7 +222,7 @@ export class AddClientComponent implements OnInit {
     }
   }
 
-  cancel() {
+  cancel() {    
     this.router.navigate(['client']);
   }
 }
