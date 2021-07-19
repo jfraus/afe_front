@@ -125,8 +125,7 @@ export class AddClientComponent implements OnInit {
   private loadClient(params: any) {
     if (params.id !== undefined) {
       this.title="Editar Cliente";
-      this.clientService.getClient(params.id).subscribe(response => {        
-        //this.clientForm.patchValue(response); 
+      this.clientService.getClient(params.id).subscribe(response => {                
         setTimeout(() => this.clientForm.patchValue(response), 600);
         let notifyInfo = {
           id: response.notificationClient.id,
