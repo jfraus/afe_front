@@ -116,7 +116,6 @@ export class AddClientComponent implements OnInit {
     this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentMethod'));
     this.validationMessages.messagesRequired = 'true';
     this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentTerm'));
-    this.invoiceForm.reset;
     this.loadCountries();
     this.loadPaymentMethods();
     this.loadPaymentTerms();
