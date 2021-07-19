@@ -39,7 +39,7 @@ export class ClientComponent implements OnInit {
     });
   }
 
-  updateClient(client:Client) {
+  updateClient(client:Client) {    
     this.router.navigate(['client-edit', client.id]);  
   }
 }

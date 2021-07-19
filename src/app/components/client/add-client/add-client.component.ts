@@ -27,6 +27,7 @@ export class AddClientComponent implements OnInit {
   paymentMethods: PaymentMethod[] = [];
   paymentTerms: PaymentTerm[] = [];
   validations = [];
+  title:string;
 
   constructor(private formBuilder: FormBuilder,
     private countryService: CountryControllerService,
@@ -41,7 +42,7 @@ export class AddClientComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.clientForm = this.formBuilder.group({
       id:[''],
       cofidiCode: ['', [Validators.required, Validators.maxLength(10)]],
@@ -115,7 +116,6 @@ export class AddClientComponent implements OnInit {
     this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentMethod'));
     this.validationMessages.messagesRequired = 'true';
     this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentTerm'));
-
     this.loadCountries();
     this.loadPaymentMethods();
     this.loadPaymentTerms();
@@ -123,8 +123,9 @@ export class AddClientComponent implements OnInit {
 
   private loadClient(params: any) {
     if (params.id !== undefined) {
-      this.clientService.getClient(params.id).subscribe(response => {        
-        this.clientForm.patchValue(response);        
+      this.title="Editar Cliente";
+      this.clientService.getClient(params.id).subscribe(response => {                
+        setTimeout(() => this.clientForm.patchValue(response), 600);
         let notifyInfo = {
           id: response.notificationClient.id,
           notifyClientName: response.notificationClient.contactName,
@@ -139,21 +140,23 @@ export class AddClientComponent implements OnInit {
           paymentTerm: response.paymentTerm,
           country: response.exportCountries
         }
-        this.invoiceForm.patchValue(invoice);
+        setTimeout(() => this.invoiceForm.patchValue(invoice), 600);
       });
+    }else{
+      this.title="Agregar Cliente";
     }
   }
 
   loadCountries(): void {
     this.countryService.get().subscribe(data => {
-      this.countries = data;
-    });
+      this.countries = data;        
+    });  
   }
 
   loadPaymentMethods(): void {
     this.invoiceService.getPaymentMethods().subscribe(data => {
       this.paymentMethods = data;
-    });
+    });  
   }
 
   loadPaymentTerms(): void {
@@ -217,7 +220,7 @@ export class AddClientComponent implements OnInit {
     }
   }
 
-  cancel() {
+  cancel() {    
     this.router.navigate(['client']);
   }
 }
