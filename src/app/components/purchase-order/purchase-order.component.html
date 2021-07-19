@@ -2,26 +2,14 @@
   <div class="card">
     <div class="card-title">Catálogo de órdenes de compra</div>
     <div class="ui-g ui-fluid">
-      <form
-        [formGroup]="formGroup"
-        class="form-group ui-g-12"
-        (ngSubmit)="SearchPurchaseOrder()"
-      >
+      <form [formGroup]="formGroup" class="form-group ui-g-12" (ngSubmit)="SearchPurchaseOrder()">
         <div class="p-fluid p-formgrid p-grid">
           <div class="ui-g-12 ui-lg-12">
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield">
-                <input
-                  type="text"
-                  formControlName="orderCode"
-                  style="width: 100%"
-                  pInputText
-                />
-                <validations-input-component
-                  [validation_messages]="validations"
-                  [(formGroup)]="formGroup"
-                  [(formInputName)]="orderCodeName"
-                >
+                <input type="text" formControlName="orderCode" style="width: 100%" pInputText />
+                <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup"
+                  [(formInputName)]="orderCodeName">
                 </validations-input-component>
                 <label>Orden de compra</label>
               </span>
@@ -29,35 +17,18 @@
             <div class="ui-g-12 ui-lg-4">
               <div class="p-inputgroup">
                 <span class="md-inputfield">
-                  <p-calendar
-                    [style]="{ width: '100%' }"
-                    dateFormat="yy-mm"
-                    name="mounthProduction"
-                    formControlName="mounthProduction"
-                    [inputStyle]="{ width: '100%' }"
-                    [showIcon]="true"
-                  ></p-calendar>
+                  <p-calendar [style]="{ width: '100%' }" dateFormat="yy-mm" name="mounthProduction"
+                    formControlName="mounthProduction" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
                   <label>Mes de produción</label>
                 </span>
-                <validations-input-component
-                  [validation_messages]="validations"
-                  [(formGroup)]="formGroup"
-                  [(formInputName)]="mounthProduction"
-                >
+                <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup"
+                  [(formInputName)]="mounthProduction">
                 </validations-input-component>
               </div>
             </div>
             <div class="ui-g-12 ui-lg-4">
-              <button
-                pButton
-                type="button"
-                label="Buscar"
-                icon="pi pi-search"
-                class="teal-btn"
-                [disabled]="!searchButtonDisable"
-                (click)="SearchPurchaseOrder()"
-                style="width: auto"
-              ></button>
+              <button pButton type="button" label="Buscar" icon="pi pi-search" class="teal-btn"
+                [disabled]="!searchButtonDisable" (click)="SearchPurchaseOrder()" style="width: auto"></button>
             </div>
           </div>
         </div>
@@ -67,54 +38,29 @@
 
   <div class="card">
     <div class="p-fluid p-formgrid p-grid">
-         
-      <div class="ui-g-12 ui-lg-1">
-        <button pButton type="button"
-          label="Crear OC HSA"
-          icon="pi pi-plus"
-          class="ui-button-success"
-          (click)="NewOc()"
-          style="width: auto"
-        ></button>
+
+      <div class="ui-g-12 ui-lg-1" style="width: 10%;">
+        <button pButton type="button" label="Crear OC HSA" icon="pi pi-plus" class="ui-button-success" (click)="NewOc()"
+          style="width: auto"></button>
       </div>
 
       <div class="ui-g-12 ui-lg-2">
-        <button pButton type="button"
-          label="Asignar OC Manual"            
-          icon="pi pi-check"
-          class="blue-grey-btn"
-          (click)="sendAssignment()"
-          style="width: auto">
-        </button>        
+        <button pButton type="button" label="Asignar OC Manual" icon="pi pi-check" class="blue-grey-btn"
+          (click)="sendAssignment()" style="width: auto">
+        </button>
+      </div>
     </div>
-  </div>
 
     <!-- Tabla con las ordenes de compras -->
-    <p-table
-      [columns]="cols"
-      selectionMode="single"
-      dataKey="idTabla"
-      [value]="purchaseOrder"
-      [loading]="loadingPurchaseOrder"
-      sortMode="multiple"
-      [style]="{ 'margin-bottom': '20px' }"
-      [responsive]="true"
-      [rowHover]="true"
-      [paginator]="true"
-      [responsive]="true"
-      [rowsPerPageOptions]="[30, 40, 50]"
-      [autoLayout]="true"
-      [rows]="20"
-      [pageLinks]="20"
-    >
+    <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="purchaseOrder"
+      [loading]="loadingPurchaseOrder" sortMode="multiple" [style]="{ 'margin-bottom': '20px' }" [responsive]="true"
+      [rowHover]="true" [paginator]="true" [responsive]="true" [rowsPerPageOptions]="[30, 40, 50]" [autoLayout]="true"
+      [rows]="20" [pageLinks]="20">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns" [pSortableColumn]="col.field">
             {{ col.header }}
-            <p-sortIcon
-              *ngIf="col.header != 'Acción'"
-              [field]="col.field"
-            ></p-sortIcon>
+            <p-sortIcon *ngIf="col.header != 'Acción'" [field]="col.field"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
@@ -131,56 +77,26 @@
             <span class="ui-column-title">{{ col.header }}</span>
             <span *ngIf="col.field != 'action'; else elseAction">{{
               rowData[col.field]
-            }}</span>
+              }}</span>
             <ng-template #elseAction>
               <div *ngIf="rowData.status === 'Creada'">
                 <div *ngIf="rowData.dueDate && rowData.productionMonth">
-                  <button
-                    pButton
-                    type="button"
-                    icon="ui-icon-edit"
-                    (click)="EditOrden(rowData)"
-                    class="blue-grey-btn"
-                  ></button>
-                  <button
-                    pButton
-                    type="button"
-                    (click)="sendOC(rowData)"
-                    icon="pi pi-check"
-                    style="margin-left: 3px"
-                    class="blue-btn"
-                  ></button>
+                  <button pButton type="button" icon="ui-icon-edit" (click)="EditOrden(rowData)"
+                    class="blue-grey-btn"></button>
+                  <button pButton type="button" (click)="sendOC(rowData)" icon="pi pi-check" style="margin-left: 3px"
+                    class="blue-btn"></button>
                 </div>
                 <div *ngIf="!rowData.dueDate || !rowData.productionMonth">
-                    <button
-                      pButton
-                      type="button"
-                      icon="ui-icon-edit"
-                      (click)="EditOrden(rowData)"
-                      class="blue-grey-btn"
-                    ></button>
-                    <button
-                      pButton
-                      type="button"
-                      [disabled]="true"
-                      (click)="sendOC(rowData)"
-                      icon="pi pi-check"
-                      style="margin-left: 3px"
-                      class="blue-btn"
-                    ></button>
-                  </div>
-                
+                  <button pButton type="button" icon="ui-icon-edit" (click)="EditOrden(rowData)"
+                    class="blue-grey-btn"></button>
+                  <button pButton type="button" [disabled]="true" (click)="sendOC(rowData)" icon="pi pi-check"
+                    style="margin-left: 3px" class="blue-btn"></button>
+                </div>
               </div>
 
-              <div *ngIf="rowData.status === 'Abierta'">
-                <button
-                  pButton
-                  type="button"
-                  style="margin-left: 3px"
-                  icon="ui-icon-format-list-bulleted"
-                  class="blue-grey-btn space-btn"
-                  (click)="ShowDetails(rowData)"
-                ></button>
+              <div *ngIf="rowData.status === 'Abierta' || rowData.status === 'Cerrada'">
+                <button pButton type="button" style="margin-left: 3px" icon="ui-icon-format-list-bulleted"
+                  class="blue-grey-btn space-btn" (click)="ShowDetails(rowData)"></button>
               </div>
             </ng-template>
           </td>
@@ -194,40 +110,19 @@
 </div>
 
 <div *ngIf="!visibledetails && !visible && visibleEditable">
-  <detail-purchase-order-component
-    (close)="CloseDetails()"
-    [order]="order"
-    [dateExpired]="fechaVencimientoSelected"
-    [dateProductionMonth]="fechaProductionMonthSelected"
-  ></detail-purchase-order-component>
+  <detail-purchase-order-component (close)="CloseDetails()" [order]="order" [dateExpired]="fechaVencimientoSelected"
+    [dateProductionMonth]="fechaProductionMonthSelected"></detail-purchase-order-component>
 </div>
 
 <div *ngIf="!visible && !visibleEditable && visibledetails">
-  <edit-purchase-order-component
-    (close)="CloseEditar()"
-    [dateExpired]="fechaVencimientoSelected"
-    [productionMonth]="fechaProductionMonthSelected"
-    [order]="order"
-  ></edit-purchase-order-component>
+  <edit-purchase-order-component (close)="CloseEditar()" [dateExpired]="fechaVencimientoSelected"
+    [productionMonth]="fechaProductionMonthSelected" [order]="order"></edit-purchase-order-component>
 </div>
 
 <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
   <p-footer>
-    <button
-      class="ui-button-success"
-      type="button"
-      pButton
-      icon="pi pi-check"
-      label="Si"
-      (click)="cd.accept()"
-    ></button>
-    <button
-      class="ui-button-danger"
-      type="button"
-      pButton
-      icon="pi pi-times"
-      label="No"
-      (click)="cd.reject()"
-    ></button>
+    <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Si"
+      (click)="cd.accept()"></button>
+    <button class="ui-button-danger" type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
   </p-footer>
 </p-confirmDialog>
