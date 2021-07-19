@@ -28,6 +28,7 @@ export class AddClientComponent implements OnInit {
   paymentTerms: PaymentTerm[] = [];
   validations = [];
   title:string;
+  editClient : boolean ;
 
   constructor(private formBuilder: FormBuilder,
     private countryService: CountryControllerService,
@@ -116,7 +117,7 @@ export class AddClientComponent implements OnInit {
     this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentMethod'));
     this.validationMessages.messagesRequired = 'true';
     this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentTerm'));
-
+    this.invoiceForm.reset;
     this.loadCountries();
     this.loadPaymentMethods();
     this.loadPaymentTerms();
@@ -125,6 +126,7 @@ export class AddClientComponent implements OnInit {
   private loadClient(params: any) {
     if (params.id !== undefined) {
       this.title="Editar Cliente";
+      this.editClient = true;
       this.clientService.getClient(params.id).subscribe(response => {                
         setTimeout(() => this.clientForm.patchValue(response), 600);
         let notifyInfo = {
@@ -145,19 +147,27 @@ export class AddClientComponent implements OnInit {
       });
     }else{
       this.title="Agregar Cliente";
+      this.editClient = false;
     }
   }
 
   loadCountries(): void {
-    this.countryService.get().subscribe(data => {
-      this.countries = data;
-    });
+    this.countries =[];
+    if (this.editClient) {
+      this.countryService.getCountriesExport().subscribe(data => {
+        this.countries = data;                
+      });
+    }else{
+      this.countryService.getCountriesExport().subscribe(data => {
+        this.countries = data;        
+      });
+    }
   }
 
   loadPaymentMethods(): void {
     this.invoiceService.getPaymentMethods().subscribe(data => {
       this.paymentMethods = data;
-    });
+    });  
   }
 
   loadPaymentTerms(): void {
