@@ -11,6 +11,10 @@ export class CountryControllerService {
   get(){
       return this.http.get<any>(`${environment.apiUrl}country/`).pipe();
   }
+
+  getExportCountries(){
+    return this.http.get<any>(`${environment.apiUrl}country/get-countries-export`).pipe();
+}
     
   put(country: Country) {
     return this.http.put<Country>(`${environment.apiUrl}country/`, country).pipe();

@@ -150,8 +150,8 @@
             </div>
             <div class="ui-g-12 ui-lg-6">
               <span class="md-inputfield">
-                <p-multiSelect [options]="countries" formControlName="country" optionLabel="name" [virtualScroll]="true"
-                  defaultLabel="Seleccionar"></p-multiSelect>
+                <p-multiSelect [options]="exportCountries" formControlName="country" optionLabel="name" [virtualScroll]="true"
+                  defaultLabel="Seleccionar"> </p-multiSelect>
                 <label>Países para Exportación</label>
                 <validations-input-component [formGroup]="invoiceForm" formInputName="country"
                   [validation_messages]="validations"></validations-input-component>
