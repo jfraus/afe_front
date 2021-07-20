@@ -28,6 +28,8 @@ export class AddClientComponent implements OnInit {
   paymentTerms: PaymentTerm[] = [];
   validations = [];
   title:string;
+  showSave:boolean;
+  labelButton:String;
 
   constructor(private formBuilder: FormBuilder,
     private countryService: CountryControllerService,
@@ -119,6 +121,9 @@ export class AddClientComponent implements OnInit {
     this.loadCountries();
     this.loadPaymentMethods();
     this.loadPaymentTerms();
+    this.showSave=true;
+    this.labelButton = "Cancelar";
+    this.showInformation();
   }
 
   private loadClient(params: any) {
@@ -144,6 +149,19 @@ export class AddClientComponent implements OnInit {
       });
     }else{
       this.title="Agregar Cliente";
+    }
+  }
+
+  showInformation():void {
+    if(this.router.url.startsWith("/client-view")){
+      this.title="Ver información del cliente";      
+      this.labelButton = "Salir";
+      this.clientForm.disable();
+      this.invoiceForm.disable();
+      this.notifyForm.disable();
+      this.showSave=false;   
+      console.log(this.showSave);
+
     }
   }
 

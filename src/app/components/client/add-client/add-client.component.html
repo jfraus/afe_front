@@ -163,12 +163,13 @@
     </p-accordion>
     <div class="ui-g-12 ui-lg-6 ui-lg-offset-8">
       <div class="ui-g-6 ui-lg-4">
-        <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar"
-          [disabled]="!(clientForm.valid && notifyForm.valid && invoiceForm.valid)" (click)="saveClient()"></button>
+        <ng-container *ngIf="showSave">
+          <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar"
+          [disabled]="!(clientForm.valid && notifyForm.valid && invoiceForm.valid)" (click)="saveClient()" hidden ={{showSave}} ></button>
+        </ng-container>        
       </div>
       <div class="ui-g-6 ui-lg-4">
-        <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" (click)="cancel()">
-        </button>
+        <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label={{labelButton}} (click)="cancel()"> </button>
       </div>
     </div>
   </div>
