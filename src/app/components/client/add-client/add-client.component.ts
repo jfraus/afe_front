@@ -11,6 +11,7 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExportCountries } from 'src/app/models/ExportCountries.model';
 
 @Component({
   selector: 'add-client',
@@ -23,7 +24,7 @@ export class AddClientComponent implements OnInit {
   clientForm: FormGroup;
   notifyForm: FormGroup;
   invoiceForm: FormGroup;
-  countries: Country[] = [];
+  countries: ExportCountries[] = [];
   paymentMethods: PaymentMethod[] = [];
   paymentTerms: PaymentTerm[] = [];
   validations = [];
@@ -31,6 +32,7 @@ export class AddClientComponent implements OnInit {
   showSave:boolean;
   labelButton:String;
   showAccordion:boolean;
+  exportCountries: ExportCountries [] =[];
 
   constructor(private formBuilder: FormBuilder,
     private countryService: CountryControllerService,
@@ -45,7 +47,7 @@ export class AddClientComponent implements OnInit {
     );
   }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.showAccordion=false;
     this.clientForm = this.formBuilder.group({
       id:[''],
@@ -75,52 +77,8 @@ export class AddClientComponent implements OnInit {
       country: ['', [Validators.required]]
     });
 
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '10';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('cofidiCode'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '200';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('name'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '254';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('contactName'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('country'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '150';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('city'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '150';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('state'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '50';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('street'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '20';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('streetNumber'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '5';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('zipCode'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '254';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyClientName'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '254';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyContactName'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '254';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyAddress'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '254';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyCity'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validationMessages.messagesMaxLenght = '254';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyState'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentMethod'));
-    this.validationMessages.messagesRequired = 'true';
-    this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentTerm'));
-    this.loadCountries();
+    this.formValidations();
+    this.loadCountries();    
     this.loadPaymentMethods();
     this.loadPaymentTerms();
     this.showSave=true;    
@@ -141,7 +99,8 @@ export class AddClientComponent implements OnInit {
           notifyState: response.notificationClient.state,
           notifyAddress: response.notificationClient.address
         }        
-        this.notifyForm.patchValue(notifyInfo);        
+        this.notifyForm.patchValue(notifyInfo);  
+        this.countries = response.exportCountries;
         let invoice = {
           paymentMethod:response.paymentMethod,
           paymentTerm: response.paymentTerm,
@@ -167,8 +126,12 @@ export class AddClientComponent implements OnInit {
   }
 
   loadCountries(): void {
-    this.countryService.get().subscribe(data => {
-      this.countries = data;        
+
+   this.countryService.getExportCountries().subscribe(data => {     
+      this.exportCountries = data;
+      this.countries.forEach(data =>{
+        this.exportCountries.push(data)
+      });     
     });  
   }
 
@@ -241,5 +204,53 @@ export class AddClientComponent implements OnInit {
 
   cancel() {    
     this.router.navigate(['client']);
+  }
+
+  formValidations():void {
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '10';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('cofidiCode'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '200';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('name'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '254';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('contactName'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('country'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '150';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('city'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '150';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('state'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '50';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('street'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '20';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('streetNumber'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '5';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('zipCode'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '254';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyClientName'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '254';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyContactName'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '254';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyAddress'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '254';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyCity'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '254';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('notifyState'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentMethod'));
+    this.validationMessages.messagesRequired = 'true';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('paymentTerm'));
   }
 }
