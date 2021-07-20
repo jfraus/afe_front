@@ -2,7 +2,7 @@
   <div class="card-title">{{title}}</div>
   <div class="ui-g ui-fluid">
     <p-accordion [multiple]="true">
-      <p-accordionTab header="Datos del cliente/Consignado a">
+      <p-accordionTab header="Datos del cliente/Consignado a" [selected]=showAccordion>
         <form [(formGroup)]="clientForm">
           <div class="ui-g form-group">
             <div class="ui-g-12 ui-lg-2">
@@ -81,7 +81,7 @@
           </div>
         </form>
       </p-accordionTab>
-      <p-accordionTab header="Notificación a">
+      <p-accordionTab header="Notificación a" [selected]=showAccordion>
         <form [(formGroup)]="notifyForm">
           <div class="ui-g form-group">
             <div class="ui-g-12 ui-lg-4">
@@ -127,7 +127,7 @@
           </div>
         </form>
       </p-accordionTab>
-      <p-accordionTab header="Especificación para facturación">
+      <p-accordionTab header="Especificación para facturación" [selected]=showAccordion>
         <form [(formGroup)]="invoiceForm">
           <div class="ui-g form-group">
             <div class="ui-g-12 ui-lg-6">
@@ -163,12 +163,13 @@
     </p-accordion>
     <div class="ui-g-12 ui-lg-6 ui-lg-offset-8">
       <div class="ui-g-6 ui-lg-4">
-        <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar"
-          [disabled]="!(clientForm.valid && notifyForm.valid && invoiceForm.valid)" (click)="saveClient()"></button>
+        <ng-container *ngIf="showSave">
+          <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar"
+          [disabled]="!(clientForm.valid && notifyForm.valid && invoiceForm.valid)" (click)="saveClient()" hidden ={{showSave}} ></button>
+        </ng-container>        
       </div>
       <div class="ui-g-6 ui-lg-4">
-        <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" (click)="cancel()">
-        </button>
+        <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label={{labelButton}} (click)="cancel()"> </button>
       </div>
     </div>
   </div>

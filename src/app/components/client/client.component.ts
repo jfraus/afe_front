@@ -42,4 +42,8 @@ export class ClientComponent implements OnInit {
   updateClient(client:Client) {    
     this.router.navigate(['client-edit', client.id]);  
   }
+
+  viewClient(client:Client){
+    this.router.navigate(['client-view', client.id]);  
+  }
 }

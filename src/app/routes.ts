@@ -32,6 +32,7 @@ export const routes: Routes = [
         {path: 'client', component: ClientComponent, canActivate: [AuthGuardService]},        
         {path: 'client-add', component: AddClientComponent},
         {path: 'client-edit/:id', component: AddClientComponent},
+        {path: 'client-view/:id', component: AddClientComponent},
         {path: 'invoice', component: InvoiceComponent},
         {path: 'invoice-detail', component: InvoiceDetailComponent},
     ]
