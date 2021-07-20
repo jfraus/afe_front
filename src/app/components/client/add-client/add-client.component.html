@@ -2,7 +2,7 @@
   <div class="card-title">{{title}}</div>
   <div class="ui-g ui-fluid">
     <p-accordion [multiple]="true">
-      <p-accordionTab header="Datos del cliente/Consignado a" [selected]="true">
+      <p-accordionTab header="Datos del cliente/Consignado a" [selected]=showAccordion>
         <form [(formGroup)]="clientForm">
           <div class="ui-g form-group">
             <div class="ui-g-12 ui-lg-2">
@@ -81,7 +81,7 @@
           </div>
         </form>
       </p-accordionTab>
-      <p-accordionTab header="Notificación a" [selected]="true">
+      <p-accordionTab header="Notificación a" [selected]=showAccordion>
         <form [(formGroup)]="notifyForm">
           <div class="ui-g form-group">
             <div class="ui-g-12 ui-lg-4">
@@ -127,7 +127,7 @@
           </div>
         </form>
       </p-accordionTab>
-      <p-accordionTab header="Especificación para facturación" [selected]="true">
+      <p-accordionTab header="Especificación para facturación" [selected]=showAccordion>
         <form [(formGroup)]="invoiceForm">
           <div class="ui-g form-group">
             <div class="ui-g-12 ui-lg-6">

@@ -30,6 +30,7 @@ export class AddClientComponent implements OnInit {
   title:string;
   showSave:boolean;
   labelButton:String;
+  showAccordion:boolean;
 
   constructor(private formBuilder: FormBuilder,
     private countryService: CountryControllerService,
@@ -45,6 +46,7 @@ export class AddClientComponent implements OnInit {
   }
 
   ngOnInit() {    
+    this.showAccordion=false;
     this.clientForm = this.formBuilder.group({
       id:[''],
       cofidiCode: ['', [Validators.required, Validators.maxLength(10)]],
@@ -121,7 +123,7 @@ export class AddClientComponent implements OnInit {
     this.loadCountries();
     this.loadPaymentMethods();
     this.loadPaymentTerms();
-    this.showSave=true;
+    this.showSave=true;    
     this.labelButton = "Cancelar";
     this.showInformation();
   }
@@ -160,6 +162,7 @@ export class AddClientComponent implements OnInit {
       this.invoiceForm.disable();
       this.notifyForm.disable();
       this.showSave=false;
+      this.showAccordion=true;
     }
   }
 
