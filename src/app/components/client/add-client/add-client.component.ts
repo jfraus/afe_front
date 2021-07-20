@@ -159,9 +159,7 @@ export class AddClientComponent implements OnInit {
       this.clientForm.disable();
       this.invoiceForm.disable();
       this.notifyForm.disable();
-      this.showSave=false;   
-      console.log(this.showSave);
-
+      this.showSave=false;
     }
   }
 
