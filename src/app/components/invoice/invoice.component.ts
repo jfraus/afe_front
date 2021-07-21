@@ -36,15 +36,15 @@ import { MessageService } from "primeng/api";
       this.loadingInvoice = true;
       this.invoiceService.getInvoiceHeader().subscribe(data =>{
         this.invoices =data;
-        this.invoices.forEach(x=>{
-          x.canInvoice=true;
-          if(x.carrierType === 'T' && x.totalUnits >10){
-            x.canInvoice=false;
-            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ x.plataforma +' ha excedido la cantidad de 10 unidades' });
+        this.invoices.forEach(data=>{
+          data.canInvoice=true;
+          if(data.carrierType === 'T' && data.totalUnits >10){
+            data.canInvoice=false;
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 10 unidades' });
           }          
-          if(x.carrierType !== 'T' && x.totalUnits >22){
-            x.canInvoice=false;
-            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ x.plataforma +' ha excedido la cantidad de 22 unidades' });
+          if(data.carrierType !== 'T' && data.totalUnits >22){
+            data.canInvoice=false;
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 22 unidades' });
           }         
         });
         this.loadingInvoice = false;        
