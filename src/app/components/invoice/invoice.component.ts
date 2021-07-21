@@ -1,31 +1,54 @@
 import { Component, OnInit } from '@angular/core';
+import { InvoiceHeader } from 'src/app/models/invoice-header.model';
+import { InvoiceService } from 'src/app/services/invoice-controller.service';
+import { MessageService } from "primeng/api";
 
 @Component({
     selector: 'app-invoice',
     templateUrl: 'invoice.component.html',
-    styles: []
+    styles: [],
+    providers:[InvoiceService]
   })
   export class InvoiceComponent implements OnInit {
 
     cols = [];
-    invoices = [];
+    invoices:InvoiceHeader[] = [];
     loadingInvoice = false;
+    msgs =[];
     
-    constructor() { }
+    constructor(private invoiceService : InvoiceService, private messageServices: MessageService) { }
 
     ngOnInit() {
       this.cols = [
-        {field: 'colum', header: 'Plataforma'},
-        {field: 'colum', header: 'Cliente'},
-        {field: 'colum', header: 'No de Viaje'},
-        {field: 'colum', header: 'Type'},
-        {field: 'colum', header: 'Destino'},
-        {field: 'colum', header: 'Total Unidades'},
-        {field: 'colum', header: 'Costo Total '}
+        {field: 'plataforma', header: 'Plataforma'},
+        {field: 'client', subfield:'name',header: 'Cliente'},
+        {field: 'noViaje', header: 'No de Viaje'},
+        {field: 'modelType', header: 'Type'},
+        {field: 'destino', header: 'Destino'},
+        {field: 'totalUnits', header: 'Total Unidades'},
+        {field: 'costTotal', header: 'Costo Total '}
         
       ]
+      this.getInvoice();
+    }
 
-
+    getInvoice(): void {
+      this.loadingInvoice = true;
+      this.invoiceService.getInvoiceHeader().subscribe(data =>{
+        this.invoices =data;
+        this.invoices.forEach(data=>{
+          data.canInvoice=true;
+          if(data.carrierType === 'T' && data.totalUnits >10){
+            data.canInvoice=false;
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 10 unidades' });
+          }          
+          if(data.carrierType !== 'T' && data.totalUnits >22){
+            data.canInvoice=false;
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 22 unidades' });
+          }         
+        });
+        this.loadingInvoice = false;        
+      });
 
     }
 

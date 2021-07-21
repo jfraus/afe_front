@@ -3,11 +3,12 @@
     <p-tabView>        
         <p-tabPanel header="Plataforma" [selected]="true">
             <div class="card-title">Facturación por Plataforma</div>
+            <p-messages [(value)]="msgs" [enableService]="true"></p-messages>
             <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="invoices"
                 [loading]="loadingInvoice" sortMode="multiple" [style]="{ 'margin-bottom': '20px' }"
                 [responsive]="true" [rowHover]="true" [paginator]="true" [responsive]="true"
                 [rowsPerPageOptions]="[10, 20, 30]" [autoLayout]="true" [rows]="20" [pageLinks]="20" #dt
-                [filterDelay]="0" [globalFilterFields]="['name']">
+                [filterDelay]="0" [globalFilterFields]="['plataforma']">
                 <ng-template pTemplate="caption">
                     <div class="table-header" class ="ui-lg-offset-8">
                         <span class="p-input-icon-left">
@@ -37,10 +38,17 @@
                 <ng-template pTemplate="body" let-rowData let-columns="columns">
                     <tr [pSelectableRow]="rowData">
                         <td *ngFor="let col of columns">
-                            {{rowData[col.field]}}
-                        </td>
+                            <span *ngIf="col.subfield === undefined; else elseBlock">
+                              {{rowData[col.field]}}
+                            </span>
+                            <ng-template #elseBlock>
+                              {{rowData[col.field] [col.subfield]}}
+                            </ng-template>
+                          </td>
                         <td>
-                            <button pButton type="button" icon="pi pi-pencil" style="margin-left: 3px" class="blue-grey-btn"></button>
+                            <div *ngIf="rowData.canInvoice">
+                                <button pButton type="button" icon="pi pi-book" style="margin-left: 3px" class="blue-grey-btn" pTooltip="Facturar"></button>
+                            </div>                            
                         </td>
                     </tr>
                 </ng-template>
