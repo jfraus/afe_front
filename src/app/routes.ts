@@ -17,6 +17,7 @@ import { ClientComponent } from './components/client/client.component';
 import { AddClientComponent } from './components/client/add-client/add-client.component';
 import { InvoiceDetailComponent } from './components/invoice/invoice-detail/invoice-detail.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
+import { InvoiceDetailBuqueComponent } from './components/invoice/invoice-detail-buque/invoice-detail-buque.component';
 
 export const routes: Routes = [
     { path: '',
@@ -33,8 +34,9 @@ export const routes: Routes = [
         {path: 'client-add', component: AddClientComponent},
         {path: 'client-edit/:id', component: AddClientComponent},
         {path: 'client-view/:id', component: AddClientComponent},
-        {path: 'invoice', component: InvoiceComponent},
+        {path: 'invoice', component: InvoiceComponent}, 
         {path: 'invoice-detail', component: InvoiceDetailComponent},
+        {path: 'invoice-detail-buque', component: InvoiceDetailBuqueComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
