@@ -33,6 +33,7 @@ export class AddClientComponent implements OnInit {
   labelButton:String;
   showAccordion:boolean;
   exportCountries: ExportCountries [] =[];
+  countriesClient: Client [] =[];
 
   constructor(private formBuilder: FormBuilder,
     private countryService: CountryControllerService,
@@ -78,6 +79,7 @@ export class AddClientComponent implements OnInit {
     });
 
     this.formValidations();
+    this.loadCountriesClient();
     this.loadCountries();    
     this.loadPaymentMethods();
     this.loadPaymentTerms();
@@ -125,8 +127,13 @@ export class AddClientComponent implements OnInit {
     }
   }
 
-  loadCountries(): void {
+  loadCountriesClient(): void {
+    this.countryService.get().subscribe(data => {     
+      this.countriesClient = data;      
+    });  
+  }
 
+  loadCountries(): void {
    this.countryService.getExportCountries().subscribe(data => {     
       this.exportCountries = data;
       this.countries.forEach(data =>{
