@@ -39,8 +39,13 @@
                     <ng-template pTemplate="body" let-rowData let-columns="columns">
                         <tr [pSelectableRow]="rowData">
                             <td *ngFor="let col of columns">
-                                {{rowData[col.field]}}
-                            
+                                <span *ngIf="col.subfield === undefined; else elseBlock">
+                                  {{rowData[col.field]}}
+                                </span>
+                                <ng-template #elseBlock>
+                                  {{rowData[col.field] [col.subfield]}}
+                                </ng-template>
+                              </td>
                             <td>
                                 <div *ngIf="rowData.canInvoice">
                                     <button pButton type="button" icon="pi pi-book" style="margin-left: 3px" class="blue-grey-btn" pTooltip="Facturar" (click)="generateInvoice(rowData)"></button>
