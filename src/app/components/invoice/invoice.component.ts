@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { InvoiceHeader } from 'src/app/models/invoice-header.model';
 import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { MessageService } from "primeng/api";
@@ -15,6 +15,10 @@ import { MessageService } from "primeng/api";
     invoices:InvoiceHeader[] = [];
     loadingInvoice = false;
     msgs =[];
+    @Output() close = new EventEmitter();
+    displayInvoice: boolean = false;
+    visibleInvoice: boolean = false;
+    invoice: InvoiceHeader;
     
     constructor(private invoiceService : InvoiceService, private messageServices: MessageService) { }
 
@@ -34,6 +38,7 @@ import { MessageService } from "primeng/api";
 
     getInvoice(): void {
       this.loadingInvoice = true;
+      
       this.invoiceService.getInvoiceHeader().subscribe(data =>{
         this.invoices =data;
         this.invoices.forEach(data=>{
@@ -52,4 +57,12 @@ import { MessageService } from "primeng/api";
 
     }
 
+    closeInvoice() {
+
+    }
+
+    generateInvoice(invoice: InvoiceHeader) {
+      this.invoice = invoice;
+      this.visibleInvoice = true;
+    }
 }
