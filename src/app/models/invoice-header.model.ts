@@ -9,6 +9,6 @@ export interface InvoiceHeader{
     destino: string, 
     costTotal: string,
     carrierType: string,
-    canInvoice: boolean
-
+    canInvoice: boolean,
+    invoice: string
 }
