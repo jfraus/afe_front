@@ -119,6 +119,7 @@ import { ClientComponent } from './components/client/client.component';
 import { AddClientComponent } from './components/client/add-client/add-client.component';
 import { InvoiceDetailComponent } from './components/invoice/invoice-detail/invoice-detail.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
+import { InvoiceDetailBuqueComponent } from './components/invoice/invoice-detail-buque/invoice-detail-buque.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -233,6 +234,7 @@ const sharedComponents = [
         AddClientComponent,
         InvoiceDetailComponent,
         InvoiceComponent,
+        InvoiceDetailBuqueComponent,
         ...sharedComponents,
     ],
     providers: [
