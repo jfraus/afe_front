@@ -9,6 +9,6 @@ export class InvoiceBuqueService {
   constructor(private http: HttpClient) { }
 
   getBuques() {
-    return this.http.get<Buque[]>(`${environment.apiUrl}`).pipe();
+    return this.http.get<Buque[]>(`${environment.apiUrl}invoice/buque`).pipe();
   }
 }
