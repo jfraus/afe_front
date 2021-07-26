@@ -24,12 +24,14 @@ export class InvoiceBuqueComponent implements OnInit {
       {field: 'costTotal', header: 'Costo Total '}
       
     ];
+    this.getBuques();
   }
 
   getBuques() {
-    this.invoiceBuqueService.getBuques().subscribe(data => {
+    /*this.invoiceBuqueService.getBuques().subscribe(data => {
       this.buques = data;
-    });
+    });*/
+    this.buques.push({buque: '1', client: null, noViaje: '4', modelType: '1', destino:'chiapas', totalUnits: 45, costTotal: '10'});
   }
 
   generateInvoice(buque: Buque) {

@@ -7,7 +7,5 @@ export interface Buque {
     modelType: string, 
     totalUnits: number,
     destino: string, 
-    costTotal: string,
-    carrierType: string,
-    canInvoice: boolean
+    costTotal: string
 }
