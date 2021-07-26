@@ -24,6 +24,7 @@ export class InvoiceBuqueComponent implements OnInit {
       {field: 'costTotal', header: 'Costo Total '}
       
     ];
+    this.getBuques();
   }
 
   getBuques() {
