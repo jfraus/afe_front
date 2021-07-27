@@ -101,7 +101,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
   }
 
   closeBuqueDetails() {    
-    this.close.emit(false);
+    this.close.emit(true);
   }
 
   generateInvoice() {

@@ -41,7 +41,7 @@ export class InvoiceBuqueComponent implements OnInit {
   }
 
   closeBuque(){
-    this.visibleBuque=true;
+    this.visibleBuque=false;
   }
 
   generateInvoice(buque: Buque) {
