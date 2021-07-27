@@ -46,24 +46,22 @@ export class QuoteComponent implements OnInit {
 
     search() {
         const dateString = this.datePipe.transform(this.formGroup.get('fechaInicio').value, 'yyyy-MM-dd');
-        if(dateString !== null) {
-            this.dataTable = [];
-            this.quoteService.getAllQuotes(dateString).subscribe(data => {
-                if(data !== null) {
-                    this.dataTable = data;
-                    this.excelData = [];
-                    data.forEach(data => {
-                        this.excelData.push({
-                            numberQuotation: data.numberQuotation,
-                            plant: data.plant,
-                            model: data.model,
-                            typeModel: data.typeModel,
-                            price: data.price
-                        });
+        this.dataTable = [];
+        this.quoteService.getAllQuotes(dateString).subscribe(data => {
+            if(data !== null) {
+                this.dataTable = data;
+                this.excelData = [];
+                data.forEach(data => {
+                    this.excelData.push({
+                        numberQuotation: data.numberQuotation,
+                        plant: data.plant,
+                        model: data.model,
+                        typeModel: data.typeModel,
+                        price: data.price
                     });
-                }
-             });
-        }
+                });
+            }
+        });
     }
 
     saveExcel(data) {
