@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output  } from '@angular/core';
 import { Buque } from 'src/app/models/buque.model';
 import { InvoiceBuqueService } from 'src/app/services/invoice-buque.service';
 
@@ -11,6 +11,12 @@ export class InvoiceBuqueComponent implements OnInit {
 
   cols = [];
   buques: Buque[] = [];
+  @Output() close = new EventEmitter();
+  displayInvoice: boolean = false;
+  visibleBuque: boolean = false;
+  buque: Buque;
+  loadingBuques = false;
+
   constructor(private invoiceBuqueService : InvoiceBuqueService) { }
 
   ngOnInit() {
@@ -21,19 +27,25 @@ export class InvoiceBuqueComponent implements OnInit {
       {field: 'modelType', header: 'Type'},
       {field: 'destino', header: 'Destino'},
       {field: 'totalUnits', header: 'Total Unidades'},
-      {field: 'costTotal', header: 'Costo Total '}
-      
+      {field: 'costTotal', header: 'Costo Total '}      
     ];
     this.getBuques();
   }
 
   getBuques() {
+    this.loadingBuques = true;
     this.invoiceBuqueService.getBuques().subscribe(data => {
       this.buques = data;
     });
+    this.loadingBuques = false;
+  }
+
+  closeBuque(){
+    this.visibleBuque=true;
   }
 
   generateInvoice(buque: Buque) {
-
+    this.buque=buque;
+    this.visibleBuque=true;
   }
 }
