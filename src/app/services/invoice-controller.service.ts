@@ -4,6 +4,7 @@ import { environment } from "../../environments/environment";
 import { PaymentMethod } from '../models/payment-method.model';
 import { PaymentTerm } from '../models/payment-term.model';
 import { InvoiceHeader } from '../models/invoice-header.model';
+import { BuqueDetails } from '../models/BuqueDetails.model';
 
 @Injectable()
 export class InvoiceService {
@@ -20,5 +21,9 @@ export class InvoiceService {
 
   getInvoiceHeader(){
     return this.http.get<InvoiceHeader[]>(`${environment.apiUrl}invoice/getHeader`).pipe();
+  }
+
+  getInvoiceBuqueDetail(buque: String ){
+    return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice/buque-detail/?buque=${buque}`).pipe();
   }
 }

@@ -58,7 +58,7 @@ import { MessageService } from "primeng/api";
     }
 
     closeInvoice() {
-
+      this.visibleInvoice = true;
     }
 
     generateInvoice(invoice: InvoiceHeader) {
