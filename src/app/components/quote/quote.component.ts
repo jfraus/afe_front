@@ -50,16 +50,6 @@ export class QuoteComponent implements OnInit {
         this.quoteService.getAllQuotes(dateString).subscribe(data => {
             if(data !== null) {
                 this.dataTable = data;
-                this.excelData = [];
-                data.forEach(data => {
-                    this.excelData.push({
-                        numberQuotation: data.numberQuotation,
-                        plant: data.plant,
-                        model: data.model,
-                        typeModel: data.typeModel,
-                        price: data.price
-                    });
-                });
             }
         });
     }
@@ -73,7 +63,11 @@ export class QuoteComponent implements OnInit {
             { key: 'plant', header: 'Planta', center: { left:0.5, top:0.5 }, width: 20 },
             { key: 'model', header: 'Modelo', center: { left:0.5, top:0.5 }, width: 20 },
             { key: 'typeModel', header: 'Tipo de modelo', center: { left:0.5, top:0.5 }, width: 20 },
-            { key: 'price', header: 'Precio', center: { left:0.5, top:0.5 }, width: 20 }
+            { key: 'price', header: 'Precio', center: { left:0.5, top:0.5 }, width: 20 },
+            { key: 'currency', header: 'Moneda', center: { left:0.5, top:0.5 }, width: 20 },
+            { key: 'createDate', header: 'Fecha de cotización', center: { left:0.5, top:0.5 }, width: 20 },
+            { kwy: 'effectiveDate', header: 'Fecha inicial', center: { left:0.5, top:0.5 }, width: 20 },
+            { key: 'endDate', header: 'Fecha final', center: { left:0.5, top:0.5 }, width: 20 },
           ];
         
         data.forEach(data => {
@@ -95,6 +89,18 @@ export class QuoteComponent implements OnInit {
         worksheet.getCell('E1').fill = { type: 'pattern', pattern:'solid', fgColor:{argb:'145DA0'} };
         worksheet.getCell('E1').font = { color: { argb: 'FFFFFFFF' }, size: 12 };
         worksheet.getCell('E1').alignment = { vertical: 'middle', horizontal: 'center' };
+        worksheet.getCell('F1').fill = { type: 'pattern', pattern:'solid', fgColor:{argb:'145DA0'} };
+        worksheet.getCell('F1').font = { color: { argb: 'FFFFFFFF' }, size: 12 };
+        worksheet.getCell('F1').alignment = { vertical: 'middle', horizontal: 'center' };
+        worksheet.getCell('G1').fill = { type: 'pattern', pattern:'solid', fgColor:{argb:'145DA0'} };
+        worksheet.getCell('G1').font = { color: { argb: 'FFFFFFFF' }, size: 12 };
+        worksheet.getCell('G1').alignment = { vertical: 'middle', horizontal: 'center' };
+        worksheet.getCell('H1').fill = { type: 'pattern', pattern:'solid', fgColor:{argb:'145DA0'} };
+        worksheet.getCell('H1').font = { color: { argb: 'FFFFFFFF' }, size: 12 };
+        worksheet.getCell('H1').alignment = { vertical: 'middle', horizontal: 'center' };
+        worksheet.getCell('I1').fill = { type: 'pattern', pattern:'solid', fgColor:{argb:'145DA0'} };
+        worksheet.getCell('I1').font = { color: { argb: 'FFFFFFFF' }, size: 12 };
+        worksheet.getCell('I1').alignment = { vertical: 'middle', horizontal: 'center' };
 
         workbook.xlsx.writeBuffer().then((data) => {
             const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -104,6 +110,6 @@ export class QuoteComponent implements OnInit {
     }
 
     downloadExcel() {
-        this.saveExcel(this.excelData);
+        this.saveExcel(this.dataTable);
     }
 }
