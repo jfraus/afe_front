@@ -10,5 +10,6 @@ export interface InvoiceHeader{
     costTotal: string,
     carrierType: string,
     canInvoice: boolean,
-    invoice: string
+    invoice: string,
+    quoteId: number
 }

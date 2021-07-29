@@ -1,16 +1,17 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Buque } from 'src/app/models/buque.model';
-import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { InvoiceDetailController } from 'src/app/services/invoice-detail-controller.service';
+import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { BuqueDetails } from 'src/app/models/buqueDetails.model';
 import { DatePipe } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-invoice-detail-buque',
   templateUrl: './invoice-detail-buque.component.html',
   styles: [],
-  providers: [InvoiceService, InvoiceDetailController]
+  providers: [InvoiceDetailController, InvoiceService]
 })
 export class InvoiceDetailBuqueComponent implements OnInit {
 
@@ -23,16 +24,20 @@ export class InvoiceDetailBuqueComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Input() display: boolean;
   numInvoice: string;
-  canInvoice: boolean;
+  canInvoice = false;
   msgs = [];
   quoteDate = [];
   purchageOrderMsg = [];
-  visibleBuqueDetails: boolean = true;
+  visibleBuqueDetails: boolean = true;    
+  invoiceNumber:string;
   
 
 
-  constructor(private formBuilder: FormBuilder, private invoiceService: InvoiceService,
-    private invoiceDetailController: InvoiceDetailController) { }
+  constructor(
+    private formBuilder: FormBuilder,    
+    private invoiceDetailController: InvoiceDetailController,
+    private invoiceService : InvoiceService,
+    public messageServices: MessageService) { }
 
   ngOnInit() {
 
@@ -62,21 +67,21 @@ export class InvoiceDetailBuqueComponent implements OnInit {
 
   generateNumInvoice(platform: string) {
     this.invoiceDetailController.getNumInvoice(platform).subscribe(data => {
+      this.invoiceNumber = data.invoice;
       this.formGroup.get('invoice').setValue(data.invoice);
     });
   }
 
   getInvoiceBuqueDetails(buque: String) {
     this.loadingInvoice = true;
-    this.invoiceService.getInvoiceBuqueDetail(buque).subscribe(data => {
+    this.invoiceDetailController.getInvoiceBuqueDetail(buque).subscribe(data => {
       this.invoiceBuqueDetails = data;
       this.purchageOrderMsg.push("No se puede generar la factura por que las siguientes unidades no tienen Orden de Compra VINS:");
       this.quoteDate.push("No se puede generar factura por que no tienen facturas vigentes para los VINS:");
       let today = new Date().toLocaleDateString()
-      let datePipe = new DatePipe("en-US");
-      this.invoiceBuqueDetails.forEach(element => {                
-        let effectiveDate = datePipe.transform(element.effectiveDate, 'MM/dd/yyyy');
-        
+      let datePipe = new DatePipe("en-US");      
+      this.invoiceBuqueDetails.forEach(element => {
+        let effectiveDate = datePipe.transform(element.effectiveDate, 'MM/dd/yyyy');        
         this.canInvoice = true;
         let showValidation = false;
         let showValidation1 = false;
@@ -95,8 +100,8 @@ export class InvoiceDetailBuqueComponent implements OnInit {
         if (showValidation1) {
           this.msgs.push({ severity: 'warn', summary: 'Información: ', detail: this.quoteDate });
         }
-      });
-    });
+      });        
+    });    
     this.loadingInvoice = false;
   }
 
@@ -105,7 +110,22 @@ export class InvoiceDetailBuqueComponent implements OnInit {
   }
 
   generateInvoice() {
-
+    if(this.canInvoice){
+      let createInvoice ={
+        typeInvoice:"buque",
+        invoice:this.invoiceNumber,
+        clientId:this.invoiceHeaderBuque.client.id,
+        travelNumber:this.invoiceHeaderBuque.noViaje,
+        totalUnits:this.invoiceHeaderBuque.totalUnits,
+        totalPrice:this.invoiceHeaderBuque.costTotal,
+        shipment:this.invoiceHeaderBuque.buque,
+        quoteId:this.invoiceHeaderBuque.quoteId
+      };
+      console.log(createInvoice);
+      this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{
+        this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
+      });
+    }    
   }
 
 }

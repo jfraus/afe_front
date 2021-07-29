@@ -7,5 +7,6 @@ export interface Buque {
     modelType: string, 
     totalUnits: number,
     destino: string, 
-    costTotal: string
+    costTotal: string,
+    quoteId: number
 }

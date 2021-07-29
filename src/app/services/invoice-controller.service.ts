@@ -4,7 +4,7 @@ import { environment } from "../../environments/environment";
 import { PaymentMethod } from '../models/payment-method.model';
 import { PaymentTerm } from '../models/payment-term.model';
 import { InvoiceHeader } from '../models/invoice-header.model';
-import { BuqueDetails } from '../models/BuqueDetails.model';
+import { Buque } from '../models/buque.model';
 
 @Injectable()
 export class InvoiceService {
@@ -15,15 +15,20 @@ export class InvoiceService {
       return this.http.get<PaymentMethod[]>(`${environment.apiUrl}payment/method`).pipe();
   }
   
-  getPaymentTerms() {
+  getPaymentTerms(){
     return this.http.get<PaymentTerm[]>(`${environment.apiUrl}payment/term`).pipe();
   }
 
-  getInvoiceHeader(){
-    return this.http.get<InvoiceHeader[]>(`${environment.apiUrl}invoice/getHeader`).pipe();
+  getplatformHeader(){
+    return this.http.get<InvoiceHeader[]>(`${environment.apiUrl}invoice/platform`).pipe();
   }
 
-  getInvoiceBuqueDetail(buque: String ){
-    return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice/buque-detail/?buque=${buque}`).pipe();
+  getBuqueHeader(){
+    return this.http.get<Buque[]>(`${environment.apiUrl}invoice/buque`).pipe();
+  }  
+
+  saveInvoices(createInvoice: any){
+    return this.http.post<any>(`${environment.apiUrl}invoice/`,createInvoice).pipe();
   }
+
 }

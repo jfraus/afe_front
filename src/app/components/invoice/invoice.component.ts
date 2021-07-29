@@ -20,7 +20,9 @@ import { MessageService } from "primeng/api";
     visibleInvoice: boolean = false;
     invoice: InvoiceHeader;
     
-    constructor(private invoiceService : InvoiceService, private messageServices: MessageService) { }
+    constructor(
+      private invoiceService : InvoiceService, 
+      private messageServices: MessageService) { }
 
     ngOnInit() {
       this.cols = [
@@ -39,7 +41,7 @@ import { MessageService } from "primeng/api";
     getInvoice(): void {
       this.loadingInvoice = true;
       
-      this.invoiceService.getInvoiceHeader().subscribe(data =>{
+      this.invoiceService.getplatformHeader().subscribe(data =>{
         this.invoices =data;
         this.invoices.forEach(data=>{
           data.canInvoice=true;

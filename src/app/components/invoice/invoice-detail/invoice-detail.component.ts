@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { InvoiceDetail } from 'src/app/models/invoice-detail.model';
 import { InvoiceHeader } from 'src/app/models/invoice-header.model';
 import { InvoiceDetailController } from 'src/app/services/invoice-detail-controller.service';
+import { InvoiceService } from 'src/app/services/invoice-controller.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-invoice-detail',
   templateUrl: './invoice-detail.component.html',
-  providers: [InvoiceDetailController]
+  providers: [InvoiceDetailController, InvoiceService]
 })
 export class InvoiceDetailComponent implements OnInit {
 
@@ -19,9 +21,12 @@ export class InvoiceDetailComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Input() display: boolean;
   cols = [];
+  invoiceNumber:string;
 
   constructor(private formBuilder: FormBuilder,
-              private invoiceDetailController: InvoiceDetailController) { }
+              private invoiceDetailController: InvoiceDetailController,
+              private invoiceService : InvoiceService,
+              public messageServices: MessageService) { }
 
   ngOnInit() {
     
@@ -58,12 +63,26 @@ export class InvoiceDetailComponent implements OnInit {
     });
   }
 
-  generateInvoice() {
-    
+  generateInvoice() {    
+      let createInvoice ={
+        typeInvoice:"platform",
+        invoice:this.invoiceNumber,
+        clientId:this.invoiceHeader.client.id,
+        travelNumber:this.invoiceHeader.noViaje,
+        totalUnits:this.invoiceHeader.totalUnits,
+        totalPrice:this.invoiceHeader.costTotal,
+        shipment:this.invoiceHeader.plataforma,
+        quoteId:this.invoiceHeader.quoteId
+      };
+      console.log(createInvoice);
+     this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{
+        this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
+      });
   }
 
   generateNumInvoice(platform: string) {
     this.invoiceDetailController.getNumInvoice(platform).subscribe(data => {
+      this.invoiceNumber = data.invoice;
       this.formGroup.get('invoice').setValue(data.invoice);
     });
   }
