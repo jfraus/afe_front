@@ -1,11 +1,11 @@
 import { Component, OnInit, EventEmitter, Output  } from '@angular/core';
 import { Buque } from 'src/app/models/buque.model';
-import { InvoiceBuqueService } from 'src/app/services/invoice-buque.service';
+import { InvoiceService } from 'src/app/services/invoice-controller.service';
 
 @Component({
   selector: 'app-invoice-buque',
   templateUrl: './invoice-buque.component.html',
-  providers: [InvoiceBuqueService]
+  providers: [InvoiceService]
 })
 export class InvoiceBuqueComponent implements OnInit {
 
@@ -17,7 +17,7 @@ export class InvoiceBuqueComponent implements OnInit {
   buque: Buque;
   loadingBuques = false;
 
-  constructor(private invoiceBuqueService : InvoiceBuqueService) { }
+  constructor(private invoiceService : InvoiceService) { }
 
   ngOnInit() {
     this.cols = [
@@ -34,9 +34,9 @@ export class InvoiceBuqueComponent implements OnInit {
 
   getBuques() {
     this.loadingBuques = true;
-    this.invoiceBuqueService.getBuques().subscribe(data => {
+    this.invoiceService.getBuqueHeader().subscribe(data => {
       this.buques = data;
-    });
+    });    
     this.loadingBuques = false;
   }
 

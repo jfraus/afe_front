@@ -93,7 +93,7 @@
     <div class="footer">
       <div class="ui-lg-offset-9">
         <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label="Generar Factura"
-          style="margin: 2px" disabled=canInvoice (click)="generateInvoice()">
+          style="margin: 2px" [disabled]=!canInvoice (click)="generateInvoice()">
         </button>
         <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar"
           (click)="closeBuqueDetails()">
