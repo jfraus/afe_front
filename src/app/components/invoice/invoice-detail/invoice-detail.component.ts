@@ -52,11 +52,12 @@ export class InvoiceDetailComponent implements OnInit {
       totalCost: [{value: this.invoiceHeader.costTotal === null ? '' : this.invoiceHeader.costTotal, disabled: true}],
     });
     this.generateNumInvoice(this.invoiceHeader.plataforma);
+    this.searchVinInvoice(this.invoiceHeader.plataforma);
   }
 
 
-  searchVinInvoice() {
-    this.invoiceDetailController.getVines().subscribe(data => {
+  searchVinInvoice(platform: string) {
+    this.invoiceDetailController.getVines(platform).subscribe(data => {
       if(data !== null) {
         this.invoiceDetail = data;
       }
