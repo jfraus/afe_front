@@ -88,4 +88,8 @@ export class InvoiceDetailComponent implements OnInit {
       this.formGroup.get('invoice').setValue(data.invoice);
     });
   }
+
+  closePlatformDetails(): void {
+    this.close.emit(true);
+  }
 }

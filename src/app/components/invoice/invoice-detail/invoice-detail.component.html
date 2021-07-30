@@ -6,34 +6,19 @@
         <div class="ui-g-12 ui-lg-12">
           <div class="ui-g-12 ui-lg-4">
             <span class="md-inputfield">
-              <input
-                type="text"
-                style="width: 100%"
-                formControlName="invoice"
-                pInputText
-              />
+              <input type="text" style="width: 100%" formControlName="invoice" pInputText />
               <label>Factura</label>
             </span>
           </div>
           <div class="ui-g-12 ui-lg-4">
             <span class="md-inputfield">
-              <input
-                type="text"
-                style="width: 100%"
-                formControlName="platform"
-                pInputText
-              />
+              <input type="text" style="width: 100%" formControlName="platform" pInputText />
               <label>Plataforma</label>
             </span>
           </div>
           <div class="ui-g-12 ui-lg-4">
             <span class="md-inputfield">
-              <input
-                type="text"
-                style="width: 100%"
-                formControlName="seals"
-                pInputText
-              />
+              <input type="text" style="width: 100%" formControlName="seals" pInputText />
               <label>Sellos</label>
             </span>
           </div>
@@ -42,34 +27,19 @@
         <div class="ui-g-12 ui-lg-12">
           <div class="ui-g-12 ui-lg-4">
             <span class="md-inputfield">
-              <input
-                type="text"
-                style="width: 100%"
-                formControlName="client"
-                pInputText
-              />
+              <input type="text" style="width: 100%" formControlName="client" pInputText />
               <label>Cliente</label>
             </span>
           </div>
           <div class="ui-g-12 ui-lg-4">
             <span class="md-inputfield">
-              <input
-                type="text"
-                style="width: 100%"
-                formControlName="paymentMethod"
-                pInputText
-              />
+              <input type="text" style="width: 100%" formControlName="paymentMethod" pInputText />
               <label>Método de pago</label>
             </span>
           </div>
           <div class="ui-g-12 ui-lg-4">
             <span class="md-inputfield">
-              <input
-                type="text"
-                style="width: 100%"
-                formControlName="paymentTerm"
-                pInputText
-              />
+              <input type="text" style="width: 100%" formControlName="paymentTerm" pInputText />
               <label>Términos de pago</label>
             </span>
           </div>
@@ -77,34 +47,19 @@
           <div class="ui-g-12 ui-lg-12">
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield">
-                <input
-                  type="text"
-                  style="width: 100%"
-                  formControlName="noTravel"
-                  pInputText
-                />
+                <input type="text" style="width: 100%" formControlName="noTravel" pInputText />
                 <label>No de Viaje</label>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield">
-                <input
-                  type="text"
-                  style="width: 100%"
-                  formControlName="totalUnits"
-                  pInputText
-                />
+                <input type="text" style="width: 100%" formControlName="totalUnits" pInputText />
                 <label>Total Unidades</label>
               </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield">
-                <input
-                  type="text"
-                  style="width: 100%"
-                  formControlName="totalCost"
-                  pInputText
-                />
+                <input type="text" style="width: 100%" formControlName="totalCost" pInputText />
                 <label>Total Costo</label>
               </span>
             </div>
@@ -117,24 +72,9 @@
 
 <div class="card">
   <div class="card-title">Cotizaciones</div>
-  <p-table
-    [columns]="cols"
-    selectionMode="single"
-    dataKey="idTabla"
-    [value]="invoiceDetail"
-    [loading]="loadingInvoice"
-    sortMode="multiple"
-    [style]="{ 'margin-bottom': '20px' }"
-    [responsive]="true"
-    [rowHover]="true"
-    [paginator]="true"
-    [responsive]="true"
-    [rowsPerPageOptions]="[10, 20, 30]"
-    [autoLayout]="true"
-    [rows]="20"
-    [pageLinks]="20"
-    #dt
-  >
+  <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="invoiceDetail" [loading]="loadingInvoice"
+    sortMode="multiple" [style]="{ 'margin-bottom': '20px' }" [responsive]="true" [rowHover]="true" [paginator]="true"
+    [responsive]="true" [rowsPerPageOptions]="[10, 20, 30]" [autoLayout]="true" [rows]="20" [pageLinks]="20" #dt>
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let col of columns" [pSortableColumn]="col.field">
@@ -159,21 +99,11 @@
   </p-table>
   <div class="footer">
     <div class="ui-lg-offset-9">
-      <button 
-        class= "ui-button-success"  
-        type="button" 
-        pButton 
-        icon="ui-icon-save" 
-        label="Generar Factura"
-        style="margin: 2px" 
-        (click)="generateInvoice()">
+      <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label="Generar Factura"
+        style="margin: 2px" (click)="generateInvoice()">
       </button>
-      <button 
-        class="ui-button-danger" 
-        type="button" 
-        pButton 
-        icon="ui-icon-close" 
-        label="Cancelar">
+      <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+      (click)="closePlatformDetails()">
       </button>
     </div>
   </div>
