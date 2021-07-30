@@ -77,7 +77,9 @@ export class InvoiceDetailComponent implements OnInit {
       };
      this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{
         this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
+        
       });
+      this.close.emit(true);
   }
 
   generateNumInvoice(platform: string) {
