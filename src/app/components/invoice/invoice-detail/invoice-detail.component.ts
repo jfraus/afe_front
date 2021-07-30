@@ -75,7 +75,6 @@ export class InvoiceDetailComponent implements OnInit {
         shipment:this.invoiceHeader.plataforma,
         quoteId:this.invoiceHeader.quoteId
       };
-      console.log(createInvoice);
      this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{
         this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
       });
