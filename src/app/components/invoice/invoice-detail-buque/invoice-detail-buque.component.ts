@@ -121,8 +121,9 @@ export class InvoiceDetailBuqueComponent implements OnInit {
         shipment:this.invoiceHeaderBuque.buque,
         quoteId:this.invoiceHeaderBuque.quoteId
       };
-      this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{
+      this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{        
         this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
+        this.closeBuqueDetails();
       });
     }    
   }

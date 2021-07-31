@@ -79,7 +79,7 @@ export class InvoiceDetailComponent implements OnInit {
         this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
         
       });
-      this.close.emit(true);
+      this.closePlatformDetails();
   }
 
   generateNumInvoice(platform: string) {
