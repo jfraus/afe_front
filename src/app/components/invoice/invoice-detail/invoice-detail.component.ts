@@ -49,7 +49,7 @@ export class InvoiceDetailComponent implements OnInit {
       paymentTerm: [{value: this.invoiceHeader.client === null ? '' : this.invoiceHeader.client.paymentTerm.paymentTerm, disabled: true}],
       noTravel: [{value: this.invoiceHeader.noViaje === null ? '' : this.invoiceHeader.noViaje , disabled: true}],
       totalUnits: [{value: this.invoiceHeader.totalUnits === null ? '' : this.invoiceHeader.totalUnits, disabled: true}],
-      totalCost: [{value: this.invoiceHeader.costTotal === null ? '' : this.invoiceHeader.costTotal, disabled: true}],
+      totalCost: [{value: this.invoiceHeader.costTotal === null ? '' : Number(this.invoiceHeader.costTotal), disabled: true}],
     });
     this.generateNumInvoice(this.invoiceHeader.plataforma);
     this.searchVinInvoice(this.invoiceHeader.plataforma);

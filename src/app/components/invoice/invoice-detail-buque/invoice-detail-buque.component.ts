@@ -59,7 +59,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
       paymentTerm: [{ value: this.invoiceHeaderBuque.client.paymentTerm === null ? '' : this.invoiceHeaderBuque.client.paymentTerm.paymentTerm, disabled: true }],
       noTravel: [{ value: this.invoiceHeaderBuque.noViaje === null ? '' : this.invoiceHeaderBuque.noViaje, disabled: true }],
       totalUnits: [{ value: this.invoiceHeaderBuque.totalUnits === null ? '' : this.invoiceHeaderBuque.totalUnits, disabled: true }],
-      totalCost: [{ value: this.invoiceHeaderBuque.costTotal === null ? '' : this.invoiceHeaderBuque.costTotal, disabled: true }]
+      totalCost: [{ value: this.invoiceHeaderBuque.costTotal === null ? '' : Number(this.invoiceHeaderBuque.costTotal), disabled: true }]
     });
     this.generateNumInvoice();
     this.getInvoiceBuqueDetails(this.invoiceHeaderBuque.buque);
