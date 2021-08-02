@@ -19,6 +19,10 @@ export class InvoiceDetailController {
         return this.http.get<InvoiceHeader>(`${environment.apiUrl}invoice-detail/header/?platform=${platform}`).pipe();
     }
 
+    getNumInvoiceBuque(): Observable<InvoiceHeader> {
+        return this.http.get<InvoiceHeader>(`${environment.apiUrl}invoice-detail/header-buque`).pipe();
+    }
+
     getInvoiceBuqueDetail(buque: String ){
         return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice-detail/buque-detail/?buque=${buque}`).pipe();
       }

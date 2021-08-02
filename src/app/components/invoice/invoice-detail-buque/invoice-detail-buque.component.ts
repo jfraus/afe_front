@@ -61,12 +61,12 @@ export class InvoiceDetailBuqueComponent implements OnInit {
       totalUnits: [{ value: this.invoiceHeaderBuque.totalUnits === null ? '' : this.invoiceHeaderBuque.totalUnits, disabled: true }],
       totalCost: [{ value: this.invoiceHeaderBuque.costTotal === null ? '' : this.invoiceHeaderBuque.costTotal, disabled: true }]
     });
-    this.generateNumInvoice(this.invoiceHeaderBuque.buque);
+    this.generateNumInvoice();
     this.getInvoiceBuqueDetails(this.invoiceHeaderBuque.buque);
   }
 
-  generateNumInvoice(platform: string) {
-    this.invoiceDetailController.getNumInvoice(platform).subscribe(data => {
+  generateNumInvoice() {
+    this.invoiceDetailController.getNumInvoiceBuque().subscribe(data => {
       this.invoiceNumber = data.invoice;
       this.formGroup.get('invoice').setValue(data.invoice);
     });
