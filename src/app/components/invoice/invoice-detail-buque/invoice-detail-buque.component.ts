@@ -119,7 +119,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
         totalUnits:this.invoiceHeaderBuque.totalUnits,
         totalPrice:this.invoiceHeaderBuque.costTotal,
         shipment:this.invoiceHeaderBuque.buque,
-        quoteId:this.invoiceHeaderBuque.quoteId
+        modelType:this.invoiceHeaderBuque.modelType
       };
       this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{        
         this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
