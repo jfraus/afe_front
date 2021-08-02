@@ -59,14 +59,14 @@ export class InvoiceDetailBuqueComponent implements OnInit {
       paymentTerm: [{ value: this.invoiceHeaderBuque.client.paymentTerm === null ? '' : this.invoiceHeaderBuque.client.paymentTerm.paymentTerm, disabled: true }],
       noTravel: [{ value: this.invoiceHeaderBuque.noViaje === null ? '' : this.invoiceHeaderBuque.noViaje, disabled: true }],
       totalUnits: [{ value: this.invoiceHeaderBuque.totalUnits === null ? '' : this.invoiceHeaderBuque.totalUnits, disabled: true }],
-      totalCost: [{ value: this.invoiceHeaderBuque.costTotal === null ? '' : this.invoiceHeaderBuque.costTotal, disabled: true }]
+      totalCost: [{ value: this.invoiceHeaderBuque.costTotal === null ? '' : Number(this.invoiceHeaderBuque.costTotal), disabled: true }]
     });
-    this.generateNumInvoice(this.invoiceHeaderBuque.buque);
+    this.generateNumInvoice();
     this.getInvoiceBuqueDetails(this.invoiceHeaderBuque.buque);
   }
 
-  generateNumInvoice(platform: string) {
-    this.invoiceDetailController.getNumInvoice(platform).subscribe(data => {
+  generateNumInvoice() {
+    this.invoiceDetailController.getNumInvoiceBuque().subscribe(data => {
       this.invoiceNumber = data.invoice;
       this.formGroup.get('invoice').setValue(data.invoice);
     });
@@ -121,8 +121,9 @@ export class InvoiceDetailBuqueComponent implements OnInit {
         shipment:this.invoiceHeaderBuque.buque,
         quoteId:this.invoiceHeaderBuque.quoteId
       };
-      this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{
+      this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{        
         this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
+        this.closeBuqueDetails();
       });
     }    
   }

@@ -49,14 +49,15 @@ export class InvoiceDetailComponent implements OnInit {
       paymentTerm: [{value: this.invoiceHeader.client === null ? '' : this.invoiceHeader.client.paymentTerm.paymentTerm, disabled: true}],
       noTravel: [{value: this.invoiceHeader.noViaje === null ? '' : this.invoiceHeader.noViaje , disabled: true}],
       totalUnits: [{value: this.invoiceHeader.totalUnits === null ? '' : this.invoiceHeader.totalUnits, disabled: true}],
-      totalCost: [{value: this.invoiceHeader.costTotal === null ? '' : this.invoiceHeader.costTotal, disabled: true}],
+      totalCost: [{value: this.invoiceHeader.costTotal === null ? '' : Number(this.invoiceHeader.costTotal), disabled: true}],
     });
     this.generateNumInvoice(this.invoiceHeader.plataforma);
+    this.searchVinInvoice(this.invoiceHeader.plataforma);
   }
 
 
-  searchVinInvoice() {
-    this.invoiceDetailController.getVines().subscribe(data => {
+  searchVinInvoice(platform: string) {
+    this.invoiceDetailController.getVines(platform).subscribe(data => {
       if(data !== null) {
         this.invoiceDetail = data;
       }
@@ -76,7 +77,9 @@ export class InvoiceDetailComponent implements OnInit {
       };
      this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{
         this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
+        
       });
+      this.closePlatformDetails();
   }
 
   generateNumInvoice(platform: string) {
@@ -84,5 +87,9 @@ export class InvoiceDetailComponent implements OnInit {
       this.invoiceNumber = data.invoice;
       this.formGroup.get('invoice').setValue(data.invoice);
     });
+  }
+
+  closePlatformDetails(): void {
+    this.close.emit(true);
   }
 }

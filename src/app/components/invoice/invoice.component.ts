@@ -38,9 +38,9 @@ import { MessageService } from "primeng/api";
       this.getInvoice();
     }
 
-    getInvoice(): void {
+    getInvoice(): void {      
       this.loadingInvoice = true;
-      
+      this.invoices = [];
       this.invoiceService.getplatformHeader().subscribe(data =>{
         this.invoices =data;
         this.invoices.forEach(data=>{
@@ -59,8 +59,10 @@ import { MessageService } from "primeng/api";
 
     }
 
-    closeInvoice() {
-      this.visibleInvoice = true;
+    closeInvoice() {      
+      this.invoices = [];
+      setTimeout(() => this.getInvoice(), 600); 
+      this.visibleInvoice = false;      
     }
 
     generateInvoice(invoice: InvoiceHeader) {
