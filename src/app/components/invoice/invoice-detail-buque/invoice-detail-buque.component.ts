@@ -66,7 +66,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
   }
 
   generateNumInvoice() {
-    this.invoiceDetailController.getNumInvoiceBuque().subscribe(data => {
+    this.invoiceDetailController.getNumInvoice(this.invoiceHeaderBuque.modelType).subscribe(data => {
       this.invoiceNumber = data.invoice;
       this.formGroup.get('invoice').setValue(data.invoice);
     });
@@ -122,7 +122,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
         modelType:this.invoiceHeaderBuque.modelType
       };
       this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{        
-        this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
+        this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con éxito' });
         this.closeBuqueDetails();
       });
     }    

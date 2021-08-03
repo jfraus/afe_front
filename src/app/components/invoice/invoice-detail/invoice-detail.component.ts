@@ -39,7 +39,8 @@ export class InvoiceDetailComponent implements OnInit {
       { field: 'quotation', header: 'Cotización' },
       { field: 'purchaseOrder', header: 'Orden de Compra' }
     ];
-    
+    this.generateNumInvoice(this.invoiceHeader.plataforma);   
+    this.searchVinInvoice(this.invoiceHeader.plataforma);
     this.formGroup = this.formBuilder.group({
       invoice: [{value: this.numInvoice, disabled: true}],
       platform: [{value: this.invoiceHeader.plataforma === null ? '' : this.invoiceHeader.plataforma, disabled: true}],
@@ -49,17 +50,16 @@ export class InvoiceDetailComponent implements OnInit {
       paymentTerm: [{value: this.invoiceHeader.client === null ? '' : this.invoiceHeader.client.paymentTerm.paymentTerm, disabled: true}],
       noTravel: [{value: this.invoiceHeader.noViaje === null ? '' : this.invoiceHeader.noViaje , disabled: true}],
       totalUnits: [{value: this.invoiceHeader.totalUnits === null ? '' : this.invoiceHeader.totalUnits, disabled: true}],
-      totalCost: [{value: this.invoiceHeader.costTotal === null ? '' : Number(this.invoiceHeader.costTotal), disabled: true}],
-    });
-    this.generateNumInvoice(this.invoiceHeader.plataforma);
-    this.searchVinInvoice(this.invoiceHeader.plataforma);
+      totalCost: [{value: this.invoiceHeader.costTotal === null ? '' : Number(this.invoiceHeader.costTotal), disabled: true}]
+    });    
   }
 
 
   searchVinInvoice(platform: string) {
     this.invoiceDetailController.getVines(platform).subscribe(data => {
       if(data !== null) {
-        this.invoiceDetail = data;
+        this.invoiceDetail = data;        
+        this.formGroup.get('seals').setValue(this.invoiceDetail[0].seals);  
       }
     });
   }
@@ -76,14 +76,14 @@ export class InvoiceDetailComponent implements OnInit {
         modelType:this.invoiceHeader.modelType
       };
      this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{
-        this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con exito' });
+        this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con éxito' });
         
       });
       this.closePlatformDetails();
   }
 
   generateNumInvoice(platform: string) {
-    this.invoiceDetailController.getNumInvoice(platform).subscribe(data => {
+    this.invoiceDetailController.getNumInvoice(this.invoiceHeader.modelType).subscribe(data => {    
       this.invoiceNumber = data.invoice;
       this.formGroup.get('invoice').setValue(data.invoice);
     });
