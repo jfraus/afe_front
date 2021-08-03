@@ -15,13 +15,13 @@ export class InvoiceDetailController {
         return this.http.get<InvoiceDetail[]>(`${environment.apiUrl}invoice-detail/platform-detail/?platform=${platform}`).pipe();
     }
 
-    getNumInvoice(platform: string): Observable<InvoiceHeader> {
-        return this.http.get<InvoiceHeader>(`${environment.apiUrl}invoice-detail/header/?platform=${platform}`).pipe();
+    getNumInvoice(type: string): Observable<InvoiceHeader> {
+        return this.http.get<InvoiceHeader>(`${environment.apiUrl}invoice-detail/header/?type=${type}`).pipe();
     }
 
-    getNumInvoiceBuque(): Observable<InvoiceHeader> {
+    /*getNumInvoiceBuque(): Observable<InvoiceHeader> {
         return this.http.get<InvoiceHeader>(`${environment.apiUrl}invoice-detail/header-buque`).pipe();
-    }
+    }*/
 
     getInvoiceBuqueDetail(buque: String ){
         return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice-detail/buque-detail/?buque=${buque}`).pipe();

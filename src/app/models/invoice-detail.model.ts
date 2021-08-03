@@ -6,4 +6,5 @@ export class InvoiceDetail {
     unitPrice: string;
     quotation: string;
     purchaseOrder: string;
+    seals: string;
 }
