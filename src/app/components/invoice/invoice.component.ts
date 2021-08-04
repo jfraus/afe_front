@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { InvoiceHeader } from 'src/app/models/invoice-header.model';
 import { InvoiceService } from 'src/app/services/invoice-controller.service';
-import { MessageService } from "primeng/api";
+
 
 @Component({
     selector: 'app-invoice',
@@ -21,8 +21,7 @@ import { MessageService } from "primeng/api";
     invoice: InvoiceHeader;
     
     constructor(
-      private invoiceService : InvoiceService, 
-      private messageServices: MessageService) { }
+      private invoiceService : InvoiceService) { }
 
     ngOnInit() {
       this.cols = [
@@ -32,7 +31,7 @@ import { MessageService } from "primeng/api";
         {field: 'modelType', header: 'Type'},
         {field: 'destino', header: 'Destino'},
         {field: 'totalUnits', header: 'Total Unidades'},
-        {field: 'costTotal', header: 'Costo Total '}
+        {field:  'costTotal', header:'Costo Total '}
         
       ]
       this.getInvoice();
@@ -41,24 +40,25 @@ import { MessageService } from "primeng/api";
     getInvoice(): void {      
       this.loadingInvoice = true;
       this.invoices = [];
-      this.invoiceService.getplatformHeader().subscribe(data =>{
-        this.invoices =data;
+      let flat: Boolean = true;
+      this.invoiceService.getplatformHeader().subscribe(data => {
+        this.invoices = data;
         this.invoices.forEach(data=>{
-          data.canInvoice=true;
-          if(data.carrierType === 'T' && data.totalUnits >10){
-            data.canInvoice=false;
+          data.costTotal= Number(data.costTotal);
+          if(data.carrierType === 'T' && data.totalUnits >10) {
             this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 10 unidades' });
-          }          
-          if(data.carrierType !== 'T' && data.totalUnits >22){
-            data.canInvoice=false;
+          } else if(data.carrierType !== 'T' && data.totalUnits >22) {
             this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 22 unidades' });
-          }         
+          } else if((!(data.duplicate === null || data.duplicate === undefined)) && flat) {
+            flat = false;            
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.duplicate +' tiene 2 clientes para facturar' });
+          }
+
         });
         this.loadingInvoice = false;        
       });
-
     }
-
+    
     closeInvoice() {      
       this.invoices = [];
       setTimeout(() => this.getInvoice(), 600); 
