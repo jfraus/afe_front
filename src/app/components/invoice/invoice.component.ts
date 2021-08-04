@@ -46,10 +46,12 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
           data.costTotal= Number(data.costTotal);
           if(data.carrierType === 'T' && data.totalUnits >10) {
             this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 10 unidades' });
-          }          
-          if(data.carrierType !== 'T' && data.totalUnits >22) {
+          } else if(data.carrierType !== 'T' && data.totalUnits >22) {
             this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 22 unidades' });
+          } else if(data.canInvoice) {
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' tiene 2 clientes para facturar' });
           }
+
         });
         this.loadingInvoice = false;        
       });
