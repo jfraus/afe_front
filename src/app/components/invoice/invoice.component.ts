@@ -40,6 +40,7 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
     getInvoice(): void {      
       this.loadingInvoice = true;
       this.invoices = [];
+      let flat: Boolean = true;
       this.invoiceService.getplatformHeader().subscribe(data => {
         this.invoices = data;
         this.invoices.forEach(data=>{
@@ -48,8 +49,9 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
             this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 10 unidades' });
           } else if(data.carrierType !== 'T' && data.totalUnits >22) {
             this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 22 unidades' });
-          } else if(data.canInvoice) {
-            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' tiene 2 clientes para facturar' });
+          } else if((!(data.duplicate === null || data.duplicate === undefined)) && flat) {
+            flat = false;            
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.duplicate +' tiene 2 clientes para facturar' });
           }
 
         });

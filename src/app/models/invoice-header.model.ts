@@ -11,5 +11,6 @@ export interface InvoiceHeader{
     carrierType: string,
     canInvoice: boolean,
     invoice: string,
-    quoteId: number
+    quoteId: number,
+    duplicate: string
 }
