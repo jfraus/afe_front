@@ -41,20 +41,7 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
       this.loadingInvoice = true;
       this.invoices = [];
       this.invoiceService.getplatformHeader().subscribe(data =>{
-        this.invoices =data;        
-        this.invoices = this.getDuplicateElements(this.invoices);
-        this.invoices.forEach(data=>{
-          data.canInvoice=true;
-          data.costTotal= Number(data.costTotal);
-          if(data.carrierType === 'T' && data.totalUnits >10){
-            data.canInvoice=false;
-            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 10 unidades' });
-          }          
-          if(data.carrierType !== 'T' && data.totalUnits >22){
-            data.canInvoice=false;
-            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 22 unidades' });
-          }
-        });
+        this.invoices =data;
         this.loadingInvoice = false;        
       });
     }
