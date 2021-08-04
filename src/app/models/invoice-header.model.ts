@@ -7,7 +7,7 @@ export interface InvoiceHeader{
     modelType: string, 
     totalUnits: number,
     destino: string, 
-    costTotal: string,
+    costTotal: number,
     carrierType: string,
     canInvoice: boolean,
     invoice: string,
