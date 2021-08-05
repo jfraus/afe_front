@@ -30,3 +30,9 @@ body{
     }
 }
 }
+
+input:disabled{
+  font-weight: bold!important;
+    opacity: 1!important;
+    width: 121%;
+}
