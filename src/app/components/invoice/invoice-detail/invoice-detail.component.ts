@@ -5,7 +5,6 @@ import { InvoiceHeader } from 'src/app/models/invoice-header.model';
 import { InvoiceDetailController } from 'src/app/services/invoice-detail-controller.service';
 import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { MessageService } from 'primeng/api';
-import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -82,7 +81,6 @@ export class InvoiceDetailComponent implements OnInit {
       this.disabledGenerateInvoice = true;
       this.invoiceService.saveInvoices(createInvoice).subscribe((response) => {
         this.disabledGenerateInvoice = false;
-        console.log(stringify(response));
           this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con éxito' });
           this.closePlatformDetails();
       });
