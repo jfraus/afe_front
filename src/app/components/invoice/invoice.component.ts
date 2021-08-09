@@ -41,6 +41,7 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
       this.loadingInvoice = true;
       this.invoices = [];
       let flat: Boolean = true;
+      this.msgs = [];
       this.invoiceService.getplatformHeader().subscribe(data => {
         this.invoices = data;
         this.invoices.forEach(data=>{
@@ -53,15 +54,33 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
             flat = false;            
             this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.duplicate +' tiene 2 clientes para facturar' });
           }
-
         });
         this.loadingInvoice = false;        
       });
     }
-    
+
+    getDuplicateElements(data:InvoiceHeader[]): InvoiceHeader[]{
+      let filterData:InvoiceHeader[] = [];
+
+      data.forEach(element =>{
+        console.log(element.plataforma);
+        if(!filterData.find(ele => ele.plataforma == element.plataforma)){
+          filterData.push(element);
+        }else{
+          element.canInvoice=false;
+          filterData.push(element);   
+          this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ element.plataforma +' tiene 2 clientes para facturar' });
+        }
+      });
+      console.log("tonin");
+      console.log(filterData);
+      return filterData;
+    }
+
+
     closeInvoice() {      
       this.invoices = [];
-      setTimeout(() => this.getInvoice(), 600); 
+      setTimeout(() => this.getInvoice(), 1000); 
       this.visibleInvoice = false;      
     }
 
