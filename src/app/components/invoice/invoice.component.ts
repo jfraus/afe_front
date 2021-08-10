@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { InvoiceHeader } from 'src/app/models/invoice-header.model';
 import { InvoiceService } from 'src/app/services/invoice-controller.service';
 
-
 @Component({
     selector: 'app-invoice',
     templateUrl: 'invoice.component.html',
@@ -41,6 +40,7 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
       this.loadingInvoice = true;
       this.invoices = [];
       let flat: Boolean = true;
+      this.msgs = [];
       this.invoiceService.getplatformHeader().subscribe(data => {
         this.invoices = data;
         this.invoices.forEach(data=>{
@@ -53,15 +53,14 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
             flat = false;            
             this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.duplicate +' tiene 2 clientes para facturar' });
           }
-
         });
         this.loadingInvoice = false;        
       });
     }
-    
+
     closeInvoice() {      
       this.invoices = [];
-      setTimeout(() => this.getInvoice(), 600); 
+      setTimeout(() => this.getInvoice(), 1000); 
       this.visibleInvoice = false;      
     }
 

@@ -20,6 +20,7 @@ export class InvoiceDetailComponent implements OnInit {
   @Input() invoiceHeader: InvoiceHeader;
   @Output() close = new EventEmitter();
   @Input() display: boolean;
+  disabledGenerateInvoice: boolean = false;
   cols = [];
   invoiceNumber:string;
 
@@ -56,10 +57,12 @@ export class InvoiceDetailComponent implements OnInit {
 
 
   searchVinInvoice(platform: string) {
+    this.disabledGenerateInvoice = true;
     this.invoiceDetailController.getVines(platform).subscribe(data => {
       if(data !== null) {
         this.invoiceDetail = data;        
-        this.formGroup.get('seals').setValue(this.invoiceDetail[0].seals);  
+        this.formGroup.get('seals').setValue(this.invoiceDetail[0].seals);
+        this.disabledGenerateInvoice = false;
       }
     });
   }
@@ -75,11 +78,12 @@ export class InvoiceDetailComponent implements OnInit {
         shipment:this.invoiceHeader.plataforma,
         modelType:this.invoiceHeader.modelType
       };
-     this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{
-        this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con éxito' });
-        
+      this.disabledGenerateInvoice = true;
+      this.invoiceService.saveInvoices(createInvoice).subscribe((response) => {
+        this.disabledGenerateInvoice = false;
+          this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con éxito' });
+          this.closePlatformDetails();
       });
-      this.closePlatformDetails();
   }
 
   generateNumInvoice(platform: string) {
