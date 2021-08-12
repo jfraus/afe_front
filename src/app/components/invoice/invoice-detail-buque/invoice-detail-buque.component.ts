@@ -45,15 +45,15 @@ export class InvoiceDetailBuqueComponent implements OnInit {
       { field: 'vin', header: 'Vin' },
       { field: 'model', header: 'Modelo' },
       { field: 'color', header: 'Color' },
-      { field: 'type', header: 'Tipo' },
-      { field: 'price', header: 'Precio' },
-      { field: 'quote', header: 'Cotización' },
-      { field: 'purchageOrder', header: 'Orden de compra' }
+      { field: 'tipo', header: 'Tipo' },
+      { field: 'unitPrice', header: 'Precio Unitario' },
+      { field: 'quotation', header: 'Cotización' },
+      { field: 'purchaseOrder', header: 'Orden de Compra' }
     ];
 
     this.formGroup = this.formBuilder.group({
       invoice: [{ value: this.numInvoice, disabled: true }],
-      buque: [{ value: this.invoiceHeaderBuque.buque === null ? '' : this.invoiceHeaderBuque.buque, disabled: true }],
+      buque: [{ value: this.invoiceHeaderBuque.typeShipment === null ? '' : this.invoiceHeaderBuque.typeShipment, disabled: true }],
       client: [{ value: this.invoiceHeaderBuque.client === null ? '' : this.invoiceHeaderBuque.client.name, disabled: true }],
       paymentMethod: [{ value: this.invoiceHeaderBuque.client.paymentMethod === null ? '' : this.invoiceHeaderBuque.client.paymentMethod.methodName, disabled: true }],
       paymentTerm: [{ value: this.invoiceHeaderBuque.client.paymentTerm === null ? '' : this.invoiceHeaderBuque.client.paymentTerm.paymentTerm, disabled: true }],
@@ -62,7 +62,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
       totalCost: [{ value: this.invoiceHeaderBuque.costTotal === null ? '' : Number(this.invoiceHeaderBuque.costTotal), disabled: true }]
     });
     this.generateNumInvoice();
-    this.getInvoiceBuqueDetails(this.invoiceHeaderBuque.buque);
+    this.getInvoiceBuqueDetails(this.invoiceHeaderBuque.typeShipment, this.invoiceHeaderBuque.modelType);
   }
 
   generateNumInvoice() {
@@ -72,9 +72,9 @@ export class InvoiceDetailBuqueComponent implements OnInit {
     });
   }
 
-  getInvoiceBuqueDetails(buque: String) {
+  getInvoiceBuqueDetails(buque: string, modelType: string) {
     this.loadingInvoice = true;
-    this.invoiceDetailController.getInvoiceBuqueDetail(buque).subscribe(data => {
+    this.invoiceDetailController.getInvoiceBuqueDetail(buque, modelType).subscribe(data => {
       this.invoiceBuqueDetails = data;
       this.purchageOrderMsg.push("No se puede generar la factura por que las siguientes unidades no tienen Orden de Compra VINS:");
       this.quoteDate.push("No se puede generar factura por que no tienen facturas vigentes para los VINS:");
@@ -118,7 +118,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
         travelNumber:this.invoiceHeaderBuque.noViaje,
         totalUnits:this.invoiceHeaderBuque.totalUnits,
         totalPrice:this.invoiceHeaderBuque.costTotal,
-        shipment:this.invoiceHeaderBuque.buque,
+        shipment:this.invoiceHeaderBuque.typeShipment,
         modelType:this.invoiceHeaderBuque.modelType
       };
       this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{        

@@ -1,7 +1,8 @@
 import { Client } from "./client.model";
 
 export interface InvoiceHeader{
-    plataforma: string,
+    quoteInvalid: string,
+    typeShipment: string,
     client: Client;
     noViaje: string, 
     modelType: string, 

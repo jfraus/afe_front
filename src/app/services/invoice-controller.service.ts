@@ -24,7 +24,7 @@ export class InvoiceService {
   }
 
   getBuqueHeader(){
-    return this.http.get<Buque[]>(`${environment.apiUrl}invoice/buque`).pipe();
+    return this.http.get<InvoiceHeader[]>(`${environment.apiUrl}invoice/buque`).pipe();
   }  
 
   saveInvoices(createInvoice: any){

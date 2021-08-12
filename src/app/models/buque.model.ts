@@ -1,12 +1,13 @@
 import { Client } from "./client.model";
 
 export interface Buque {
-    buque: string,
+    typeShipment: string,
     client: Client;
     noViaje: string, 
     modelType: string, 
     totalUnits: number,
     destino: string, 
     costTotal: string,
-    quoteId: number
+    quoteId: number,
+    quoteInvalid: string
 }
