@@ -42,8 +42,10 @@
                     </ng-template>
                 </td>
                 <td>
-                    <button pButton type="button" icon="pi pi-book" style="margin-left: 3px" class="blue-grey-btn"
+                    <div *ngIf="rowData.canInvoice">
+                        <button pButton type="button" icon="pi pi-book" style="margin-left: 3px" class="blue-grey-btn"
                         pTooltip="Facturar" (click)="generateInvoice(rowData)"></button>
+                    </div>
                 </td>
             </tr>
         </ng-template>
