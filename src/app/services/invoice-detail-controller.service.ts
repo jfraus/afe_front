@@ -19,7 +19,7 @@ export class InvoiceDetailController {
         return this.http.get<InvoiceHeader>(`${environment.apiUrl}invoice-detail/header/?type=${type}`).pipe();
     }
     
-    getInvoiceBuqueDetail(buque: String ){
-        return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice-detail/buque-detail/?buque=${buque}`).pipe();
+    getInvoiceBuqueDetail(buque: string, modelType: string){
+        return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice-detail/buque-detail/?buque=${buque}&&modelType=${modelType}`).pipe();
       }
 }

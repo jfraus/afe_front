@@ -40,11 +40,11 @@ export class InvoiceDetailComponent implements OnInit {
       { field: 'quotation', header: 'Cotización' },
       { field: 'purchaseOrder', header: 'Orden de Compra' }
     ];
-    this.generateNumInvoice(this.invoiceHeader.plataforma);   
-    this.searchVinInvoice(this.invoiceHeader.plataforma);
+    this.generateNumInvoice(this.invoiceHeader.typeShipment);   
+    this.searchVinInvoice(this.invoiceHeader.typeShipment);
     this.formGroup = this.formBuilder.group({
       invoice: [{value: this.numInvoice, disabled: true}],
-      platform: [{value: this.invoiceHeader.plataforma === null ? '' : this.invoiceHeader.plataforma, disabled: true}],
+      platform: [{value: this.invoiceHeader.typeShipment === null ? '' : this.invoiceHeader.typeShipment, disabled: true}],
       seals: [{value: '', disabled: true}],
       client: [{value: this.invoiceHeader.client === null ? '' : this.invoiceHeader.client.name, disabled: true}],
       paymentMethod: [{value: this.invoiceHeader.client === null ? '' : this.invoiceHeader.client.paymentMethod.methodName, disabled: true}],
@@ -75,7 +75,7 @@ export class InvoiceDetailComponent implements OnInit {
         travelNumber:this.invoiceHeader.noViaje,
         totalUnits:this.invoiceHeader.totalUnits,
         totalPrice:this.invoiceHeader.costTotal,
-        shipment:this.invoiceHeader.plataforma,
+        shipment:this.invoiceHeader.typeShipment,
         modelType:this.invoiceHeader.modelType
       };
       this.disabledGenerateInvoice = true;

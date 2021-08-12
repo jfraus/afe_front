@@ -24,7 +24,7 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
 
     ngOnInit() {
       this.cols = [
-        {field: 'plataforma', header: 'Plataforma'},
+        {field: 'typeShipment', header: 'Plataforma'},
         {field: 'client', subfield:'name',header: 'Cliente'},
         {field: 'noViaje', header: 'No de Viaje'},
         {field: 'modelType', header: 'Type'},
@@ -40,18 +40,26 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
       this.loadingInvoice = true;
       this.invoices = [];
       let flat: Boolean = true;
+      let flatQuote: Boolean = true;
       this.msgs = [];
       this.invoiceService.getplatformHeader().subscribe(data => {
+
         this.invoices = data;
-        this.invoices.forEach(data=>{
+        this.invoices.forEach(data => {
           data.costTotal= Number(data.costTotal);
           if(data.carrierType === 'T' && data.totalUnits >10) {
-            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 10 unidades' });
-          } else if(data.carrierType !== 'T' && data.totalUnits >22) {
-            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.plataforma +' ha excedido la cantidad de 22 unidades' });
-          } else if((!(data.duplicate === null || data.duplicate === undefined)) && flat) {
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.typeShipment +' ha excedido la cantidad de 10 unidades' });
+          } 
+          if(data.carrierType !== 'T' && data.totalUnits >22) {
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.typeShipment +' ha excedido la cantidad de 22 unidades' });
+          }
+          if((!(data.duplicate === null || data.duplicate === undefined)) && flat) {
             flat = false;            
             this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.duplicate +' tiene 2 clientes para facturar' });
+          }
+          if (!(data.quoteInvalid === null || data.quoteInvalid === undefined) && flatQuote) {
+            flatQuote = false;            
+            this.msgs.push({severity:'warn', summary:'Información: ', detail:'La plataforma '+ data.quoteInvalid +' no tiene cotizaciones vigentes' });
           }
         });
         this.loadingInvoice = false;        
