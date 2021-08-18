@@ -41,7 +41,7 @@ export class InvoiceDetailComponent implements OnInit {
       { field: 'purchaseOrder', header: 'Orden de Compra' }
     ];
     this.generateNumInvoice(this.invoiceHeader.typeShipment);   
-    this.searchVinInvoice(this.invoiceHeader.typeShipment);
+    this.searchVinInvoice(this.invoiceHeader.typeShipment, this.invoiceHeader.client.name);
     this.formGroup = this.formBuilder.group({
       invoice: [{value: this.numInvoice, disabled: true}],
       platform: [{value: this.invoiceHeader.typeShipment === null ? '' : this.invoiceHeader.typeShipment, disabled: true}],
@@ -56,12 +56,12 @@ export class InvoiceDetailComponent implements OnInit {
   }
 
 
-  searchVinInvoice(platform: string) {
+  searchVinInvoice(platform: string, client: string) {
     this.disabledGenerateInvoice = true;
-    this.invoiceDetailController.getVines(platform).subscribe(data => {
+    this.invoiceDetailController.getVines(platform, client).subscribe(data => {
       if(data !== null) {
         this.invoiceDetail = data;        
-        this.formGroup.get('seals').setValue(this.invoiceDetail[0].seals);
+        this.formGroup.get('seals').setValue(this.invoiceDetail[0].seals == null? '' : this.invoiceDetail[0].seals);
         this.disabledGenerateInvoice = false;
       }
     });
