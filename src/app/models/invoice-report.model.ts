@@ -1,0 +1,22 @@
+export interface InvoiceReport{
+    vin: string,
+    type: string,
+    model: string,
+    color: string,
+    modelWeight: number, 
+    productionDate: string, 
+    originRamp: string, 
+    destinationRamp: string, 
+    destinationCountry: string, 
+    purchaseOrder: string,
+    contractNumber: string,
+    client: string, 
+    InvoiceNumber: string, 
+    invoiceDate: string, 
+    price: number, 
+    travelNumber: number,
+    platform: string, 
+    buque: string, 
+    hj2: string, 
+    idd1125: string
+}
