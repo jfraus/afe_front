@@ -1,0 +1,84 @@
+<div class="card">
+  <div class="card-title">Reporte de Facturación</div>
+  <div class="ui-g ui-fluid">
+    <form [formGroup]="formGroup" class="form-group ui-g-12" (ngSubmit)="searchInvoiceReport()">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="ui-g-12 ui-lg-12">
+          <div class="ui-g-12 ui-lg-4">
+            <span class="md-inputfield">
+              <input type="text" formControlName="vin" style="width: 100%" pInputText />
+              <label>VIN</label>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <span class="md-inputfield">
+              <input type="text" formControlName="invoice" style="width: 100%" pInputText />
+              <label>Factura</label>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <span class="md-inputfield">
+              <p-calendar [style]="{ width: '100%' }" dateFormat="dd-mm-yy" [showButtonBar]="true" name="startDate"
+                formControlName="startDate" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
+              <label>Fecha Inicial</label>
+            </span>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-lg-12">
+          <div class="ui-g-12 ui-lg-4">
+            <span class="md-inputfield">
+              <p-calendar [style]="{ width: '100%' }" dateFormat="dd-mm-yy" [showButtonBar]="true" name="endDate"
+                formControlName="endDate" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
+              <label>Fecha Final</label>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <button pButton type="button" label="Buscar" icon="pi pi-search" class="teal-btn"
+              [disabled]="!searchButtonDisable" (click)="searchInvoiceReport()" style="width: auto"></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+    <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="records"
+      [loading]="loadingReport" sortMode="multiple" [style]="{ 'margin-bottom': '20px' }" [responsive]="true"
+      [rowHover]="true" [paginator]="true" [responsive]="true" [rowsPerPageOptions]="[30, 40, 50]" [autoLayout]="true"
+      [rows]="20" [pageLinks]="20">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{ col.header }}
+            <p-sortIcon *ngIf="col.header != 'Acción'" [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td style="text-align: center" [attr.colspan]="columns.length + 2">
+            No se encontró información
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+            <span class="ui-column-title">{{ col.header }}</span>
+            <span *ngIf="col.field != 'action'; else elseAction">{{
+              rowData[col.field]
+              }}</span>
+            <ng-template #elseAction>
+            
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="caption">
+        <div class="ui-helper-clearfix" style="text-align: left">
+            <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="Exportar a Excel" class="ui-button-success" style="float:right" (click)="downloadExcel()"></button>
+        </div>
+    </ng-template>
+    </p-table>
+</div>
