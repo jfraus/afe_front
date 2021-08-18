@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from "../../environments/environment";
 import { PaymentMethod } from '../models/payment-method.model';
 import { PaymentTerm } from '../models/payment-term.model';
 import { InvoiceHeader } from '../models/invoice-header.model';
-import { Buque } from '../models/buque.model';
+import { InvoiceReport }from 'src/app/models/invoice-report.model';
 
 @Injectable()
 export class InvoiceService {
@@ -31,4 +31,13 @@ export class InvoiceService {
     return this.http.post<any>(`${environment.apiUrl}invoice/`,createInvoice).pipe();
   }
 
+  getReportInvoice(vin:string, invoice:string, startDate:string, endDate:string){
+    let httpParams = new HttpParams();
+    httpParams = vin !== '' ? httpParams.set('vin', vin) : httpParams;
+    httpParams = invoice !== '' ? httpParams.set('invoice', invoice) : httpParams;
+    httpParams = startDate !== '' ? httpParams.set('startDate', startDate) : httpParams;
+    httpParams = endDate !== '' ? httpParams.set('endDate', endDate) : httpParams;
+    return this.http.get<InvoiceReport[]>(`${environment.apiUrl}invoice/report/?${httpParams}`).pipe();      
+  }
+  
 }

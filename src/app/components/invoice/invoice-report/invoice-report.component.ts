@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
-import { InvoiceReport }from 'src/app/models/invoice-report.model';
+import { InvoiceReport } from 'src/app/models/invoice-report.model';
 import * as Excel from "exceljs/dist/exceljs.min.js";
 import * as fs from 'file-saver';
+import { InvoiceService } from 'src/app/services/invoice-controller.service'
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-invoice-report',
   templateUrl: './invoice-report.component.html',
-  styleUrls: ['./invoice-report.component.css']
+  styleUrls: ['./invoice-report.component.css'],
+  providers:[InvoiceService]
+
 })
 export class InvoiceReportComponent implements OnInit {
 
@@ -17,7 +21,8 @@ export class InvoiceReportComponent implements OnInit {
   loadingReport = false;
   records: InvoiceReport [] =[];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private service: InvoiceService,
+              private messageService:MessageService) { }
 
   ngOnInit() {
     this.BuildForm();
@@ -43,38 +48,8 @@ export class InvoiceReportComponent implements OnInit {
       { field: 'hj2', header: 'HJ2' },
       { field: 'idd1125', header: 'IDD1125' }
   ];
-    this.onChanges();
-    this.temp();
+    this.onChanges();    
   }
-
-  temp(){
-
-    let c ={
-      vin: "3CZRU6H73MM724908",
-      type: "KA",
-      model: "GK5G3HE",
-      color: "R-81",
-      modelWeight: 150, 
-      productionDate: "08-17-2021",
-      originRamp: "158",
-      destinationRamp: "753",
-      destinationCountry: "CANADA",
-      purchaseOrder: "HCL478",
-      contractNumber: "1245",
-      client: "Honda Canada",
-      InvoiceNumber: "75896",
-      invoiceDate: "08-17-2021",
-      price: 120,
-      travelNumber: 50,
-      platform: "TTGX994907", 
-      buque: "BUQ8584", 
-      hj2: "hj2",
-      idd1125: "idd1125"
-    }
-    this.records = [c];
-
-  }
-
 
   private BuildForm() {
     this.formGroup = this.fb.group({
@@ -108,9 +83,21 @@ export class InvoiceReportComponent implements OnInit {
     });
   }
 
-
   searchInvoiceReport() {      
-    
+    if(this.formGroup.valid){
+      this.loadingReport = true;
+      this.service.getReportInvoice(this.formGroup.get('vin').value, this.formGroup.get('invoice').value, 
+        this.formGroup.get('startDate').value, this.formGroup.get('endDate').value).subscribe((response) =>{
+          if(response.length>0){
+            this.records = response;
+            this.loadingReport = false;
+          }else{
+            this.messageService.clear();
+            this.messageService.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
+            this.records = [];
+          }          
+      });
+    }
   }
 
   downloadExcel(){
