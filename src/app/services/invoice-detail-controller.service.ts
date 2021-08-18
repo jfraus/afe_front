@@ -11,15 +11,15 @@ export class InvoiceDetailController {
 
     constructor(private http: HttpClient) { }
 
-    getVines(platform: string): Observable<InvoiceDetail[]> {
-        return this.http.get<InvoiceDetail[]>(`${environment.apiUrl}invoice-detail/platform-detail/?platform=${platform}`).pipe();
+    getVines(platform: string, client: string): Observable<InvoiceDetail[]> {
+        return this.http.get<InvoiceDetail[]>(`${environment.apiUrl}invoice-detail/platform-detail/?platform=${platform}&&client=${client}`).pipe();
     }
 
     getNumInvoice(type: string): Observable<InvoiceHeader> {
         return this.http.get<InvoiceHeader>(`${environment.apiUrl}invoice-detail/header/?type=${type}`).pipe();
     }
     
-    getInvoiceBuqueDetail(buque: string, modelType: string){
-        return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice-detail/buque-detail/?buque=${buque}&&modelType=${modelType}`).pipe();
+    getInvoiceBuqueDetail(buque: string, client: string){
+        return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice-detail/buque-detail/?buque=${buque}&&client=${client}`).pipe();
       }
 }
