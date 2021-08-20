@@ -5,7 +5,7 @@ export interface BuqueDetails {
 	type: String, 
 	price: String, 
 	quote: String, 
-	purchageOrder: String,
+	purchaseOrder: String,
 	endDate:String,
 	effectiveDate: String
 }

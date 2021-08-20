@@ -5,11 +5,12 @@ import { PaymentMethod } from '../models/payment-method.model';
 import { PaymentTerm } from '../models/payment-term.model';
 import { InvoiceHeader } from '../models/invoice-header.model';
 import { InvoiceReport }from 'src/app/models/invoice-report.model';
+import { FormatDate } from '../utils/format-date';
 
 @Injectable()
 export class InvoiceService {
 
-  constructor(private http: HttpClient) {  }
+  constructor(private http: HttpClient, private dateUtils: FormatDate) {  }
 
   getPaymentMethods(){
       return this.http.get<PaymentMethod[]>(`${environment.apiUrl}payment/method`).pipe();
@@ -35,8 +36,8 @@ export class InvoiceService {
     let httpParams = new HttpParams();
     httpParams = vin !== '' ? httpParams.set('vin', vin) : httpParams;
     httpParams = invoice !== '' ? httpParams.set('invoice', invoice) : httpParams;
-    httpParams = startDate !== '' ? httpParams.set('startDate', startDate) : httpParams;
-    httpParams = endDate !== '' ? httpParams.set('endDate', endDate) : httpParams;
+    httpParams = startDate !== '' ? httpParams.set('startDate', this.dateUtils.formatDate(startDate)) : httpParams;
+    httpParams = endDate !== '' ? httpParams.set('endDate', this.dateUtils.formatDate(endDate)) : httpParams;
     return this.http.get<InvoiceReport[]>(`${environment.apiUrl}invoice/report/?${httpParams}`).pipe();      
   }
   
