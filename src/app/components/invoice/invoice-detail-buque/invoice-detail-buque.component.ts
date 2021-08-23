@@ -77,30 +77,19 @@ export class InvoiceDetailBuqueComponent implements OnInit {
     this.invoiceDetailController.getInvoiceBuqueDetail(buque, client).subscribe(data => {
       this.invoiceBuqueDetails = data;
       this.purchageOrderMsg.push("No se puede generar la factura por que las siguientes unidades no tienen Orden de Compra VINS:");
-      this.quoteDate.push("No se puede generar factura por que no tienen facturas vigentes para los VINS:");
-      let today = new Date().toLocaleDateString()
-      let datePipe = new DatePipe("en-US");      
-      this.invoiceBuqueDetails.forEach(element => {
-        let effectiveDate = datePipe.transform(element.effectiveDate, 'MM/dd/yyyy');        
+      this.quoteDate.push("No se puede generar factura por que no tienen facturas vigentes para los VINS:");   
+      let showValidation = false;
+      this.invoiceBuqueDetails.forEach(element => {       
         this.canInvoice = true;
-        let showValidation = false;
-        let showValidation1 = false;
-        if (element.purchageOrder === undefined || element.purchageOrder == null || element.purchageOrder === "") {
+        if ((element.purchaseOrder === undefined || element.purchaseOrder == null || element.purchaseOrder === "")) {
           showValidation = true;
           this.purchageOrderMsg.push(" " + element.vin);
           this.canInvoice = false;
         }
-        if (!element.endDate.startsWith("9999") && today >= effectiveDate) {
-          this.quoteDate.push(" " + element.vin);
-          this.canInvoice = false;
-        }
-        if (showValidation) {
-          this.msgs.push({ severity: 'warn', summary: 'Información: ', detail: this.purchageOrderMsg });
-        }
-        if (showValidation1) {
-          this.msgs.push({ severity: 'warn', summary: 'Información: ', detail: this.quoteDate });
-        }
-      });        
+      });
+      if (showValidation) {
+        this.msgs.push({ severity: 'warn', summary: 'Información: ', detail: this.purchageOrderMsg });
+      }        
     });    
     this.loadingInvoice = false;
   }
