@@ -9,7 +9,7 @@ export class DistributionControllerService {
   constructor(private http: HttpClient, public dateUtils: FormatDate) {  }
 
   getAll(){
-    return this.http.get<any>(`${environment.apiUrl}/all-distribution`).pipe();
+    return this.http.get<any>(`${environment.apiUrl}distribution/all-distribution`).pipe();
   }
 
   get(dealerId,countryId){
