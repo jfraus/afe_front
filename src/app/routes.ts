@@ -20,6 +20,8 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { InvoiceDetailBuqueComponent } from './components/invoice/invoice-detail-buque/invoice-detail-buque.component';
 import { InvoiceBuqueComponent } from './components/invoice/invoice-buque/invoice-buque.component';
 import { InvoiceReportComponent } from './components/invoice/invoice-report/invoice-report.component';
+import { DistributionCenterComponent } from './components/distribution-center/distribution-center.component';
+
 
 export const routes: Routes = [
     { path: '',
@@ -40,7 +42,8 @@ export const routes: Routes = [
         {path: 'invoice-detail', component: InvoiceDetailComponent},
         {path: 'invoice-detail-buque', component: InvoiceDetailBuqueComponent},
         {path: 'invoice-buque', component: InvoiceBuqueComponent},
-        {path: 'invoice-report', component: InvoiceReportComponent}
+        {path: 'invoice-report', component: InvoiceReportComponent},
+        {path: 'distribution-center', component: DistributionCenterComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
