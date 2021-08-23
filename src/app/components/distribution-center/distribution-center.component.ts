@@ -12,6 +12,7 @@ export class DistributionCenterComponent implements OnInit {
   //clients:Client[] = [];  
   loadingDistribution:boolean = false;
   distributions: DistributionCenter[] =[];
+  displayAddEdit: boolean = false;
 
   constructor() { }
 
@@ -30,6 +31,11 @@ export class DistributionCenterComponent implements OnInit {
 
   }
 
+  addUpdate() {
+    console.log('clic');
+    
+    this.displayAddEdit = true;
+  }
 
 
 }

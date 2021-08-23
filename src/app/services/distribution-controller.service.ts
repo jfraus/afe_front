@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../../environments/environment";
-import { OrderList } from 'primeng/orderlist';
-import { Observable } from 'rxjs/internal/Observable';
 import { FormatDate } from '../utils/format-date';
+import { DistributionCenter } from '../models/distributionCenter.model';
 
 @Injectable()
 export class DistributionControllerService {
@@ -13,5 +12,7 @@ export class DistributionControllerService {
       return this.http.get<any>(`${environment.apiUrl}distribution/?countryId=${countryId}&dealerId=${dealerId}`).pipe();
     }
   
-
+  post(distributionCenter: DistributionCenter){
+    return this.http.post<any>(`${environment.apiUrl}distribution`, distributionCenter).pipe(); 
+  }
 }
