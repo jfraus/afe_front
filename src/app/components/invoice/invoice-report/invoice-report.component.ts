@@ -92,6 +92,7 @@ export class InvoiceReportComponent implements OnInit {
             this.records = response;
             this.loadingReport = false;
           }else{
+            this.loadingReport = false;
             this.messageService.clear();
             this.messageService.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
             this.records = [];
