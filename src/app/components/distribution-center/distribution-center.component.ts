@@ -13,6 +13,7 @@ export class DistributionCenterComponent implements OnInit {
   cols = [];
   loadingDistribution:boolean = false;
   distributions: DistributionCenter[] =[];
+  displayAddEdit: boolean = false;
 
   constructor(private distributionControllerService :DistributionControllerService) { }
 
@@ -40,6 +41,11 @@ export class DistributionCenterComponent implements OnInit {
 
   }
 
+  addUpdate() {
+    console.log('clic');
+    
+    this.displayAddEdit = true;
+  }
 
 
 }

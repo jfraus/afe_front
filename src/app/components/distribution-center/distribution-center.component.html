@@ -2,7 +2,7 @@
   <div class="card-title">Catálogo Centro de distribución</div>
   <div class="p-fluid p-formgrid p-grid">
     <div class="ui-g-12 ui-lg-3">
-      <a class="ui-button-success" type="button" pButton icon="pi pi-plus" label="Agregar">
+      <a class="ui-button-success" type="button" pButton icon="pi pi-plus" (click)="addUpdate()" label="Agregar">
       </a>
     </div>
   </div>
@@ -57,4 +57,13 @@
       </tr>
     </ng-template>
   </p-table>
+</div>
+
+<div *ngIf="displayAddEdit">
+  <app-add-edit-distribution
+    (close)="closeAddEdit()" 
+    (display)="displayAddEdit"
+    [distribution]="distribution"
+  >
+  </app-add-edit-distribution>
 </div>
