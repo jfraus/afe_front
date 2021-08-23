@@ -8,6 +8,10 @@ import { DistributionCenter } from '../models/distributionCenter.model';
 export class DistributionControllerService {
   constructor(private http: HttpClient, public dateUtils: FormatDate) {  }
 
+  getAll(){
+    return this.http.get<any>(`${environment.apiUrl}distribution/all-distribution`).pipe();
+  }
+
   get(dealerId,countryId){
       return this.http.get<any>(`${environment.apiUrl}distribution/?countryId=${countryId}&dealerId=${dealerId}`).pipe();
     }
