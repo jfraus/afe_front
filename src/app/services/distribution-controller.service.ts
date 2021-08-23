@@ -9,6 +9,10 @@ import { FormatDate } from '../utils/format-date';
 export class DistributionControllerService {
   constructor(private http: HttpClient, public dateUtils: FormatDate) {  }
 
+  getAll(){
+    return this.http.get<any>(`${environment.apiUrl}/all-distribution`).pipe();
+  }
+
   get(dealerId,countryId){
       return this.http.get<any>(`${environment.apiUrl}distribution/?countryId=${countryId}&dealerId=${dealerId}`).pipe();
     }
