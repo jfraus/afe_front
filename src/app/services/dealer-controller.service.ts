@@ -9,7 +9,9 @@ export class DealerControllerService {
 
   get(countryId: string){
       return this.http.get<any>(`${environment.apiUrl}dealer/?countryId=${countryId}`).pipe();
-    }
-  
+  }
 
+  getDealersByCountry(countryId: string){
+    return this.http.get<any[]>(`${environment.apiUrl}dealer/country/?countryCode=${countryId}`).pipe();
+  }
 }

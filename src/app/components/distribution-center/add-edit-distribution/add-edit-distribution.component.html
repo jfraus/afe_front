@@ -4,25 +4,25 @@
           <div class="ui-g form-group">
               <div class="ui-g-12 ui-lg-4">
                   <span class="md-inputfield"  >
-                      <p-dropdown formControlName="country" [options]="country" [filter]="true" 
-                      [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                      <p-dropdown formControlName="countryName" [options]="country" [filter]="true" 
+                      [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="changeCountry()"></p-dropdown>
                       <label>País*</label>
-                      <validations-input-component [formGroup]="addDistibution" formInputName="country" [validation_messages]="validations"></validations-input-component>
+                      <validations-input-component [formGroup]="addDistibution" formInputName="countryName" [validation_messages]="validations"></validations-input-component>
                   </span>
               </div>
               <div class="ui-g-12 ui-lg-4">
                 <span class="md-inputfield"  >
-                  <p-dropdown formControlName="dealer" [options]="dealer" [filter]="true" 
-                  [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (click)="findDealerByCountry()"></p-dropdown>
+                  <p-dropdown formControlName="dealerNumber" [options]="dealerNumber" [filter]="true" 
+                  [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (click)="findDealerByCountry()" (onChange)="setDealerValues()"></p-dropdown>
                   <label>Dealer*</label>
-                  <validations-input-component [formGroup]="addDistibution" formInputName="dealer" [validation_messages]="validations"></validations-input-component>
+                  <validations-input-component [formGroup]="addDistibution" formInputName="dealerNumber" [validation_messages]="validations"></validations-input-component>
                 </span>
               </div>
               <div class="ui-g-12 ui-lg-4">
                   <span class="md-inputfield"  >
-                    <input type="text" formControlName="codeDistribution" pInputText>
+                    <input type="text" formControlName="distributionCode" pInputText>
                     <label>Código de Distribución</label>
-                      <validations-input-component [formGroup]="addDistibution" formInputName="codeDistribution" [validation_messages]="validations"></validations-input-component>
+                      <validations-input-component [formGroup]="addDistibution" formInputName="distributionCode" [validation_messages]="validations"></validations-input-component>
                   </span>
               </div>
               <div class="ui-g-12 ui-lg-4">
@@ -34,9 +34,9 @@
               </div>
               <div class="ui-g-12 ui-lg-4">
                   <span class="md-inputfield"  >
-                    <input type="text" formControlName="nameDealer" pInputText>
+                    <input type="text" formControlName="dealerName" pInputText>
                     <label>Nombre Dealer</label>
-                    <validations-input-component [formGroup]="addDistibution" formInputName="nameDealer" [validation_messages]="validations"></validations-input-component>
+                    <validations-input-component [formGroup]="addDistibution" formInputName="dealerName" [validation_messages]="validations"></validations-input-component>
                   </span>
               </div>
 
@@ -50,9 +50,9 @@
 
               <div class="ui-g-12 ui-lg-4">
                 <span class="md-inputfield"  >
-                  <input type="text" formControlName="codePort" pInputText>
+                  <input type="text" formControlName="portCode" pInputText>
                   <label>Código de Puerto</label>
-                  <validations-input-component [formGroup]="addDistibution" formInputName="codePort" [validation_messages]="validations"></validations-input-component>
+                  <validations-input-component [formGroup]="addDistibution" formInputName="portCode" [validation_messages]="validations"></validations-input-component>
                 </span>
               </div>
           </div>
