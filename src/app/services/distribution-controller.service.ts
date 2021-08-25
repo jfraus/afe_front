@@ -19,4 +19,8 @@ export class DistributionControllerService {
   post(distributionCenter: DistributionCenter){
     return this.http.post<any>(`${environment.apiUrl}distribution`, distributionCenter).pipe(); 
   }
+
+  put(distributionCenter: DistributionCenter){
+    return this.http.put<any>(`${environment.apiUrl}distribution`, distributionCenter).pipe(); 
+  }
 }

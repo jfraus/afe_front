@@ -62,8 +62,9 @@
 <div *ngIf="displayAddEdit">
   <app-add-edit-distribution
     (close)="closeAddEdit()" 
-    (display)="displayAddEdit"
-    [distribution]="distribution"
+    [display]="displayAddEdit"
+    [distribution]="distributionCenter"
+    [countryItems]="countryItems"
   >
   </app-add-edit-distribution>
 </div>

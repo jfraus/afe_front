@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { DistributionCenter} from 'src/app/models/distributionCenter.model';
 import { DistributionControllerService } from 'src/app/services/distribution-controller.service'
-import { MessageService } from "primeng/api";
+import { MessageService, SelectItem } from "primeng/api";
+import { CountryControllerService } from 'src/app/services/country-controller.service';
 
 @Component({
   selector: 'app-distribution-center',
   templateUrl: './distribution-center.component.html',
   styleUrls: ['./distribution-center.component.css'],
-  providers:[DistributionControllerService]
+  providers:[DistributionControllerService, CountryControllerService]
 })
 export class DistributionCenterComponent implements OnInit {
 
@@ -15,8 +16,11 @@ export class DistributionCenterComponent implements OnInit {
   loadingDistribution:boolean = false;
   distributions: DistributionCenter[] =[];
   displayAddEdit: boolean = false;
+  distributionCenter: DistributionCenter;
+  countryItems: SelectItem[];
 
-  constructor(private distributionControllerService :DistributionControllerService, private messageService :MessageService) { }
+  constructor(private distributionControllerService :DistributionControllerService, 
+             private messageService :MessageService, private countryService: CountryControllerService,) { }
 
   getAllDistribution(): void {
     this.loadingDistribution = true;
@@ -36,23 +40,37 @@ export class DistributionCenterComponent implements OnInit {
     this.cols = [
       {field: 'dealerNumber', header: 'No de Dealer'},
       {field: 'dealerName', header: 'Nombre del Dealer'},
-      {field: 'country', header: 'País'},
+      {field: 'countryName', header: 'País'},
       {field: 'distributionCode', header: 'Código de Distribución'},
       {field: 'port', header: 'Puerto'},
       {field: 'portCode', header: 'Código de Puerto'}
     ]
     this.getAllDistribution();
+    this.countrySelect();
   }
 
-  updateDistribution(){
-
-  }
-
-  addUpdate() {
-    console.log('clic');
-    
+  updateDistribution(distribution: DistributionCenter){
+    this.distributionCenter = distribution;
     this.displayAddEdit = true;
   }
 
+  addUpdate() {
+    this.displayAddEdit = true;
+  }
 
+  closeAddEdit() {
+    this.distributions = [];
+    this.displayAddEdit = false;
+    this.distributionCenter = null;
+    setTimeout(() => {this.getAllDistribution();}, 1000);
+    
+  }
+
+  countrySelect() {
+    this.countryService.get().subscribe(data => {
+      this.countryItems = data.map(r => (       
+        { label: r.name, value: r.countryCode}
+      ));
+    });
+  }
 }
