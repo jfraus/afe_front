@@ -124,7 +124,7 @@ import { InvoiceBuqueComponent } from './components/invoice/invoice-buque/invoic
 import { InvoiceReportComponent } from './components/invoice/invoice-report/invoice-report.component';
 import { DistributionCenterComponent } from './components/distribution-center/distribution-center.component';
 import { AddEditDistributionComponent } from './components/distribution-center/add-edit-distribution/add-edit-distribution.component';
-
+import { PortCatalogComponent } from './components/port-catalog/port-catalog.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -243,6 +243,7 @@ const sharedComponents = [
         InvoiceBuqueComponent,
         InvoiceReportComponent,
         DistributionCenterComponent,
+        PortCatalogComponent,
         AddEditDistributionComponent,
         ...sharedComponents,
     ],
