@@ -11,8 +11,8 @@ export class InvoiceDetailController {
 
     constructor(private http: HttpClient) { }
 
-    getVines(platform: string, client: string): Observable<InvoiceDetail[]> {
-        return this.http.get<InvoiceDetail[]>(`${environment.apiUrl}invoice-detail/platform-detail/?platform=${platform}&&client=${client}`).pipe();
+    getVines(platform: string, client: string, destino: string): Observable<InvoiceDetail[]> {
+        return this.http.get<InvoiceDetail[]>(`${environment.apiUrl}invoice-detail/platform-detail/?platform=${platform}&&client=${client}&&destino=${destino}`).pipe();
     }
 
     getNumInvoice(type: string): Observable<InvoiceHeader> {
