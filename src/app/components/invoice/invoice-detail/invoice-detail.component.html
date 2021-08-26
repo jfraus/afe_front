@@ -72,6 +72,7 @@
 
 <div class="card">
   <div class="card-title">Cotizaciones</div>
+  <p-messages [(value)]="msgs" [enableService]="true"></p-messages>
   <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="invoiceDetail" [loading]="loadingInvoice"
     sortMode="multiple" [style]="{ 'margin-bottom': '20px' }" [responsive]="true" [rowHover]="true" [paginator]="true"
     [responsive]="true" [rowsPerPageOptions]="[10, 20, 30]" [autoLayout]="true" [rows]="20" [pageLinks]="20" #dt>

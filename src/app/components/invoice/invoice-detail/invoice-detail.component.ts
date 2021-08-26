@@ -5,6 +5,7 @@ import { InvoiceHeader } from 'src/app/models/invoice-header.model';
 import { InvoiceDetailController } from 'src/app/services/invoice-detail-controller.service';
 import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { MessageService } from 'primeng/api';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -23,6 +24,8 @@ export class InvoiceDetailComponent implements OnInit {
   disabledGenerateInvoice: boolean = false;
   cols = [];
   invoiceNumber:string;
+  msgs = [];
+  purchageOrderMsg = [];
 
   constructor(private formBuilder: FormBuilder,
               private invoiceDetailController: InvoiceDetailController,
@@ -41,7 +44,7 @@ export class InvoiceDetailComponent implements OnInit {
       { field: 'purchaseOrder', header: 'Orden de Compra' }
     ];
     this.generateNumInvoice(this.invoiceHeader.typeShipment);   
-    this.searchVinInvoice(this.invoiceHeader.typeShipment, this.invoiceHeader.client.name);
+    this.searchVinInvoice(this.invoiceHeader.typeShipment, this.invoiceHeader.client.name, this.invoiceHeader.destino);
     this.formGroup = this.formBuilder.group({
       invoice: [{value: this.numInvoice, disabled: true}],
       platform: [{value: this.invoiceHeader.typeShipment === null ? '' : this.invoiceHeader.typeShipment, disabled: true}],
@@ -56,13 +59,25 @@ export class InvoiceDetailComponent implements OnInit {
   }
 
 
-  searchVinInvoice(platform: string, client: string) {
-    this.disabledGenerateInvoice = true;
-    this.invoiceDetailController.getVines(platform, client).subscribe(data => {
+  searchVinInvoice(platform: string, client: string, destino: string) {
+    this.loadingInvoice = true;
+    this.invoiceDetailController.getVines(platform, client, destino).subscribe(data => {
       if(data !== null) {
-        this.invoiceDetail = data;        
+        this.invoiceDetail = data; 
         this.formGroup.get('seals').setValue(this.invoiceDetail[0].seals == null? '' : this.invoiceDetail[0].seals);
-        this.disabledGenerateInvoice = false;
+        this.purchageOrderMsg.push("No se puede generar la factura por que las siguientes unidades no tienen Orden de Compra VINS:");
+        let showValidation = false;
+        this.invoiceDetail.forEach(element => {
+          if (isNullOrUndefined(element.purchaseOrder) || element.purchaseOrder === "") {
+            showValidation = true;
+            this.purchageOrderMsg.push(" " + element.vin);
+            this.disabledGenerateInvoice = true;
+          }
+        });
+        this.loadingInvoice = false;
+        if (showValidation) {
+          this.msgs.push({ severity: 'warn', summary: 'Información: ', detail: this.purchageOrderMsg });
+        }
       }
     });
   }

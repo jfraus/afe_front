@@ -6,6 +6,7 @@ import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { BuqueDetails } from 'src/app/models/buqueDetails.model';
 import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-invoice-detail-buque',
@@ -26,12 +27,9 @@ export class InvoiceDetailBuqueComponent implements OnInit {
   numInvoice: string;
   canInvoice = false;
   msgs = [];
-  quoteDate = [];
   purchageOrderMsg = [];
   visibleBuqueDetails: boolean = true;    
   invoiceNumber:string;
-  
-
 
   constructor(
     private formBuilder: FormBuilder,    
@@ -77,11 +75,10 @@ export class InvoiceDetailBuqueComponent implements OnInit {
     this.invoiceDetailController.getInvoiceBuqueDetail(buque, client).subscribe(data => {
       this.invoiceBuqueDetails = data;
       this.purchageOrderMsg.push("No se puede generar la factura por que las siguientes unidades no tienen Orden de Compra VINS:");
-      this.quoteDate.push("No se puede generar factura por que no tienen facturas vigentes para los VINS:");   
       let showValidation = false;
       this.invoiceBuqueDetails.forEach(element => {       
         this.canInvoice = true;
-        if ((element.purchaseOrder === undefined || element.purchaseOrder == null || element.purchaseOrder === "")) {
+        if (isNullOrUndefined(element.purchaseOrder) || element.purchaseOrder === "") {
           showValidation = true;
           this.purchageOrderMsg.push(" " + element.vin);
           this.canInvoice = false;
