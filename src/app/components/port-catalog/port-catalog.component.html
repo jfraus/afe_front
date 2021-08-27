@@ -60,3 +60,12 @@
 
 
 </div>
+
+<div *ngIf="addUpdatePort">
+  <app-port-add-update
+  (close)="closeAddUpdate()"
+  [disabled]="addUpdatePort"
+  [port]="port"
+  >
+  </app-port-add-update>
+</div>

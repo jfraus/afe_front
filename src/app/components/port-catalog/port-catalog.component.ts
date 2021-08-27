@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { port } from 'src/app/models/port.model'
+import { Port } from 'src/app/models/port.model'
 
 @Component({
   selector: 'app-port-catalog',
@@ -10,7 +10,9 @@ export class PortCatalogComponent implements OnInit {
 
   cols = [];
   loadingPort:boolean = false;
-  ports: port[] =[];
+  ports: Port[] =[];
+  addUpdatePort: boolean = false;
+  port: Port;
 
   constructor() { }
 
@@ -22,12 +24,17 @@ export class PortCatalogComponent implements OnInit {
     ]
   }
 
-  updatePort(port: port){
-
+  updatePort(port: Port){
+    this.port = port;
+    this.addUpdatePort = true;
   }
 
   addUpdate() {
+    this.addUpdatePort = true;
+  }
 
+  closeAddUpdate() {
+    this.addUpdatePort = false;
   }
 
 }
