@@ -5,21 +5,22 @@
               <div class="ui-g-12 ui-lg-4">
                   <span class="md-inputfield"  >
                     <input type="text" formControlName="portCode" pInputText>
-                    <label>Código de Distribución</label>
+                    <label>Código de Puerto</label>
                       <validations-input-component [formGroup]="addUpdatePort" formInputName="portCode" [validation_messages]="validations"></validations-input-component>
                   </span>
               </div>
               <div class="ui-g-12 ui-lg-4">
                 <span class="md-inputfield"  >
                   <input type="text" formControlName="portDescription" pInputText>
-                  <label>Código de País</label>
-                    <validations-input-component [formGroup]="addUpdatePort" formInputName="portDescription" [validation_messages]="validations"></validations-input-component>
+                  <label>Puerto</label>
+                  <validations-input-component [formGroup]="addUpdatePort" formInputName="portDescription" [validation_messages]="validations"></validations-input-component>
                 </span>
               </div>
               <div class="ui-g-12 ui-lg-4">
                 <span class="md-inputfield"  >
-                  <input type="text" formControlName="countryName" pInputText>
-                  <label>Puerto</label>
+                  <p-dropdown formControlName="countryName" [options]="country" [filter]="true" 
+                  [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                  <label>País*</label>
                   <validations-input-component [formGroup]="addUpdatePort" formInputName="countryName" [validation_messages]="validations"></validations-input-component>
                 </span>
               </div>

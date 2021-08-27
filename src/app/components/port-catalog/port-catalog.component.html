@@ -64,8 +64,9 @@
 <div *ngIf="addUpdatePort">
   <app-port-add-update
   (close)="closeAddUpdate()"
-  [disabled]="addUpdatePort"
+  [display]="addUpdatePort"
   [port]="port"
+  [countryItms]="country"
   >
   </app-port-add-update>
 </div>
