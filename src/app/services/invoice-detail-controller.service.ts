@@ -19,7 +19,7 @@ export class InvoiceDetailController {
         return this.http.get<InvoiceHeader>(`${environment.apiUrl}invoice-detail/header/?type=${type}`).pipe();
     }
     
-    getInvoiceBuqueDetail(buque: string, client: string): Observable<BuqueDetails[]>{
-        return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice-detail/buque-detail/?buque=${buque}&&client=${client}`).pipe();
+    getInvoiceBuqueDetail(buque: string, client: string, destino: string): Observable<BuqueDetails[]>{
+        return this.http.get<BuqueDetails[]>(`${environment.apiUrl}invoice-detail/buque-detail/?buque=${buque}&&client=${client}&&destino=${destino}`).pipe();
       }
 }

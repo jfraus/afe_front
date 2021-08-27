@@ -60,7 +60,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
       totalCost: [{ value: this.invoiceHeaderBuque.costTotal === null ? '' : Number(this.invoiceHeaderBuque.costTotal), disabled: true }]
     });
     this.generateNumInvoice();
-    this.getInvoiceBuqueDetails(this.invoiceHeaderBuque.typeShipment, this.invoiceHeaderBuque.client.name);
+    this.getInvoiceBuqueDetails(this.invoiceHeaderBuque.typeShipment, this.invoiceHeaderBuque.client.name, this.invoiceHeaderBuque.destino);
   }
 
   generateNumInvoice() {
@@ -70,9 +70,9 @@ export class InvoiceDetailBuqueComponent implements OnInit {
     });
   }
 
-  getInvoiceBuqueDetails(buque: string, client: string) {
+  getInvoiceBuqueDetails(buque: string, client: string, destino: string) {
     this.loadingInvoice = true;
-    this.invoiceDetailController.getInvoiceBuqueDetail(buque, client).subscribe(data => {
+    this.invoiceDetailController.getInvoiceBuqueDetail(buque, client, destino).subscribe(data => {
       this.invoiceBuqueDetails = data;
       this.purchageOrderMsg.push("No se puede generar la factura por que las siguientes unidades no tienen Orden de Compra VINS:");
       let showValidation = false;
