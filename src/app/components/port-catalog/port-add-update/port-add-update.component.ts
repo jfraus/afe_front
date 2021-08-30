@@ -53,23 +53,26 @@ export class PortAddUpdateComponent implements OnInit {
   
   add() {
     if(this.addUpdatePort.valid) {
-      let country = this.country.find(data => data.value == this.addUpdatePort.get('countryName').value);
+      let  country = this.country.find(data => data.value == this.addUpdatePort.get('countryName').value);
       this.addUpdatePort.get('countryName').setValue(country.label);
-      if(isNullOrUndefined(this.port)) {
-        this.portService.postPort(this.addUpdatePort.getRawValue()).subscribe(data => {
-          this.messageServices.add({key: 'error', severity:'success', summary: 'Agregado con éxito'});
-          this.closed();
-        }) 
-      } else {
-        this.portService.putPort(this.addUpdatePort.getRawValue()).subscribe(data => {
-          this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con éxito'});
-          this.closed();
-        });
-      }
+      setTimeout(() => {
+        if(isNullOrUndefined(this.port)) {
+          this.portService.postPort(this.addUpdatePort.getRawValue()).subscribe(data => {
+            this.messageServices.add({key: 'error', severity:'success', summary: 'Agregado con éxito'});
+            this.closed();
+          }) 
+        } else {
+          this.portService.putPort(this.addUpdatePort.getRawValue()).subscribe(data => {
+            this.messageServices.add({key: 'error', severity:'success', summary: 'Actualizado con éxito'});
+            this.closed();
+          });
+        }
+      }, 600);
     }
   }
 
   closed() {
+    this.addUpdatePort.reset();
     this.close.emit(true);
   }
 }
