@@ -22,6 +22,7 @@ import { InvoiceBuqueComponent } from './components/invoice/invoice-buque/invoic
 import { InvoiceReportComponent } from './components/invoice/invoice-report/invoice-report.component';
 import { DistributionCenterComponent } from './components/distribution-center/distribution-center.component';
 import { PortCatalogComponent } from './components/port-catalog/port-catalog.component';
+import { Hj2CatalogComponent } from './components/hj2-catalog/hj2-catalog.component';
 
 
 export const routes: Routes = [
@@ -45,7 +46,8 @@ export const routes: Routes = [
         {path: 'invoice-buque', component: InvoiceBuqueComponent},
         {path: 'invoice-report', component: InvoiceReportComponent},
         {path: 'distribution-center', component: DistributionCenterComponent},
-        {path: 'port', component: PortCatalogComponent}
+        {path: 'port', component: PortCatalogComponent},
+        {path: 'hj2', component: Hj2CatalogComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
