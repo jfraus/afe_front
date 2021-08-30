@@ -49,6 +49,7 @@ export class PortCatalogComponent implements OnInit {
   }
 
   closeAddUpdate() {
+    this.port = null;
     this.addUpdatePort = false;
     this.getPorts();
   }
