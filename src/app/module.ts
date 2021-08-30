@@ -126,6 +126,7 @@ import { DistributionCenterComponent } from './components/distribution-center/di
 import { AddEditDistributionComponent } from './components/distribution-center/add-edit-distribution/add-edit-distribution.component';
 import { PortCatalogComponent } from './components/port-catalog/port-catalog.component';
 import { PortAddUpdateComponent } from './components/port-catalog/port-add-update/port-add-update.component';
+import { Hj2CatalogComponent } from './components/hj2-catalog/hj2-catalog.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -247,6 +248,7 @@ const sharedComponents = [
         PortCatalogComponent,
         AddEditDistributionComponent,
         PortAddUpdateComponent,
+        Hj2CatalogComponent,
         ...sharedComponents,
     ],
     providers: [
