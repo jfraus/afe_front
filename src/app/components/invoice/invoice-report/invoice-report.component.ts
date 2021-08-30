@@ -39,7 +39,7 @@ export class InvoiceReportComponent implements OnInit {
       { field: 'purchaseOrder', header: 'Orden de Compra' },
       { field: 'contractNumber', header: 'Contrato de Venta' },
       { field: 'client', header: 'Cliente' },
-      { field: 'InvoiceNumber', header: 'No. Factura' },
+      { field: 'invoiceNumber', header: 'No. Factura' },
       { field: 'invoiceDate', header: 'Fecha Factura' },
       { field: 'price', header: 'Precio' },
       { field: 'travelNumber', header: 'No. de Viaje' },
