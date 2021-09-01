@@ -1,5 +1,4 @@
 export interface Hj2Invoice{
-
     invoice: string;
     platform: string;
     travelNumber: Number;
