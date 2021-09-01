@@ -31,18 +31,12 @@ export class Hj2InvoiceComponent implements OnInit {
   }
 
   loading(){
-    this.invoices = [{
-      invoice: "AHCL47991",
-      platform: "ATW 800065",
-      travelNumber: 2222,
-      typeModel: "KA",
-      invoiceDate: "2021-06-29",
-      hj2: "Si",
-      idd1125: "Si"
-    }];
-
+    this.loadingInvoice = true;
+    this.hj2Service.getPaymentMethods().subscribe(data =>{
+      this.invoices = data;
+      this.loadingInvoice = false;
+    });
   }
-
 
   downloadInvoice(invoices: Hj2Invoice){
 
