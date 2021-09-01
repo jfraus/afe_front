@@ -13,5 +13,7 @@ export interface InvoiceHeader{
     canInvoice: boolean,
     invoice: string,
     quoteId: number,
-    duplicate: string
+    duplicate: string,
+    typeShipmentId: number,
+    cityId: number
 }

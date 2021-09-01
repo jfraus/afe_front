@@ -21,6 +21,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
   invoiceDetail: [];
   invoiceBuqueDetails: BuqueDetails[] = [];
   cols = [];
+  cityId: number;
   @Input() invoiceHeaderBuque: Buque;
   @Output() close = new EventEmitter();
   @Input() display: boolean;
@@ -60,7 +61,8 @@ export class InvoiceDetailBuqueComponent implements OnInit {
       totalCost: [{ value: this.invoiceHeaderBuque.costTotal === null ? '' : Number(this.invoiceHeaderBuque.costTotal), disabled: true }]
     });
     this.generateNumInvoice();
-    this.getInvoiceBuqueDetails(this.invoiceHeaderBuque.typeShipment, this.invoiceHeaderBuque.client.name, this.invoiceHeaderBuque.destino);
+    this.cityId = this.invoiceHeaderBuque.cityId;
+    this.getInvoiceBuqueDetails(this.invoiceHeaderBuque.typeShipment, this.invoiceHeaderBuque.client.id, this.invoiceHeaderBuque.cityId);
   }
 
   generateNumInvoice() {
@@ -70,7 +72,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
     });
   }
 
-  getInvoiceBuqueDetails(buque: string, client: string, destino: string) {
+  getInvoiceBuqueDetails(buque: string, client: number, destino: number) {
     this.loadingInvoice = true;
     this.invoiceDetailController.getInvoiceBuqueDetail(buque, client, destino).subscribe(data => {
       this.invoiceBuqueDetails = data;
@@ -105,7 +107,8 @@ export class InvoiceDetailBuqueComponent implements OnInit {
         totalUnits:this.invoiceHeaderBuque.totalUnits,
         totalPrice:this.invoiceHeaderBuque.costTotal,
         shipment:this.invoiceHeaderBuque.typeShipment,
-        modelType:this.invoiceHeaderBuque.modelType
+        modelType:this.invoiceHeaderBuque.modelType,
+        destino: this.cityId
       };
       this.invoiceService.saveInvoices(createInvoice).subscribe((response) =>{        
         this.messageServices.add({ key: 'error', severity: 'success', summary: 'Factura '+this.invoiceNumber+' generada con éxito' });

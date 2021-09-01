@@ -9,5 +9,6 @@ export interface Buque {
     destino: string, 
     costTotal: string,
     quoteId: number,
-    quoteInvalid: string
+    quoteInvalid: string,
+    cityId: number
 }
