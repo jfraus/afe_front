@@ -12,4 +12,7 @@ export class Hj2Service {
     return this.http.get<Hj2Invoice[]>(`${environment.apiUrl}hj2/by-invoice`).pipe();
   }
 
+  getHj2ByTravel(){
+    return this.http.get<Hj2Invoice[]>(`${environment.apiUrl}hj2/by-travel`).pipe();
+  }
 }
