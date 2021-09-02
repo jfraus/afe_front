@@ -43,7 +43,8 @@ export class DistributionCenterComponent implements OnInit {
       {field: 'countryName', header: 'País'},
       {field: 'distributionCode', header: 'Código de Distribución'},
       {field: 'port', header: 'Puerto'},
-      {field: 'portCode', header: 'Código de Puerto'}
+      {field: 'portCode', header: 'Código de Puerto'},
+      {field: 'embarkPort', header: 'Puerto Embarque'}
     ]
     this.getAllDistribution();
     this.countrySelect();
@@ -51,10 +52,12 @@ export class DistributionCenterComponent implements OnInit {
 
   updateDistribution(distribution: DistributionCenter){
     this.distributionCenter = distribution;
-    this.displayAddEdit = true;
+    this.loadingDistribution =true;
+    setTimeout(() => {this.displayAddEdit = true}, 1000);
+    this.loadingDistribution =false;
   }
 
-  addUpdate() {
+  addUpdate() {    
     this.displayAddEdit = true;
   }
 
