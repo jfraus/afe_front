@@ -18,6 +18,8 @@ export class InvoiceDetailComponent implements OnInit {
   loadingInvoice: boolean = false;
   invoiceDetail: InvoiceDetail[];
   numInvoice: string;
+  typeShipmentId: number;
+  destino: number;
   @Input() invoiceHeader: InvoiceHeader;
   @Output() close = new EventEmitter();
   @Input() display: boolean;
@@ -44,7 +46,10 @@ export class InvoiceDetailComponent implements OnInit {
       { field: 'purchaseOrder', header: 'Orden de Compra' }
     ];
     this.generateNumInvoice(this.invoiceHeader.typeShipment);   
-    this.searchVinInvoice(this.invoiceHeader.typeShipment, this.invoiceHeader.client.name, this.invoiceHeader.destino);
+
+    this.typeShipmentId = this.invoiceHeader.typeShipmentId;
+    this.destino =  this.invoiceHeader.cityId;
+    this.searchVinInvoice(this.invoiceHeader.typeShipmentId, this.invoiceHeader.client.id, this.invoiceHeader.cityId);
     this.formGroup = this.formBuilder.group({
       invoice: [{value: this.numInvoice, disabled: true}],
       platform: [{value: this.invoiceHeader.typeShipment === null ? '' : this.invoiceHeader.typeShipment, disabled: true}],
@@ -59,12 +64,12 @@ export class InvoiceDetailComponent implements OnInit {
   }
 
 
-  searchVinInvoice(platform: string, client: string, destino: string) {
+  searchVinInvoice(platform: number, client: number, destino: number) {
     this.loadingInvoice = true;
     this.invoiceDetailController.getVines(platform, client, destino).subscribe(data => {
-      if(data !== null) {
+      if(data !== null) {        
         this.invoiceDetail = data; 
-        this.formGroup.get('seals').setValue(this.invoiceDetail[0].seals == null? '' : this.invoiceDetail[0].seals);
+        this.formGroup.get('seals').setValue(isNullOrUndefined(this.invoiceDetail[0].seals) ? '' : this.invoiceDetail[0].seals);
         this.purchageOrderMsg.push("No se puede generar la factura por que las siguientes unidades no tienen Orden de Compra VINS:");
         let showValidation = false;
         this.invoiceDetail.forEach(element => {
@@ -91,7 +96,9 @@ export class InvoiceDetailComponent implements OnInit {
         totalUnits:this.invoiceHeader.totalUnits,
         totalPrice:this.invoiceHeader.costTotal,
         shipment:this.invoiceHeader.typeShipment,
-        modelType:this.invoiceHeader.modelType
+        modelType:this.invoiceHeader.modelType,
+        typeShipmentId: this.typeShipmentId,
+        destino: this.destino
       };
       this.disabledGenerateInvoice = true;
       this.invoiceService.saveInvoices(createInvoice).subscribe((response) => {
