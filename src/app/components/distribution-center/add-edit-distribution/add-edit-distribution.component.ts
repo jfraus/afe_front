@@ -6,6 +6,7 @@ import { CountryControllerService } from 'src/app/services/country-controller.se
 import { DealerControllerService } from 'src/app/services/dealer-controller.service';
 import { DistributionControllerService } from 'src/app/services/distribution-controller.service';
 import { isNullOrUndefined } from 'util';
+import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 
 @Component({
   selector: 'app-add-edit-distribution',
@@ -21,33 +22,81 @@ export class AddEditDistributionComponent implements OnInit {
   @Input() display: boolean;
   country: SelectItem[] = [];
   dealerNumber: SelectItem[] = [];
+  embarkPort: SelectItem[] = [];
+  validations = [];
+  title:string;
+  titleButton:string;
 
   constructor(private formBuilder: FormBuilder, private countryService: CountryControllerService,
               private dealerService: DealerControllerService, private distributionService: DistributionControllerService,
-              private messageServices: MessageService) { }
+              private messageServices: MessageService,
+              private validationMessages: AppValidationMessagesService) { }
               
               
-  ngOnInit() {
+  ngOnInit() {    
     this.country = this.countryItems;
+    this.embarkPortSelect();
+    this.formValidations();
     this.addDistibution = this.formBuilder.group({
       id:[''],
       countryName: ['', [Validators.required]],
       dealerNumber: ['', [Validators.required]],
-      distributionCode: ['', [Validators.required]],
+      distributionCode: ['', [Validators.required, Validators.maxLength(3)]],
       codeCountry: [{value: '', disabled: true}, [Validators.required]],
       dealerName: [{value: '', disabled: true}, [Validators.required]],
-      port: ['', [Validators.required]],
-      portCode: ['', [Validators.required]]
+      port: ['', [Validators.required, Validators.maxLength(50)]],
+      portCode: ['', [Validators.required, Validators.maxLength(10)]],
+      embarkPort: ['', [Validators.required]]
     });
     
     if(!isNullOrUndefined(this.distribution)) {
-      this.addDistibution.patchValue(this.distribution);
-        new Promise((resolved) => {
+      this.title="Editar Centro de Distribución"
+      this.titleButton ="Guardar"
+      this.addDistibution.patchValue(this.distribution);      
+      new Promise((resolved) => {
         let country = this.country.find(data => data.value == this.distribution.codeCountry);
         this.addDistibution.get('countryName').setValue(country.value);
         resolved(true);
       });
+      this.addDistibution.get('embarkPort').setValue(this.distribution.embarkPort);
       this.findDealerByCountry();
+    }else{
+      this.title="Agregar Centro de Distribución"
+      this.titleButton ="Agregar"
+    }
+  }
+
+  embarkPortSelect(){
+    this.embarkPort =[
+     { label: 'Vrz',
+      value: 'Vrz'
+      } ,
+      { label: 'Lzc',
+      value: 'Lzc'
+      }
+  ];
+  }
+
+  formValidations():void {
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '3';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('distributionCode'));
+
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '50';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('port'));
+
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '10';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('portCode'));
+  }
+
+  selectedChange(e) {
+    if (e.value) {
+      this.addDistibution.get('dealerNumber').reset();
+      this.addDistibution.get('dealerName').reset();
+    }else{
+      this.addDistibution.patchValue(this.distribution);      
     }
   }
 
