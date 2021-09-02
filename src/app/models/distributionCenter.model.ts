@@ -5,5 +5,6 @@ export interface DistributionCenter{
     distributionCode: number, 
     port: string, 
     portNumber: string,
-    codeCountry: string
+    codeCountry: string,
+    embarkPort: string
 }
