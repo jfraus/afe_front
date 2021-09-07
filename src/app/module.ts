@@ -128,6 +128,7 @@ import { PortCatalogComponent } from './components/port-catalog/port-catalog.com
 import { PortAddUpdateComponent } from './components/port-catalog/port-add-update/port-add-update.component';
 import { Hj2CatalogComponent } from './components/hj2-catalog/hj2-catalog.component';
 import { Hj2InvoiceComponent } from './components/hj2-catalog/hj2-invoice/hj2-invoice.component';
+import { Hj2TravelComponent } from './components/hj2-catalog/hj2-travel/hj2-travel.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -251,6 +252,7 @@ const sharedComponents = [
         PortAddUpdateComponent,
         Hj2CatalogComponent,
         Hj2InvoiceComponent,
+        Hj2TravelComponent,
         ...sharedComponents,
     ],
     providers: [
