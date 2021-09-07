@@ -16,9 +16,9 @@ export class Hj2TravelComponent implements OnInit {
 
   ngOnInit() {
     this.cols = [
-      {field: 'invoice', header: 'No de Viaje'},
-      {field: 'platform', header: 'HJ2'},
-      {field: 'travelNumber', header: 'IDD1125'}
+      {field: 'travelNumber', header: 'No. de Viaje'},
+      {field: 'hj2', header: 'HJ2'},
+      {field: 'idd1125', header: 'IDD1125'}
     ];
     this.getInvoicesByTravel();
   }
@@ -26,11 +26,8 @@ export class Hj2TravelComponent implements OnInit {
   getInvoicesByTravel() {
     this.loadingInvoice = true;
     this.hj2Service.getHj2ByTravel().subscribe(data => {
-      console.log(JSON.stringify(data));
-      
       this.invoices = data;
       this.loadingInvoice = false;
     });
   }
-
 }
