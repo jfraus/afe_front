@@ -20,6 +20,8 @@ export class PortAddUpdateComponent implements OnInit {
   @Input() countryItms: SelectItem[];
   country: SelectItem[] = [];
   validations = [];
+  title :String;
+  buttonTitle: String;
   
   constructor(private formBuilder: FormBuilder, private portService: PortControllerService,
               private messageServices: MessageService, private validationMessages: AppValidationMessagesService) { }
@@ -45,9 +47,14 @@ export class PortAddUpdateComponent implements OnInit {
     this.validations.push(this.validationMessages.getValidationMessagesWithName('countryName'));
 
     if(!isNullOrUndefined(this.port)) {
+      this.title="Editar Puerto";
+      this.buttonTitle ="Guardar"
       this.addUpdatePort.patchValue(this.port);
       let country = this.country.find(data => data.label === this.port.countryName);
       this.addUpdatePort.get('countryName').setValue(country.value);
+    }else{
+      this.title="Agregar Puerto";
+      this.buttonTitle ="Agregar"
     }
   }
   
