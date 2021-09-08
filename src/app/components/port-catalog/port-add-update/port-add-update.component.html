@@ -1,4 +1,4 @@
-<p-dialog header="Agregar Puerto" (onHide)="closed()" [(visible)]="display">
+<p-dialog header={{title}} (onHide)="closed()" [(visible)]="display">
   <div class="ui-g ui-fluid">
       <form [(formGroup)]="addUpdatePort" class="ui-g-12">
           <div class="ui-g form-group">
@@ -28,7 +28,7 @@
       </form>
   </div>
   <p-footer>
-      <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Agregar" [disabled]="!addUpdatePort.valid"
+      <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label={{buttonTitle}} [disabled]="!addUpdatePort.valid"
       (click)="add()"></button>
       <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
       (click)="closed()"></button>
