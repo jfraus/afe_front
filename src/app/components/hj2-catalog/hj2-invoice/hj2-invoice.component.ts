@@ -39,11 +39,16 @@ export class Hj2InvoiceComponent implements OnInit {
   }
 
   downloadInvoice(invoices: Hj2Invoice){
+    this.hj2Service.createHj2ByInvoice(invoices.invoice, false).subscribe(data => {
+
+    });
 
   }
 
   sendInvoice(invoices: Hj2Invoice){
-
+this.hj2Service.createHj2ByInvoice(invoices.invoice, true).subscribe(data => {
+      
+    });
   }
 
 }
