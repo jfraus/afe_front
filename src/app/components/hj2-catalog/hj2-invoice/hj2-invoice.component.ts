@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hj2Invoice } from 'src/app/models/hj2Invoice.model';
 import { Hj2Service } from 'src/app/services/hj2-catalog-controller.service';
-
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-hj2-invoice',
@@ -40,7 +40,7 @@ export class Hj2InvoiceComponent implements OnInit {
 
   downloadInvoice(invoices: Hj2Invoice){
     this.hj2Service.createHj2ByInvoice(invoices.invoice, false).subscribe(data => {
-
+      saveAs(data, 'file.txt');
     });
 
   }
