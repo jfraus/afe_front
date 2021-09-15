@@ -129,6 +129,7 @@ import { PortAddUpdateComponent } from './components/port-catalog/port-add-updat
 import { Hj2CatalogComponent } from './components/hj2-catalog/hj2-catalog.component';
 import { Hj2InvoiceComponent } from './components/hj2-catalog/hj2-invoice/hj2-invoice.component';
 import { Hj2TravelComponent } from './components/hj2-catalog/hj2-travel/hj2-travel.component';
+import { PeoplesoftCatalogComponent } from './components/peoplesoft-catalog/peoplesoft-catalog.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -253,6 +254,7 @@ const sharedComponents = [
         Hj2CatalogComponent,
         Hj2InvoiceComponent,
         Hj2TravelComponent,
+        PeoplesoftCatalogComponent,
         ...sharedComponents,
     ],
     providers: [

@@ -23,6 +23,7 @@ import { InvoiceReportComponent } from './components/invoice/invoice-report/invo
 import { DistributionCenterComponent } from './components/distribution-center/distribution-center.component';
 import { PortCatalogComponent } from './components/port-catalog/port-catalog.component';
 import { Hj2CatalogComponent } from './components/hj2-catalog/hj2-catalog.component';
+import { PeoplesoftCatalogComponent } from './components/peoplesoft-catalog/peoplesoft-catalog.component';
 
 
 export const routes: Routes = [
@@ -47,7 +48,8 @@ export const routes: Routes = [
         {path: 'invoice-report', component: InvoiceReportComponent},
         {path: 'distribution-center', component: DistributionCenterComponent},
         {path: 'port', component: PortCatalogComponent},
-        {path: 'hj2', component: Hj2CatalogComponent}
+        {path: 'hj2', component: Hj2CatalogComponent},
+        {path: 'peoplesoft', component: PeoplesoftCatalogComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
