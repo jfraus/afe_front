@@ -20,4 +20,9 @@ export class Hj2Service {
   getHj2ByTravel(){
     return this.http.get<Hj2Invoice[]>(`${environment.apiUrl}hj2/by-travel`).pipe();
   }
+
+  getSendTravel(travel: Number, sendFile: Boolean) : Observable<Blob> {
+    return this.http.get(`${environment.apiUrl}hj2/create-hj2-by-travel?travelNumber=${travel}&sendFile=${sendFile}`,
+    { responseType: 'blob'});
+  }
 }
