@@ -16,6 +16,18 @@ export class FormatDate {
         return date.getMonth() < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1;
     }
 
+    getDay(date: Date){
+        return date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+    }
+
+    getMinutes(date: Date) {
+        return date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+    }
+
+    getSeconds(date: Date) {
+        return date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+    }
+
     formatDateWithoutTime(date: string){
         if(date){
             return date.substring(0,10 );
@@ -30,6 +42,11 @@ export class FormatDate {
             newMonth='0'+month;
         }
         return `${date.getFullYear()}-${newMonth}-${date.getUTCDay()+1}`
+    }
+
+    formatDateToNumbers(date: Date) {
+        let dateOutput = new Date(date);
+        return `${dateOutput.getFullYear()}${this.getMonth(date)}${this.getDay(date)}${dateOutput.getHours()}${this.getMinutes(date)}${this.getSeconds(date)}`
     }
 
 }
