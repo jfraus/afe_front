@@ -96,7 +96,6 @@ export class AddEditClientComponent implements OnInit {
 
   closed() {
     this.addClientPs.reset;
-    this.clientPs = null;
     this.close.emit(true);    
   }
 }

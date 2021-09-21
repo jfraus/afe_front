@@ -49,7 +49,8 @@ export class PsClientComponent implements OnInit {
   }
 
   closeAddEdit() {
-    this.displayAddEdit = false;    
+    this.displayAddEdit = false; 
+    this.clientPs= null;
     setTimeout(() => {this.getClients()}, 2000);
   }
   
