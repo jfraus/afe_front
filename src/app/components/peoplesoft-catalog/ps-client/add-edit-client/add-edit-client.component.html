@@ -1,0 +1,52 @@
+<p-dialog header={{title}} (onHide)="closed()" [(visible)]="display">
+  <div class="ui-g ui-fluid">
+    <form [(formGroup)]="addClientPs" class="ui-g-12">
+      <div class="ui-g form-group">
+
+        <div class="ui-g-12 ui-lg-8">
+          <span class="md-inputfield">
+            <p-dropdown formControlName="nombreClient" [options]="clients" [filter]="true" [autoDisplayFirst]="false"
+              [showClear]="true" appendTo="body" (onChange)="changeClient()"></p-dropdown>
+            <label>Cliente</label>
+            <validations-input-component [formGroup]="addClientPs" formInputName="clientName"
+              [validation_messages]="validations"></validations-input-component>
+          </span>
+        </div>
+
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input type="text" formControlName="claveCliente" pInputText disabled=true>
+            <label>Clave Cliente</label>
+            <validations-input-component [formGroup]="addClientPs" formInputName="clientKey"
+              [validation_messages]="validations"></validations-input-component>
+          </span>
+        </div>
+
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input type="text" formControlName="clavePeoplesoft" pInputText>
+            <label>Clave PeopleSoft</label>
+            <validations-input-component [formGroup]="addClientPs" formInputName="peoplesoftKey"
+              [validation_messages]="validations"></validations-input-component>
+          </span>
+        </div>
+
+        <div class="ui-g-12 ui-lg-4">
+          <span class="md-inputfield">
+            <input type="text" formControlName="filial" pInputText>
+            <label>Filial</label>
+            <validations-input-component [formGroup]="addClientPs" formInputName="filial"
+              [validation_messages]="validations"></validations-input-component>
+          </span>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <p-footer>
+    <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label={{buttonTitle}}
+      [disabled]="!addClientPs.valid" (click)="add()"></button>
+    <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar"
+      (click)="closed()"></button>
+  </p-footer>
+</p-dialog>
