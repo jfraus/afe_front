@@ -51,6 +51,7 @@ export class AddEditClientComponent implements OnInit {
         resolve(true);
       });
     }else{
+      this.clientPs = null;
       this.addClientPs.reset;
       this.title="Agregar Cliente";
       this.buttonTitle="Agregar";
