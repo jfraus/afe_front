@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LocationStrategy, HashLocationStrategy, APP_BASE_HREF } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { AppRoutes } from './routes';
 import { ContractComponent } from './components/contract/contract.component';
 
@@ -133,6 +133,7 @@ import { PeoplesoftCatalogComponent } from './components/peoplesoft-catalog/peop
 import { PsClientComponent } from './components/peoplesoft-catalog/ps-client/ps-client.component';
 import { PsProductComponent } from './components/peoplesoft-catalog/ps-product/ps-product.component';
 import { ProductAddUpdateComponent } from './components/peoplesoft-catalog/ps-product/product-add-update/product-add-update.component';
+import { AddEditClientComponent } from './components/peoplesoft-catalog/ps-client/add-edit-client/add-edit-client.component';
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
 ];
@@ -260,6 +261,7 @@ const sharedComponents = [
         PsClientComponent,
         PsProductComponent,
         ProductAddUpdateComponent,
+        AddEditClientComponent,
         ...sharedComponents,
     ],
     providers: [
