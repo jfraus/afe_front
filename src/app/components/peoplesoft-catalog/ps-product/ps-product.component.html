@@ -6,15 +6,15 @@
       </a>
     </div>
   </div>
-  <p-table #dt [columns]="cols" selectionMode="single" [value]="product" [loading]="loadingProduct"
+  <p-table #dt [columns]="cols" selectionMode="single" [value]="productList" [loading]="loadingProduct"
   sortMode="single" [responsive]="true" [rowHover]="true" [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30, 40, 50]" [autoLayout]="true" [rows]="20" [pageLinks]="20" [filterDelay]="0"
-  [globalFilterFields]="['product']">
+  [globalFilterFields]="['destinationCountry']">
   <ng-template pTemplate="caption" class="p-input-icon-left">
     <div class="table-header">
       <div style="text-align: right" class="p-input-icon-left">
         <span class="p-input-icon-left">
-          Buscar por producto
+          Buscar por país destino
           <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
           <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" />
         </span>
@@ -56,4 +56,16 @@
     </tr>
   </ng-template>
 </p-table>
+</div>
+
+<div *ngIf="addUpdateProduct">
+  <app-product-add-update
+  (close)="closeAddUpdate()" 
+  [display]="addUpdateProduct" 
+  [product]="product"
+  [countryItems]="countryItems"
+  [modelItems]="modelItems"
+  [modelTypeItems]="modelTypeItems"
+  >
+  </app-product-add-update>
 </div>

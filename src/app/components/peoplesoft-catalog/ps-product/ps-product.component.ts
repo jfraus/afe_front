@@ -1,19 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import { SelectItem } from 'primeng/api';
 import { Product } from 'src/app/models/product.model';
+import { CountryControllerService } from 'src/app/services/country-controller.service';
+import { ModelControllerService } from 'src/app/services/model-controller.service';
 import { ProductPsServiceController } from 'src/app/services/product-ps-controller.service';
 
 @Component({
   selector: 'app-ps-product',
   templateUrl: './ps-product.component.html',
-  providers: [ProductPsServiceController]
+  providers: [ProductPsServiceController, CountryControllerService, ModelControllerService]
 })
 export class PsProductComponent implements OnInit {
 
   loadingProduct: boolean = false;
-  product: Product[] = [];
+  productList: Product[] = [];
   cols = [];
+  addUpdateProduct: boolean = false;
+  product: Product;
+  countryItems: SelectItem[];
+  modelTypeItems: SelectItem[];
+  modelItems: SelectItem[];
 
-  constructor(private productService : ProductPsServiceController) { }
+  constructor(private productService : ProductPsServiceController,
+              private countryService: CountryControllerService,
+              private modelService: ModelControllerService) { }
 
   ngOnInit() {
     this.cols = [
@@ -21,21 +31,62 @@ export class PsProductComponent implements OnInit {
       {field: 'model', header: 'Modelo'},
       {field: 'modelType', header: 'Tipo Modelo'},
       {field: 'productKey', header: 'Clave Producto'}
-    ]
+    ];
+    
+    this.modelTypeSelect();
+    this.countrySelect();
+    this.modelSelect();
+    this.getProducService();
+    
   }
 
   getProducService() {
+    this.loadingProduct = true;    
     this.productService.getProduct().subscribe(data => {
-      this.product = data;
+      this.productList = data;
+      this.loadingProduct = false;
+    });
+  }
+  
+  addProduct() {
+    this.addUpdateProduct = true;
+  }
+
+  editProduct(product: Product) {
+    this.addUpdateProduct = true;
+    this.product = product;
+  }
+
+  closeAddUpdate() {
+    this.getProducService();
+    this.addUpdateProduct = false;
+    this.product = null;
+  }
+
+  countrySelect() {
+    this.countryService.get().subscribe(data => {
+      this.countryItems = data.map(r => (       
+        { label: r.name, value: r.id}
+      ));
     });
   }
 
-  addProduct() {
-
+  modelSelect() {
+    this.productService.getModelPs().subscribe(data => {
+      console.log(JSON.stringify(data));
+      
+      this.modelItems = data.map(r => (       
+        { label: r.modelPs, value: r.id}
+      ));
+    });
   }
 
-  editProduct() {
-
+  modelTypeSelect() {
+    this.modelService.getModelType().subscribe(data => {
+      this.modelTypeItems = data.map(r => (    
+        { label: r.type, value: r.id}
+      ));
+    });    
   }
 
 }

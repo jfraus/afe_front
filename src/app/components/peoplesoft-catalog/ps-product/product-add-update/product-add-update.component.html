@@ -1,0 +1,45 @@
+<p-dialog header={{title}} (onHide)="closed()" [(visible)]="display">
+  <div class="ui-g ui-fluid">
+      <form [(formGroup)]="addUpdateProduct" class="ui-g-12">
+          <div class="ui-g form-group">
+            <div class="ui-g-12 ui-lg-6">
+              <span class="md-inputfield"  >
+                <p-dropdown formControlName="destinationCountry" [options]="countryItems" [filter]="true" 
+                [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                <label>País Destino*</label>
+                <validations-input-component [formGroup]="addUpdateProduct" formInputName="destinationCountry" [validation_messages]="validations"></validations-input-component>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-6">
+              <span class="md-inputfield"  >
+                <p-dropdown formControlName="model" [options]="modelItems" [filter]="true" 
+                [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                <label>Tipo Modelo*</label>
+                <validations-input-component [formGroup]="addUpdateProduct" formInputName="model" [validation_messages]="validations"></validations-input-component>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-6">
+              <span class="md-inputfield"  >
+                <p-dropdown formControlName="modelType" [options]="modelTypeItems" [filter]="true" 
+                [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                <label>Modelo*</label>
+                <validations-input-component [formGroup]="addUpdateProduct" formInputName="modelType" [validation_messages]="validations"></validations-input-component>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-6">
+                <span class="md-inputfield"  >
+                  <input type="text" formControlName="productKey" pInputText>
+                  <label>Clave Producto</label>
+                    <validations-input-component [formGroup]="addUpdateProduct" formInputName="productKey" [validation_messages]="validations"></validations-input-component>
+                </span>
+            </div>
+          </div>
+      </form>
+  </div>
+  <p-footer>
+      <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label={{buttonTitle}} [disabled]="!addUpdateProduct.valid"
+      (click)="add()"></button>
+      <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+      (click)="closed()"></button>
+  </p-footer>
+</p-dialog>
