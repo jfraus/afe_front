@@ -131,6 +131,7 @@ import { Hj2InvoiceComponent } from './components/hj2-catalog/hj2-invoice/hj2-in
 import { Hj2TravelComponent } from './components/hj2-catalog/hj2-travel/hj2-travel.component';
 import { PeoplesoftCatalogComponent } from './components/peoplesoft-catalog/peoplesoft-catalog.component';
 import { PsClientComponent } from './components/peoplesoft-catalog/ps-client/ps-client.component';
+import { PsProductComponent } from './components/peoplesoft-catalog/ps-product/ps-product.component';
 import { AddEditClientComponent } from './components/peoplesoft-catalog/ps-client/add-edit-client/add-edit-client.component';
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -257,6 +258,7 @@ const sharedComponents = [
         Hj2TravelComponent,
         PeoplesoftCatalogComponent,
         PsClientComponent,
+        PsProductComponent,
         AddEditClientComponent,
         ...sharedComponents,
     ],
