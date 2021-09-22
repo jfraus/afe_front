@@ -15,4 +15,8 @@ export class ModelControllerService {
     return this.http.put<any>(`${environment.apiUrl}models/exclud-model`,model).pipe();
   }
 
+  getModelType(){
+    return this.http.get<any>(`${environment.apiUrl}models/model-type/`).pipe();
+  }
+
 }
