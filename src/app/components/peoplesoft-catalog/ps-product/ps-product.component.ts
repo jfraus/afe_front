@@ -73,8 +73,6 @@ export class PsProductComponent implements OnInit {
 
   modelSelect() {
     this.productService.getModelPs().subscribe(data => {
-      console.log(JSON.stringify(data));
-      
       this.modelItems = data.map(r => (       
         { label: r.modelPs, value: r.id}
       ));
