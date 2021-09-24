@@ -24,6 +24,7 @@ import { DistributionCenterComponent } from './components/distribution-center/di
 import { PortCatalogComponent } from './components/port-catalog/port-catalog.component';
 import { Hj2CatalogComponent } from './components/hj2-catalog/hj2-catalog.component';
 import { PeoplesoftCatalogComponent } from './components/peoplesoft-catalog/peoplesoft-catalog.component';
+import { ModelMasterCatalogComponent } from './components/model-master-catalog/model-master-catalog.component';
 
 
 export const routes: Routes = [
@@ -49,7 +50,8 @@ export const routes: Routes = [
         {path: 'distribution-center', component: DistributionCenterComponent},
         {path: 'port', component: PortCatalogComponent},
         {path: 'hj2', component: Hj2CatalogComponent},
-        {path: 'peoplesoft', component: PeoplesoftCatalogComponent}
+        {path: 'peoplesoft', component: PeoplesoftCatalogComponent},
+        {path: 'model-master', component: ModelMasterCatalogComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
