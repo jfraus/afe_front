@@ -1,13 +1,7 @@
-import { isNgTemplate } from '@angular/compiler';
-import { Component, Input, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { of } from 'rxjs';
-import { ModelControllerService } from 'src/app/services/model-controller.service';
-import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { SaleContractControllerService } from 'src/app/services/sale-contract-controller.service';
-import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
-import { resolve } from 'url';
 import * as Excel from "exceljs/dist/exceljs.min.js";
 import * as fs from 'file-saver';
 import { VinControllerService } from 'src/app/services/vin-controller.service';
