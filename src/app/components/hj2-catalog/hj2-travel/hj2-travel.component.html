@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-title">HJ2 por Viaje</div>
+  <div class="card-title">HJ2 por Número de Viaje</div>
   <p-table #dt [columns]="cols" selectionMode="single" [value]="invoices" [loading]="loadingInvoice"
   sortMode="single" [responsive]="true" [rowHover]="true" [paginator]="true"
   [rowsPerPageOptions]="[10, 20, 30, 40, 50]" [autoLayout]="true" [rows]="20" [pageLinks]="20" [filterDelay]="0"
@@ -8,7 +8,7 @@
       <div class="table-header">
         <div style="text-align: right" class="p-input-icon-left">
           <span class="p-input-icon-left">
-            Buscar por Viaje
+            HJ2 por Número de Viaje
             <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
             <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" />
           </span>
