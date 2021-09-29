@@ -72,6 +72,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 import { AppComponent } from './component';
 import { ValidationsInputComponent } from "./components/validations-input/validations-input.component";
@@ -135,6 +136,8 @@ import { PsProductComponent } from './components/peoplesoft-catalog/ps-product/p
 import { ProductAddUpdateComponent } from './components/peoplesoft-catalog/ps-product/product-add-update/product-add-update.component';
 import { AddEditClientComponent } from './components/peoplesoft-catalog/ps-client/add-edit-client/add-edit-client.component';
 import { ModelMasterCatalogComponent } from './components/model-master-catalog/model-master-catalog.component';
+import { PeoplesoftReportComponent } from './components/peoplesoft-report/peoplesoft-report.component';
+
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
 ];
@@ -211,7 +214,8 @@ const sharedComponents = [
         TooltipModule,
         TreeModule,
         TreeTableModule,
-        VirtualScrollerModule
+        VirtualScrollerModule,
+        ProgressSpinnerModule
     ],
     declarations: [
         AppComponent,
@@ -264,6 +268,7 @@ const sharedComponents = [
         ProductAddUpdateComponent,
         AddEditClientComponent,
         ModelMasterCatalogComponent,
+        PeoplesoftReportComponent,
         ...sharedComponents,
     ],
     providers: [

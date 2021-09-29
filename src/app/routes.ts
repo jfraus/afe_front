@@ -25,7 +25,7 @@ import { PortCatalogComponent } from './components/port-catalog/port-catalog.com
 import { Hj2CatalogComponent } from './components/hj2-catalog/hj2-catalog.component';
 import { PeoplesoftCatalogComponent } from './components/peoplesoft-catalog/peoplesoft-catalog.component';
 import { ModelMasterCatalogComponent } from './components/model-master-catalog/model-master-catalog.component';
-
+import { PeoplesoftReportComponent } from './components/peoplesoft-report/peoplesoft-report.component';
 
 export const routes: Routes = [
     { path: '',
@@ -51,7 +51,8 @@ export const routes: Routes = [
         {path: 'port', component: PortCatalogComponent},
         {path: 'hj2', component: Hj2CatalogComponent},
         {path: 'peoplesoft', component: PeoplesoftCatalogComponent},
-        {path: 'model-master', component: ModelMasterCatalogComponent}
+        {path: 'model-master', component: ModelMasterCatalogComponent},
+        {path: 'peoplesoft-report', component: PeoplesoftReportComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
