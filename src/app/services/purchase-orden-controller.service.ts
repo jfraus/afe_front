@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from "../../environments/environment";
 import { Observable } from 'rxjs/internal/Observable';
 import { PurchaseOrderDetail } from '../models/purchase-order-detail.model';
+import { Maintenance } from '../models/maintenance.model';
 
 @Injectable()
 export class PurchaseOrdenControllerService {
@@ -60,6 +61,10 @@ export class PurchaseOrdenControllerService {
 
   sendAssignment(){
     return this.http.post<string>(`${environment.apiUrl}purchase/orders/assigned-units`,null).pipe();    
+  }
+
+  getMaintenance() {
+    return this.http.get<Maintenance[]>(`${environment.apiUrl}purchase/orders/maintenance/`).pipe();
   }
 
 }

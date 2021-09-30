@@ -98,6 +98,11 @@
                 <button pButton type="button" style="margin-left: 3px" icon="ui-icon-format-list-bulleted"
                   class="blue-grey-btn space-btn" (click)="ShowDetails(rowData)"></button>
               </div>
+
+              <div>
+                <button pButton type="button" style="margin-left: 3px" icon="pi pi-exclamation-triangle"
+                  class="amber-btn" [routerLink]="['/maintenance']"></button>
+              </div>
             </ng-template>
           </td>
         </tr>
