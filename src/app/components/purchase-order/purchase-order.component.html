@@ -18,9 +18,9 @@
             <div class="ui-g-12 ui-lg-4">
               <div class="p-inputgroup">
                 <span class="md-inputfield">
-                  <p-calendar [style]="{ width: '100%' }" dateFormat="yy-mm" name="mounthProduction"
-                    [showButtonBar]="true" formControlName="mounthProduction" [inputStyle]="{ width: '100%' }"
-                    [showIcon]="true" (ngModelChange)="selectedChangeMountProdc($event)"></p-calendar>
+                  <p-calendar [style]="{ width: '100%' }" dateFormat="yy-mm" name="monthProduction"
+                    [showButtonBar]="true" formControlName="monthProduction" [inputStyle]="{ width: '100%' }"
+                    [showIcon]="true" (ngModelChange)="selectedChangeMonthProduction($event)"></p-calendar>
                   <label>Mes de produción</label>
                 </span>
                 <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup"

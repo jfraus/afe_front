@@ -22,7 +22,7 @@ export class PurchaseOrderComponent implements OnInit {
     validations = [];
     formGroup: FormGroup;
     orderCodeName = "orderCode";
-    mounthProduction = 'mounthProduction';
+    monthProduction = 'monthProduction';
     order: any;
     searchButtonDisable = false;
     visibledetails: boolean = true;
@@ -61,7 +61,7 @@ export class PurchaseOrderComponent implements OnInit {
         this.validations.push(this.messages.getValidationMessagesWithName('orderCode'));
 
         this.messages.messagesRequired = 'true';
-        this.validations.push(this.messages.getValidationMessagesWithName('mounthProduction'));
+        this.validations.push(this.messages.getValidationMessagesWithName('monthProduction'));
     }
     
     ngOnInit(): void {
@@ -72,7 +72,7 @@ export class PurchaseOrderComponent implements OnInit {
     selectedChangeType(e) {
         if(e.value){
             this.formGroup.controls['orderCode'].disable();
-            this.formGroup.controls['mounthProduction'].disable();
+            this.formGroup.controls['monthProduction'].disable();
             this.loadModel(e.value);
             this.formGroup.controls['model'].enable();
             this.formGroup.controls['color'].enable();
@@ -82,7 +82,7 @@ export class PurchaseOrderComponent implements OnInit {
             this.models = [];
             this.colors = [];
             this.formGroup.controls['orderCode'].enable();
-            this.formGroup.controls['mounthProduction'].enable();
+            this.formGroup.controls['monthProduction'].enable();
         }
     }
 
@@ -98,21 +98,20 @@ export class PurchaseOrderComponent implements OnInit {
     selectedChangeOrderCode(e){
         let x = this.formGroup.get('orderCode').value;
         if(x.length>0) {
-            this.formGroup.controls['mounthProduction'].disable();
+            this.formGroup.controls['monthProduction'].disable();
             this.formGroup.controls['model'].disable();
             this.formGroup.controls['color'].disable();
             this.formGroup.controls['type'].disable();
         }else{
-            this.formGroup.controls['mounthProduction'].enable();
+            this.formGroup.controls['monthProduction'].enable();
             this.formGroup.controls['model'].enable();
             this.formGroup.controls['color'].enable();
             this.formGroup.controls['type'].enable();           
       }
     }
 
-    selectedChangeMountProdc(e){
-        let x = this.formGroup.get('mounthProduction').value;
-        console.log("tiene de valor:"+x);
+    selectedChangeMonthProduction(e){
+        let x = this.formGroup.get('monthProduction').value;
         if(x != null){            
             this.formGroup.controls['orderCode'].disable();
             this.formGroup.controls['model'].disable();
@@ -153,7 +152,7 @@ export class PurchaseOrderComponent implements OnInit {
     private BuildForm() {
         this.formGroup = this.fb.group({
             orderCode: ['', [Validators.maxLength(7), Validators.minLength(7)]],
-            mounthProduction: ['', []],
+            monthProduction: ['', []],
             model: new FormControl({ value: '', disabled: true }),
             color: new FormControl({ value: '', disabled: true }),
             type: ['', []]
@@ -179,8 +178,8 @@ export class PurchaseOrderComponent implements OnInit {
 
     SearchPurchaseOrder() {
         this, this.messageServices.clear();
-        if (this.formGroup.get('mounthProduction').value) {
-            let fecha = new Date(this.formGroup.get('mounthProduction').value);
+        if (this.formGroup.get('monthProduction').value) {
+            let fecha = new Date(this.formGroup.get('monthProduction').value);
             this.loadingPurchaseOrder = true;
             this.service.purchase_orders(null, this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
                 if (response.length > 0) {
@@ -191,7 +190,7 @@ export class PurchaseOrderComponent implements OnInit {
                 }
                 this.loadingPurchaseOrder = false;
                 this.formGroup.get('orderCode').reset();
-                this.formGroup.get('mounthProduction').reset();
+                this.formGroup.get('monthProduction').reset();
             });
         } else {
             this.loadingPurchaseOrder = true;
@@ -204,7 +203,7 @@ export class PurchaseOrderComponent implements OnInit {
                 }
                 this.loadingPurchaseOrder = false;
                 this.formGroup.get('orderCode').reset();
-                this.formGroup.get('mounthProduction').reset();
+                this.formGroup.get('monthProduction').reset();
             });
         }
     }
@@ -212,7 +211,7 @@ export class PurchaseOrderComponent implements OnInit {
     onChanges(): void {
         this.formGroup.valueChanges.subscribe(val => {
             this.searchButtonDisable = ((this.formGroup.get(this.orderCodeName).value && this.formGroup.get(this.orderCodeName).valid) 
-            || this.formGroup.get(this.mounthProduction).value || (this.formGroup.get('type').value && this.formGroup.get('model').value && this.formGroup.get('color').value))
+            || this.formGroup.get(this.monthProduction).value || (this.formGroup.get('type').value && this.formGroup.get('model').value && this.formGroup.get('color').value))
             ? true : false;
         });
     }
