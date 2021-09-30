@@ -1,4 +1,53 @@
 <div class="card">
+  <div class="card-title">Mantenimiento a Orden de Compra</div>
+  <div class="ui-g ui-fluid">
+    <form [formGroup]="formGroup" class="form-group ui-g-12">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="ui-g-12 ui-lg-12">
+          <div class="ui-g-12 ui-lg-4">
+            <span class="md-inputfield">
+              <input type="text" formControlName="purchaseOrder" style="width: 100%" pInputText />
+              <label>Orden de compra</label>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <div class="p-inputgroup">
+              <span class="md-inputfield">
+                <input type="text" formControlName="status" style="width: 100%" pInputText />
+                <label>Estatus</label>
+              </span>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <div class="p-inputgroup">
+              <span class="md-inputfield">
+                <input type="text" formControlName="monthProduction" style="width: 100%" pInputText />
+                <label>Mes de Producción</label>
+              </span>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <div class="p-inputgroup">
+              <span class="md-inputfield">
+                <input type="text" formControlName="expirationDate" style="width: 100%" pInputText />
+                <label>Fecha Vencimiento</label>
+              </span>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <div class="p-inputgroup">
+              <span class="md-inputfield">
+                <input type="text" formControlName="totalOrder" style="width: 100%" pInputText />
+                <label>Total Pedido</label>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="card">
   <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="maintenanceList"
   [loading]="loadingMaintenance" sortMode="multiple" [style]="{ 'margin-bottom': '20px' }" [responsive]="true"
   [rowHover]="true" [paginator]="true" [responsive]="true" [rowsPerPageOptions]="[30, 40, 50]" [autoLayout]="true"
