@@ -43,8 +43,8 @@ export class PurchaseOrderComponent implements OnInit {
         private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService,
         private modelControllerService: ModelControllerService, private modelColorService: ModelColorControllerService) {
 
-        this.TableOrderFull();
-        this.BuildForm();
+        this.tableOrderFull();
+        this.buildForm();
         this.cols = [
             { field: 'orderNumber', header: 'Orden de Compra' },
             { field: 'productionMonth', header: 'Mes de Produción' },
@@ -149,7 +149,7 @@ export class PurchaseOrderComponent implements OnInit {
         });        
     }
 
-    private BuildForm() {
+    private buildForm() {
         this.formGroup = this.fb.group({
             orderCode: ['', [Validators.maxLength(7), Validators.minLength(7)]],
             monthProduction: ['', []],
@@ -159,7 +159,7 @@ export class PurchaseOrderComponent implements OnInit {
         });
     }
 
-    TableOrderFull() {
+    tableOrderFull() {
         this.service.purchase_orders(null, null, null).subscribe((response) => {
             this.purchaseOrder = response;
             this.purchaseOrder = this.purchaseOrder.map(iteam => ({
@@ -245,7 +245,7 @@ export class PurchaseOrderComponent implements OnInit {
                     icon: 'pi pi-exclamation-triangle',
                     accept: () => {
                         this.service.enviarPurchaseOrder(oc.id).subscribe((response) => {
-                            this.TableOrderFull();
+                            this.tableOrderFull();
                             this.messageServices.add({ key: 'error', severity: 'success', summary: 'Se ha enviado el registro' });
                         });
                     },
@@ -276,14 +276,14 @@ export class PurchaseOrderComponent implements OnInit {
         this.visible = true;
         this.visibledetails = true;
         this.visibleEditable = true;
-        this.TableOrderFull();
+        this.tableOrderFull();
     }
 
     closeGenerar() {
         this.visible = true;
         this.visibledetails = true;
         this.visibleEditable = true;
-        this.TableOrderFull();
+        this.tableOrderFull();
     }
 
     sendAssignment(): void {
