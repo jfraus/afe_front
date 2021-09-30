@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../../environments/environment";
-import { OrderList } from 'primeng/orderlist';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable()
 export class ModelControllerService {
@@ -17,6 +15,10 @@ export class ModelControllerService {
 
   getModelType(){
     return this.http.get<any>(`${environment.apiUrl}models/model-type/`).pipe();
+  }
+
+  getModelsByType(modelType : String){
+    return this.http.get<any>(`${environment.apiUrl}models/by-model-type/?modelType=${modelType}`).pipe();
   }
 
 }

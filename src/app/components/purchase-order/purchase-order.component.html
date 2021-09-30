@@ -7,7 +7,8 @@
           <div class="ui-g-12 ui-lg-12">
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield">
-                <input type="text" formControlName="orderCode" style="width: 100%" pInputText />
+                <input type="text" formControlName="orderCode" style="width: 100%" pInputText
+                  (input)="selectedChangeOrderCode($event)" />
                 <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup"
                   [(formInputName)]="orderCodeName">
                 </validations-input-component>
@@ -18,13 +19,39 @@
               <div class="p-inputgroup">
                 <span class="md-inputfield">
                   <p-calendar [style]="{ width: '100%' }" dateFormat="yy-mm" name="mounthProduction"
-                    formControlName="mounthProduction" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
+                    [showButtonBar]="true" formControlName="mounthProduction" [inputStyle]="{ width: '100%' }"
+                    [showIcon]="true" (ngModelChange)="selectedChangeMountProdc($event)"></p-calendar>
                   <label>Mes de produción</label>
                 </span>
                 <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup"
                   [(formInputName)]="mounthProduction">
                 </validations-input-component>
               </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-12">
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield ">
+                <p-dropdown #dd formControlName="type" [resetFilterOnHide]="true" [options]="types"
+                  (onChange)="selectedChangeType($event)" [filter]="true" [autoDisplayFirst]="false" [showClear]="true"
+                  appendTo="body" disable=enableType></p-dropdown>
+                <label>Tipo</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield ">
+                <p-dropdown #dd formControlName="model" [resetFilterOnHide]="true" [options]="models"
+                  (onChange)="selectedChangeModel($event)" [filter]="true" [autoDisplayFirst]="false" [showClear]="true"
+                  appendTo="body"></p-dropdown>
+                <label>Modelo</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield ">
+                <p-dropdown #dd formControlName="color" [resetFilterOnHide]="true" [options]="colors" [filter]="true"
+                  [autoDisplayFirst]="false" [showClear]="true" appendTo="body"></p-dropdown>
+                <label>Color</label>
+              </span>
             </div>
             <div class="ui-g-12 ui-lg-4">
               <button pButton type="button" label="Buscar" icon="pi pi-search" class="teal-btn"
@@ -93,11 +120,10 @@
                     style="margin-left: 3px" class="blue-btn"></button>
                 </div>
               </div>
-
               <div *ngIf="rowData.status === 'Abierta' || rowData.status === 'Cerrada'">
                 <button pButton type="button" style="margin-left: 3px" icon="ui-icon-format-list-bulleted"
                   class="blue-grey-btn space-btn" (click)="ShowDetails(rowData)"></button>
-              </div>
+              </div>              
             </ng-template>
           </td>
         </tr>
