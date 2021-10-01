@@ -87,7 +87,7 @@ export class AddDetailModelComponent {
         if (this.addModel.valid) {
 
             let validPromise = new Promise((resolved) => {
-                this.servicesPurchase.purchase_orders(this.purchaseOrderId, null, null).subscribe((response) => {
+                this.servicesPurchase.purchase_orders(this.purchaseOrderId, null, null,null,null,null).subscribe((response) => {
                     let array = response[0].detail;
                     array.forEach(element => {
                         if (element.color.id === this.addModel.value.color.id && element.model.id === this.addModel.value.model.id) {

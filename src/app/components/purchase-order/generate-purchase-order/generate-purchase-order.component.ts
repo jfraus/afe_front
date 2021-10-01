@@ -78,7 +78,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
 
     fillTable(){
         this.loadingPurchaseOrderDetail = true;
-        this.service.purchase_orders(this.order.id,null,null).subscribe((response) =>
+        this.service.purchase_orders(this.order.id,null,null,null,null,null).subscribe((response) =>
         {
             this.loadingPurchaseOrderDetail = false;
             this.purchaseOrderDetail = response[0].detail;
