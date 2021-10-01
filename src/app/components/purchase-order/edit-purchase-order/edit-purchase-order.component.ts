@@ -75,7 +75,7 @@ export class EditPurchaseOrderComponent implements OnInit {
     }
     fillTable(){
         this.loadingPurchaseOrder = true;
-        this.service.purchase_orders(this.order.id,null,null).subscribe((response) =>
+        this.service.purchase_orders(this.order.id,null,null,null,null,null).subscribe((response) =>
         {
             this.loadingPurchaseOrder = false;
             this.order.detail = response[0].detail;

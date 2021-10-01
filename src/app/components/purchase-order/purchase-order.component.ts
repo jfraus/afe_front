@@ -32,12 +32,7 @@ export class PurchaseOrderComponent implements OnInit {
     visible: boolean = true;
     types = [];
     models = [];
-    colors = [];    
-    eneblePurchaseOrder = true;
-    enableProductionDate = true;
-    enableType = true;
-    enableModel = true;
-    enableColor = true;
+    colors = [];
 
     constructor(public dateUtil: FormatDate, public confirmationService: ConfirmationService, public messageServices: MessageService, 
         private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService,
@@ -160,7 +155,7 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     tableOrderFull() {
-        this.service.purchase_orders(null, null, null).subscribe((response) => {
+        this.service.purchase_orders(null, null, null, null, null, null).subscribe((response) => {
             this.purchaseOrder = response;
             this.purchaseOrder = this.purchaseOrder.map(iteam => ({
                 ...iteam,
@@ -180,8 +175,8 @@ export class PurchaseOrderComponent implements OnInit {
         this, this.messageServices.clear();
         if (this.formGroup.get('monthProduction').value) {
             let fecha = new Date(this.formGroup.get('monthProduction').value);
-            this.loadingPurchaseOrder = true;
-            this.service.purchase_orders(null, this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`).subscribe((response) => {
+            this.loadingPurchaseOrder = true;            
+            this.service.purchase_orders(null, this.formGroup.get('orderCode').value, `${fecha.getFullYear()}${fecha.getMonth() + 1}`,null,null,null).subscribe((response) => { //(en este si es ir a buscar el valor para los parametros)
                 if (response.length > 0) {
                     this.purchaseOrder = response;
                 } else {
@@ -192,9 +187,9 @@ export class PurchaseOrderComponent implements OnInit {
                 this.formGroup.get('orderCode').reset();
                 this.formGroup.get('monthProduction').reset();
             });
-        } else {
+        } else if(this.formGroup.get('orderCode').value) {
             this.loadingPurchaseOrder = true;
-            this.service.purchase_orders(null, this.formGroup.get('orderCode').value, null).subscribe((response) => {
+            this.service.purchase_orders(null, this.formGroup.get('orderCode').value, null, null, null, null).subscribe((response) => {
                 if (response.length > 0) {
                     this.purchaseOrder = response;
                 } else {
@@ -205,7 +200,23 @@ export class PurchaseOrderComponent implements OnInit {
                 this.formGroup.get('orderCode').reset();
                 this.formGroup.get('monthProduction').reset();
             });
-        }
+        }else if(this.formGroup.get('type').value)  {
+            this.loadingPurchaseOrder = true;
+            this.service.purchase_orders(null, null, null, this.formGroup.get('type').value, this.formGroup.get('model').value, this.formGroup.get('color').value).subscribe((response) => {
+                if (response.length > 0) {
+                    this.purchaseOrder = response;
+                } else {
+                    this.messageServices.add({ key: 'error', severity: 'info', summary: 'No se encontraron registros' });
+                    this.purchaseOrder = [];
+                }
+                this.loadingPurchaseOrder = false;
+                this.formGroup.get('orderCode').enable();
+                this.formGroup.get('monthProduction').enable();
+                this.formGroup.get('type').reset();                
+                this.formGroup.get('color').reset();     
+                this.formGroup.get('model').reset();     
+            });
+        }       
     }
 
     onChanges(): void {
@@ -217,7 +228,7 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     ShowDetails(detail) {
-        this.service.purchase_orders(detail.id, null, null).subscribe((response) => {
+        this.service.purchase_orders(detail.id, null, null, null, null, null).subscribe((response) => {
             this.order = response[0];
             this.fechaVencimientoSelected = new Date(response[0].dueDate);
             if (response[0].productionMonth) {
@@ -237,7 +248,7 @@ export class PurchaseOrderComponent implements OnInit {
 
     sendOC(oc) {
         let check = false;
-        this.service.purchase_orders(oc.id, null, null).subscribe((response) => {
+        this.service.purchase_orders(oc.id, null, null, null, null, null).subscribe((response) => {
             if (response[0].detail.length > 0) {
                 this.confirmationService.confirm({
                     message: 'Deseas enviar OC, una vez enviada no se podrá editar.',
@@ -260,7 +271,7 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     EditOrden(purchaseOrder) {
-        this.service.purchase_orders(purchaseOrder.id, null, null).subscribe((response) => {
+        this.service.purchase_orders(purchaseOrder.id, null, null, null, null, null).subscribe((response) => {
             this.order = response[0];
             this.fechaVencimientoSelected = new Date(response[0].dueDate);
             if (response[0].productionMonth) {

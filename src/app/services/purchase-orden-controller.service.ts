@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from "../../environments/environment";
 import { Observable } from 'rxjs/internal/Observable';
 import { PurchaseOrderDetail } from '../models/purchase-order-detail.model';
@@ -9,28 +9,26 @@ import { Maintenance } from '../models/maintenance.model';
 export class PurchaseOrdenControllerService {
   constructor(private http: HttpClient) {  }
 
-  purchase_orders(purchaseOrderId: any,ordenNumber: string, productionMonth: string): Observable<any>{
-    if(purchaseOrderId){
+  purchase_orders(purchaseOrderId: any, orderNumber: string, productionMonth: string, type: string, model: string, color: string): Observable<any>{
+   if(purchaseOrderId){
       return this.http.get<any>(`${environment.apiUrl}purchase/orders/?purchaseOrderId=${purchaseOrderId}`).pipe();
     }else{
-
-      if(ordenNumber && productionMonth){
-          return this.http.get<any>(`${environment.apiUrl}purchase/orders/?orderNumber=${ordenNumber}&&productionMonth=${productionMonth}`).pipe();
+      if(orderNumber && productionMonth){
+          return this.http.get<any>(`${environment.apiUrl}purchase/orders/?orderNumber=${orderNumber}&&productionMonth=${productionMonth}`).pipe();
       }else {
-
-        if(ordenNumber) {
-          return this.http.get<any>(`${environment.apiUrl}purchase/orders/?orderNumber=${ordenNumber}`).pipe();
+        if(orderNumber) {
+          return this.http.get<any>(`${environment.apiUrl}purchase/orders/?orderNumber=${orderNumber}`).pipe();
         }
         if(productionMonth) {
           return this.http.get<any>(`${environment.apiUrl}purchase/orders/?productionMonth=${productionMonth}`).pipe();
-
+        }
+        if(type && model && color ){
+          return this.http.get<any>(`${environment.apiUrl}purchase/orders/?type=${type}&model=${model}&color=${color}`).pipe();
         }
         return this.http.get<any>(`${environment.apiUrl}purchase/orders/`).pipe();
-      }
-
-      
-    }
-  }
+      }       
+    }  
+}
 
   PutPurchaseOrders(order): Observable<any>{
     if(order){
