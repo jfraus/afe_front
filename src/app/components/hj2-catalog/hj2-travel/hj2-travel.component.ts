@@ -46,7 +46,6 @@ export class Hj2TravelComponent implements OnInit {
   downloadTravel(hj2: Hj2Invoice) {
     this.hj2Service.createHj2ByInvoice(hj2.invoice, false).subscribe(data => {
       let date = this.dateUtil.formatDateToNumbers(new Date(hj2.invoiceDate));
-      console.log(date);
       let nameFile = "HCLHJ2_"+hj2.travelNumber+"_"+date+"_afe.txt";
       saveAs(data, nameFile);
     });

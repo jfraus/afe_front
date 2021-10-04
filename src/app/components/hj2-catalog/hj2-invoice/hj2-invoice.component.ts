@@ -44,7 +44,6 @@ export class Hj2InvoiceComponent implements OnInit {
     this.loadingInvoice = true;
     this.hj2Service.createHj2ByInvoice(invoices.invoice, false).subscribe(data => {
       let date = this.dateUtil.formatDateToNumbers(new Date(invoices.invoiceDate));
-      console.log(date);
       let nameFile = "HCLHJ2_"+invoices.invoice+"_"+date+"_afe.txt";
       saveAs(data, nameFile);      
       this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 descargado con éxito' }); 
