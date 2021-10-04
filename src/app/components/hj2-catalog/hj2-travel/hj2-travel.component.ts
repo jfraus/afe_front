@@ -36,16 +36,17 @@ export class Hj2TravelComponent implements OnInit {
   }
 
   sendTravel(hj2: Hj2Invoice) {
-    this.hj2Service.getSendTravel(hj2.travelNumber, true).subscribe(data => {
-      this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' });
-      this.getInvoicesByTravel(); 
-    });
+    console.log(hj2.invoice)
+    this.hj2Service.getSendTravel(hj2.travelNumber, true).subscribe(data => { });    
+    this.hj2Service.createHj2ByInvoice(hj2.invoice, true).subscribe(data =>{ });
+    this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' });
+    setTimeout(() => {this.getInvoicesByTravel()}, 3000);
   }
 
   downloadTravel(hj2: Hj2Invoice) {
-    this.hj2Service.getSendTravel(hj2.travelNumber, false).subscribe(data => {
+    this.hj2Service.createHj2ByInvoice(hj2.invoice, false).subscribe(data => {
       let date = this.dateUtil.formatDateToNumbers(new Date(hj2.invoiceDate));
-      let nameFile = "HCLHJ2_"+hj2.invoice+"_"+date+"_afe.txt";
+      let nameFile = "HCLHJ2_"+hj2.travelNumber+"_"+date+"_afe.txt";
       saveAs(data, nameFile);
     });
   }
