@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-title">Mantenimiento a Orden de Compra</div>
+  <div class="card-title">Mantenimiento a Orden de Compra</div>  
   <div class="ui-g ui-fluid">
     <form [formGroup]="formGroup" class="form-group ui-g-12">
       <div class="p-fluid p-formgrid p-grid">
@@ -46,6 +46,12 @@
       </div>
     </form>
   </div>
+  <div class="p-fluid p-formgrid p-grid">
+    <div class="ui-g-12 ui-lg-3">
+      <a class="ui-button-success" type="button" pButton icon="pi pi-plus" (click)="addUpdate()" label="Agregar">
+      </a>
+    </div>
+  </div>
 </div>
 <div class="card">
   <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="maintenanceList"
@@ -87,4 +93,9 @@
     </tr>
   </ng-template>
 </p-table>
+</div>
+
+<div *ngIf="displayAddEdit">
+  <app-add-edit-maintenance (close)="closeAddEdit()" [display]="displayAddEdit" [maintenance]="maintenance">
+  </app-add-edit-maintenance>
 </div>

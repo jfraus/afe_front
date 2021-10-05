@@ -14,6 +14,8 @@ export class MaintenanceComponent implements OnInit {
   loadingMaintenance: boolean = false;
   formGroup: FormGroup;
   cols = [];
+  displayAddEdit: boolean = false;
+  maintenance: Maintenance;
 
   constructor(private maintenanceService: PurchaseOrdenControllerService, private formBuilder: FormBuilder) { }
 
@@ -46,6 +48,14 @@ export class MaintenanceComponent implements OnInit {
 
   editMaintenance() {
     
+  }
+
+  addUpdate(){
+    this.displayAddEdit=true;
+  }
+
+  closeAddEdit() {
+
   }
 
 }
