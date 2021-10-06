@@ -38,8 +38,7 @@ export class MaintenanceComponent implements OnInit {
       monthProduction: [{value: this.maintenanceDetails.productionMonth, disabled: true}],
       expirationDate: [{value: this.maintenanceDetails.dueDate, disabled: true}],
       totalOrder: [{value: this.maintenanceDetails.unitsQuantity, disabled: true}]
-    });
-    console.log(JSON.stringify(this.maintenanceDetails));
+    });;
     this.getMaintenance(this.maintenanceDetails.id);
     
   }

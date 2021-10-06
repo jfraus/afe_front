@@ -38,7 +38,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
     maxDateExpired = new Date();
     minExpired = new Date();
     validations = [];
-    order: PurchaseOrder;// = {id: 0,orderNumber:'',productionMonth:'',unitsQuantity:1,dueDate: 1};
+    order: PurchaseOrder;
     displayAdd: boolean;
     btnAdDisable: boolean = false;
     displayEdit: boolean;
