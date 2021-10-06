@@ -4,4 +4,5 @@ export interface PurchaseOrder{
         productionMonth: string,
         dueDate: number,
         unitsQuantity: number
+        status: string;
 }
