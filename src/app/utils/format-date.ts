@@ -46,7 +46,7 @@ export class FormatDate {
 
     formatDateToNumbers(date: Date) {
         let dateOutput = new Date(date);
-        return `${dateOutput.getFullYear()}${this.getMonth(date)}${this.getDay(date)}${dateOutput.getHours()}${this.getMinutes(date)}${this.getSeconds(date)}`
+        return `${dateOutput.getFullYear()}${this.getMonth(date)}${this.getDay(date)}`
     }
 
 }

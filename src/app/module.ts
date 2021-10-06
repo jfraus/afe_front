@@ -137,6 +137,8 @@ import { ProductAddUpdateComponent } from './components/peoplesoft-catalog/ps-pr
 import { AddEditClientComponent } from './components/peoplesoft-catalog/ps-client/add-edit-client/add-edit-client.component';
 import { ModelMasterCatalogComponent } from './components/model-master-catalog/model-master-catalog.component';
 import { PeoplesoftReportComponent } from './components/peoplesoft-report/peoplesoft-report.component';
+import { MaintenanceComponent } from './components/purchase-order/maintenance/maintenance.component';
+import { AddEditMaintenanceComponent } from './components/purchase-order/maintenance/add-edit-maintenance/add-edit-maintenance.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -269,6 +271,8 @@ const sharedComponents = [
         AddEditClientComponent,
         ModelMasterCatalogComponent,
         PeoplesoftReportComponent,
+        MaintenanceComponent,
+        AddEditMaintenanceComponent,
         ...sharedComponents,
     ],
     providers: [

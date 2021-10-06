@@ -43,19 +43,20 @@ export class Hj2InvoiceComponent implements OnInit {
   downloadInvoice(invoices: Hj2Invoice){
     this.loadingInvoice = true;
     this.hj2Service.createHj2ByInvoice(invoices.invoice, false).subscribe(data => {
-      let date = this.dateUtil.formatDateOnlyNumbers(new Date(invoices.invoiceDate));
+      let date = this.dateUtil.formatDateToNumbers(new Date(invoices.invoiceDate));
       let nameFile = "HCLHJ2_"+invoices.invoice+"_"+date+"_afe.txt";
       saveAs(data, nameFile);      
+      this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 descargado con éxito' }); 
       this.loadingInvoice = false;
     });
   }
 
   sendInvoice(invoices: Hj2Invoice){
     this.loadingInvoice = true;
-    this.hj2Service.createHj2ByInvoice(invoices.invoice, true).subscribe(data => {
-      this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' }); 
-      this.loadingInvoice = false; 
-    });
-    setTimeout(() => {this.loading()}, 2000);
+    this.hj2Service.createHj2ByInvoice(invoices.invoice, true).subscribe(data => {  });
+    this.hj2Service.getSendTravel(invoices.travelNumber, true).subscribe(data =>{   });
+    this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' }); 
+    this.loadingInvoice = false; 
+    setTimeout(() => {this.loading()}, 3000);
   }
 }

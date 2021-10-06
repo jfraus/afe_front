@@ -26,6 +26,7 @@ import { Hj2CatalogComponent } from './components/hj2-catalog/hj2-catalog.compon
 import { PeoplesoftCatalogComponent } from './components/peoplesoft-catalog/peoplesoft-catalog.component';
 import { ModelMasterCatalogComponent } from './components/model-master-catalog/model-master-catalog.component';
 import { PeoplesoftReportComponent } from './components/peoplesoft-report/peoplesoft-report.component';
+import { MaintenanceComponent } from './components/purchase-order/maintenance/maintenance.component';
 
 export const routes: Routes = [
     { path: '',
@@ -52,7 +53,8 @@ export const routes: Routes = [
         {path: 'hj2', component: Hj2CatalogComponent},
         {path: 'peoplesoft', component: PeoplesoftCatalogComponent},
         {path: 'model-master', component: ModelMasterCatalogComponent},
-        {path: 'peoplesoft-report', component: PeoplesoftReportComponent}
+        {path: 'peoplesoft-report', component: PeoplesoftReportComponent},
+        {path: 'maintenance', component: MaintenanceComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},

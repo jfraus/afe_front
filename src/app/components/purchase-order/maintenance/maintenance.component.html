@@ -1,0 +1,101 @@
+<div class="card">
+  <div class="card-title">Mantenimiento a Orden de Compra</div>  
+  <div class="ui-g ui-fluid">
+    <form [formGroup]="formGroup" class="form-group ui-g-12">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="ui-g-12 ui-lg-12">
+          <div class="ui-g-12 ui-lg-4">
+            <span class="md-inputfield">
+              <input type="text" formControlName="purchaseOrder" style="width: 100%" pInputText />
+              <label>Orden de compra</label>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <div class="p-inputgroup">
+              <span class="md-inputfield">
+                <input type="text" formControlName="status" style="width: 100%" pInputText />
+                <label>Estatus</label>
+              </span>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <div class="p-inputgroup">
+              <span class="md-inputfield">
+                <input type="text" formControlName="monthProduction" style="width: 100%" pInputText />
+                <label>Mes de Producción</label>
+              </span>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <div class="p-inputgroup">
+              <span class="md-inputfield">
+                <input type="text" formControlName="expirationDate" style="width: 100%" pInputText />
+                <label>Fecha Vencimiento</label>
+              </span>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <div class="p-inputgroup">
+              <span class="md-inputfield">
+                <input type="text" formControlName="totalOrder" style="width: 100%" pInputText />
+                <label>Total Pedido</label>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="p-fluid p-formgrid p-grid">
+    <div class="ui-g-12 ui-lg-3">
+      <a class="ui-button-success" type="button" pButton icon="pi pi-plus" (click)="addUpdate()" label="Agregar">
+      </a>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="maintenanceList"
+  [loading]="loadingMaintenance" sortMode="multiple" [style]="{ 'margin-bottom': '20px' }" [responsive]="true"
+  [rowHover]="true" [paginator]="true" [responsive]="true" [rowsPerPageOptions]="[30, 40, 50]" [autoLayout]="true"
+  [rows]="20" [pageLinks]="20">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{ col.header }}
+      </th>
+      <th>
+        Acción
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage" let-columns>
+    <tr>
+      <td style="text-align: center" [attr.colspan]="columns.length + 2">
+        No se encontró información
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        <span *ngIf="col.subfield === undefined; else elseBlock">
+          {{rowData[col.field]}}
+        </span>
+        <ng-template #elseBlock>
+          {{rowData[col.field] [col.subfield]}}
+        </ng-template>
+      </td>
+      <td>
+        <button pButton type="button" icon="pi pi-pencil" class="blue-grey-btn" style="margin-left: 3px"
+          (click)="editMaintenance(rowData)" pTooltip="Edit">
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>
+
+<div *ngIf="displayAddEdit">
+  <app-add-edit-maintenance (close)="closeAddEdit()" [display]="displayAddEdit" [maintenance]="maintenance">
+  </app-add-edit-maintenance>
+</div>
