@@ -158,6 +158,7 @@ export class PurchaseOrderComponent implements OnInit {
 
     tableOrderFull() {
         this.service.purchase_orders(null, null, null, null, null, null).subscribe((response) => {
+            console.log(response);
             this.purchaseOrder = response;
             this.purchaseOrder = this.purchaseOrder.map(iteam => ({
                 ...iteam,
@@ -299,6 +300,14 @@ export class PurchaseOrderComponent implements OnInit {
         this.tableOrderFull();
     }
 
+    closeMaintenance(){
+        this.visible = true;
+        this.visibledetails = true;
+        this.visibleEditable = true;
+        this.visibleMaintenance =false;
+        this.tableOrderFull();
+    }
+
     sendAssignment(): void {
         this.service.sendAssignment().subscribe((response) => {
             this.messageServices.add({ key: 'error', severity: 'success', summary: 'Enviado!' });
@@ -306,8 +315,6 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     maintenance(maintenance: PurchaseOrder) {
-        console.log(JSON.stringify(maintenance));
-        
         this.maintenanceDetails = maintenance;
         this.visible = false;
         this.visibleMaintenance = true;
