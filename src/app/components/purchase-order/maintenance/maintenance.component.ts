@@ -44,8 +44,7 @@ export class MaintenanceComponent implements OnInit {
 
   getMaintenance(id: number) {
     this.loadingMaintenance = true;
-    this.maintenanceService.getMaintenance(id).subscribe(data => { 
-      console.log(data);     
+    this.maintenanceService.getMaintenance(id).subscribe(data => {     
       this.maintenanceList = data;
       this.loadingMaintenance = false;
     });
