@@ -39,15 +39,23 @@ export class MaintenanceComponent implements OnInit {
       expirationDate: [{value: this.maintenanceDetails.dueDate, disabled: true}],
       totalOrder: [{value: this.maintenanceDetails.unitsQuantity, disabled: true}]
     });;
-    this.getMaintenance(this.maintenanceDetails.id);
-    
+    this.getMaintenance(this.maintenanceDetails.id);    
   }
 
   getMaintenance(id: number) {
     this.loadingMaintenance = true;
-    this.maintenanceService.getMaintenance(id).subscribe(data => {
+    this.maintenanceService.getMaintenance(id).subscribe(data => {     
       this.maintenanceList = data;
       this.loadingMaintenance = false;
+    });
+  }
+
+  getHeaders(){
+    this.maintenanceService.purchase_orders(this.maintenanceDetails.id,null,null,null,null,null).subscribe((response) => {
+      this.loadingMaintenance = true;
+      this.maintenanceList = response[0].detail;
+        this.formGroup.get('totalOrder').setValue(response[0].unitsQuantity);
+        this.loadingMaintenance = false;
     });
   }
 
@@ -60,7 +68,14 @@ export class MaintenanceComponent implements OnInit {
   }
 
   closeAddEdit() {
-
+    this.displayAddEdit=false;
+    this.getMaintenance(this.maintenanceDetails.id);
+    this.getHeaders()
   }
 
+  closeMaintenance(){
+    this.close.emit(true);
+    this.displayAddEdit=false;
+  }
+  
 }
