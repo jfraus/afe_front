@@ -9,6 +9,7 @@ export class PeoplesoftCatalogComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }
