@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from "../../environments/environment";
-import { Observable } from 'rxjs/internal/Observable';
 import { PeoplesoftClient } from 'src/app/models/peoplesoftClient.model'
+import { peoplesoftReport } from 'src/app/models/peoplesoftReport.model'
 
 @Injectable()
 export class PeopleSofController {
@@ -20,4 +20,9 @@ export class PeopleSofController {
   updateClient(peoplesoftClient: PeoplesoftClient) {
     return this.http.put<any>(`${environment.apiUrl}peopleSoft/update-client`, peoplesoftClient).pipe();
   }
+
+  getReport(serie: string, startDate: string, endDate: string){
+    return this.http.get<peoplesoftReport[]>(`${environment.apiUrl}peopleSoft/report?serie=${serie}&startDate=${startDate}&endDate=${endDate}`).pipe();
+  }
+
 }
