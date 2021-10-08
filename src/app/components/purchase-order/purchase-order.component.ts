@@ -158,7 +158,6 @@ export class PurchaseOrderComponent implements OnInit {
 
     tableOrderFull() {
         this.service.purchase_orders(null, null, null, null, null, null).subscribe((response) => {
-            console.log(response);
             this.purchaseOrder = response;
             this.purchaseOrder = this.purchaseOrder.map(iteam => ({
                 ...iteam,
@@ -315,9 +314,20 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     maintenance(maintenance: PurchaseOrder) {
-        this.maintenanceDetails = maintenance;
-        this.visible = false;
-        this.visibleMaintenance = true;
+        
+        this.confirmationService.confirm({
+            message: '¿Deseas dar mantenimiento a la orden de compra ' +maintenance.status +' '+maintenance.orderNumber+' ?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {        
+                this.maintenanceDetails = maintenance;
+                this.visible = false;
+                this.visibleMaintenance = true;              
+            },
+            reject: () => {
+
+            }
+          });         
     }
 }
 

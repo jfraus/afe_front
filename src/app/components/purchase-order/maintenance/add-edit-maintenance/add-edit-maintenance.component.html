@@ -45,7 +45,8 @@
   </div>
   <p-footer>
     <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label={{titleButton}}
-      [disabled]="!addMaintenance.valid" (click)="add()"></button>
+      [disabled]="!addMaintenance.valid" (click)="add()"  [disabled]="!addMaintenance.valid"></button>
+      
     <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar"
       (click)="closed()"></button>
   </p-footer>
