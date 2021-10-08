@@ -4,14 +4,13 @@ import { Maintenance } from 'src/app/models/maintenance.model';
 import { PurchaseOrder } from 'src/app/models/purchase-order.model';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { ModelControllerService } from 'src/app/services/model-controller.service';
-import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
 import { SelectItem } from "primeng/api";
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html',
-  providers: [PurchaseOrdenControllerService, ModelControllerService, ModelColorControllerService, ConfirmationService]
+  providers: [PurchaseOrdenControllerService, ModelControllerService, ConfirmationService]
 })
 export class MaintenanceComponent implements OnInit {
 
@@ -26,8 +25,7 @@ export class MaintenanceComponent implements OnInit {
   models: SelectItem[];
 
   constructor(private maintenanceService: PurchaseOrdenControllerService, private formBuilder: FormBuilder, 
-    private modelColorService: ModelColorControllerService, private modelControllerService: ModelControllerService, 
-    public confirmationService: ConfirmationService) { }
+    private modelControllerService: ModelControllerService, public confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.cols = [
@@ -87,14 +85,12 @@ export class MaintenanceComponent implements OnInit {
   }
 
   closeAddEdit() {
-    console.log("Cierra el Dialog");
     this.displayAddEdit=false;
     setTimeout(() => { this.getMaintenance(this.maintenanceDetails.id)}, 100);
     setTimeout(() => { this.getHeaders() }, 100);
   }
 
  closeMaintenance(){
-    console.log("Si llega");
     this.close.emit(true);  
     this.maintenance = null;    
     this.displayAddEdit=false;   
