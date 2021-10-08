@@ -64,5 +64,8 @@ export class PurchaseOrdenControllerService {
   getMaintenance(id: number) {
     return this.http.get<Maintenance[]>(`${environment.apiUrl}purchase/orders/maintenance/?purchaseOrderId=${id}`).pipe();
   }
-
+  
+  changeStatusPurchaseOrderMaintenance(purchaseOrderId: string) {
+    return this.http.put<any>(`${environment.apiUrl}purchase/orders/change-status-maintenance?purchaseOrderId=${purchaseOrderId}`,null).pipe(); 
+  } 
 }

@@ -3,11 +3,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Maintenance } from 'src/app/models/maintenance.model';
 import { PurchaseOrder } from 'src/app/models/purchase-order.model';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
+import { ModelControllerService } from 'src/app/services/model-controller.service';
+import { SelectItem } from "primeng/api";
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html',
-  providers: [PurchaseOrdenControllerService]
+  providers: [PurchaseOrdenControllerService, ModelControllerService, ConfirmationService]
 })
 export class MaintenanceComponent implements OnInit {
 
@@ -19,8 +22,10 @@ export class MaintenanceComponent implements OnInit {
   cols = [];
   displayAddEdit: boolean = false;
   maintenance: Maintenance;
+  models: SelectItem[];
 
-  constructor(private maintenanceService: PurchaseOrdenControllerService, private formBuilder: FormBuilder) { }
+  constructor(private maintenanceService: PurchaseOrdenControllerService, private formBuilder: FormBuilder, 
+    private modelControllerService: ModelControllerService, public confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.cols = [
@@ -39,7 +44,8 @@ export class MaintenanceComponent implements OnInit {
       expirationDate: [{value: this.maintenanceDetails.dueDate, disabled: true}],
       totalOrder: [{value: this.maintenanceDetails.unitsQuantity, disabled: true}]
     });;
-    this.getMaintenance(this.maintenanceDetails.id);    
+    this.getMaintenance(this.maintenanceDetails.id);   
+    this.loadModel("KK") ;
   }
 
   getMaintenance(id: number) {
@@ -55,12 +61,23 @@ export class MaintenanceComponent implements OnInit {
       this.loadingMaintenance = true;
       this.maintenanceList = response[0].detail;
         this.formGroup.get('totalOrder').setValue(response[0].unitsQuantity);
+        this.formGroup.get('status').setValue(response[0].status);
         this.loadingMaintenance = false;
     });
   }
 
-  editMaintenance() {
-    
+  editMaintenance(maintenance: Maintenance) {
+    this.confirmationService.confirm({
+      message: '¿Deseas editar el modelo '+maintenance.model+' y color '+maintenance.color+' ?',
+      header: 'Confirmación',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {        
+        this.maintenance = maintenance;    
+        this.displayAddEdit=true;
+      },
+      reject: () => {
+      }
+    });    
   }
 
   addUpdate(){
@@ -69,13 +86,23 @@ export class MaintenanceComponent implements OnInit {
 
   closeAddEdit() {
     this.displayAddEdit=false;
-    this.getMaintenance(this.maintenanceDetails.id);
-    this.getHeaders()
+    setTimeout(() => { this.getMaintenance(this.maintenanceDetails.id)}, 100);
+    setTimeout(() => { this.getHeaders() }, 100);
   }
 
-  closeMaintenance(){
-    this.close.emit(true);
-    this.displayAddEdit=false;
+ closeMaintenance(){
+    this.close.emit(true);  
+    this.maintenance = null;    
+    this.displayAddEdit=false;   
+    this.maintenanceList =[];   
   }
-  
+    
+  private loadModel(modelType: String): void {
+    this.modelControllerService.getModelsByType(modelType).subscribe(data => {
+      this.models = data.map(r => (
+        { label: r.code, value: r.id }
+      ));
+    });
+  }
+
 }

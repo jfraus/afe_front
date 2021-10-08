@@ -104,6 +104,16 @@
   </div>
 </div>
 <div *ngIf="displayAddEdit">
-  <app-add-edit-maintenance (close)="closeAddEdit()" [purchaseOrderId]="this.maintenanceDetails.id"[display]="displayAddEdit" [maintenance]="maintenance">
+  <app-add-edit-maintenance (close)="closeAddEdit()" [purchaseOrderId]="this.maintenanceDetails.id"
+    [display]="displayAddEdit" [maintenance]="maintenance" [models]="models">
   </app-add-edit-maintenance>
 </div>
+
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+  <p-footer>
+      <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Aceptar" 
+      (click)="cd.accept()"></button>
+      <button class= "ui-button-danger" type="button" pButton icon="pi pi-times" label="Cancelar" 
+      (click)="cd.reject()"></button>
+  </p-footer>
+</p-confirmDialog>

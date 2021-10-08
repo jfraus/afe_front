@@ -6,7 +6,7 @@ import { ModelControllerService } from 'src/app/services/model-controller.servic
 import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
-
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-add-edit-maintenance',
@@ -17,12 +17,13 @@ export class AddEditMaintenanceComponent implements OnInit {
   @Input() display: boolean;
   @Input() maintenance: Maintenance;
   @Output() close = new EventEmitter();
+  @Input() models: SelectItem[];  
   @Input() purchaseOrderId;
   title: string;
   titleButton: string;
   addMaintenance: FormGroup;
-  models: SelectItem[] = [];
   colors: SelectItem[] = [];
+  actualPedido : number;
 
   constructor(private formBuilder: FormBuilder, private modelControllerService: ModelControllerService,
     private modelColorService: ModelColorControllerService, private servicesPurchase: PurchaseOrdenControllerService,
@@ -33,20 +34,40 @@ export class AddEditMaintenanceComponent implements OnInit {
       id: [''],
       plant: [{ value: 'HCL', disabled: true }, [Validators.required]],
       modelType: [{ value: 'KK', disabled: true }, [Validators.required]],
-      model: [''],
-      color: [''],
+      model: ['', [Validators.required]],
+      color: ['', [Validators.required]],
       interiorColor: [{ value: '', disabled: true }, [Validators.required]],
-      cantidad: ['']
+      cantidad: ['', [Validators.required]],
     });
 
-    if (this.maintenance == null) {
-      this.title = "Agregar pedido";
-      this.titleButton = "Agregar";
-    } else {
+    if(!isNullOrUndefined(this.maintenance)) {
       this.title = "Editar pedido";
       this.titleButton = "Guardar";
-    }
-    this.loadModel(this.addMaintenance.get('modelType').value)
+      let model = this.models.find(data => data.label == this.maintenance.model);  
+      setTimeout(() => {
+        new Promise((resolved) => {                  
+          this.addMaintenance.get('model').setValue(model.value);          
+          this.loadColor(model.value);          
+          resolved(true);      
+        });
+      }, 600);
+
+      setTimeout(() => {
+        new Promise((resolved) => {            
+          this.loadColor(model.value);
+          let color = this.colors.find(data => data.label == this.maintenance.color);
+          this.addMaintenance.get('color').setValue(color.value);      
+          this.addMaintenance.get('interiorColor').setValue(color.value.interiorCode);
+        });
+      }, 800);     
+      this.actualPedido = this.maintenance.order;
+        this.addMaintenance.get('cantidad').setValue(this.maintenance.order);
+        this.addMaintenance.get('id').setValue(this.maintenance.purchaseOrderDetailId);
+    }else {
+      this.loadModel(this.addMaintenance.get('modelType').value);
+      this.title = "Agregar pedido";
+      this.titleButton = "Agregar";
+    }    
   }
 
   private loadModel(modelType: String): void {
@@ -81,10 +102,9 @@ export class AddEditMaintenanceComponent implements OnInit {
     }
   }
 
-  closed() {
-    
-    this.addMaintenance.reset();    
-    this.close.emit(true);    
+  closed() {    
+    this.close.emit(true);  
+    this.addMaintenance.reset();
   }
 
   add(maintenance: Maintenance) {    
@@ -98,10 +118,28 @@ export class AddEditMaintenanceComponent implements OnInit {
         color: this.addMaintenance.value.color,
         quantity: this.addMaintenance.value.cantidad
       };
-      this.servicesPurchase.postPurchaseOrderDetail(addDetail).subscribe((response) => {
-        this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con éxito' });
-        this.closed();
-      });
+      if(!isNullOrUndefined(this.maintenance)) {
+        if(this.addMaintenance.value.cantidad < this.actualPedido){
+          this.messageServices.add({ key: 'error', severity: 'info', summary: 'La cantidad no puede ser menor a la orinal' });          
+        }else{
+          this.servicesPurchase.putPurchaseOrderDetail(addDetail).subscribe((response) => {
+            this.messageServices.add({ key: 'error', severity: 'success', summary: 'Actualizado con éxito' });
+            this.changeStatus(this.purchaseOrderId);
+            this.closed();
+          });
+        }
+      }else{
+        this.servicesPurchase.postPurchaseOrderDetail(addDetail).subscribe((response) => {
+          this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con éxito' });
+          this.changeStatus(this.purchaseOrderId);
+          this.closed();
+        });
+      }
     }
   }
+
+  private changeStatus(purchaseOrderId: string){
+    this.servicesPurchase.changeStatusPurchaseOrderMaintenance(purchaseOrderId).subscribe((response) =>{  });
+  }
+  
 }
