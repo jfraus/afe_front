@@ -125,7 +125,7 @@
                   class="blue-grey-btn space-btn" (click)="ShowDetails(rowData)"></button>
 
                 <button pButton type="button" style="margin-left: 3px" icon="pi pi-exclamation-triangle"
-                  class="amber-btn" [routerLink]="['/maintenance']"></button>
+                  class="amber-btn" (click)=maintenance(rowData)></button>
               </div>              
             </ng-template>
           </td>
@@ -134,24 +134,28 @@
     </p-table>
   </div>
 </div>
-<div *ngIf="!visible && visibledetails && visibleEditable">
+<div *ngIf="!visible && visibledetails && visibleEditable && !visibleMaintenance">
   <generate-purchase-order-component (close)="closeGenerar()"></generate-purchase-order-component>
 </div>
 
-<div *ngIf="!visibledetails && !visible && visibleEditable">
+<div *ngIf="!visibledetails && !visible && visibleEditable && !visibleMaintenance">
   <detail-purchase-order-component (close)="CloseDetails()" [order]="order" [dateExpired]="fechaVencimientoSelected"
     [dateProductionMonth]="fechaProductionMonthSelected"></detail-purchase-order-component>
 </div>
 
-<div *ngIf="!visible && !visibleEditable && visibledetails">
+<div *ngIf="!visible && !visibleEditable && visibledetails && !visibleMaintenance">
   <edit-purchase-order-component (close)="CloseEditar()" [dateExpired]="fechaVencimientoSelected"
     [productionMonth]="fechaProductionMonthSelected" [order]="order"></edit-purchase-order-component>
 </div>
 
+<div *ngIf="!visible && visibleMaintenance">
+  <app-maintenance (close)="closeMaintenance()" [maintenanceDetails]="maintenanceDetails"></app-maintenance>
+</div>
+
 <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
   <p-footer>
-    <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Si"
+    <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Aceptar"
       (click)="cd.accept()"></button>
-    <button class="ui-button-danger" type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    <button class="ui-button-danger" type="button" pButton icon="pi pi-times" label="Cancelar" (click)="cd.reject()"></button>
   </p-footer>
 </p-confirmDialog>

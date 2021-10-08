@@ -80,11 +80,10 @@ export class PsProductComponent implements OnInit {
   }
 
   modelTypeSelect() {
-    this.modelService.getModelType().subscribe(data => {
-      this.modelTypeItems = data.map(r => (    
-        { label: r.type, value: r.id}
-      ));
-    });    
+    this.modelTypeItems =[
+      { label: 'KC', value: 'KC'},
+      { label: 'KK', value: 'KK'},
+      { label: 'KA', value: 'KA'}
+   ];   
   }
-
 }

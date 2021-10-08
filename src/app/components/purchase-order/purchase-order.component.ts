@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
@@ -6,7 +6,7 @@ import { AppValidationMessagesService } from 'src/app/utils/app-validation-messa
 import { FormatDate } from "src/app/utils/format-date";
 import { ModelControllerService } from 'src/app/services/model-controller.service';
 import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
-import { ignoreElements } from "rxjs/operators";
+import { PurchaseOrder } from "src/app/models/purchase-order.model";
 
 @Component({
     selector: 'purchase-order-component',
@@ -30,9 +30,11 @@ export class PurchaseOrderComponent implements OnInit {
     fechaProductionMonthSelected = new Date();
     fechaVencimientoSelected = new Date();
     visible: boolean = true;
+    visibleMaintenance: boolean = false;
     types = [];
     models = [];
     colors = [];
+    maintenanceDetails: any;
 
     constructor(public dateUtil: FormatDate, public confirmationService: ConfirmationService, public messageServices: MessageService, 
         private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService,
@@ -297,11 +299,35 @@ export class PurchaseOrderComponent implements OnInit {
         this.tableOrderFull();
     }
 
+    closeMaintenance(){
+        this.visible = true;
+        this.visibledetails = true;
+        this.visibleEditable = true;
+        this.visibleMaintenance =false;
+        this.tableOrderFull();
+    }
+
     sendAssignment(): void {
         this.service.sendAssignment().subscribe((response) => {
             this.messageServices.add({ key: 'error', severity: 'success', summary: 'Enviado!' });
         });
     }
 
+    maintenance(maintenance: PurchaseOrder) {
+        
+        this.confirmationService.confirm({
+            message: '¿Deseas dar mantenimiento a la orden de compra ' +maintenance.status +' '+maintenance.orderNumber+' ?',
+            header: 'Confirmación',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {        
+                this.maintenanceDetails = maintenance;
+                this.visible = false;
+                this.visibleMaintenance = true;              
+            },
+            reject: () => {
+
+            }
+          });         
+    }
 }
 
