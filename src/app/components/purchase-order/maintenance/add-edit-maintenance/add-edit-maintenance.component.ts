@@ -104,8 +104,7 @@ export class AddEditMaintenanceComponent implements OnInit {
 
   closed() {    
     this.close.emit(true);  
-    this.addMaintenance.reset();    
-    this.maintenance = null;
+    this.addMaintenance.reset();
   }
 
   add(maintenance: Maintenance) {    
@@ -125,15 +124,22 @@ export class AddEditMaintenanceComponent implements OnInit {
         }else{
           this.servicesPurchase.putPurchaseOrderDetail(addDetail).subscribe((response) => {
             this.messageServices.add({ key: 'error', severity: 'success', summary: 'Actualizado con éxito' });
+            this.changeStatus(this.purchaseOrderId);
             this.closed();
           });
         }
       }else{
         this.servicesPurchase.postPurchaseOrderDetail(addDetail).subscribe((response) => {
           this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con éxito' });
+          this.changeStatus(this.purchaseOrderId);
           this.closed();
         });
       }
     }
   }
+
+  private changeStatus(purchaseOrderId: string){
+    this.servicesPurchase.changeStatusPurchaseOrderMaintenance(purchaseOrderId).subscribe((response) =>{  });
+  }
+  
 }

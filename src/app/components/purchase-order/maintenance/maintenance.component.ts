@@ -63,6 +63,7 @@ export class MaintenanceComponent implements OnInit {
       this.loadingMaintenance = true;
       this.maintenanceList = response[0].detail;
         this.formGroup.get('totalOrder').setValue(response[0].unitsQuantity);
+        this.formGroup.get('status').setValue(response[0].status);
         this.loadingMaintenance = false;
     });
   }
@@ -86,17 +87,18 @@ export class MaintenanceComponent implements OnInit {
   }
 
   closeAddEdit() {
+    console.log("Cierra el Dialog");
     this.displayAddEdit=false;
-    this.getMaintenance(this.maintenanceDetails.id);
-    this.getHeaders()
+    setTimeout(() => { this.getMaintenance(this.maintenanceDetails.id)}, 100);
+    setTimeout(() => { this.getHeaders() }, 100);
   }
 
-  closeMaintenance(){
-    this.maintenance = null;
+ closeMaintenance(){
+    console.log("Si llega");
+    this.close.emit(true);  
+    this.maintenance = null;    
     this.displayAddEdit=false;   
-    this.maintenanceList =[];
-    //this.close.emit(true);
-     
+    this.maintenanceList =[];   
   }
     
   private loadModel(modelType: String): void {
