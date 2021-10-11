@@ -36,17 +36,19 @@ export class PeoplesoftReportComponent implements OnInit {
   }
 
   search() {
-    let startDate = this.datePipe.transform(this.formGroup.get('startDate').value, 'yyyyMMdd');
-    let endDate = this.datePipe.transform(this.formGroup.get('startDate').value, 'yyyyMMdd');
+    let startDate = this.datePipe.transform(this.formGroup.get('startDate').value, 'yyyy/MM/dd');
+    let endDate = this.datePipe.transform(this.formGroup.get('endDate').value, 'yyyy/MM/dd');
     let serie = this.formGroup.get('serie').value;
     this.visible = true;
     this.peopleSofService.getReport(serie, startDate, endDate).subscribe(data => {      
-      this.createFile(data, serie, startDate, endDate);
+      this.createFile(data, serie);
     });
   setTimeout(() => {  this.visible = false }, 300);
   }
 
-  createFile(data: peoplesoftReport[], serie: string, startDate: string, endDate: string) {
+  createFile(data: peoplesoftReport[], serie: string) {
+    let startDate = this.datePipe.transform(this.formGroup.get('startDate').value, 'yyyyMMdd');
+    let endDate = this.datePipe.transform(this.formGroup.get('endDate').value, 'yyyyMMdd');
     let fileName = "PS_" + startDate + "_" + endDate + "_" + serie;
     let workbook = new Excel.Workbook();
     let worksheet = workbook.addWorksheet(fileName);
