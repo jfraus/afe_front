@@ -37,7 +37,7 @@ export class PeoplesoftReportComponent implements OnInit {
 
   search() {
     let startDate = this.datePipe.transform(this.formGroup.get('startDate').value, 'yyyyMMdd');
-    let endDate = this.datePipe.transform(this.formGroup.get('startDate').value, 'yyyyMMdd');
+    let endDate = this.datePipe.transform(this.formGroup.get('endDate').value, 'yyyyMMdd');
     let serie = this.formGroup.get('serie').value;
     this.visible = true;
     this.peopleSofService.getReport(serie, startDate, endDate).subscribe(data => {      
