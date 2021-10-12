@@ -38,10 +38,10 @@ export class Hj2TravelComponent implements OnInit {
   sendTravel(hj2: Hj2Invoice) {
     this.loadingInvoice = true;
     this.hj2Service.getSendTravel(hj2.travelNumber, true).subscribe(data => { });    
-    this.hj2Service.createHj2ByInvoice(null, true, hj2.travelNumber).subscribe(data =>{ });
-    this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' });
+    this.hj2Service.createHj2ByInvoice(null, true, hj2.travelNumber).subscribe(data =>{ });    
     this.loadingInvoice = false;
-    setTimeout(() => {this.getInvoicesByTravel()}, 3000);
+    setTimeout(() => {this.getInvoicesByTravel()}, 6000);
+    this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' });
   }
 
   downloadTravel(hj2: Hj2Invoice) {
