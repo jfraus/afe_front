@@ -16,6 +16,7 @@ export class MaintenanceToVinComponent implements OnInit {
   formGroupInformation: FormGroup;
   invoices: SelectItem[] = [];
   searchButtonDisable: boolean;
+  editButtonDisable: boolean;
   loadingMaintenance: false;
   maintenanceVin: maintenanceVin[] = [];
   cols = [];
@@ -28,6 +29,7 @@ export class MaintenanceToVinComponent implements OnInit {
 
   private buildForm() {
     this.searchButtonDisable = false;
+    this.editButtonDisable = false;
     this.cols = [
       { field: 'vin', header: 'Vin' },
       { field: 'model', subfield: 'code', header: 'Modelo' },
@@ -118,11 +120,13 @@ export class MaintenanceToVinComponent implements OnInit {
           } else if (carrierType == 'O') {
             this.formGroupInformation.get('carrierType').setValue('Buque');
           }
-          console.log(this.maintenanceVin);
-
         }
       });
     }
+  }
+
+  editInformation(){
+
   }
 
 }

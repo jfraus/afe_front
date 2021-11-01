@@ -71,7 +71,7 @@
     </form>
     <div class="ui-g-12 ui-lg-4">
       <button pButton type="button" label="Editar embarque" icon="pi pi-pencil" class="teal-btn"
-        [disabled]="!searchButtonDisable" (click)="searchInformation()" style="width: auto"></button>
+        [disabled]="!editButtonDisable" (click)="editInformation()" style="width: auto"></button>
     </div>
   </div>
 </div>
@@ -86,6 +86,8 @@
             <th *ngFor="let col of columns" [pSortableColumn]="col.field">
               {{ col.header}}
             </th>
+            <th class="td-center">              
+          </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
