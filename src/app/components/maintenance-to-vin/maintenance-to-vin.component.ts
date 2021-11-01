@@ -57,26 +57,25 @@ export class MaintenanceToVinComponent implements OnInit {
       let travelNumber: number;
       travelNumber = Number(this.formatDate.formatDateToTravelNumber(this.formGroup.get('travelNumber').value));
       this.invoiceService.getMaintenanceInformation(travelNumber).subscribe(data => {
-        console.log(data);
-        if(data.length>0 ){
+        if (data.length > 0) {
           this.invoices = data.map(r => (
             { label: r.invoice, value: r.id }
           ));
-        }else{
+        } else {
           this.formGroup.get('invoice').reset();
-          this.resetView();          
+          this.resetView();
           this.messageServices.add({ key: 'error', severity: 'success', summary: 'No se encontró información' });
         }
       });
     } else {
       this.formGroup.get('invoice').reset();
-     this.resetView();
+      this.resetView();
     }
   }
 
-  resetView(){    
+  resetView() {
     this.formGroupInformation.reset();
-    this.maintenanceVin =[];
+    this.maintenanceVin = [];
     this.searchButtonDisable = false;
   }
 
@@ -86,7 +85,6 @@ export class MaintenanceToVinComponent implements OnInit {
     if (invoice != null) {
       this.searchButtonDisable = true;
     } else {
-      //this.searchButtonDisable = false;
       this.resetView();
     }
   }
@@ -125,7 +123,7 @@ export class MaintenanceToVinComponent implements OnInit {
     }
   }
 
-  editInformation(){
+  editInformation() {
 
   }
 
