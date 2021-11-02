@@ -5,7 +5,6 @@ import { maintenanceVin } from 'src/app/models/maintenance-vin.model';
 import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { FormatDate } from 'src/app/utils/format-date';
 import { CarrierControllerService } from 'src/app/services/carrier-controller.service';
-import { Carrier } from 'src/app/models/carrier.model';
 import { Seal} from 'src/app/models/seal.model';
 import { MaintenanceVinDetails } from 'src/app/models/maintenance-vin-details'
 

@@ -5,7 +5,7 @@
         <div class="ui-g-12 ui-lg-6">
           <span class="md-inputfield">
             <p-dropdown formControlName="carrierType" [options]="carrierTypes" [filter]="true" [autoDisplayFirst]="false"
-            [showClear]="true" appendTo="body"></p-dropdown>            
+            [showClear]="true" appendTo="body" (onChange)="selectedChange($event)"></p-dropdown>            
             <label>Tipo Carrier</label>
           </span>
         </div>
