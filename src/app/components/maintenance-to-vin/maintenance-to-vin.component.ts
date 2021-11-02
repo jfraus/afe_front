@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { MessageService, SelectItem } from 'primeng/api';
+import { MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 import { maintenanceVin } from 'src/app/models/maintenance-vin.model';
 import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { FormatDate } from 'src/app/utils/format-date';
@@ -11,7 +11,7 @@ import { MaintenanceVinDetails } from 'src/app/models/maintenance-vin-details'
 @Component({
   selector: 'app-maintenance-to-vin',
   templateUrl: './maintenance-to-vin.component.html',
-  providers: [InvoiceService, CarrierControllerService]
+  providers: [InvoiceService, CarrierControllerService, ConfirmationService]
 })
 export class MaintenanceToVinComponent implements OnInit {
 
@@ -23,14 +23,13 @@ export class MaintenanceToVinComponent implements OnInit {
   maintenanceVin: maintenanceVin[] = [];
   cols = [];
   displayEdit: boolean = false;
-  //carrier: Carrier;
   carrier: SelectItem[] = [];
   carrierTypes: SelectItem[] = [];
   seals: Seal[] = [];
   maintenanceVinDetails: MaintenanceVinDetails;
 
   constructor(private fb: FormBuilder, private invoiceService: InvoiceService, private formatDate: FormatDate,
-    private messageServices: MessageService, private carrierControllerService: CarrierControllerService) { }
+    private messageServices: MessageService, private carrierControllerService: CarrierControllerService, private confirmationService :ConfirmationService) { }
 
   ngOnInit() {
     this.buildForm();
@@ -143,11 +142,16 @@ export class MaintenanceToVinComponent implements OnInit {
   }
 
   editInformation() {
-    this.displayEdit = true;
+    this.confirmationService.confirm({
+      message: '¿Desea modificar la información de embarque para la factura '+this.formGroupInformation.get('platform').value+ '?',
+      accept: () => {
+        this.displayEdit = true;
+      }
+    });    
   }
 
   closeEdit() {
-
+    this.displayEdit = false;
   }
 
   getCarrier(carrierType: string) {

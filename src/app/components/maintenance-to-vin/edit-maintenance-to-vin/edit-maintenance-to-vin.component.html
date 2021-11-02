@@ -22,6 +22,8 @@
           <span class="md-inputfield">
             <input type="text" formControlName="platform" style="width: 100%" pInputText />
             <label>Plataforma</label>
+            <validations-input-component [formGroup]="formGroupInformation" formInputName="platform" 
+            [validation_messages]="validations"></validations-input-component>
           </span>
         </div>
       </div>
@@ -30,12 +32,16 @@
           <span class="md-inputfield">
             <input type="text" formControlName="seal1" style="width: 100%" pInputText />
             <label>Sello 1</label>
+            <validations-input-component [formGroup]="formGroupInformation" formInputName="seal1" 
+            [validation_messages]="validations"></validations-input-component>
           </span>
         </div>
         <div class="ui-g-12 ui-lg-6">
           <span class="md-inputfield">
             <input type="text" formControlName="seal2" style="width: 100%" pInputText />
             <label>Sello 2</label>
+            <validations-input-component [formGroup]="formGroupInformation" formInputName="seal2" 
+            [validation_messages]="validations"></validations-input-component>
           </span>
         </div>
       </div>
@@ -44,12 +50,16 @@
           <span class="md-inputfield">
             <input type="text" formControlName="seal3" style="width: 100%" pInputText />
             <label>Sello 3</label>
+            <validations-input-component [formGroup]="formGroupInformation" formInputName="seal3" 
+            [validation_messages]="validations"></validations-input-component>
           </span>
         </div>
         <div class="ui-g-12 ui-lg-6">
           <span class="md-inputfield">
             <input type="text" formControlName="seal4" style="width: 100%" pInputText />
             <label>Sello 4</label>
+            <validations-input-component [formGroup]="formGroupInformation" formInputName="seal4" 
+            [validation_messages]="validations"></validations-input-component>
           </span>
         </div>
       </div>

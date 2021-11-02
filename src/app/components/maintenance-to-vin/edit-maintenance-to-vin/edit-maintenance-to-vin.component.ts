@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { MessageService, SelectItem } from 'primeng/api';
 import { MaintenanceVinDetails } from 'src/app/models/maintenance-vin-details'
 import { CarrierControllerService } from 'src/app/services/carrier-controller.service';
+import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 
 @Component({
   selector: 'app-edit-maintenance-to-vin',
@@ -18,8 +19,10 @@ export class EditMaintenanceToVinComponent implements OnInit {
   @Input() carrierTypes: SelectItem[] = [];
   @Input() maintenanceVinDetails: MaintenanceVinDetails;
   formGroupInformation: FormGroup;
+  validations = [];
   
-  constructor(private fb: FormBuilder, private carrierControllerService: CarrierControllerService) { }
+  constructor(private fb: FormBuilder, private carrierControllerService: CarrierControllerService,
+    private validationMessages: AppValidationMessagesService) { }
 
   ngOnInit() {
     this.title="Editar información de embarque"
@@ -27,14 +30,14 @@ export class EditMaintenanceToVinComponent implements OnInit {
   }
 
   buildForm(){
-    this.formGroupInformation = this.fb.group({
-      carrier: new FormControl({ value: ''}),
-      carrierType: new FormControl({ value: ''}),
-      platform: new FormControl({ value: ''}),      
-      seal1: new FormControl({ value: ''}),
-      seal2: new FormControl({ value: ''}),
-      seal3: new FormControl({ value: ''}),
-      seal4: new FormControl({ value: ''})
+    this.formGroupInformation = this.fb.group({      
+      carrier: ['', [ Validators.required ]],
+      carrierType: ['', [ Validators.required ]],
+      platform: ['', [Validators.required, Validators.maxLength(10)]],
+      seal1: ['', [ Validators.maxLength(10)] ],
+      seal2: ['', [ Validators.maxLength(10)] ],
+      seal3: ['', [ Validators.maxLength(10)] ],
+      seal4: ['', [ Validators.maxLength(10)] ]
     });
    
     if(this.maintenanceVinDetails){
@@ -89,6 +92,29 @@ export class EditMaintenanceToVinComponent implements OnInit {
   closed() {
     this.close.emit(true);
     this.formGroupInformation.reset();
+  }
+
+  formValidations():void {
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '10';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('platform'));
+
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '10';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('seal1'));
+
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '10';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('seal2'));
+
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '10';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('seal3'));
+
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '10';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('seal4'));
+
   }
 
 }
