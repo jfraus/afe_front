@@ -1,0 +1,64 @@
+<p-dialog header={{title}} (onHide)="closed()" [(visible)]="display">
+  <div class="ui-g ui-fluid">
+    <form [formGroup]="formGroupInformation" class="form-group ui-g-12">
+      <div class="ui-g-12 ui-lg-12">
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <p-dropdown formControlName="carrierType" [options]="carrierTypes" [filter]="true" [autoDisplayFirst]="false"
+            [showClear]="true" appendTo="body"></p-dropdown>            
+            <label>Tipo Carrier</label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <p-dropdown formControlName="carrier" [options]="carrier" [filter]="true" [autoDisplayFirst]="false"
+            [showClear]="true" appendTo="body"></p-dropdown>            
+            <label>Carrier</label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-lg-12">
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <input type="text" formControlName="platform" style="width: 100%" pInputText />
+            <label>Plataforma</label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-lg-12">
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <input type="text" formControlName="seal1" style="width: 100%" pInputText />
+            <label>Sello 1</label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <input type="text" formControlName="seal2" style="width: 100%" pInputText />
+            <label>Sello 2</label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-lg-12">
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <input type="text" formControlName="seal3" style="width: 100%" pInputText />
+            <label>Sello 3</label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <input type="text" formControlName="seal4" style="width: 100%" pInputText />
+            <label>Sello 4</label>
+          </span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <p-footer>
+    <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Actualizar" [disabled]="!formGroupInformation.valid"
+    (click)="edit()"></button>
+    <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+    (click)="closed()"></button>
+</p-footer>
+</p-dialog>

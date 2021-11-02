@@ -1,7 +1,7 @@
 import { Model } from './model.model'
 import { Carrier } from './carrier.model'
 import { Color } from './color.model'
-import { seal } from './seal.model'
+import { Seal } from './seal.model'
 
 export interface maintenanceVin{
     contractNumber: String;
@@ -13,5 +13,5 @@ export interface maintenanceVin{
     carrier: Carrier;
     quantity: number;
 	totalUnitsAssigned: number;
-    seal: seal[];
+    seal: Seal[];
 }

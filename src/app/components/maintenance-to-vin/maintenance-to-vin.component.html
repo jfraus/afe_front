@@ -115,3 +115,9 @@
     </div>
   </div>
 </div>
+
+<div *ngIf="displayEdit">
+<app-edit-maintenance-to-vin (close)="closeEdit()" [display]="displayEdit" 
+  [carrier]=carrier [carrierTypes]= carrierTypes [maintenanceVinDetails] = maintenanceVinDetails>
+</app-edit-maintenance-to-vin>
+</div>
