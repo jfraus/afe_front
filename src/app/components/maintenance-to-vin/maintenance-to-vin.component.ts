@@ -48,7 +48,6 @@ export class MaintenanceToVinComponent implements OnInit {
     this.formGroup = this.fb.group({
       travelNumber: ['', []],
       invoice: ['', []]
-
     });
 
     this.formGroupInformation = this.fb.group({
@@ -77,6 +76,7 @@ export class MaintenanceToVinComponent implements OnInit {
           ));
         } else {
           this.formGroup.get('invoice').reset();
+          this.invoices =[];
           this.resetView();
           this.messageServices.add({ key: 'error', severity: 'success', summary: 'No se encontró información' });
         }
@@ -118,9 +118,9 @@ export class MaintenanceToVinComponent implements OnInit {
           data.vinList.forEach(d => {
             carrierName = d.carrier.name;
             carrierType = d.carrier.carrierType;
-            d.seal.forEach(e => {
-              seals = seals.concat(e.code.toString().concat(","));              
-            });
+          });
+          data.vinList[0].seal.forEach(e => { 
+            seals = seals.concat(e.code.toString().concat(","));              
           });
           this.formGroupInformation.get('carrier').setValue(carrierName);
           this.formGroupInformation.get('unitTotals').setValue(data.totalUnitsAssigned);
@@ -152,6 +152,7 @@ export class MaintenanceToVinComponent implements OnInit {
 
   closeEdit() {
     this.displayEdit = false;
+    this.searchInformation();
   }
 
   getCarrier(carrierType: string) {
