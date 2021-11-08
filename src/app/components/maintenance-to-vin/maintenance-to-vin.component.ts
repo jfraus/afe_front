@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
-import { MessageService, SelectItem } from 'primeng/api';
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 import { maintenanceVin } from 'src/app/models/maintenance-vin.model';
 import { InvoiceService } from 'src/app/services/invoice-controller.service';
 import { FormatDate } from 'src/app/utils/format-date';
+import { CarrierControllerService } from 'src/app/services/carrier-controller.service';
+import { Seal} from 'src/app/models/seal.model';
+import { MaintenanceVinDetails } from 'src/app/models/maintenance-vin-details'
 
 @Component({
   selector: 'app-maintenance-to-vin',
   templateUrl: './maintenance-to-vin.component.html',
-  providers: [InvoiceService]
+  providers: [InvoiceService, CarrierControllerService, ConfirmationService]
 })
 export class MaintenanceToVinComponent implements OnInit {
 
@@ -17,11 +20,16 @@ export class MaintenanceToVinComponent implements OnInit {
   invoices: SelectItem[] = [];
   searchButtonDisable: boolean;
   editButtonDisable: boolean;
-  loadingMaintenance: false;
   maintenanceVin: maintenanceVin[] = [];
   cols = [];
+  displayEdit: boolean = false;
+  carrier: SelectItem[] = [];
+  carrierTypes: SelectItem[] = [];
+  seals: Seal[] = [];
+  maintenanceVinDetails: MaintenanceVinDetails;
 
-  constructor(private fb: FormBuilder, private invoiceService: InvoiceService, private formatDate: FormatDate, public messageServices: MessageService) { }
+  constructor(private fb: FormBuilder, private invoiceService: InvoiceService, private formatDate: FormatDate,
+    private messageServices: MessageService, private carrierControllerService: CarrierControllerService, private confirmationService :ConfirmationService) { }
 
   ngOnInit() {
     this.buildForm();
@@ -40,7 +48,6 @@ export class MaintenanceToVinComponent implements OnInit {
     this.formGroup = this.fb.group({
       travelNumber: ['', []],
       invoice: ['', []]
-
     });
 
     this.formGroupInformation = this.fb.group({
@@ -50,6 +57,12 @@ export class MaintenanceToVinComponent implements OnInit {
       unitTotals: new FormControl({ value: '', disabled: true }),
       seals: new FormControl({ value: '', disabled: true })
     });
+
+    this.carrierTypes = [
+      { label: 'Truck', value: 'T' },
+      { label: 'Buque', value: 'O' },
+      { label: 'Rail', value: 'R' },
+    ];
   }
 
   onChanges(e): void {
@@ -63,6 +76,7 @@ export class MaintenanceToVinComponent implements OnInit {
           ));
         } else {
           this.formGroup.get('invoice').reset();
+          this.invoices =[];
           this.resetView();
           this.messageServices.add({ key: 'error', severity: 'success', summary: 'No se encontró información' });
         }
@@ -77,6 +91,7 @@ export class MaintenanceToVinComponent implements OnInit {
     this.formGroupInformation.reset();
     this.maintenanceVin = [];
     this.searchButtonDisable = false;
+    this.editButtonDisable = false;
   }
 
 
@@ -98,13 +113,14 @@ export class MaintenanceToVinComponent implements OnInit {
           let carrierName: string;
           let carrierType: string;
           let seals = "";
+          this.maintenanceVinDetails = data;
           this.maintenanceVin = data.vinList;
           data.vinList.forEach(d => {
             carrierName = d.carrier.name;
             carrierType = d.carrier.carrierType;
-            d.seal.forEach(e => {
-              seals = seals.concat(e.code.toString().concat(","));
-            });
+          });
+          data.vinList[0].seal.forEach(e => { 
+            seals = seals.concat(e.code.toString().concat(","));              
           });
           this.formGroupInformation.get('carrier').setValue(carrierName);
           this.formGroupInformation.get('unitTotals').setValue(data.totalUnitsAssigned);
@@ -118,13 +134,33 @@ export class MaintenanceToVinComponent implements OnInit {
           } else if (carrierType == 'O') {
             this.formGroupInformation.get('carrierType').setValue('Buque');
           }
+          this.editButtonDisable = true;
+          this.getCarrier(carrierType);
         }
       });
     }
   }
 
   editInformation() {
+    this.confirmationService.confirm({
+      message: '¿Desea modificar la información de embarque para la factura '+this.formGroupInformation.get('platform').value+ '?',
+      accept: () => {
+        this.displayEdit = true;
+      }
+    });    
+  }
 
+  closeEdit() {
+    this.displayEdit = false;
+    this.searchInformation();
+  }
+
+  getCarrier(carrierType: string) {
+    this.carrierControllerService.get(carrierType).subscribe(response => {
+      this.carrier = response.map(r => (
+        { label: r.name, value: r.id }
+      ));
+    });
   }
 
 }

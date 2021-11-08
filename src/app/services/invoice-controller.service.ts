@@ -6,7 +6,8 @@ import { PaymentTerm } from '../models/payment-term.model';
 import { InvoiceHeader } from '../models/invoice-header.model';
 import { InvoiceReport }from 'src/app/models/invoice-report.model';
 import { FormatDate } from '../utils/format-date'; 
-import { maintenanceVinDetails } from '../models/maintenance-vin-details'
+import { MaintenanceVinDetails } from '../models/maintenance-vin-details';
+import { MaintenanceVinUpdate } from 'src/app/models/maintenance-vin-update.model';
 
 @Injectable()
 export class InvoiceService {
@@ -47,7 +48,10 @@ export class InvoiceService {
   }  
 
   getMaintenanceDetailsInformation(invoice: String){
-    return this.http.get<maintenanceVinDetails>(`${environment.apiUrl}invoice/maintenance-details/?invoice=${invoice}`).pipe();
+    return this.http.get<MaintenanceVinDetails>(`${environment.apiUrl}invoice/maintenance-details/?invoice=${invoice}`).pipe();
   }
-
+  
+  updateMaintenanceDetailsInformation(maintenanceVinUpdate: MaintenanceVinUpdate){
+    return this.http.put<any>(`${environment.apiUrl}invoice/edit-maintenance`,maintenanceVinUpdate).pipe();
+  }
 }

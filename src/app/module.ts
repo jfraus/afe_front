@@ -139,7 +139,8 @@ import { ModelMasterCatalogComponent } from './components/model-master-catalog/m
 import { PeoplesoftReportComponent } from './components/peoplesoft-report/peoplesoft-report.component';
 import { MaintenanceComponent } from './components/purchase-order/maintenance/maintenance.component';
 import { AddEditMaintenanceComponent } from './components/purchase-order/maintenance/add-edit-maintenance/add-edit-maintenance.component';
-import  {MaintenanceToVinComponent } from './components/maintenance-to-vin/maintenance-to-vin.component';
+import { MaintenanceToVinComponent } from './components/maintenance-to-vin/maintenance-to-vin.component';
+import { EditMaintenanceToVinComponent } from './components/maintenance-to-vin/edit-maintenance-to-vin/edit-maintenance-to-vin.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -275,6 +276,7 @@ const sharedComponents = [
         MaintenanceComponent,
         AddEditMaintenanceComponent,
         MaintenanceToVinComponent,
+        EditMaintenanceToVinComponent,
         ...sharedComponents,
     ],
     providers: [

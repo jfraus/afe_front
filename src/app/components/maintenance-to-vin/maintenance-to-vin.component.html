@@ -8,7 +8,8 @@
             <div class="p-inputgroup">
               <span class="md-inputfield">
                 <p-calendar [style]="{ width: '100%' }" dateFormat="ymmdd" name="travelNumber" [showButtonBar]="true"
-                  formControlName="travelNumber" [inputStyle]="{ width: '100%' }" [showIcon]="true" (ngModelChange)="onChanges($event)"></p-calendar>
+                  formControlName="travelNumber" [inputStyle]="{ width: '100%' }" [showIcon]="true"
+                  (ngModelChange)="onChanges($event)"></p-calendar>
                 <label>No. de viaje</label>
               </span>
             </div>
@@ -86,8 +87,8 @@
             <th *ngFor="let col of columns" [pSortableColumn]="col.field">
               {{ col.header}}
             </th>
-            <th class="td-center">              
-          </th>
+            <th class="td-center">
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
@@ -114,4 +115,18 @@
       </p-table>
     </div>
   </div>
+</div>
+
+<p-confirmDialog #cd header="Confirmación" icon="pi pi-exclamation-triangle">
+  <p-footer>
+    <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Sí" (click)="cd.accept()">
+    </button>
+    <button class="ui-button-danger" type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<div *ngIf="displayEdit">
+  <app-edit-maintenance-to-vin (close)="closeEdit()" [display]="displayEdit" [carrier]=carrier
+    [carrierTypes]=carrierTypes [maintenanceVinDetails]=maintenanceVinDetails>
+  </app-edit-maintenance-to-vin>
 </div>
