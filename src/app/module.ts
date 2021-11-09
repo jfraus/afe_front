@@ -141,6 +141,7 @@ import { MaintenanceComponent } from './components/purchase-order/maintenance/ma
 import { AddEditMaintenanceComponent } from './components/purchase-order/maintenance/add-edit-maintenance/add-edit-maintenance.component';
 import { MaintenanceToVinComponent } from './components/maintenance-to-vin/maintenance-to-vin.component';
 import { EditMaintenanceToVinComponent } from './components/maintenance-to-vin/edit-maintenance-to-vin/edit-maintenance-to-vin.component';
+import { InvoiceCancellationComponent } from './components/invoice/invoice-cancellation/invoice-cancellation.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -277,6 +278,7 @@ const sharedComponents = [
         AddEditMaintenanceComponent,
         MaintenanceToVinComponent,
         EditMaintenanceToVinComponent,
+        InvoiceCancellationComponent,
         ...sharedComponents,
     ],
     providers: [
