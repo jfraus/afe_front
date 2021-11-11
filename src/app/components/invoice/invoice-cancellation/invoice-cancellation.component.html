@@ -109,8 +109,7 @@
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-lg-12">
       <div class="ui-g-12 ui-lg-12">
-        <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)" multiple="multiple"
-          accept="image/*" maxFileSize="1000000">
+        <p-fileUpload #form name="demo[]" customUpload="true" multiple="multiple" (uploadHandler)="myUploader($event, form)" accept=".xml">        
           <ng-template pTemplate="content">
             <ul *ngIf="uploadedFiles.length">
               <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>

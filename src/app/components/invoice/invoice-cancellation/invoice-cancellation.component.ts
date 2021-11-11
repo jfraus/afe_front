@@ -20,6 +20,9 @@ export class InvoiceCancellationComponent implements OnInit {
   cols = [];
   checked: boolean;
   uploadedFiles: any[] = [];
+  uplo: File;
+  contents: any = null;
+  filename: string;
 
   constructor(private fb: FormBuilder, private confirmationService :ConfirmationService) { }
 
@@ -78,9 +81,48 @@ export class InvoiceCancellationComponent implements OnInit {
 
   }
 
-  onUpload(e): void {
+  onUpload(event: any) {
+    for(let file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+  }
+
+  public myUploader(event, form) {    
+    for (const file of event.files) {
+      const dataset = this.readFile(file); 
+    }    
+    form.clear();
+  }
+
+  private readFile(file: File) {
+    const reader: FileReader = new FileReader();
+    reader.onload = () => {        
+        this.contents = reader.result;        
+        this.readData(reader.result);
+    };
+    reader.readAsText(file);
+    this.filename = file.name;
+  }
+
+  readData(contents: any){
+    var parser = new DOMParser();
+    let xmlDoc = parser.parseFromString(contents, 'text/xml');
+
+    let cfdiComprobante = xmlDoc.getElementsByTagName("cfdi:Comprobante")[0];    
+    let serie = cfdiComprobante.getAttribute('Serie');
+    let folio = cfdiComprobante.getAttribute('Folio');    
+
+    let cfdiComplemento = cfdiComprobante.getElementsByTagName("cfdi:Complemento")[0];
+    let fecha = cfdiComplemento.children[0].getAttribute('FechaTimbrado');
+    let uuid =  cfdiComplemento.children[0].getAttribute('UUID');
+
+    this.formGroupInformationInvoice.get('serie').setValue(serie);
+    this.formGroupInformationInvoice.get('folio').setValue(folio);
+    this.formGroupInformationInvoice.get('staampDate').setValue(fecha);
+    this.formGroupInformationInvoice.get('uuid').setValue(uuid);
 
   }
+
 
   cancelInvoice() {
     this.confirmationService.confirm({
