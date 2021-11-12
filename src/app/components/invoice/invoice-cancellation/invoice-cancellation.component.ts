@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 import { maintenanceVin } from 'src/app/models/maintenance-vin.model';
+import { CancellationInvoiceService } from 'src/app/services/cancellation-invoice.controller.service';
+import { FormatDate } from 'src/app/utils/format-date';
 
 @Component({
   selector: 'app-invoice-cancellation',
   templateUrl: './invoice-cancellation.component.html',
-  providers: [ConfirmationService]
+  providers: [ConfirmationService, CancellationInvoiceService]
 })
 export class InvoiceCancellationComponent implements OnInit {
 
@@ -14,6 +16,7 @@ export class InvoiceCancellationComponent implements OnInit {
   formGroupInformation: FormGroup;
   formGroupInformationInvoice: FormGroup;
   invoices: SelectItem[] = [];
+  typesCancellation: SelectItem[] = [];
   searchButtonDisable: boolean;
   cancellationInvoices: maintenanceVin[] = [];//Cambiar este tipo 
   loadingInvoices : boolean;
@@ -23,8 +26,10 @@ export class InvoiceCancellationComponent implements OnInit {
   uplo: File;
   contents: any = null;
   filename: string;
+  
 
-  constructor(private fb: FormBuilder, private confirmationService :ConfirmationService) { }
+  constructor(private fb: FormBuilder, private confirmationService :ConfirmationService, private cancellationService: CancellationInvoiceService,
+    private messageServices: MessageService, private formatDate: FormatDate) { }
 
   ngOnInit() {
     this.buildForm();
@@ -32,6 +37,7 @@ export class InvoiceCancellationComponent implements OnInit {
 
   buildForm() : void {
     this.searchButtonDisable = false;
+    this.getTypesCancellation();
 
     this.cols = [
       { field: 'vin', header: 'Factura' },
@@ -44,8 +50,6 @@ export class InvoiceCancellationComponent implements OnInit {
       { field: 'vin', header: 'Total de unidades' },
       { field: 'vin', header: 'Costo total' }
     ];
-
-
 
     this.formGroup = this.fb.group({
       invoiceDate: ['', []],
@@ -73,12 +77,50 @@ export class InvoiceCancellationComponent implements OnInit {
 
   }
 
-  onChanges(e): void {
-
+  getTypesCancellation(): void{
+    this.cancellationService.getCancellationType().subscribe(data => {
+      if(data.length > 0){
+        this.typesCancellation = data.map(p =>(
+          { label: p.description, value: p.cancellationType }
+        ));
+      }
+    });    
   }
 
-  selectedChange(e) :void{
+  onChanges(e): void {
+    if (this.formGroup.get('invoiceDate').value) {
+      let invoiceDate : String;      
+      invoiceDate = this.formatDate.formatDateToNumbersWithFormatt(this.formGroup.get('invoiceDate').value);      
+      console.log(invoiceDate);
+      this.cancellationService.getInvoices(invoiceDate).subscribe(data => {
+        if(data.length>0){
+          this.invoices = data.map(r =>(
+            { label: r.invoice, value: r.id }
+          ));
+        }else{
+          this.formGroup.get('invoice').reset();
+          this.invoices =[];
+          this.resetView();
+          this.messageServices.add({ key: 'error', severity: 'success', summary: 'No se encontró información'});
+        }
+      });
+    }else{
+      this.formGroup.get('invoice').reset();
+      this.resetView();
+    }
+  }
 
+  resetView():void {
+    this.searchButtonDisable = false;    
+  }
+
+  selectedChange(e) :void {
+    let invoice = this.formGroup.get('invoice').value
+    if (invoice != null) {
+      this.searchButtonDisable = true;
+    } else {
+      this.resetView();
+    }
   }
 
   onUpload(event: any) {
@@ -87,7 +129,7 @@ export class InvoiceCancellationComponent implements OnInit {
     }
   }
 
-  public myUploader(event, form) {    
+  myUploader(event, form) {    
     for (const file of event.files) {
       const dataset = this.readFile(file); 
     }    
@@ -122,7 +164,6 @@ export class InvoiceCancellationComponent implements OnInit {
     this.formGroupInformationInvoice.get('uuid').setValue(uuid);
 
   }
-
 
   cancelInvoice() {
     this.confirmationService.confirm({
