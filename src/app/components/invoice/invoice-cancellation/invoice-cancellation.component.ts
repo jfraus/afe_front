@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { MessageService, SelectItem, ConfirmationService } from 'primeng/api';
-import { maintenanceVin } from 'src/app/models/maintenance-vin.model';
+import { InvoiceHeader } from 'src/app/models/invoice-header.model';
 import { CancellationInvoiceService } from 'src/app/services/cancellation-invoice.controller.service';
 import { FormatDate } from 'src/app/utils/format-date';
 
@@ -18,7 +18,7 @@ export class InvoiceCancellationComponent implements OnInit {
   invoices: SelectItem[] = [];
   typesCancellation: SelectItem[] = [];
   searchButtonDisable: boolean;
-  cancellationInvoices: maintenanceVin[] = [];//Cambiar este tipo 
+  cancellationInvoices: InvoiceHeader;
   loadingInvoices : boolean;
   cols = [];
   checked: boolean;
@@ -40,15 +40,15 @@ export class InvoiceCancellationComponent implements OnInit {
     this.getTypesCancellation();
 
     this.cols = [
-      { field: 'vin', header: 'Factura' },
-      { field: 'vin', header: 'Fecha de factura' },
-      { field: 'vin', header: 'Plataforma' },
-      { field: 'vin', header: 'Cliente' },
-      { field: 'vin', header: 'No de viaje' },
-      { field: 'vin', header: 'Type' },
-      { field: 'vin', header: 'Destino' },
-      { field: 'vin', header: 'Total de unidades' },
-      { field: 'vin', header: 'Costo total' }
+      { field: 'invoice', header: 'Factura' },
+      { field: 'invoiceDate', header: 'Fecha de factura' },
+      { field: 'shipment', header: 'Plataforma' },
+      { field: 'client', subfield: 'name', header: 'Cliente' },
+      { field: 'noViaje', header: 'No de viaje' },
+      { field: 'modelType', header: 'Type' },
+      { field: 'destino', header: 'Destino' },
+      { field: 'totalUnits', header: 'Total de unidades' },
+      { field: 'costTotal', header: 'Costo total' }
     ];
 
     this.formGroup = this.fb.group({
@@ -74,7 +74,14 @@ export class InvoiceCancellationComponent implements OnInit {
   }
 
   searchInformation(): void {
-
+    if(this.formGroup.valid) {
+      let  invoice = this.formGroup.get('invoice').value;
+      this.cancellationService.getInvoices(invoice).subscribe(data => {
+        if(data != null){
+          this.cancellationInvoices = data;          
+        }
+      });
+    }
   }
 
   getTypesCancellation(): void{
@@ -90,9 +97,8 @@ export class InvoiceCancellationComponent implements OnInit {
   onChanges(e): void {
     if (this.formGroup.get('invoiceDate').value) {
       let invoiceDate : String;      
-      invoiceDate = this.formatDate.formatDateToNumbersWithFormatt(this.formGroup.get('invoiceDate').value);      
-      console.log(invoiceDate);
-      this.cancellationService.getInvoices(invoiceDate).subscribe(data => {
+      invoiceDate = this.formatDate.formatDateToNumbersWithFormatt(this.formGroup.get('invoiceDate').value);
+      this.cancellationService.getInvoicesActive(invoiceDate).subscribe(data => {
         if(data.length>0){
           this.invoices = data.map(r =>(
             { label: r.invoice, value: r.id }
