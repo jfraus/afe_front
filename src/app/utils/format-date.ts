@@ -57,4 +57,9 @@ export class FormatDate {
         return `${this.getShortYear(date)}${this.getMonth(date)}${this.getDay(date)}`
     }
 
+    formatDateToNumbersWithFormatt(date: Date) {
+        let dateOutput = new Date(date);
+        return `${dateOutput.getFullYear()}-${this.getMonth(date)}-${this.getDay(date)}`
+    }
+
 }

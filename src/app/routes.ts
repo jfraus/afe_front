@@ -29,6 +29,7 @@ import { PeoplesoftReportComponent } from './components/peoplesoft-report/people
 import { MaintenanceComponent } from './components/purchase-order/maintenance/maintenance.component';
 import { MaintenanceToVinComponent } from './components/maintenance-to-vin/maintenance-to-vin.component';
 import { EditMaintenanceToVinComponent } from './components/maintenance-to-vin/edit-maintenance-to-vin/edit-maintenance-to-vin.component';
+import { InvoiceCancellationComponent } from './components/invoice/invoice-cancellation/invoice-cancellation.component';
 
 export const routes: Routes = [
     { path: '',
@@ -57,7 +58,8 @@ export const routes: Routes = [
         {path: 'model-master', component: ModelMasterCatalogComponent},
         {path: 'peoplesoft-report', component: PeoplesoftReportComponent},
         {path: 'maintenance', component: MaintenanceComponent},
-        {path: 'maintenance-to-vin', component: MaintenanceToVinComponent}        
+        {path: 'maintenance-to-vin', component: MaintenanceToVinComponent},
+        {path: 'cancellation-invoice', component: InvoiceCancellationComponent}        
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},

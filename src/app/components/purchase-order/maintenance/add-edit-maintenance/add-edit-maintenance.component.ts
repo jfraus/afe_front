@@ -120,7 +120,7 @@ export class AddEditMaintenanceComponent implements OnInit {
       };
       if(!isNullOrUndefined(this.maintenance)) {
         if(this.addMaintenance.value.cantidad < this.actualPedido){
-          this.messageServices.add({ key: 'error', severity: 'info', summary: 'La cantidad no puede ser menor a la orinal' });          
+          this.messageServices.add({ key: 'error', severity: 'info', summary: 'La cantidad no puede ser menor a la original' });          
         }else{
           this.servicesPurchase.putPurchaseOrderDetail(addDetail).subscribe((response) => {
             this.messageServices.add({ key: 'error', severity: 'success', summary: 'Actualizado con éxito' });
