@@ -27,6 +27,7 @@ import { PeoplesoftCatalogComponent } from './components/peoplesoft-catalog/peop
 import { ModelMasterCatalogComponent } from './components/model-master-catalog/model-master-catalog.component';
 import { PeoplesoftReportComponent } from './components/peoplesoft-report/peoplesoft-report.component';
 import { MaintenanceComponent } from './components/purchase-order/maintenance/maintenance.component';
+import { InvoiceCancelComponent } from './components/invoice/invoice-cancel/invoice-cancel.component';
 
 export const routes: Routes = [
     { path: '',
@@ -54,7 +55,8 @@ export const routes: Routes = [
         {path: 'peoplesoft', component: PeoplesoftCatalogComponent},
         {path: 'model-master', component: ModelMasterCatalogComponent},
         {path: 'peoplesoft-report', component: PeoplesoftReportComponent},
-        {path: 'maintenance', component: MaintenanceComponent}
+        {path: 'maintenance', component: MaintenanceComponent},
+        {path: 'cancellation-invoice-report', component: InvoiceCancelComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
