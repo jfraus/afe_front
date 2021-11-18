@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 import { InvoiceHeader } from 'src/app/models/invoice-header.model';
 import { CancellationInvoiceService } from 'src/app/services/cancellation-invoice.controller.service';
 import { FormatDate } from 'src/app/utils/format-date';
+import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 
 @Component({
   selector: 'app-invoice-cancellation',
@@ -18,6 +19,9 @@ export class InvoiceCancellationComponent implements OnInit {
   invoices: SelectItem[] = [];
   typesCancellation: SelectItem[] = [];
   searchButtonDisable: boolean;
+  cancellButtonDisable: boolean;
+  fileUploadDisable: boolean;
+  checkboxDisable: boolean;
   cancellationInvoices: InvoiceHeader;
   loadingInvoices : boolean;
   cols = [];
@@ -26,10 +30,11 @@ export class InvoiceCancellationComponent implements OnInit {
   uplo: File;
   contents: any = null;
   filename: string;
+  validations = [];
   
 
   constructor(private fb: FormBuilder, private confirmationService :ConfirmationService, private cancellationService: CancellationInvoiceService,
-    private messageServices: MessageService, private formatDate: FormatDate) { }
+    private messageServices: MessageService, private formatDate: FormatDate,private validationMessages: AppValidationMessagesService) { }
 
   ngOnInit() {
     this.buildForm();
@@ -37,7 +42,10 @@ export class InvoiceCancellationComponent implements OnInit {
 
   buildForm() : void {
     this.searchButtonDisable = false;
+    this.cancellButtonDisable =false;
+    this.fileUploadDisable = false;
     this.getTypesCancellation();
+    this.formValidations();
 
     this.cols = [
       { field: 'invoice', header: 'Factura' },
@@ -57,11 +65,10 @@ export class InvoiceCancellationComponent implements OnInit {
     });
 
     this.formGroupInformation = this.fb.group({
-      motive: ['', []],
-      typeCancellation: ['', []],
-      cofidiInvoice: ['', []],
-      manualInvoice: ['', []]
-
+      motive: new FormControl({value: '', disabled: true}, [Validators.required, Validators.maxLength(500)]),      
+      typeCancellation: new FormControl({value: '', disabled: true}, [Validators.required]),
+      cofidiInvoice: new FormControl({ value: '', disabled: true }),
+      manualInvoice: new FormControl({value: '', disabled: true}, [Validators.required, Validators.maxLength(20)]),
     });
 
     this.formGroupInformationInvoice = this.fb.group( {
@@ -73,15 +80,77 @@ export class InvoiceCancellationComponent implements OnInit {
 
   }
 
+  selectedCheckBox(e):void {
+    if(this.formGroupInformation.get('cofidiInvoice').value){            
+      this.formGroupInformation.get('manualInvoice').enable();      
+    }else{
+      this.formGroupInformation.get('manualInvoice').disable();
+      this.formGroupInformation.get('manualInvoice').setValue('');
+    }
+  }
+
+  formValidations(): void {
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '500';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('motive'));
+
+    this.validationMessages.messagesRequired = 'true';    
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('typeCancellation'));
+
+    this.validationMessages.messagesRequired = 'true';
+    this.validationMessages.messagesMaxLenght = '20';
+    this.validations.push(this.validationMessages.getValidationMessagesWithName('manualInvoice'));
+  }
+
   searchInformation(): void {
     if(this.formGroup.valid) {
       let  invoice = this.formGroup.get('invoice').value;
+      this.loadingInvoices = true;
       this.cancellationService.getInvoices(invoice).subscribe(data => {
         if(data != null){
-          this.cancellationInvoices = data;          
+          this.cancellationInvoices = data;
+          this.loadingInvoices = false;
+          this.formGroupInformation.enable();
+          this.formGroupInformation.get('manualInvoice').disable()
+          this.cancellButtonDisable =true;
+          this.filterTypeCancellation(data);
         }
       });
     }
+  }
+
+  filterTypeCancellation(invoiceDate: any){
+    console.log(invoiceDate[0].invoiceDate);
+  }
+
+  cancellInvoiceInformation(): void {
+    let invoice = this.invoices.find(d => d.value = this.formGroup.get('invoice').value).label;        
+    this.confirmationService.confirm({
+      message: '¿Desea cancelar la factura '+invoice+'?',
+      accept: () => {
+        this.cancellInvoice(invoice);      
+      }
+    });    
+  }
+
+  cancellInvoice(invoice: any): void{
+      let cancelledInvoice ={
+        id: null,
+        cancelledInvoice:invoice,
+        newInvoice: null,
+        cancellationType: this.formGroupInformation.get('typeCancellation').value,
+        cancellationDate: null,
+        cancellationReason: this.formGroupInformation.get('motive').value,
+        noteSerie: this.formGroupInformationInvoice.get('serie').value,
+        noteFolio:this.formGroupInformationInvoice.get('folio').value,
+        noteDateCancelation: this.formGroupInformationInvoice.get('staampDate').value,
+        noteUuid: this.formGroupInformationInvoice.get('uuid').value,
+        canceledManualInvoice: this.formGroupInformation.get('manualInvoice').value,
+      }
+      console.log(cancelledInvoice);
+      this.cancellationService.cancellationInvoice(cancelledInvoice).subscribe(data => {
+        this.messageServices.add({key: 'error', severity:'success', summary: 'La factura'+invoice+' ha sido cancelada'});
+      });          
   }
 
   getTypesCancellation(): void{
@@ -117,7 +186,8 @@ export class InvoiceCancellationComponent implements OnInit {
   }
 
   resetView():void {
-    this.searchButtonDisable = false;    
+    this.searchButtonDisable = false;  
+    this.cancellButtonDisable =false;  
   }
 
   selectedChange(e) :void {
@@ -126,6 +196,16 @@ export class InvoiceCancellationComponent implements OnInit {
       this.searchButtonDisable = true;
     } else {
       this.resetView();
+    }
+  }
+
+  selectedTypeChange(e) :void {
+    let d = this.typesCancellation.find(d => d.value == this.formGroupInformation.get('typeCancellation').value);    
+    if(d.label =='Nota Crédito' || d.label =='Nota Débito'){
+      this.fileUploadDisable = true;
+    }else{
+      this.fileUploadDisable = false;
+      this.formGroupInformationInvoice.reset();
     }
   }
 
@@ -168,16 +248,6 @@ export class InvoiceCancellationComponent implements OnInit {
     this.formGroupInformationInvoice.get('folio').setValue(folio);
     this.formGroupInformationInvoice.get('staampDate').setValue(fecha);
     this.formGroupInformationInvoice.get('uuid').setValue(uuid);
+  }  
 
-  }
-
-  cancelInvoice() {
-    this.confirmationService.confirm({
-      message: '¿Desea cancelar la factura ?',
-      accept: () => {
-        //this.displayEdit = true;
-      }
-    });    
-  }
-  
 }
