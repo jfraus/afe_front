@@ -113,14 +113,18 @@ export class InvoiceCancellationComponent implements OnInit {
           this.formGroupInformation.enable();
           this.formGroupInformation.get('manualInvoice').disable()
           this.cancellButtonDisable =true;
-          this.filterTypeCancellation(data);
+          this.filterTypeCancellation( this.cancellationInvoices[0].invoiceDate);
         }
       });
     }
   }
 
-  filterTypeCancellation(invoiceDate: any){
-    console.log(invoiceDate[0].invoiceDate);
+  filterTypeCancellation(invoiceDate: Date){      
+    let currentMonth = this.formatDate.getMonth(new Date());    
+    let invoiceMonth = this.formatDate.getMonth(new Date(invoiceDate));
+    if(currentMonth != invoiceMonth){      
+     this.typesCancellation = this.typesCancellation.filter(obj => obj.label != 'Sustitución Factura');
+    }
   }
 
   cancellInvoiceInformation(): void {
@@ -147,7 +151,7 @@ export class InvoiceCancellationComponent implements OnInit {
         noteUuid: this.formGroupInformationInvoice.get('uuid').value,
         canceledManualInvoice: this.formGroupInformation.get('manualInvoice').value,
       }
-      console.log(cancelledInvoice);
+      //console.log(cancelledInvoice);
       this.cancellationService.cancellationInvoice(cancelledInvoice).subscribe(data => {
         this.messageServices.add({key: 'error', severity:'success', summary: 'La factura'+invoice+' ha sido cancelada'});
       });          
@@ -206,6 +210,7 @@ export class InvoiceCancellationComponent implements OnInit {
     }else{
       this.fileUploadDisable = false;
       this.formGroupInformationInvoice.reset();
+      this.formGroupInformation.get('cofidiInvoice').disable();
     }
   }
 

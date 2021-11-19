@@ -15,5 +15,6 @@ export interface InvoiceHeader{
     quoteId: number,
     duplicate: string,
     typeShipmentId: number,
-    cityId: number
+    cityId: number,
+    invoiceDate: Date;
 }
