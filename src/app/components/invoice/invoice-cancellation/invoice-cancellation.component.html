@@ -72,8 +72,9 @@
       <div class="ui-g-12 ui-lg-12">
         <div class="ui-g-12 ui-lg-12">
           <span class="ui-float-label md-inputfield">
-            <textarea formControlName="motive" [rows]="3" [cols]="60" pInputTextarea></textarea>
-            <label>Motivo</label>
+            <textarea formControlName="motive" [rows]="3" [cols]="60" pInputTextarea></textarea>            
+            <label>Motivo *</label>
+            <validations-input-component [formGroup]="formGroupInformation" formInputName="motive" [validation_messages]="validations"></validations-input-component>
           </span>
         </div>
       </div>
@@ -81,24 +82,26 @@
         <div class="ui-g-12 ui-lg-3">
           <span class="md-inputfield">
             <p-dropdown formControlName="typeCancellation" [options]="typesCancellation" [filter]="true"
-              [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectedChange($event)">
+              [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectedTypeChange($event)">
             </p-dropdown>
-            <label>Tipo de cancelación</label>
+            <label>Tipo de cancelación *</label>
+            <validations-input-component [formGroup]="formGroupInformation" formInputName="typeCancellation" [validation_messages]="validations"></validations-input-component>
           </span>
         </div>
       </div>
       <div class="ui-g-12 ui-lg-12">
         <div class="ui-g-12 ui-lg-3">
           <span class="p-field-checkbox">
-            <p-checkbox formControlName="cofidiInvoice" [(ngModel)]="checked" binary="true" inputId="binary">
+            <p-checkbox formControlName="cofidiInvoice" [(ngModel)]="checked" binary="true" inputId="binary" (onChange)="selectedCheckBox($event)">
             </p-checkbox>
             <label>Factura manual en COFIDI </label>
           </span>
         </div>
         <div class="ui-g-12 ui-lg-3">
           <span class="md-inputfield">
-            <input type="text" formControlName="manualInvoice" style="width: 100%" pInputText />
+            <input type="text" formControlName="manualInvoice" style="width: 100%" pInputText/>
             <label>Folio factura manual</label>
+            <validations-input-component [formGroup]="formGroupInformation" formInputName="manualInvoice" [validation_messages]="validations"></validations-input-component>
           </span>
         </div>
       </div>
@@ -108,14 +111,14 @@
 <div class="card">
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 ui-lg-12">
-      <div class="ui-g-12 ui-lg-12">
-        <p-fileUpload #form name="demo[]" customUpload="true" multiple="multiple" (uploadHandler)="myUploader($event, form)" accept=".xml">        
-          <ng-template pTemplate="content">
-            <ul *ngIf="uploadedFiles.length">
-              <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
-            </ul>
-          </ng-template>
-        </p-fileUpload>
+      <div class="ui-g-12 ui-lg-12">        
+          <p-fileUpload #form name="demo[]" customUpload="true" multiple="multiple" (uploadHandler)="myUploader($event, form)" accept=".xml" [disabled]="!fileUploadDisable">
+            <ng-template pTemplate="content">
+              <ul *ngIf="uploadedFiles.length">
+                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+              </ul>
+            </ng-template>
+          </p-fileUpload>      
       </div>
     </div>
     <form [formGroup]="formGroupInformationInvoice" class="form-group ui-g-12">
@@ -149,6 +152,14 @@
       </div>
     </form>
   </div>
+</div>
+<div class="ui-g ui-fluid">  
+    <div class="ui-g-12 ui-lg-12">
+      <div class="ui-g-12 ui-lg-12">
+        <button pButton class="ui-button-danger" type="button" label="Cancelar factura" icon="pi pi-times"
+        [disabled]="!cancellButtonDisable" (click)="cancellInvoiceInformation()" style="width: auto"></button>
+      </div>      
+    </div>    
 </div>
 
 <p-confirmDialog #cd header="Confirmación" icon="pi pi-exclamation-triangle">
