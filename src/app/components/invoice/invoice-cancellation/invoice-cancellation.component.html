@@ -73,7 +73,7 @@
         <div class="ui-g-12 ui-lg-12">
           <span class="ui-float-label md-inputfield">
             <textarea formControlName="motive" [rows]="3" [cols]="60" pInputTextarea></textarea>            
-            <label>Motivo</label>
+            <label>Motivo *</label>
             <validations-input-component [formGroup]="formGroupInformation" formInputName="motive" [validation_messages]="validations"></validations-input-component>
           </span>
         </div>
@@ -84,7 +84,7 @@
             <p-dropdown formControlName="typeCancellation" [options]="typesCancellation" [filter]="true"
               [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectedTypeChange($event)">
             </p-dropdown>
-            <label>Tipo de cancelación</label>
+            <label>Tipo de cancelación *</label>
             <validations-input-component [formGroup]="formGroupInformation" formInputName="typeCancellation" [validation_messages]="validations"></validations-input-component>
           </span>
         </div>

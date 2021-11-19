@@ -112,7 +112,7 @@ export class InvoiceCancellationComponent implements OnInit {
           this.loadingInvoices = false;
           this.formGroupInformation.enable();
           this.formGroupInformation.get('manualInvoice').disable()
-          this.cancellButtonDisable =true;
+          this.cancellButtonDisable = true;
           this.filterTypeCancellation( this.cancellationInvoices[0].invoiceDate);
         }
       });
@@ -137,24 +137,37 @@ export class InvoiceCancellationComponent implements OnInit {
     });    
   }
 
-  cancellInvoice(invoice: any): void{
-      let cancelledInvoice ={
-        id: null,
-        cancelledInvoice:invoice,
-        newInvoice: null,
-        cancellationType: this.formGroupInformation.get('typeCancellation').value,
-        cancellationDate: null,
-        cancellationReason: this.formGroupInformation.get('motive').value,
-        noteSerie: this.formGroupInformationInvoice.get('serie').value,
-        noteFolio:this.formGroupInformationInvoice.get('folio').value,
-        noteDateCancelation: this.formGroupInformationInvoice.get('staampDate').value,
-        noteUuid: this.formGroupInformationInvoice.get('uuid').value,
-        canceledManualInvoice: this.formGroupInformation.get('manualInvoice').value,
-      }
-      //console.log(cancelledInvoice);
-      this.cancellationService.cancellationInvoice(cancelledInvoice).subscribe(data => {
-        this.messageServices.add({key: 'error', severity:'success', summary: 'La factura'+invoice+' ha sido cancelada'});
-      });          
+  cancellInvoice(invoice: any): void{    
+    if(this.formGroupInformation.get('motive').value && this.formGroupInformation.get('typeCancellation').value){
+     if(this.formGroupInformation.get('typeCancellation').value != '04' && this.formGroupInformationInvoice.get('serie').value == ''){
+      this.messageServices.add({key: 'error', severity:'error', summary: 'Por favor ingresar la información de la factura requerida'});
+      }else{
+        let cancelledInvoice ={
+          id: null,
+          cancelledInvoice:invoice,
+          newInvoice: null,
+          cancellationType: this.formGroupInformation.get('typeCancellation').value,
+          cancellationDate: null,
+          cancellationReason: this.formGroupInformation.get('motive').value,
+          noteSerie: this.formGroupInformationInvoice.get('serie').value,
+          noteFolio:this.formGroupInformationInvoice.get('folio').value,
+          noteDateCancelation: this.formGroupInformationInvoice.get('staampDate').value,
+          noteUuid: this.formGroupInformationInvoice.get('uuid').value,
+          canceledManualInvoice: this.formGroupInformation.get('manualInvoice').value,
+        }
+         this.cancellationService.cancellationInvoice(cancelledInvoice).subscribe(data => {
+          this.messageServices.add({key: 'error', severity:'success', summary: 'La factura '+invoice+' ha sido cancelada'});
+          this.formGroup.reset();
+          this.formGroupInformation.reset();
+          this.formGroupInformationInvoice.reset();
+          this.cancellationInvoices =null;
+          this.fileUploadDisable = false;
+          this.resetView();
+        });
+      }               
+    }else{
+      this.messageServices.add({key: 'error', severity:'error', summary: 'Por favor ingresar la información requerida'});
+    } 
   }
 
   getTypesCancellation(): void{
