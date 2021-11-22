@@ -1,0 +1,132 @@
+<div class="card">
+  <div class="card-title">Mantenimiento a VIN | Información de embarque</div>
+  <div class="ui-g ui-fluid">
+    <form [formGroup]="formGroup" class="form-group ui-g-12" (ngSubmit)="searchInformation()">
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="ui-g-12 ui-lg-12">
+          <div class="ui-g-12 ui-lg-4">
+            <div class="p-inputgroup">
+              <span class="md-inputfield">
+                <p-calendar [style]="{ width: '100%' }" dateFormat="ymmdd" name="travelNumber" [showButtonBar]="true"
+                  formControlName="travelNumber" [inputStyle]="{ width: '100%' }" [showIcon]="true"
+                  (ngModelChange)="onChanges($event)"></p-calendar>
+                <label>No. de viaje</label>
+              </span>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <span class="md-inputfield">
+              <p-dropdown formControlName="invoice" [options]="invoices" [filter]="true" [autoDisplayFirst]="false"
+                [showClear]="true" appendTo="body" (onChange)="selectedChange($event)"></p-dropdown>
+              <label>Factura cancelada</label>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-lg-4">
+            <button pButton type="button" label="Buscar" icon="pi pi-search" class="teal-btn"
+              [disabled]="!searchButtonDisable" (click)="searchInformation()" style="width: auto"></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="card">
+  <div class="ui-g ui-fluid">
+    <form [formGroup]="formGroupInformation" class="form-group ui-g-12">
+      <div class="ui-g-12 ui-lg-12">
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <input type="text" formControlName="carrier" style="width: 100%" pInputText />
+            <label>Carrier</label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <input type="text" formControlName="carrierType" style="width: 100%" pInputText />
+            <label>Tipo de carrier</label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-lg-12">
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <input type="text" formControlName="platform" style="width: 100%" pInputText />
+            <label>Plataforma</label>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-lg-6">
+          <span class="md-inputfield">
+            <input type="text" formControlName="unitTotals" style="width: 100%" pInputText />
+            <label>Total de unidades</label>
+          </span>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-lg-12">
+        <div class="ui-g-12 ui-lg-12">
+          <span class="md-inputfield">
+            <input type="text" formControlName="seals" style="width: 100%" pInputText />
+            <label>Sellos</label>
+          </span>
+        </div>
+      </div>
+    </form>
+    <div class="ui-g-12 ui-lg-4">
+      <button pButton type="button" label="Editar embarque" icon="pi pi-pencil" class="teal-btn"
+        [disabled]="!editButtonDisable" (click)="editInformation()" style="width: auto"></button>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-lg-12">
+      <p-table #dt [columns]="cols" selectionMode="single" [value]="maintenanceVin" [loading]="loadingMaintenance"
+        sortMode="single" [responsive]="true" [rowHover]="true" [paginator]="true"
+        [rowsPerPageOptions]="[10, 20, 30, 40, 50]" [autoLayout]="true" [rows]="20" [pageLinks]="20" [filterDelay]="0">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{ col.header}}
+            </th>
+            <th class="td-center">
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="text-align: center" [attr.colspan]="columns.length + 2">
+              No se encontró información
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+              <span *ngIf="col.subfield === undefined; else elseBlock">
+                {{rowData[col.field]}}
+              </span>
+              <ng-template #elseBlock>
+                {{rowData[col.field] [col.subfield]}}
+              </ng-template>
+            </td>
+            <td>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-confirmDialog #cd header="Confirmación" icon="pi pi-exclamation-triangle">
+  <p-footer>
+    <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Sí" (click)="cd.accept()">
+    </button>
+    <button class="ui-button-danger" type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<div *ngIf="displayEdit">
+  <app-edit-maintenance-to-vin (close)="closeEdit()" [display]="displayEdit" [carrier]=carrier
+    [carrierTypes]=carrierTypes [maintenanceVinDetails]=maintenanceVinDetails>
+  </app-edit-maintenance-to-vin>
+</div>

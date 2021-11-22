@@ -13,7 +13,7 @@ export class FormatDate {
     }
 
     getMonth(date: Date){
-        return date.getMonth() < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1;
+        return (date.getMonth()+1) < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1;
     }
 
     getDay(date: Date){
@@ -26,6 +26,10 @@ export class FormatDate {
 
     getSeconds(date: Date) {
         return date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+    }
+
+    getShortYear(date: Date){
+        return date.getFullYear().toString().substring(2,4);
     }
 
     formatDateWithoutTime(date: string){
@@ -47,6 +51,15 @@ export class FormatDate {
     formatDateToNumbers(date: Date) {
         let dateOutput = new Date(date);
         return `${dateOutput.getFullYear()}${this.getMonth(date)}${this.getDay(date)}`
+    }
+
+    formatDateToTravelNumber(date: Date){
+        return `${this.getShortYear(date)}${this.getMonth(date)}${this.getDay(date)}`
+    }
+
+    formatDateToNumbersWithFormatt(date: Date) {
+        let dateOutput = new Date(date);
+        return `${dateOutput.getFullYear()}-${this.getMonth(date)}-${this.getDay(date)}`
     }
 
 }

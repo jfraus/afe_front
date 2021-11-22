@@ -5,7 +5,9 @@ import { PaymentMethod } from '../models/payment-method.model';
 import { PaymentTerm } from '../models/payment-term.model';
 import { InvoiceHeader } from '../models/invoice-header.model';
 import { InvoiceReport }from 'src/app/models/invoice-report.model';
-import { FormatDate } from '../utils/format-date';
+import { FormatDate } from '../utils/format-date'; 
+import { MaintenanceVinDetails } from '../models/maintenance-vin-details';
+import { MaintenanceVinUpdate } from 'src/app/models/maintenance-vin-update.model';
 
 @Injectable()
 export class InvoiceService {
@@ -40,5 +42,16 @@ export class InvoiceService {
     httpParams = endDate !== '' ? httpParams.set('endDate', this.dateUtils.formatDate(endDate)) : httpParams;
     return this.http.get<InvoiceReport[]>(`${environment.apiUrl}invoice/report/?${httpParams}`).pipe();      
   }
+
+  getMaintenanceInformation(travelNumber: number){    
+    return this.http.get<any[]>(`${environment.apiUrl}invoice/maintenance/?travelNumber=${travelNumber}`).pipe();
+  }  
+
+  getMaintenanceDetailsInformation(invoice: String){
+    return this.http.get<MaintenanceVinDetails>(`${environment.apiUrl}invoice/maintenance-details/?invoice=${invoice}`).pipe();
+  }
   
+  updateMaintenanceDetailsInformation(maintenanceVinUpdate: MaintenanceVinUpdate){
+    return this.http.put<any>(`${environment.apiUrl}invoice/edit-maintenance`,maintenanceVinUpdate).pipe();
+  }
 }
