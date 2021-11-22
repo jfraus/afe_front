@@ -1,11 +1,11 @@
 <div class="card">
   <div class="card-title">Catálogo HJ2</div>
-  <p-tabView>
-    <p-tabPanel header="No. Viaje" [selected]="true">
-      <app-hj2-travel></app-hj2-travel>
+  <p-tabView (onChange) ="reloadMethod($event)">
+    <p-tabPanel header="No. Viaje" [selected]="true" >
+      <app-hj2-travel #hj2Invoice> </app-hj2-travel>
     </p-tabPanel>
     <p-tabPanel header="Factura">
-      <app-hj2-invoice></app-hj2-invoice>
+      <app-hj2-invoice #hj2Travel> </app-hj2-invoice>
     </p-tabPanel>
   </p-tabView>
 </div>
