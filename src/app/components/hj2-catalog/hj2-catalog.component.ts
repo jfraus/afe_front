@@ -12,7 +12,7 @@ export class Hj2CatalogComponent implements OnInit {
   @ViewChild('hj2Invoice', { static: false }) hj2: Hj2TravelComponent;
   @ViewChild('hj2Travel', { static: false }) hj2Travel: Hj2InvoiceComponent;
 
-  displayAddEdit: boolean = false;
+  
   constructor() { }  
 
   ngOnInit() { }
