@@ -32,8 +32,7 @@ export class Hj2InvoiceComponent implements OnInit {
     this.loading();
   }
 
-  loading(){
-    console.log("Hj2InvoiceComponent");
+  loading(){    
     this.loadingInvoice = true;
     this.hj2Service.getPaymentMethods().subscribe(data =>{
       this.invoices = data;
