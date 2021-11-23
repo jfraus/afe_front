@@ -29,10 +29,10 @@ export class Hj2InvoiceComponent implements OnInit {
       {field: 'hj2', header: 'HJ2'},
       {field: 'idd1125', header: 'IDD1125'}
     ]
-    this.loading();    
+    this.loading();
   }
 
-  loading(){
+  loading(){    
     this.loadingInvoice = true;
     this.hj2Service.getPaymentMethods().subscribe(data =>{
       this.invoices = data;
@@ -54,9 +54,11 @@ export class Hj2InvoiceComponent implements OnInit {
   sendInvoice(invoices: Hj2Invoice){
     this.loadingInvoice = true;
     this.hj2Service.createHj2ByInvoice(invoices.invoice, true, null).subscribe(data => {  });
-    this.hj2Service.getSendTravel(invoices.travelNumber, true).subscribe(data =>{   });
-    this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' }); 
-    this.loadingInvoice = false; 
-    setTimeout(() => {this.loading()}, 3000);
+    this.hj2Service.getSendTravel(invoices.travelNumber, true).subscribe(data =>{   });    
+    setTimeout(() => {
+      this.loading();
+      this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' }); 
+      this.loadingInvoice = false;
+    }, 6000);
   }
 }
