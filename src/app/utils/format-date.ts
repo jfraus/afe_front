@@ -32,6 +32,10 @@ export class FormatDate {
         return date.getFullYear().toString().substring(2,4);
     }
 
+    getYear(date: Date){
+        return date.getFullYear();
+    }
+
     formatDateWithoutTime(date: string){
         if(date){
             return date.substring(0,10 );
