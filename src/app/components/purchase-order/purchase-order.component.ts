@@ -179,7 +179,7 @@ export class PurchaseOrderComponent implements OnInit {
             let date = new Date(this.formGroup.get('monthProduction').value);
             let monthProduction = this.dateUtil.getYear(date).toString() + this.dateUtil.getMonth(date).toString();            
             this.loadingPurchaseOrder = true;            
-            this.service.purchase_orders(null, this.formGroup.get('orderCode').value,monthProduction,null,null,null).subscribe((response) => { //(en este si es ir a buscar el valor para los parametros)
+            this.service.purchase_orders(null, this.formGroup.get('orderCode').value,monthProduction,null,null,null).subscribe((response) => {
                 if (response.length > 0) {
                     this.purchaseOrder = response;
                 } else {
