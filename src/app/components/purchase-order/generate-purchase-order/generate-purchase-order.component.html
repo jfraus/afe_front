@@ -1,161 +1,118 @@
 <div class="card">
     <div class="card-title">Generar Orden de Compra</div>
     <div class="p-fluid p-formgrid p-grid">
-            
-    
-
-        <form
-        [formGroup]="formGroup"
-        class="form-group ui-g-12"
-        >
-        <div class="p-fluid p-formgrid p-grid">
-            <div class="ui-g-12 ui-lg-12">
-                <div class="ui-g-12 ui-lg-3">
-                    <span class="md-inputfield ">
-                        <input type="text" style="width: 100%;" [readOnly]="true" formControlName="orderCode"  pInputText>
-                        <label>Orden de compra</label>
-                    </span>
-                </div>
-                <div class="ui-g-12 ui-lg-3">
-                    <div class="p-inputgroup">
-                        <span class="md-inputfield">
-                            <p-calendar
-                                [style]="{ width: '100%' }"
-                                dateFormat="yy-mm"
-                                name="mesProduction"
-                                [minDate]="minDate"
-                                formControlName="productionMonthForm"
-                                [inputStyle]="{ width: '100%' }"
-                                [showIcon]="true"></p-calendar>
-                            <label>Mes de produción</label>
-                            <validations-input-component
-                                [validation_messages]="validations"
-                                [(formGroup)]="formGroup"
-                                [(formInputName)]="productionMonthFormName">
-                            </validations-input-component>
+        <form [formGroup]="formGroup" class="form-group ui-g-12">
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="ui-g-12 ui-lg-12">
+                    <div class="ui-g-12 ui-lg-3">
+                        <span class="md-inputfield ">
+                            <input type="text" style="width: 100%;" [readOnly]="true" formControlName="orderCode" pInputText>
+                            <label>Orden de compra</label>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-lg-3">
+                        <div class="p-inputgroup">
+                            <span class="md-inputfield">
+                                <p-calendar [style]="{ width: '100%' }" dateFormat="yy-mm" name="mesProduction"
+                                    [minDate]="minDate" formControlName="productionMonthForm"
+                                    [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
+                                <label>Mes de produción</label>
+                                <validations-input-component [validation_messages]="validations"
+                                    [(formGroup)]="formGroup" [(formInputName)]="productionMonthFormName">
+                                </validations-input-component>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-3">
+                        <span class="md-inputfield ">
+                            <p-calendar [style]="{'width':'100%'}" [maxDate]="maxDateExpired" [minDate]="minExpired"
+                                [inputStyle]="{'width':'100%'}" formControlName="dateExpired" [showIcon]="true">
+                            </p-calendar>
+                            <label>Fecha de vencimiento</label>
+                            <validations-input-component [validation_messages]="validations" [(formGroup)]="formGroup"
+                                [(formInputName)]="dateExpiredName"></validations-input-component>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-lg-3">
+                        <span class="md-inputfield ">
+                            <input type="text" style="width: 100%;" [readOnly]="true" formControlName="unitsQuantity"
+                                pInputText>
+                            <label>Total unidades</label>
                         </span>
                     </div>
                 </div>
-                <div class="ui-g-12 ui-lg-3">
-                    <span class="md-inputfield ">
-                        <p-calendar [style]="{'width':'100%'}" [maxDate]="maxDateExpired" [minDate]="minExpired" [inputStyle]="{'width':'100%'}"  formControlName="dateExpired" [showIcon]="true"></p-calendar>
-                            <label>Fecha de vencimiento</label>
-                            <validations-input-component  [validation_messages]="validations"
-                            [(formGroup)]="formGroup"
-                            [(formInputName)]="dateExpiredName"></validations-input-component>
-                        </span>
-                </div>
-                <div class="ui-g-12 ui-lg-3">
-                    <span class="md-inputfield ">
-                        <input type="text" style="width: 100%;" [readOnly]="true"  formControlName="unitsQuantity"   pInputText>
-                        <label>Total unidades</label>
-                    </span>
+                <div class="ui-g-12 ui-lg-2">
+                    <button pButton type="button" label="Guardar" (click)="update()" [disabled]="!validadoPost"
+                        icon="ui-icon-save" class="ui-button-success" style="width:auto"></button>
                 </div>
             </div>
-            <div class="ui-g-12 ui-lg-2">
-                <button pButton type="button" label="Guardar" (click)="update()" [disabled]="!validadoPost" icon="ui-icon-save" class="ui-button-success" style="width:auto"></button>
-            </div>
-        </div>
-    </form>
-
-        
-
+        </form>
     </div>
 </div>
 <div class="card">
     <div class="p-fluid p-formgrid p-grid">
         <div class="ui-g-12 ui-lg-3">
-            <button
-                pButton
-                type="button"
-                label="Agregar"
-                icon="pi
-                pi-plus"
-                class="ui-button-success"
-                [disabled]="!(btnAdDisable && this.formGroup.valid)"
-                (click)="add()"
+            <button pButton type="button" label="Agregar" icon="pi
+                pi-plus" class="ui-button-success" [disabled]="!(btnAdDisable && this.formGroup.valid)" (click)="add()"
                 style="width: auto"></button>
         </div>
     </div>
-    <p-table [columns]="cols"
-    selectionMode="single"
-    dataKey="idTabla"
-    [value]="purchaseOrderDetail"
-    [loading]="loadingPurchaseOrderDetail"
-    sortMode="multiple"
-    [style]="{ 'margin-bottom': '20px' }"
-    [responsive]="true"
-    [rowHover]="true"
-    [paginator]="true"
-    [responsive]="true"
-    [rowsPerPageOptions]="[30, 40, 50]"
-    [autoLayout]="true"
-    [rows]="20"
-    [pageLinks]="20"
-        >
+    <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="purchaseOrderDetail"
+        [loading]="loadingPurchaseOrderDetail" sortMode="multiple" [style]="{ 'margin-bottom': '20px' }"
+        [responsive]="true" [rowHover]="true" [paginator]="true" [responsive]="true" [rowsPerPageOptions]="[30, 40, 50]"
+        [autoLayout]="true" [rows]="20" [pageLinks]="20">
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns"
-                    [pSortableColumn]="col.field">
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
                     {{ col.header }}
-                    <p-sortIcon
-                        *ngIf="col.header != 'Acción'"
-                        [field]="col.field"></p-sortIcon>
+                    <p-sortIcon *ngIf="col.header != 'Acción'" [field]="col.field"></p-sortIcon>
                 </th>
             </tr>
         </ng-template>
-            <ng-template pTemplate="emptymessage" let-purchaseOrder>
-                <tr>
-                  <td style="text-align: center" [colSpan]="5">
-                  No se encontro información
-                  </td>
-                </tr>
-              </ng-template>
-            <ng-template pTemplate="body" let-purchaseOrder>
-                
-                <tr>
-                    <td>{{ purchaseOrder.model.type.type }}</td>
-                    <td>{{ purchaseOrder.model.code }}</td>
-                    <td>{{ purchaseOrder.color.code }}</td>
-                    <td>{{ purchaseOrder.color.interiorCode }}</td>
-                    <td>{{ purchaseOrder.quantity }}</td>
-                    <td> <button
-                        pButton
-                        type="button"
-                        icon="ui-icon-edit"
-                        (click)="updateDetail(purchaseOrder)"
+        <ng-template pTemplate="emptymessage" let-purchaseOrder>
+            <tr>
+                <td style="text-align: center" [colSpan]="5">
+                    No se encontro información
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-purchaseOrder>
+            <tr>
+                <td>{{ purchaseOrder.model.type.type }}</td>
+                <td>{{ purchaseOrder.model.code }}</td>
+                <td>{{ purchaseOrder.color.code }}</td>
+                <td>{{ purchaseOrder.color.interiorCode }}</td>
+                <td>{{ purchaseOrder.quantity }}</td>
+                <td> <button pButton type="button" icon="ui-icon-edit" (click)="updateDetail(purchaseOrder)"
                         class="blue-grey-btn"></button>
-                    <button
-                        pButton
-                        type="button"
-                        icon="ui-icon-delete" 
-                        style="margin-left: 3px"
-                        (click)="deletedDetail(purchaseOrder)"
-                        class="ui-button-danger"></button>
-                        </td>
-                </tr>
-            </ng-template>
-        </p-table>
-        <div class="p-fluid p-formgrid p-grid">
-            <div class="ui-g-12 ui-lg-2">
-                <button pButton type="button" label="Salir" (click)="closed()" icon="ui-icon-close" class="ui-button-danger" style="width:auto"></button>
-            </div>
+                    <button pButton type="button" icon="ui-icon-delete" style="margin-left: 3px"
+                        (click)="deletedDetail(purchaseOrder)" class="ui-button-danger"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="ui-g-12 ui-lg-2">
+            <button pButton type="button" label="Salir" (click)="closed()" icon="ui-icon-close" class="ui-button-danger"
+                style="width:auto"></button>
         </div>
+    </div>
 </div>
 <div>
-    <add-detail-model-component [display]="displayAdd" [purchaseOrderId]="this.order.id" (close)="closedAdd()"></add-detail-model-component>
+    <add-detail-model-component [display]="displayAdd" [purchaseOrderId]="this.purchaseOrderId" (close)="closedAdd()">
+    </add-detail-model-component>
 </div>
 
 <div>
-    <edit-detail-model-component [(pedido)]="detail" (close)="closedEditDetail()" [purchaseOrderId]="this.order.id" [display]="displayEdit"></edit-detail-model-component>
+    <edit-detail-model-component [(pedido)]="detail" (close)="closedEditDetail()" [purchaseOrderId]="this.purchaseOrderId"
+        [display]="displayEdit"></edit-detail-model-component>
 </div>
 
 <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
     <p-footer>
-        <button class="ui-button-danger" type="button" pButton icon="pi pi-check" label="Si" 
-        (click)="cd.accept()"></button>
-        <button class= "ui-button-success" type="button" pButton icon="pi pi-times" label="No" 
-        (click)="cd.reject()"></button>
+        <button class="ui-button-danger" type="button" pButton icon="pi pi-check" label="Si"
+            (click)="cd.accept()"></button>
+        <button class="ui-button-success" type="button" pButton icon="pi pi-times" label="No"
+            (click)="cd.reject()"></button>
     </p-footer>
-  </p-confirmDialog>
-  
+</p-confirmDialog>

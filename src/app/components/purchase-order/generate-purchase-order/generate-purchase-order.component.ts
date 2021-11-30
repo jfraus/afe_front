@@ -8,6 +8,7 @@ import { AppValidationMessagesService } from 'src/app/utils/app-validation-messa
 import { EditDetailModelComponent } from '../edit-detail/edit-detail-model.component';
 import { ConfirmationService } from 'primeng/api';
 import { FormatDate } from 'src/app/utils/format-date';
+import { PurchaseOrderComponent } from "../purchase-order.component";
 
 @Component({
     selector: 'generate-purchase-order-component',
@@ -23,7 +24,6 @@ export class GeneratePurchaseOrderComponent implements OnInit {
     cols=[];
     @Output() close = new EventEmitter();
     detail: PurchaseOrderDetail;
-
     validadoPost= true;
     formGroup = new FormGroup({
         productionMonthForm: new FormControl(),
@@ -39,6 +39,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
     minExpired = new Date();
     validations = [];
     order: PurchaseOrder;
+    purchaseOrderId : number;
     displayAdd: boolean;
     btnAdDisable: boolean = false;
     displayEdit: boolean;
@@ -59,22 +60,20 @@ export class GeneratePurchaseOrderComponent implements OnInit {
             { field: 'action', header: 'Acción' },
         ];
 
-
-        
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('productionMonthForm'));
 
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('dateExpired'));
-        
-        this.service.PostFirstPurchaseOrders().subscribe((response) => {
+
+        this.service.PostFirstPurchaseOrders().subscribe((response) => {            
+            this.purchaseOrderId = response.id;
             this.formGroup.get('orderCode').setValue(response.orderNumber);
-            this.formGroup.get('unitsQuantity').setValue(response.unitsQuantity);
-            this.order.id = response.id;
-            
+            this.formGroup.get('unitsQuantity').setValue(response.unitsQuantity); 
+            this.order = response;          
+            console.log(this.order);
         });
     }
-
 
     fillTable(){
         this.loadingPurchaseOrderDetail = true;
@@ -86,12 +85,13 @@ export class GeneratePurchaseOrderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.onChanges();
+        this.onChanges();       
     }
 
     add(){
         this.displayAdd =  true;         
     }
+
     private BuildForm() {
         this.formGroup = this.fb.group({
             productionMonthForm: ['', [Validators.required]],
@@ -101,7 +101,6 @@ export class GeneratePurchaseOrderComponent implements OnInit {
         });
         this.formGroup.get('orderCode').disable();
         this.formGroup.get('unitsQuantity').disable();
-
     }
 
     closed(){     
@@ -120,8 +119,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
         this.fillTable();
     }
 
-    deletedDetail(detail){
-        
+    deletedDetail(detail){        
         this.confirmationService.confirm({
             message: '¿Seguro qué desea eliminar este registro?',
             header: 'Confirmación',
@@ -134,8 +132,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
             reject: () => {
                 
             }
-        });
-    
+        });    
     }
 
     updateDetail(detail){
@@ -160,20 +157,20 @@ export class GeneratePurchaseOrderComponent implements OnInit {
                 this.displayEdit = true;
             })
             
-        });
-        
+        });        
     }
     
     closedEditDetail(){
         this.displayEdit = false;
         this.fillTable();
     }
+
     update(){
         if(this.formGroup.valid){
             let promise = new Promise((resolved, reject) => {
                 let dateVencida = new Date(this.formGroup.get('dateExpired').value);
                 let dateProduction = new Date(this.formGroup.get('productionMonthForm').value);
-                this.order.dueDate = dateVencida.getTime();
+                this.order.dueDate = dateVencida.getTime();                
                 this.order.orderNumber = this.formGroup.get('orderCode').value;
                 this.order.productionMonth =  `${dateProduction.getFullYear()}${this.dateUtil.getMonth(dateProduction)}`;
                 resolved(this.order);

@@ -85,7 +85,6 @@ export class AddDetailModelComponent {
 
     async add() {
         if (this.addModel.valid) {
-
             let validPromise = new Promise((resolved) => {
                 this.servicesPurchase.purchase_orders(this.purchaseOrderId, null, null,null,null,null).subscribe((response) => {
                     let array = response[0].detail;

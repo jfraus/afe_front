@@ -85,9 +85,9 @@ export class MaintenanceComponent implements OnInit {
   }
 
   closeAddEdit() {
+    setTimeout(() => { this.getMaintenance(this.maintenanceDetails.id); }, 1000);    
+    setTimeout(() => { this.getHeaders(); }, 1000);
     this.displayAddEdit=false;
-    setTimeout(() => { this.getMaintenance(this.maintenanceDetails.id)}, 100);
-    setTimeout(() => { this.getHeaders() }, 100);
   }
 
  closeMaintenance(){
