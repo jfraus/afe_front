@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from "../../environments/environment";
 import { Observable } from 'rxjs/internal/Observable';
 import { PurchaseOrderDetail } from '../models/purchase-order-detail.model';
 import { Maintenance } from '../models/maintenance.model';
+import { PurchaseOrder } from '../models/purchase-order.model';
 
 @Injectable()
 export class PurchaseOrdenControllerService {
@@ -37,7 +38,7 @@ export class PurchaseOrdenControllerService {
   }
 
   PostFirstPurchaseOrders(): Observable<any>{
-    return this.http.post<any>(`${environment.apiUrl}purchase/orders/`,null).pipe(); 
+    return this.http.post<PurchaseOrder>(`${environment.apiUrl}purchase/orders/`,null).pipe(); 
   }
 
   postPurchaseOrderDetail(PurchaseOrderDetail: PurchaseOrderDetail){
