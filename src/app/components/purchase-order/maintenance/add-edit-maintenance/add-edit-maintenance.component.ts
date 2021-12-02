@@ -18,11 +18,13 @@ export class AddEditMaintenanceComponent implements OnInit {
   @Input() maintenance: Maintenance;
   @Output() close = new EventEmitter();
   @Input() models: SelectItem[];  
+  @Input() modelTypes: SelectItem[];  
   @Input() purchaseOrderId;
+  @Input() purchaseOrder;
+  @Input() colors: SelectItem[];  
   title: string;
   titleButton: string;
   addMaintenance: FormGroup;
-  colors: SelectItem[] = [];
   actualPedido : number;
 
   constructor(private formBuilder: FormBuilder, private modelControllerService: ModelControllerService,
@@ -33,7 +35,7 @@ export class AddEditMaintenanceComponent implements OnInit {
     this.addMaintenance = this.formBuilder.group({
       id: [''],
       plant: [{ value: 'HCL', disabled: true }, [Validators.required]],
-      modelType: [{ value: 'KK', disabled: true }, [Validators.required]],
+      modelType: ['', [Validators.required]],
       model: ['', [Validators.required]],
       color: ['', [Validators.required]],
       interiorColor: [{ value: '', disabled: true }, [Validators.required]],
@@ -43,35 +45,52 @@ export class AddEditMaintenanceComponent implements OnInit {
     if(!isNullOrUndefined(this.maintenance)) {
       this.title = "Editar pedido";
       this.titleButton = "Guardar";
-      let model = this.models.find(data => data.label == this.maintenance.model);  
-      setTimeout(() => {
-        new Promise((resolved) => {                  
-          this.addMaintenance.get('model').setValue(model.value);          
-          this.loadColor(model.value);          
-          resolved(true);      
-        });
-      }, 600);
-
-      setTimeout(() => {
-        new Promise((resolved) => {            
-          this.loadColor(model.value);
-          let color = this.colors.find(data => data.label == this.maintenance.color);
-          this.addMaintenance.get('color').setValue(color.value);      
-          this.addMaintenance.get('interiorColor').setValue(color.value.interiorCode);
-        });
-      }, 800);     
+      if(this.purchaseOrder.startsWith("12L")) {
+        this.loadData12L();
+      }else{
+        this.loadData12C();
+      }      
       this.actualPedido = this.maintenance.order;
-        this.addMaintenance.get('cantidad').setValue(this.maintenance.order);
-        this.addMaintenance.get('id').setValue(this.maintenance.purchaseOrderDetailId);
+      this.addMaintenance.get('cantidad').setValue(this.maintenance.order);
+      this.addMaintenance.get('id').setValue(this.maintenance.purchaseOrderDetailId);
     }else {
-      this.loadModel(this.addMaintenance.get('modelType').value);
+      if(this.purchaseOrder.startsWith("12L")){
+        let type = this.modelTypes.find(d => d.value == 'KK').label;  
+        this.addMaintenance.get('modelType').setValue(type);
+        this.addMaintenance.get('modelType').disable();
+        this.loadModel('KK', true);      
+      }
       this.title = "Agregar pedido";
       this.titleButton = "Agregar";
     }    
   }
 
-  private loadModel(modelType: String): void {
-    this.modelControllerService.getModelsByType(modelType).subscribe(data => {
+  private loadData12L(){
+    let type = this.modelTypes.find(d => d.value == 'KK').label;      
+    this.addMaintenance.get('modelType').setValue(type);
+    this.addMaintenance.get('modelType').disable();
+    let model = this.models.find(data => data.label == this.maintenance.model);
+    this.addMaintenance.get('model').setValue(model.value);
+    setTimeout(() => { 
+      let color = this.colors.find(data => data.label == this.maintenance.color);
+      this.addMaintenance.get('color').setValue(color.value);      
+      this.addMaintenance.get('interiorColor').setValue(color.value.interiorCode);
+    }, 1000);
+  }
+
+  private loadData12C(){
+    let type = this.modelTypes.find(d => d.value == this.maintenance.type).label;  
+    this.addMaintenance.get('modelType').setValue(type);
+    let model = this.models.find(data => data.label == this.maintenance.model);
+    this.addMaintenance.get('model').setValue(model.value);
+    let color = this.colors.find(data => data.label == this.maintenance.color);
+    this.addMaintenance.get('color').setValue(color.value);      
+    this.addMaintenance.get('interiorColor').setValue(color.value.interiorCode); 
+
+  }
+
+  private loadModel(modelType: String, modelExclude: boolean): void { 
+    this.modelControllerService.getModelsByType(modelType, modelExclude).subscribe(data => {
       this.models = data.map(r => (
         { label: r.code, value: r.id }
       ));
@@ -84,6 +103,10 @@ export class AddEditMaintenanceComponent implements OnInit {
         { label: r.code, value: r }
       ));
     });
+  }
+
+  selectedChangeModelType(e) {    
+    this.loadModel(this.addMaintenance.get('modelType').value, false); 
   }
 
   selectedChangeModel(e) {

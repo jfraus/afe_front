@@ -6,6 +6,7 @@ import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-
 import { ModelControllerService } from 'src/app/services/model-controller.service';
 import { SelectItem } from "primeng/api";
 import { ConfirmationService } from 'primeng/api';
+import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
 
 @Component({
   selector: 'app-maintenance',
@@ -23,9 +24,13 @@ export class MaintenanceComponent implements OnInit {
   displayAddEdit: boolean = false;
   maintenance: Maintenance;
   models: SelectItem[];
+  types = [];
+  purchaseOrder: string;
+  colors: SelectItem[] = [];
 
   constructor(private maintenanceService: PurchaseOrdenControllerService, private formBuilder: FormBuilder, 
-    private modelControllerService: ModelControllerService, public confirmationService: ConfirmationService) { }
+    private modelControllerService: ModelControllerService, public confirmationService: ConfirmationService, 
+    private modelColorService: ModelColorControllerService) { }
 
   ngOnInit() {
     this.cols = [
@@ -44,8 +49,15 @@ export class MaintenanceComponent implements OnInit {
       expirationDate: [{value: this.maintenanceDetails.dueDate, disabled: true}],
       totalOrder: [{value: this.maintenanceDetails.unitsQuantity, disabled: true}]
     });;
-    this.getMaintenance(this.maintenanceDetails.id);   
-    this.loadModel("KK") ;
+
+    this.purchaseOrder = this.maintenanceDetails.orderNumber;   
+    if(this.purchaseOrder.startsWith("12L")){
+      this.types =[{label: 'KK', value: 'KK'}];
+      this.loadModel("KK", true);
+    }else{
+      this.loadType();
+    }    
+    this.getMaintenance(this.maintenanceDetails.id); 
   }
 
   getMaintenance(id: number) {
@@ -71,23 +83,37 @@ export class MaintenanceComponent implements OnInit {
       message: '¿Deseas editar el modelo '+maintenance.model+' y color '+maintenance.color+' ?',
       header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
-      accept: () => {        
-        this.maintenance = maintenance;    
-        this.displayAddEdit=true;
+      accept: () => {
+        this.loadingMaintenance = true;  
+        this.maintenance = maintenance;        
+        if(this.purchaseOrder.startsWith("12L")){ 
+          setTimeout(() => { this.loadingData(maintenance, true); }, 1000);   
+        }else{
+          setTimeout(() => { this.loadingData(maintenance, false); }, 1000);                            
+        }        
+        this.loadingMaintenance = false;        
       },
-      reject: () => {
+      reject: () => {        
       }
     });    
   }
 
+  loadingData(maintenance: Maintenance, modelExclude: boolean){
+    this.loadModel(maintenance.type, modelExclude);
+    setTimeout(() => {
+      let modelId = this.models.find(m => m.label === maintenance.model);
+      this.loadColor(modelId.value); this.displayAddEdit=true;}, 4000);     
+  }
+
   addUpdate(){
+    this.maintenance = null;
     this.displayAddEdit=true;
   }
 
   closeAddEdit() {
-    setTimeout(() => { this.getMaintenance(this.maintenanceDetails.id); }, 1000);    
-    setTimeout(() => { this.getHeaders(); }, 1000);
-    this.displayAddEdit=false;
+    this.getMaintenance(this.maintenanceDetails.id);
+    this.getHeaders();
+    setTimeout(() => { this.displayAddEdit=false; }, 1000);    
   }
 
  closeMaintenance(){
@@ -97,12 +123,28 @@ export class MaintenanceComponent implements OnInit {
     this.maintenanceList =[];   
   }
     
-  private loadModel(modelType: String): void {
-    this.modelControllerService.getModelsByType(modelType).subscribe(data => {
+  private loadModel(modelType: String, modelExclude: boolean): void {
+    this.modelControllerService.getModelsByType(modelType, modelExclude).subscribe(data =>{
       this.models = data.map(r => (
         { label: r.code, value: r.id }
       ));
     });
   }
+
+  private loadType() : void {
+    this.types =[
+        { label: 'KA', value: 'KA'  } ,
+        { label: 'KC', value: 'KC' } ,
+        { label: 'KK', value: 'KK' }
+     ];
+}
+
+private loadColor(model: string): void {
+  this.modelColorService.get(model).subscribe(data =>{
+    this.colors = data.map(r => (
+      { label: r.code, value: r }
+    ));
+  });
+}
 
 }
