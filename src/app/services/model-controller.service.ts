@@ -17,8 +17,8 @@ export class ModelControllerService {
     return this.http.get<any>(`${environment.apiUrl}models/model-type/`).pipe();
   }
 
-  getModelsByType(modelType : String){
-    return this.http.get<any>(`${environment.apiUrl}models/by-model-type/?modelType=${modelType}`).pipe();
+  getModelsByType(modelType : String, modelExclude: boolean){
+    return this.http.get<any>(`${environment.apiUrl}models/by-model-type/?modelType=${modelType}&modelExclude=${modelExclude}`).pipe();
   }
 
 }

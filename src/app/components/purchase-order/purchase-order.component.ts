@@ -131,7 +131,7 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     private loadModel(modelType: String) : void {
-        this.modelControllerService.getModelsByType(modelType).subscribe(data =>{
+        this.modelControllerService.getModelsByType(modelType, null).subscribe(data =>{
             this.models = data.map(r => (       
                 { label: r.code , value: r.id}
               ));

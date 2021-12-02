@@ -62,7 +62,7 @@ export class PurchaseOrdenControllerService {
     return this.http.post<string>(`${environment.apiUrl}purchase/orders/assigned-units`,null).pipe();    
   }
 
-  getMaintenance(id: number) {
+  getMaintenance(id: number){
     return this.http.get<Maintenance[]>(`${environment.apiUrl}purchase/orders/maintenance/?purchaseOrderId=${id}`).pipe();
   }
   

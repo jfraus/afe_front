@@ -10,7 +10,8 @@
         </div>
         <div class="ui-g-12 ui-lg-4">
           <span class="md-inputfield">
-            <input type="text" formControlName="modelType" pInputText>
+           <p-dropdown formControlName="modelType" [options]="modelTypes" [filter]="true" [autoDisplayFirst]="false"
+           [showClear]="true" appendTo="body" (onChange)="selectedChangeModelType($event)"></p-dropdown>
             <label>Tipo Modelo</label>
           </span>
         </div>

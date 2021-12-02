@@ -105,7 +105,8 @@
 </div>
 <div *ngIf="displayAddEdit">
   <app-add-edit-maintenance (close)="closeAddEdit()" [purchaseOrderId]="this.maintenanceDetails.id"
-    [display]="displayAddEdit" [maintenance]="maintenance" [models]="models">
+    [display]="displayAddEdit" [maintenance]="maintenance" [models]="models" [modelTypes]="types" 
+    [purchaseOrder]="purchaseOrder" [colors]=colors>
   </app-add-edit-maintenance>
 </div>
 
