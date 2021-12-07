@@ -30,6 +30,7 @@ import { MaintenanceComponent } from './components/purchase-order/maintenance/ma
 import { MaintenanceToVinComponent } from './components/maintenance-to-vin/maintenance-to-vin.component';
 import { InvoiceCancellationComponent } from './components/invoice/invoice-cancellation/invoice-cancellation.component';
 import { InvoiceCancellationReportComponent } from './components/invoice/invoice-cancellation-report/invoice-cancellation-report.component';
+import { RolComponent } from './components/security/rol/rol.component';
 
 export const routes: Routes = [
     { path: '',
@@ -60,7 +61,8 @@ export const routes: Routes = [
         {path: 'maintenance', component: MaintenanceComponent},
         {path: 'cancellation-invoice-report', component: InvoiceCancellationReportComponent},
         {path: 'maintenance-to-vin', component: MaintenanceToVinComponent},
-        {path: 'cancellation-invoice', component: InvoiceCancellationComponent}
+        {path: 'cancellation-invoice', component: InvoiceCancellationComponent},
+        {path: 'rol', component: RolComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
