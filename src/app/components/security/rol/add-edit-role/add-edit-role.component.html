@@ -1,0 +1,13 @@
+<div class="card">
+  <div class="card-title">{{title}}</div>
+  <p-tabView>
+    <p-tabPanel header="Rol" [selected]="true">
+      <app-admin-role> </app-admin-role>
+    </p-tabPanel>
+
+    <p-tabPanel header="Permisos">
+      <app-admin-permisions> </app-admin-permisions>
+    </p-tabPanel>
+
+  </p-tabView>  
+</div>

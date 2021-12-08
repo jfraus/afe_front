@@ -144,6 +144,9 @@ import { EditMaintenanceToVinComponent } from './components/maintenance-to-vin/e
 import { InvoiceCancellationReportComponent } from './components/invoice/invoice-cancellation-report/invoice-cancellation-report.component';
 import { InvoiceCancellationComponent } from './components/invoice/invoice-cancellation/invoice-cancellation.component';
 import { RolComponent } from './components/security/rol/rol.component';
+import { AddEditRoleComponent } from './components/security/rol/add-edit-role/add-edit-role.component';
+import { AdminRoleComponent } from './components/security/rol/add-edit-role/admin-role/admin-role.component';
+import { AdminPermisionsComponent } from './components/security/rol/add-edit-role/admin-permisions/admin-permisions.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -283,6 +286,9 @@ const sharedComponents = [
         InvoiceCancellationReportComponent,
         InvoiceCancellationComponent,
         RolComponent,
+        AddEditRoleComponent,
+        AdminPermisionsComponent, 
+        AdminRoleComponent,
         ...sharedComponents,
     ],
     providers: [
