@@ -4,7 +4,7 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="ui-g-12 ui-lg-3">
         <button pButton type="button" label="Agregar Rol" icon="pi
-                pi-plus" (click)="addRol()" class="ui-button-success" style="width: auto"></button>
+                pi-plus" routerLink="/role-add" class="ui-button-success" style="width: auto"></button>
       </div>
     </div>
     <p-table #dt [columns]="cols" selectionMode="single" [value]="roles" [loading]="loadingRoles" sortMode="single"
