@@ -54,7 +54,6 @@ export class RolComponent implements OnInit {
   }
 
   updateRole(role : Roles){
-    console.log(role);    
     this.router.navigate(['role-edit', role.id]);
   }
 
