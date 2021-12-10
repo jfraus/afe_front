@@ -64,7 +64,8 @@ export const routes: Routes = [
         {path: 'maintenance-to-vin', component: MaintenanceToVinComponent},
         {path: 'cancellation-invoice', component: InvoiceCancellationComponent},
         {path: 'role', component: RolComponent},
-        {path: 'role-add', component: AddEditRoleComponent}
+        {path: 'role-add', component: AddEditRoleComponent},
+        {path: 'role-edit/:id', component: AddEditRoleComponent},
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
