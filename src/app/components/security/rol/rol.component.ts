@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class RolComponent implements OnInit {
 
-  roles: Roles[] = [];;
+  roles: Roles[] = [];
   cols = [];
   loadingRoles: boolean = false;
 
