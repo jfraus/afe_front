@@ -22,7 +22,7 @@ export class Hj2CatalogComponent implements OnInit {
       this.hj2Travel.loading();
     }   
     if(e.index ===1){
-      this.hj2.getInvoicesByTravel(null);
+      this.hj2.getInvoicesByTravel('');
     }    
   }
   

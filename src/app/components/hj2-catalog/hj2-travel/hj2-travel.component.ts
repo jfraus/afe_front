@@ -39,18 +39,22 @@ export class Hj2TravelComponent implements OnInit {
     });
   }
 
-  getInvoicesByTravel(travelNumber: string) {  
-    this.loadingInvoice = true;
-    this.hj2Service.getHj2ByTravel(travelNumber).subscribe(data => {
-      if(data.length > 0 ){
-        this.invoices = data;
-        this.loadingInvoice = false;
-      }else{
-        this.messageServices.add({ key: 'success', severity: 'success', summary: 'No se encontró información' });
-        this.invoices = null;
-        this.loadingInvoice = false;
-      }      
-    });
+  getInvoicesByTravel(travelNumber: string) {    
+    if(travelNumber.length===0){
+      this.loadingInvoice = false;    
+    }else{
+      this.loadingInvoice = true;
+      this.hj2Service.getHj2ByTravel(travelNumber).subscribe(data => {
+        if(data.length > 0 ){
+          this.invoices = data;
+          this.loadingInvoice = false;
+        }else{
+          this.messageServices.add({ key: 'success', severity: 'success', summary: 'No se encontró información' });
+          this.invoices = null;
+          this.loadingInvoice = false;
+        }      
+      });
+    }    
   }
   
   search(){
@@ -64,7 +68,7 @@ export class Hj2TravelComponent implements OnInit {
     this.hj2Service.getSendTravel(hj2.travelNumber, true).subscribe(data => { });    
     this.hj2Service.createHj2ByInvoice(null, true, hj2.travelNumber).subscribe(data =>{ });        
     setTimeout(() => {
-      this.getInvoicesByTravel(null);
+      this.getInvoicesByTravel(this.formGroup.get('travelNumber').value);
       this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' });
       this.loadingInvoice = false;    
     }, 6000);    
