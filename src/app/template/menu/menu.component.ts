@@ -20,16 +20,10 @@ export class AppMenuComponent implements OnInit {
         setTimeout(() => {
             
             if(sessionStorage.getItem("menu")){
-                this.items = JSON.parse(sessionStorage.getItem("menu"));  
-                var count = 0;
+                this.items = JSON.parse(sessionStorage.getItem("menu")); 
                 this.items.forEach(data => {
-                    console.log(count + " => " + data.label);
-                    
-                    count++;
                     data.command = (event: any) => { this.closeMenu(event); }
                 });
-                //this.items.    
-               // console.log(JSON.stringify(this.items));
             }else{
                 this.aut.logout();
             }
