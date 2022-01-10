@@ -55,6 +55,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import {SidebarModule} from 'primeng/sidebar';
 import { SlideMenuModule } from 'primeng/slidemenu';
 import { SliderModule } from 'primeng/slider';
 import { SpinnerModule } from 'primeng/spinner';
@@ -147,7 +148,6 @@ import { RolComponent } from './components/security/rol/rol.component';
 import { AddEditRoleComponent } from './components/security/rol/add-edit-role/add-edit-role.component';
 import { AdminRoleComponent } from './components/security/rol/add-edit-role/admin-role/admin-role.component';
 import { AdminPermisionsComponent } from './components/security/rol/add-edit-role/admin-permisions/admin-permisions.component';
-
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
 ];
@@ -210,6 +210,7 @@ const sharedComponents = [
         SelectButtonModule,
         SlideMenuModule,
         SliderModule,
+        SidebarModule,
         SpinnerModule,
         SplitButtonModule,
         StepsModule,
