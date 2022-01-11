@@ -51,8 +51,14 @@ export class AppMainComponent implements OnDestroy, OnInit {
 
     configDialogActive: boolean;
 
-    constructor(public messageServices: MessageService,private router: Router, public renderer: Renderer2, public zone: NgZone, public aut: AuthService) {
-    }
+    hideShowImgMain: boolean = true;
+
+    constructor(public messageServices: MessageService,
+        private router: Router, 
+        public renderer: Renderer2, 
+        public zone: NgZone, 
+        public aut: AuthService,
+        private route: Router) { }
 
     ngOnInit() {
         this.zone.runOutsideAngular(() => { this.bindRipple(); });
@@ -64,7 +70,7 @@ export class AppMainComponent implements OnDestroy, OnInit {
                     this.messageServices.add({key: 'error',severity: 'success', summary: 'Bienvenido', detail: `${localStorage.getItem("fullname")}`});
                 }
             }, 3600);
-        }
+        }        
     }
 
     bindRipple() {
@@ -199,6 +205,8 @@ export class AppMainComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
+        console.log("destroy");
+        
         this.unbindRipple();
     }
 
@@ -226,7 +234,9 @@ export class AppMainComponent implements OnDestroy, OnInit {
 
     onMenuButtonClick(event: Event) {
         this.menuClick = true;
-
+        this.hideShowImgMain = false;
+        console.log(this.hideShowImgMain);
+        
         if (!this.horizontal || this.isMobile()) {
             this.menuActive = !this.menuActive;
 

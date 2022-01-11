@@ -1,5 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
 
+.imgMain {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.p-accordion-header-text {
+  font-weight: bold !important;
+}
+
+.p-panelmenu {
+  background-color: #ffffff !important;
+  color: #616161;
+  font-size: 16px;
+  border: solid #03A9F4;
+}
+
+.p-panelmenu-content {
+  background-color: #1276da !important;
+  color: #616161;
+}
+
+.p-menuitem {
+  background-color: #1377db!important;
+}
+
+.layout-menu-container, .layout-menu-wrapper {
+  background-color: #f8f5f5 !important;
+}
+
+.ui-menuitem-text {
+  color: #616161;
+}
+
+.ui-panelmenu-header-link {
+  background-color: #ffffff !important;
+}
+
+.ui-state-active {
+  background-color: #ffffff;
+  border-left-style: solid !important;
+  border-left-color: #03A9F4 !important;
+  border-right-width: 10px;
+}
+
 .layout-footer{
   bottom: 0!important;
   width: 100%!important;

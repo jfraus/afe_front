@@ -37,7 +37,7 @@ export class AuthService {
             localStorage.setItem('isLoggedIn', "true");
             localStorage.setItem('token', response.access_token);
             localStorage.setItem("fullname", response.fullName);
-            this.router.navigateByUrl("/").then(() => { });
+            this.router.navigateByUrl("/");
             this.convertMenu();
             this.messageServices.add({ key: 'error', severity: 'success', summary: "Bienvenido", detail: `${response.fullName}` });
         });

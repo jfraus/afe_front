@@ -1,0 +1,7 @@
+.layout-footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - 90px);
+    z-index: 100;
+}
