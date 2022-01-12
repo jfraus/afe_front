@@ -8,7 +8,6 @@ import { AppValidationMessagesService } from 'src/app/utils/app-validation-messa
 import { EditDetailModelComponent } from '../edit-detail/edit-detail-model.component';
 import { ConfirmationService } from 'primeng/api';
 import { FormatDate } from 'src/app/utils/format-date';
-import { PurchaseOrderComponent } from "../purchase-order.component";
 
 @Component({
     selector: 'generate-purchase-order-component',
@@ -50,7 +49,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
         this.minDate = new Date(day.getFullYear(),day.getMonth()-2 ,1,0,0,0,0);
         this.minExpired = new Date(day.getFullYear(),day.getMonth()-1 -1,1,0,0,0,0);
         
-        this.BuildForm();
+        this.buildForm();
         this.cols = [
             { field: 'model.type.type', header: 'Tipo' },
             { field: 'model.code', header: 'Modelo' },
@@ -92,7 +91,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
         this.displayAdd =  true;         
     }
 
-    private BuildForm() {
+    private buildForm() {
         this.formGroup = this.fb.group({
             productionMonthForm: ['', [Validators.required]],
             dateExpired: ['', [Validators.required]],

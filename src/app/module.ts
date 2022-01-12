@@ -148,6 +148,8 @@ import { RolComponent } from './components/security/rol/rol.component';
 import { AddEditRoleComponent } from './components/security/rol/add-edit-role/add-edit-role.component';
 import { AdminRoleComponent } from './components/security/rol/add-edit-role/admin-role/admin-role.component';
 import { AdminPermisionsComponent } from './components/security/rol/add-edit-role/admin-permisions/admin-permisions.component';
+import { CanUse } from './utils/can-use.directive';
+
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
 ];
@@ -290,6 +292,7 @@ const sharedComponents = [
         AddEditRoleComponent,
         AdminPermisionsComponent, 
         AdminRoleComponent,
+        CanUse,
         ...sharedComponents,
     ],
     providers: [

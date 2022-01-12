@@ -36,7 +36,7 @@ export class PurchaseOrderComponent implements OnInit {
     colors = [];
     maintenanceDetails: any;
 
-    constructor(public dateUtil: FormatDate, public confirmationService: ConfirmationService, public messageServices: MessageService, 
+    constructor(public dateUtil: FormatDate, public confirmationService: ConfirmationService, public messageServices: MessageService,
         private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService,
         private modelControllerService: ModelControllerService, private modelColorService: ModelColorControllerService) {
 
@@ -60,20 +60,20 @@ export class PurchaseOrderComponent implements OnInit {
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('monthProduction'));
     }
-    
+
     ngOnInit(): void {
         this.onChanges();
         this.loadType();
     }
 
     selectedChangeType(e) {
-        if(e.value){
+        if (e.value) {
             this.formGroup.controls['orderCode'].disable();
             this.formGroup.controls['monthProduction'].disable();
             this.loadModel(e.value);
             this.formGroup.controls['model'].enable();
             this.formGroup.controls['color'].enable();
-        }else{
+        } else {
             this.formGroup.get('model').reset();
             this.formGroup.get('color').reset();
             this.models = [];
@@ -83,67 +83,67 @@ export class PurchaseOrderComponent implements OnInit {
         }
     }
 
-    selectedChangeModel(e){
-        if(e.value){
+    selectedChangeModel(e) {
+        if (e.value) {
             this.loadColor(e.value);
-        }else{
+        } else {
             this.formGroup.get('color').reset();
             this.colors = [];
         }
     }
 
-    selectedChangeOrderCode(e){
+    selectedChangeOrderCode(e) {
         let x = this.formGroup.get('orderCode').value;
-        if(x.length>0) {
+        if (x.length > 0) {
             this.formGroup.controls['monthProduction'].disable();
             this.formGroup.controls['model'].disable();
             this.formGroup.controls['color'].disable();
             this.formGroup.controls['type'].disable();
-        }else{
+        } else {
             this.formGroup.controls['monthProduction'].enable();
             this.formGroup.controls['model'].enable();
             this.formGroup.controls['color'].enable();
-            this.formGroup.controls['type'].enable();           
-      }
+            this.formGroup.controls['type'].enable();
+        }
     }
 
-    selectedChangeMonthProduction(e){
+    selectedChangeMonthProduction(e) {
         let x = this.formGroup.get('monthProduction').value;
-        if(x != null){            
+        if (x != null) {
             this.formGroup.controls['orderCode'].disable();
             this.formGroup.controls['model'].disable();
             this.formGroup.controls['color'].disable();
             this.formGroup.controls['type'].disable();
-        }else{
+        } else {
             this.formGroup.controls['orderCode'].enable();
             this.formGroup.controls['model'].enable();
             this.formGroup.controls['color'].enable();
             this.formGroup.controls['type'].enable();
-        }  
+        }
     }
 
-    private loadType() : void {
-        this.types =[
-            { label: 'KA', value: 'KA'  } ,
-            { label: 'KC', value: 'KC' } ,
+    private loadType(): void {
+        this.types = [
+            { label: 'KA', value: 'KA' },
+            { label: 'KC', value: 'KC' },
             { label: 'KK', value: 'KK' }
-         ];
+        ];
     }
 
-    private loadModel(modelType: String) : void {
-        this.modelControllerService.getModelsByType(modelType, null).subscribe(data =>{
-            this.models = data.map(r => (       
-                { label: r.code , value: r.id}
-              ));
+    private loadModel(modelType: String): void {
+        this.modelControllerService.getModelsByType(modelType, null).subscribe(data => {
+            this.models = data.map(r => (
+                { label: r.code, value: r.id }
+            ));
         });
     }
 
-    private loadColor(model: string) : void {
-        this.modelColorService.get(model).subscribe(data =>{
-            this.colors = data.map(r => ( 
-                { label: r.code , value: r.id}
-            )); 
-        });        
+    private loadColor(model: string): void {
+        this.modelColorService.get(model).subscribe(data => {
+            this.colors = data.map(r => (
+                { label: r.code, value: r.id }
+            ));
+        });
     }
 
     private buildForm() {
@@ -167,19 +167,19 @@ export class PurchaseOrderComponent implements OnInit {
         });
     }
 
-    NewOc() {
+    newOc() {
         this.visible = false;
         this.visibledetails = true;
         this.visibleEditable = true;
     }
 
-    SearchPurchaseOrder() {
+    searchPurchaseOrder() {
         this, this.messageServices.clear();
         if (this.formGroup.get('monthProduction').value) {
             let date = new Date(this.formGroup.get('monthProduction').value);
-            let monthProduction = this.dateUtil.getYear(date).toString() + this.dateUtil.getMonth(date).toString();            
-            this.loadingPurchaseOrder = true;            
-            this.service.purchase_orders(null, this.formGroup.get('orderCode').value,monthProduction,null,null,null).subscribe((response) => {
+            let monthProduction = this.dateUtil.getYear(date).toString() + this.dateUtil.getMonth(date).toString();
+            this.loadingPurchaseOrder = true;
+            this.service.purchase_orders(null, this.formGroup.get('orderCode').value, monthProduction, null, null, null).subscribe((response) => {
                 if (response.length > 0) {
                     this.purchaseOrder = response;
                 } else {
@@ -190,7 +190,7 @@ export class PurchaseOrderComponent implements OnInit {
                 this.formGroup.get('orderCode').reset();
                 this.formGroup.get('monthProduction').reset();
             });
-        } else if(this.formGroup.get('orderCode').value) {
+        } else if (this.formGroup.get('orderCode').value) {
             this.loadingPurchaseOrder = true;
             this.service.purchase_orders(null, this.formGroup.get('orderCode').value, null, null, null, null).subscribe((response) => {
                 if (response.length > 0) {
@@ -203,7 +203,7 @@ export class PurchaseOrderComponent implements OnInit {
                 this.formGroup.get('orderCode').reset();
                 this.formGroup.get('monthProduction').reset();
             });
-        }else if(this.formGroup.get('type').value)  {
+        } else if (this.formGroup.get('type').value) {
             this.loadingPurchaseOrder = true;
             this.service.purchase_orders(null, null, null, this.formGroup.get('type').value, this.formGroup.get('model').value, this.formGroup.get('color').value).subscribe((response) => {
                 if (response.length > 0) {
@@ -215,22 +215,22 @@ export class PurchaseOrderComponent implements OnInit {
                 this.loadingPurchaseOrder = false;
                 this.formGroup.get('orderCode').enable();
                 this.formGroup.get('monthProduction').enable();
-                this.formGroup.get('type').reset();                
-                this.formGroup.get('color').reset();     
-                this.formGroup.get('model').reset();     
+                this.formGroup.get('type').reset();
+                this.formGroup.get('color').reset();
+                this.formGroup.get('model').reset();
             });
-        }       
+        }
     }
 
     onChanges(): void {
         this.formGroup.valueChanges.subscribe(val => {
-            this.searchButtonDisable = ((this.formGroup.get(this.orderCodeName).value && this.formGroup.get(this.orderCodeName).valid) 
-            || this.formGroup.get(this.monthProduction).value || (this.formGroup.get('type').value && this.formGroup.get('model').value && this.formGroup.get('color').value))
-            ? true : false;
+            this.searchButtonDisable = ((this.formGroup.get(this.orderCodeName).value && this.formGroup.get(this.orderCodeName).valid)
+                || this.formGroup.get(this.monthProduction).value || (this.formGroup.get('type').value && this.formGroup.get('model').value && this.formGroup.get('color').value))
+                ? true : false;
         });
     }
 
-    ShowDetails(detail) {
+    showDetails(detail) {
         this.service.purchase_orders(detail.id, null, null, null, null, null).subscribe((response) => {
             this.order = response[0];
             this.fechaVencimientoSelected = new Date(response[0].dueDate);
@@ -243,7 +243,7 @@ export class PurchaseOrderComponent implements OnInit {
         });
     }
 
-    CloseDetails() {
+    closeDetails() {
         this.visible = true;
         this.visibledetails = true;
         this.visibleEditable = true;
@@ -273,7 +273,7 @@ export class PurchaseOrderComponent implements OnInit {
         });
     }
 
-    EditOrden(purchaseOrder) {
+    editOrden(purchaseOrder) {
         this.service.purchase_orders(purchaseOrder.id, null, null, null, null, null).subscribe((response) => {
             this.order = response[0];
             this.fechaVencimientoSelected = new Date(response[0].dueDate);
@@ -286,7 +286,7 @@ export class PurchaseOrderComponent implements OnInit {
         });
     }
 
-    CloseEditar() {
+    closeEditar() {
         this.visible = true;
         this.visibledetails = true;
         this.visibleEditable = true;
@@ -300,11 +300,11 @@ export class PurchaseOrderComponent implements OnInit {
         this.tableOrderFull();
     }
 
-    closeMaintenance(){
+    closeMaintenance() {
         this.visible = true;
         this.visibledetails = true;
         this.visibleEditable = true;
-        this.visibleMaintenance =false;
+        this.visibleMaintenance = false;
         this.tableOrderFull();
     }
 
@@ -315,20 +315,19 @@ export class PurchaseOrderComponent implements OnInit {
     }
 
     maintenance(maintenance: PurchaseOrder) {
-        
         this.confirmationService.confirm({
-            message: '¿Deseas dar mantenimiento a la orden de compra ' +maintenance.status +' '+maintenance.orderNumber+' ?',
+            message: '¿Deseas dar mantenimiento a la orden de compra ' + maintenance.status + ' ' + maintenance.orderNumber + ' ?',
             header: 'Confirmación',
             icon: 'pi pi-exclamation-triangle',
-            accept: () => {        
+            accept: () => {
                 this.maintenanceDetails = maintenance;
                 this.visible = false;
-                this.visibleMaintenance = true;              
+                this.visibleMaintenance = true;
             },
             reject: () => {
 
             }
-          });         
+        });
     }
 }
 

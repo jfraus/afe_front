@@ -7,12 +7,7 @@
           <div class="ui-g-12 ui-lg-12">
             <div class="ui-g-12 ui-lg-4">
               <span class="md-inputfield">
-                <input
-                  type="text"
-                  style="width: 100%"
-                  formControlName="contracNumber"
-                  pInputText
-                />
+                <input type="text" style="width: 100%" formControlName="contracNumber" pInputText />
                 <validations-input-component> </validations-input-component>
                 <label>Contrato de Venta</label>
               </span>
@@ -20,14 +15,8 @@
             <div class="ui-g-12 ui-lg-4">
               <div class="p-inputgroup">
                 <span class="md-inputfield">
-                  <p-calendar
-                    dateFormat="dd-mm-yy"
-                    name="createDate"
-                    [showButtonBar]="true"
-                    formControlName="createDate"
-                    [inputStyle]="{ width: '100%' }"
-                    [showIcon]="true"
-                  ></p-calendar>
+                  <p-calendar dateFormat="dd-mm-yy" name="createDate" [showButtonBar]="true"
+                    formControlName="createDate" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
                   <label>Fecha de Creación Inicio</label>
                 </span>
                 <validations-input-component> </validations-input-component>
@@ -36,31 +25,16 @@
             <div class="ui-g-12 ui-lg-4">
               <div class="p-inputgroup">
                 <span class="md-inputfield">
-                  <p-calendar
-                    dateFormat="dd-mm-yy"
-                    name="createDateEnd"
-                    formControlName="createDateEnd"
-                    [showButtonBar]="true"
-                    [inputStyle]="{ width: '100%' }"
-                    [showIcon]="true"
-                  ></p-calendar>
+                  <p-calendar dateFormat="dd-mm-yy" name="createDateEnd" formControlName="createDateEnd"
+                    [showButtonBar]="true" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
                   <label>Fecha de Creación Final</label>
                 </span>
                 <validations-input-component> </validations-input-component>
               </div>
             </div>
-
             <div class="ui-g-12 ui-lg-4">
-              <button
-                pButton
-                type="button"
-                label="Buscar"
-                [disabled]="searchDisable"
-                (click)="search()"
-                icon="pi pi-search"
-                class="teal-btn"
-                style="width: auto"
-              ></button>
+              <button pButton type="button" label="Buscar" [disabled]="searchDisable" (click)="search()"
+                icon="pi pi-search" class="teal-btn" style="width: auto"></button>
             </div>
           </div>
         </div>
@@ -70,55 +44,24 @@
 
   <div class="card">
     <div class="p-fluid p-formgrid p-grid">
-      <div class="ui-g-12 ui-lg-1">
-        <button
-          pButton
-          type="button"
-          label="Agregar"
-          (click)="visibleAdd()"
-          icon="pi pi-plus"
-          class="ui-button-success"
-          style="width: auto"
-        ></button>
+      <div class="ui-g-12 ui-lg-1" can-use [typeAction]="'Add'">
+        <button pButton type="button" label="Agregar" (click)="visibleAdd()" icon="pi pi-plus" class="ui-button-success"
+          style="width: auto"></button>
       </div>
       <div class="ui-g-12 ui-lg-1" style="width: 50%;">
-        <button
-          pButton
-          type="button"
-          label="Asignar contrato a unidades"
-          (click)="asigUnits()"
-          icon="pi pi-check"
-          class="blue-grey-btn"
-          style="width: auto"
-        ></button>
+        <button pButton type="button" label="Asignar contrato a unidades" (click)="asigUnits()" icon="pi pi-check"
+          class="blue-grey-btn" style="width: auto"></button>
       </div>
     </div>
-
-    <!-- Tabla con las ordenes de compras -->
-    <p-table
-      [columns]="cols"
-      [value]="dataTable"
-      selectionMode="single"
-      dataKey="idTabla"
-      sortMode="multiple"
-      [style]="{ 'margin-bottom': '20px' }"
-      [responsive]="true"
-      [rowHover]="true"
-      [paginator]="true"
-      [responsive]="true"
-      [rowsPerPageOptions]="[10, 20, 30, 40, 50]"
-      [autoLayout]="true"
-      [rows]="20"
-      [pageLinks]="20"
-    >
+    
+    <p-table [columns]="cols" [value]="dataTable" selectionMode="single" dataKey="idTabla" sortMode="multiple"
+      [style]="{ 'margin-bottom': '20px' }" [responsive]="true" [rowHover]="true" [paginator]="true" [responsive]="true"
+      [rowsPerPageOptions]="[10, 20, 30, 40, 50]" [autoLayout]="true" [rows]="20" [pageLinks]="20">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns" [pSortableColumn]="col.field">
             {{ col.header }}
-            <p-sortIcon
-              *ngIf="col.header != 'Acción'"
-              [field]="col.field"
-            ></p-sortIcon>
+            <p-sortIcon *ngIf="col.header != 'Acción'" [field]="col.field"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
@@ -143,41 +86,26 @@
             </span>
             <ng-template #elseAction>
               <div *ngIf="rowData.status === 'CREADO'">
-                <button
-                  pButton
-                  type="button"
-                  icon="ui-icon-edit"
-                  (click)="updateContract(rowData)"
-                  class="blue-grey-btn"
-                ></button>
-                <button
-                  pButton
-                  type="button"
-                  (click)="sendContrato(rowData)"
-                  icon="pi pi-check"
-                  style="margin-left: 3px"
-                  class="blue-btn"
-                ></button>
+                <div can-use [typeAction]="'Edit'">                
+                  <button pButton type="button" icon="ui-icon-edit" (click)="updateContract(rowData)"
+                    class="blue-grey-btn" pTooltip="Editar"></button>
+                </div>
+                <div can-use [typeAction]="'Send'">
+                  <button pButton type="button" (click)="sendContrato(rowData)" icon="pi pi-check"
+                    style="margin-left: 3px" class="blue-btn" pTooltip="Enviar CV"></button>
+                </div>
               </div>
               <div *ngIf="rowData.status === 'ENVIADO'">
-                <button
-                  pButton
-                  type="button"
-                  (click)="showDetail(rowData)"
-                  icon="ui-icon-format-list-bulleted"
-                  style="margin-left: 3px"
-                  class="blue-grey-btn space-btn"
-                ></button>
+                <div can-use [typeAction]="'Detail'">
+                  <button pButton type="button" (click)="showDetail(rowData)" icon="ui-icon-format-list-bulleted"
+                  style="margin-left: 3px" class="blue-grey-btn space-btn" pTooltip="Ver detalle"></button>
+                </div>                
               </div>
               <div *ngIf="rowData.status === 'FINALIZADO'">
-                <button
-                  pButton
-                  type="button"
-                  (click)="showDetail(rowData)"
-                  icon="ui-icon-format-list-bulleted"
-                  style="margin-left: 3px"
-                  class="blue-grey-btn space-btn"
-                ></button>
+                <div can-use [typeAction]="'Detail'">
+                  <button pButton type="button" (click)="showDetail(rowData)" icon="ui-icon-format-list-bulleted"
+                  style="margin-left: 3px" class="blue-grey-btn space-btn" pTooltip="Ver detalle"></button>
+                </div>                
               </div>
             </ng-template>
           </td>
@@ -188,29 +116,23 @@
 
   <p-confirmDialog #cd header="Confirmación" icon="pi pi-exclamation-triangle">
     <p-footer>
-      <button class="ui-button-success" 
-      type="button" pButton icon="pi pi-check" label="Sí" (click)="cd.accept()"> </button>
-      <button class="ui-button-danger" 
-      type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"
-      ></button>
+      <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Sí" (click)="cd.accept()">
+      </button>
+      <button class="ui-button-danger" type="button" pButton icon="pi pi-times" label="No"
+        (click)="cd.reject()"></button>
     </p-footer>
   </p-confirmDialog>
 </div>
 
-<edit-add-contracts-component
-  (close)="closeEditarAgregar()"
-  [(display)]="visiableAddEdit"
-></edit-add-contracts-component>
+<edit-add-contracts-component (close)="closeEditarAgregar()" [(display)]="visiableAddEdit">
+</edit-add-contracts-component>
 
 <div *ngIf="displayEdtiar">
-  <edit-sale-contract-component
-    (close)="closedEditar()"
-    [(detail)]="detail"
-    [contract]="contratoSelected"
-  >
+  <edit-sale-contract-component (close)="closedEditar()" [(detail)]="detail" [contract]="contratoSelected">
   </edit-sale-contract-component>
 </div>
 
 <div *ngIf="!displayEdtiar && displayDetalle">
-  <details-contract-component [contrato]="contratoSelected" [detail]="detail" (close)="displayDetalle=false"> </details-contract-component>
+  <details-contract-component [contrato]="contratoSelected" [detail]="detail" (close)="displayDetalle=false">
+  </details-contract-component>
 </div>

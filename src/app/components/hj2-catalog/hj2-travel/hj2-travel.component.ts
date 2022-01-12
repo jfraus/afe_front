@@ -30,10 +30,10 @@ export class Hj2TravelComponent implements OnInit {
       {field: 'hj2', header: 'HJ2'},
       {field: 'idd1125', header: 'IDD1125'}
     ];    
-    this.BuildForm();    
+    this.buildForm();    
   }
 
-  private BuildForm() {
+  private buildForm() {
     this.formGroup = this.fb.group({
       travelNumber: ['', [, Validators.required, Validators.maxLength(6), Validators.minLength(6)]],
     });

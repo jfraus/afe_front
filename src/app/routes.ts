@@ -64,8 +64,8 @@ export const routes: Routes = [
         {path: 'maintenance-to-vin', component: MaintenanceToVinComponent, canActivate: [AuthGuardService]},
         {path: 'cancellation-invoice', component: InvoiceCancellationComponent, canActivate: [AuthGuardService]},
         {path: 'role', component: RolComponent, canActivate: [AuthGuardService]},
-        {path: 'role-add', component: AddEditRoleComponent, canActivate: [AuthGuardService]},
-        {path: 'role-edit/:id', component: AddEditRoleComponent, canActivate: [AuthGuardService]},
+        {path: 'role-add', component: AddEditRoleComponent}, 
+        {path: 'role-edit/:id', component: AddEditRoleComponent}
     ]
     },
     {path: 'error', component: AppErrorComponent, pathMatch   : 'full'},
