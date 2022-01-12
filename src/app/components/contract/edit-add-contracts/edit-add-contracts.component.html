@@ -3,11 +3,13 @@
         <form [(formGroup)]="addModel" class="ui-g-12">
             <div class="ui-g form-group">
                 <div class="ui-g-12 ui-lg-4">
-                    <span class="md-inputfield"  >
-                        <p-dropdown formControlName="country" [options]="country" [filter]="true" 
-                        [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectModel()"></p-dropdown>
+                    <span class="md-inputfield">
+                        <p-dropdown formControlName="country" [options]="country" [filter]="true"
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectModel()">
+                        </p-dropdown>
                         <label>Pais*</label>
-                        <validations-input-component [formGroup]="addModel" formInputName="country" [validation_messages]="validations"></validations-input-component>
+                        <validations-input-component [formGroup]="addModel" formInputName="country"
+                            [validation_messages]="validations"></validations-input-component>
                     </span>
                 </div>
                 <div class="ui-g-12 ui-lg-4">
@@ -16,13 +18,15 @@
                         <label>Cod. Pais</label>
                     </span>
                 </div>
-                
+
                 <div class="ui-g-12 ui-lg-4">
-                    <span class="md-inputfield"  >
-                        <p-dropdown formControlName="dealer" [options]="dealer" [filter]="true" 
-                        [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectDealer()"></p-dropdown>
+                    <span class="md-inputfield">
+                        <p-dropdown formControlName="dealer" [options]="dealer" [filter]="true"
+                            [autoDisplayFirst]="false" [showClear]="true" appendTo="body" (onChange)="selectDealer()">
+                        </p-dropdown>
                         <label>Dealer*</label>
-                        <validations-input-component [formGroup]="addModel" formInputName="dealer" [validation_messages]="validations"></validations-input-component>
+                        <validations-input-component [formGroup]="addModel" formInputName="dealer"
+                            [validation_messages]="validations"></validations-input-component>
                     </span>
                 </div>
                 <div class="ui-g-12 ui-lg-4">
@@ -48,9 +52,9 @@
         </form>
     </div>
     <p-footer>
-        <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Agregar" [disabled]="!addModel.valid"
-        (click)="add()"></button>
-        <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
-        (click)="closed()"></button>
+        <button class="ui-button-success" type="button" pButton icon="ui-icon-save" label="Agregar"
+            [disabled]="!addModel.valid" (click)="add()"></button>
+        <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar"
+            (click)="closed()"></button>
     </p-footer>
 </p-dialog>

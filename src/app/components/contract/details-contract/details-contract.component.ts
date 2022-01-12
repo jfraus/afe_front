@@ -25,7 +25,7 @@ export class ContractDetailsComponent {
     ];
   }
 
-  closed(){
+  closed() {
     this.close.emit(true);
   }
 

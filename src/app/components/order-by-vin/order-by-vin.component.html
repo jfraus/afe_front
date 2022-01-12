@@ -1,169 +1,103 @@
 <div *ngIf="!displayEdtiar && !displayDetalle">
-    <div class="card">
-      <div class="card-title">Order by Vin</div>
-      <div class="ui-g ui-fluid">
-        <form class="form-group ui-g-12" [formGroup]="formGroup">
-          <div class="p-fluid p-formgrid p-grid">
-            <div class="ui-g-12 ui-lg-12">
-              <div class="ui-g-12 ui-lg-4">
+  <div class="card">
+    <div class="card-title">Order by Vin</div>
+    <div class="ui-g ui-fluid">
+      <form class="form-group ui-g-12" [formGroup]="formGroup">
+        <div class="p-fluid p-formgrid p-grid">
+          <div class="ui-g-12 ui-lg-12">
+            <div class="ui-g-12 ui-lg-4">
+              <span class="md-inputfield">
+                <input type="text" style="width: 100%" formControlName="contracNumber" pInputText />
+                <validations-input-component> </validations-input-component>
+                <label>Contrato de Venta</label>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+              <div class="p-inputgroup">
                 <span class="md-inputfield">
-                  <input
-                    type="text"
-                    style="width: 100%"
-                    formControlName="contracNumber"
-                    pInputText
-                  />
-                  <validations-input-component> </validations-input-component>
-                  <label>Contrato de Venta</label>
+                  <p-calendar dateFormat="yy-mm-dd" name="createDate" [showButtonBar]="true"
+                    formControlName="createDate" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
+                  <label>Mes de Creación Inicio</label>
                 </span>
-              </div>
-              <div class="ui-g-12 ui-lg-4">
-                <div class="p-inputgroup">
-                  <span class="md-inputfield">
-                    <p-calendar
-                      dateFormat="yy-mm-dd"
-                      name="createDate"
-                      [showButtonBar]="true"
-                      formControlName="createDate"
-                      [inputStyle]="{ width: '100%' }"
-                      [showIcon]="true"
-                    ></p-calendar>
-                    <label>Mes de Creación Inicio</label>
-                  </span>
-                  <validations-input-component> </validations-input-component>
-                </div>
-              </div>
-              <div class="ui-g-12 ui-lg-4">
-                <div class="p-inputgroup">
-                  <span class="md-inputfield">
-                    <p-calendar
-                      dateFormat="yy-mm-dd"
-                      name="createDateEnd"
-                      formControlName="createDateEnd"
-                      [showButtonBar]="true"
-                      [inputStyle]="{ width: '100%' }"
-                      [showIcon]="true"
-                    ></p-calendar>
-                    <label>Mes de Creación Final</label>
-                  </span>
-                  <validations-input-component> </validations-input-component>
-                </div>
-              </div>
-  
-              <div class="ui-g-12 ui-lg-4">
-                <button
-                  pButton
-                  type="button"
-                  label="Buscar"
-                  (click)="search()"
-                  [disabled]="searchDisable"
-                  icon="pi pi-search"
-                  class="teal-btn"
-                  style="width: auto"
-                ></button>
+                <validations-input-component> </validations-input-component>
               </div>
             </div>
+            <div class="ui-g-12 ui-lg-4">
+              <div class="p-inputgroup">
+                <span class="md-inputfield">
+                  <p-calendar dateFormat="yy-mm-dd" name="createDateEnd" formControlName="createDateEnd"
+                    [showButtonBar]="true" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
+                  <label>Mes de Creación Final</label>
+                </span>
+                <validations-input-component> </validations-input-component>
+              </div>
+            </div>
+
+            <div class="ui-g-12 ui-lg-4">
+              <button pButton type="button" label="Buscar" (click)="search()" [disabled]="searchDisable"
+                icon="pi pi-search" class="teal-btn" style="width: auto"></button>
+            </div>
           </div>
-        </form>
-      </div>
-    </div>
-  
-    <div class="card">
-      <div class="p-fluid p-formgrid p-grid">
-        <div class="ui-g-12 ui-lg-3">
-          <button
-            pButton
-            type="button"
-            label="Enviar YMS"
-            (click)="sendYms()"
-            class="ui-button-success"
-            style="width: auto"
-          ></button>
         </div>
-      </div>
-      
-      <!-- Tabla con las ordenes de compras -->
-      <p-table
-        [columns]="cols"
-        [value]="dataTable"
-        selectionMode="single"
-        dataKey="idTabla"
-        sortMode="multiple"
-        [style]="{ 'margin-bottom': '20px' }"
-        [responsive]="true"
-        [rowHover]="true"
-        [paginator]="true"
-        [responsive]="true"
-        [rowsPerPageOptions]="[10, 20, 30, 40, 50]"
-        [autoLayout]="true"
-        [rows]="20"
-        [pageLinks]="20"
-      >
-        <ng-template pTemplate="header" let-columns>
-          <tr>
-            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-              {{ col.header }}
-              <p-sortIcon
-                *ngIf="col.header != 'Acción'"
-                [field]="col.field"
-              ></p-sortIcon>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage" let-columns>
-          <tr>
-            <td style="text-align: center" [attr.colspan]="columns.length + 2">
-              No se encontro información
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-          <tr [pSelectableRow]="rowData">
-            <td *ngFor="let col of columns">
-              <span class="ui-column-title">{{ col.header }}</span>
-              <span *ngIf="col.field != 'action'; else elseAction">
-                <div *ngIf="col.field == 'createDate'; else elseDate">
-                  {{rowData[col.field] | pipeStringDate}}
-                </div>
-                <ng-template #elseDate>
-                  {{rowData[col.field]}}
-                </ng-template>
-              </span>
-              <ng-template #elseAction>
-                
-                  <button
-                    pButton
-                    type="button"
-                    icon="pi pi-file-excel"
-                    (click)="saveExcel(rowData)"
-                    style="margin-left: 3px"
-                    class="ui-button-success"
-                  ></button>
-              </ng-template>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+      </form>
     </div>
-  
-    <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
-      <p-footer>
-        <button
-          class="ui-button-success"
-          type="button"
-          pButton
-          icon="pi pi-check"
-          label="Si"
-          (click)="cd.accept()"
-        ></button>
-        <button
-          class="ui-button-danger"
-          type="button"
-          pButton
-          icon="pi pi-times"
-          label="No"
-          (click)="cd.reject()"
-        ></button>
-      </p-footer>
-    </p-confirmDialog>
   </div>
+
+  <div class="card">
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="ui-g-12 ui-lg-3">
+        <button pButton type="button" label="Enviar YMS" (click)="sendYms()" class="ui-button-success"
+          style="width: auto"></button>
+      </div>
+    </div>
+    
+    <p-table [columns]="cols" [value]="dataTable" selectionMode="single" dataKey="idTabla" sortMode="multiple"
+      [style]="{ 'margin-bottom': '20px' }" [responsive]="true" [rowHover]="true" [paginator]="true" [responsive]="true"
+      [rowsPerPageOptions]="[10, 20, 30, 40, 50]" [autoLayout]="true" [rows]="20" [pageLinks]="20">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{ col.header }}
+            <p-sortIcon *ngIf="col.header != 'Acción'" [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td style="text-align: center" [attr.colspan]="columns.length + 2">
+            No se encontro información
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+            <span class="ui-column-title">{{ col.header }}</span>
+            <span *ngIf="col.field != 'action'; else elseAction">
+              <div *ngIf="col.field == 'createDate'; else elseDate">
+                {{rowData[col.field] | pipeStringDate}}
+              </div>
+              <ng-template #elseDate>
+                {{rowData[col.field]}}
+              </ng-template>
+            </span>
+            <ng-template #elseAction>
+
+              <button pButton type="button" icon="pi pi-file-excel" (click)="saveExcel(rowData)"
+                style="margin-left: 3px" class="ui-button-success"></button>
+            </ng-template>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+    <p-footer>
+      <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Si"
+        (click)="cd.accept()"></button>
+      <button class="ui-button-danger" type="button" pButton icon="pi pi-times" label="No"
+        (click)="cd.reject()"></button>
+    </p-footer>
+  </p-confirmDialog>
+</div>

@@ -1,12 +1,10 @@
 <div>
-
   <div class="card">
     <div class="card-title">Catálogo Cotizaciones</div>
     <div class="ui-g ui-fluid">
       <form class="form-group ui-g-12" [formGroup]="formGroup">
         <div class="p-fluid p-formgrid p-grid">
           <div class="ui-g-12 ui-lg-12">
-
             <div class="ui-g-12 ui-lg-4">
               <div class="p-inputgroup">
                 <span class="md-inputfield">
@@ -27,8 +25,7 @@
     </div>
   </div>
 
-  <div class="card">
-    
+  <div class="card">    
     <p-table [columns]="cols" [value]="dataTable" selectionMode="single" dataKey="idTabla" sortMode="multiple"
       [style]="{ 'margin-bottom': '20px' }" [responsive]="true" [rowHover]="true" [paginator]="true" [responsive]="true"
       [rowsPerPageOptions]="[10, 20, 30, 40, 50]" [autoLayout]="true" [rows]="20" [pageLinks]="20">

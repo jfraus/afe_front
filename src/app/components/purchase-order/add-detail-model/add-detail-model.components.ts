@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { MessageService, SelectItem } from 'primeng/api';
-import { Observable } from 'rxjs';
 import { Model } from 'src/app/models/model.model';
 import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
@@ -32,7 +31,7 @@ export class AddDetailModelComponent {
                 private serviceColor: ModelColorControllerService, 
                 private messages: AppValidationMessagesService, 
                 private services: ModelControllerService) {
-        this.BuildForm();
+        this.buildForm();
         this.fillModel();
         this.messages.messagesRequired = 'true';
         this.validations.push(this.messages.getValidationMessagesWithName('model'));
@@ -45,7 +44,7 @@ export class AddDetailModelComponent {
         this.validations.push(this.messages.getValidationMessagesWithName('quantity'));
     }
 
-    private BuildForm() {
+    private buildForm() {
         this.addModel = this.fb.group({
             model: ['', [Validators.required]],
             plant: new FormControl({ value: '', disabled: true }),

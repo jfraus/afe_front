@@ -1,35 +1,15 @@
 <div class="card">
-    <div class="card-title">Catálogo de países</div>
-    <p-table
-      [columns]="cols"
-      selectionMode="single"
-      dataKey="idTabla"
-      [value]="countries"
-      [loading]="loadingCountries"
-      sortMode="multiple"
-      [style]="{ 'margin-bottom': '20px' }"
-      [responsive]="true"
-      [rowHover]="true"
-      [paginator]="true"
-      [responsive]="true"
-      [rowsPerPageOptions]="[10, 20, 30]"
-      [autoLayout]="true"
-      [rows]="20"
-      [pageLinks]="20"
-      #dt
-      [filterDelay]="0" 
-      [globalFilterFields]="['name']"
-    >
+  <div class="card-title">Catálogo de países</div>
+  <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="countries" [loading]="loadingCountries"
+    sortMode="multiple" [style]="{ 'margin-bottom': '20px' }" [responsive]="true" [rowHover]="true" [paginator]="true"
+    [responsive]="true" [rowsPerPageOptions]="[10, 20, 30]" [autoLayout]="true" [rows]="20" [pageLinks]="20" #dt
+    [filterDelay]="0" [globalFilterFields]="['name']">
     <ng-template pTemplate="caption">
       <div class="table-header">
         <span class="p-input-icon-left">
           Buscar por pais
           <i class="pi pi-search"></i>
-            <input 
-              pInputText 
-              type="text" 
-              (input)="dt.filterGlobal($event.target.value, 'contains')" 
-            />
+          <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" />
         </span>
       </div>
     </ng-template>
@@ -56,14 +36,10 @@
           {{rowData[col.field]}}
         </td>
         <td>
-          <button
-            pButton
-            type="button"
-            icon="pi pi-pencil"
-            (click)="updateCountry(rowData)"
-            style="margin-left: 3px"
-            class="blue-grey-btn"
-          ></button>
+          <div can-use [typeAction]="'Edit'"> 
+            <button pButton type="button" icon="pi pi-pencil" (click)="updateCountry(rowData)" style="margin-left: 3px"
+              class="blue-grey-btn" pTooltip="Editar"></button>
+          </div>
         </td>
       </tr>
     </ng-template>
@@ -71,11 +47,6 @@
 </div>
 
 <div *ngIf="displayUpdate">
-  <app-edit-country
-  (close)="closedEditar()"
-  [(display)]="visibleEdit"
-  [country]="country"
->
-    
+  <app-edit-country (close)="closedEditar()" [(display)]="visibleEdit" [country]="country">
   </app-edit-country>
 </div>
