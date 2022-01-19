@@ -8,7 +8,6 @@ import { ModelControllerService } from 'src/app/services/model-controller.servic
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
 
-
 @Component({
     selector: 'edit-detail-model-component',
     templateUrl: './edit-detail-model.component.html',
@@ -45,22 +44,20 @@ export class EditDetailModelComponent implements OnInit {
         this.validations.push(this.messages.getValidationMessagesWithName('quantity'));
         this.pedido = {color: {id:0,code:'',interiorCode:''},model: {id:0, code: '',type:{id:0,type:''},plant: {abbreviation: '',id:1,salesCode:''}},quantity:0,purchaseOrderId:0 };
     }
+
     ngOnInit(): void {
         this.addModel.controls['modelType'].disable();
         this.addModel.controls['plant'].disable();
         this.addModel.controls['internalColor'].disable();
     }
-    
 
     public BuildForm(pedido) {
-
         let promesa = new Promise((resolved) => {
             this.serviceColor.get(pedido.model.id).subscribe((response) => {
                 this.colors = response.map(r => ({
                     label: r.code,
                     value: r
-                }));
-    
+                }));    
             });
             resolved(true);
         });
@@ -78,9 +75,6 @@ export class EditDetailModelComponent implements OnInit {
                 });
             },10);
         })
-        
-        
-
     }
 
     fillModel(){
@@ -97,16 +91,8 @@ export class EditDetailModelComponent implements OnInit {
                 label: r.code,
                 value: r
             }));
-
         });
         
-    }
-    fillColorId(idModel){
-        
-        
-        
-
-
     }
 
     selectModel():void{
@@ -121,12 +107,10 @@ export class EditDetailModelComponent implements OnInit {
                 value: r
             }));
         })
-
     }
 
     selectColor():void{
-        let color = this.addModel.get('color').value;
-        
+        let color = this.addModel.get('color').value;        
         this.addModel.get('internalColor').setValue(color !== null ? color.interiorCode: '');
     }
 

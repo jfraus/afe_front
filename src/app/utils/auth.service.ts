@@ -11,8 +11,8 @@ import { MenuControllerService } from '../services/menu-controller.service';
 })
 export class AuthService {
 
-    constructor(private menuServices: MenuControllerService,private router: Router, private http: HttpClient, public messageServices: MessageService) { }
-    getLogin(username:string, password:string) {
+    constructor(private menuServices: MenuControllerService, private router: Router, private http: HttpClient, public messageServices: MessageService) { }
+    getLogin(username: string, password: string) {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -47,17 +47,24 @@ export class AuthService {
         localStorage.setItem("isLoggedIn", 'false');
         localStorage.removeItem('token');
         localStorage.removeItem("fullname");
+        localStorage.removeItem("authorities");
         sessionStorage.clear();
         this.router.navigateByUrl("/login");
     }
 
-    convertMenu(){
+    convertMenu() {
         this.menuServices.get().subscribe(response => {
-        let menuData = response.view;
-        menuData = menuData.map(view => ({
-            label: view.view, routerLink: [`/${view.route}`]
-        }));
-        sessionStorage.setItem("menu",JSON.stringify(menuData));
+            let menuData = response.view;
+            menuData = menuData.map(view => ({
+                label: view.view, routerLink: [`/${view.route}`]
+            }));
+            sessionStorage.setItem("menu", JSON.stringify(menuData));
+
+            let actionData = response.view;
+            actionData = actionData.map(action => ({
+                authority: action.route, can: [action.action]
+            }));
+            localStorage.setItem("authorities", JSON.stringify(actionData));
         });
     }
 } 

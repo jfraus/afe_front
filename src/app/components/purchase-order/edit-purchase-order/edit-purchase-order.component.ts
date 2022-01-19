@@ -41,6 +41,7 @@ export class EditPurchaseOrderComponent implements OnInit {
     minExpired = new Date();
     maxDateExpired= new Date();
     btnAddDisable = false;
+    visible: boolean = true;
 
     constructor(public dateUtil: FormatDate,public confirmationService: ConfirmationService,public messageServices: MessageService, private service: PurchaseOrdenControllerService, private fb: FormBuilder, private messages: AppValidationMessagesService) {
 
@@ -65,14 +66,15 @@ export class EditPurchaseOrderComponent implements OnInit {
         this.validations.push(this.messages.getValidationMessagesWithName('productionMonthForm'));
 
         this.messages.messagesRequired = 'true';
-        this.validations.push(this.messages.getValidationMessagesWithName('dateExpired'));
-        
+        this.validations.push(this.messages.getValidationMessagesWithName('dateExpired'));       
 
     }
+
     closedEditarPedido(){
         this.displayEdit = false;
         this.fillTable();
     }
+
     fillTable(){
         this.loadingPurchaseOrder = true;
         this.service.purchase_orders(this.order.id,null,null,null,null,null).subscribe((response) =>
@@ -82,6 +84,7 @@ export class EditPurchaseOrderComponent implements OnInit {
             this.formGroup.get('unitsQuantity').setValue(response[0].unitsQuantity);
         });
     }
+
     closedAgregar(){
         this.displayAdd = false;
         this.fillTable();
@@ -100,12 +103,10 @@ export class EditPurchaseOrderComponent implements OnInit {
         this.formGroup.controls['unitsAssigned'].disable();
         if(this.order.dueDate && this.order.productionMonth){
             this.btnAddDisable = true;
-        }
-        
-        
+        }        
     }
-    updateDetail(detail){
 
+    updateDetail(detail){
         let promise = new Promise((resolve) => {
             this.detail = {
                 id: detail.id,
@@ -123,19 +124,17 @@ export class EditPurchaseOrderComponent implements OnInit {
             });
 
             promiseForm.then((succes) => {
-                
-                // this.editarComponent.fillColorId(this.pedido.model.id);
                 this.displayEdit = true;
             })
 
         });
-
     }
+
     add(){
         this.displayAdd =  true;
     }
+
     deletedDetail(detail){
-        
         this.confirmationService.confirm({
             message: '¿Seguro qué desea eliminar este registro?',
             header: 'Confirmación',
@@ -151,18 +150,13 @@ export class EditPurchaseOrderComponent implements OnInit {
                 
             }
         });
-    
     }
 
-
-
-    visible: boolean = true;
     ngOnInit(): void {
         this.BuildForm();
     }
 
-
-    Save(){
+    save(){
         if(this.formGroup.valid){
             let promise = new Promise((resolved, reject) => {
                 let dateVencida = new Date(this.formGroup.get('dateExpired').value);
@@ -190,8 +184,6 @@ export class EditPurchaseOrderComponent implements OnInit {
     Close(){
         this.close.emit(true);
     }
-
     
-
 }
 

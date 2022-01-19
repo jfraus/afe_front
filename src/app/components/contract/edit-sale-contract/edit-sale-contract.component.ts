@@ -17,7 +17,7 @@ export class EditSaleContractComponent {
   cols = [];
   @Output() close = new EventEmitter();
 
-  constructor(public confirmationService: ConfirmationService,public messageServices: MessageService, private services: SaleContractControllerService) {
+  constructor(public confirmationService: ConfirmationService, public messageServices: MessageService, private services: SaleContractControllerService) {
     this.cols = [
       { field: 'carrierName', header: 'Carrier' },
       { field: 'modelType', header: 'Tipo' },
@@ -36,12 +36,11 @@ export class EditSaleContractComponent {
   }
 
   closedAdd(event) {
-    
-    if(event){
+    if (event) {
       this.services.get(null, null, null, this.contract.id).subscribe((response) => {
         let details = response[0];
         this.contract = details;
-        if(details){
+        if (details) {
           this.detail = details.detail.map(r => ({
             ...r,
             carrierName: r.carrier.name,
@@ -67,7 +66,7 @@ export class EditSaleContractComponent {
         this.services.deletedDetail(detail.id).subscribe((response) => {
           this.services.get(null, null, null, this.contract.id).subscribe((response) => {
             let details = response[0];
-            if(details.detail){
+            if (details.detail) {
               this.detail = details.detail.map(r => ({
                 ...r,
                 carrierName: r.carrier.name,
@@ -78,8 +77,6 @@ export class EditSaleContractComponent {
               }));
             }
             this.messageServices.add({ key: 'success', severity: 'success', summary: 'Eliminado con éxito' });
-
-
           });
         });
       },
@@ -95,7 +92,7 @@ export class EditSaleContractComponent {
     this.displayAdd = true;
   }
 
-  closed(){
+  closed() {
     this.close.emit(true);
     this.detail = [];
   }

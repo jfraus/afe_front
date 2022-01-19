@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormControl, Validators, FormGroup } from "@angular/forms";
 import { MessageService, SelectItem } from 'primeng/api';
-import { from } from 'rxjs';
 import { CarrierControllerService } from 'src/app/services/carrier-controller.service';
 import { DealerControllerService } from 'src/app/services/dealer-controller.service';
 import { ModelColorControllerService } from 'src/app/services/model-color-controller.service';
@@ -19,8 +18,7 @@ import { CarrierType } from 'src/app/enums/carrier-type.enum';
     providers: [CarrierControllerService, AppValidationMessagesService, SaleContractControllerService, ModelColorControllerService, ModelControllerService, DealerControllerService, FormatDate]
 })
 export class EditAddDetailComponent implements OnInit {
-
-    //ADD
+    
     @Input() display: boolean;
     @Output() close = new EventEmitter();
     model: SelectItem[] = [];
@@ -31,22 +29,19 @@ export class EditAddDetailComponent implements OnInit {
     addModel: FormGroup;
     validations = [];
     @Input() purchaseOrderId;
-
-    //EDIT
+    
     @Input() edit: boolean;
     modelEdit: FormGroup;
     @Input() detail: any;
 
-    constructor(private serviceCarrier: CarrierControllerService, 
-        private messages: AppValidationMessagesService, 
-        public serviceModelColor: ModelColorControllerService, 
-        public messageServices: MessageService, 
-        private utilDate: FormatDate,
-        private fb: FormBuilder, 
-        private servicesModel: ModelControllerService, 
-        private serviceDealer: DealerControllerService, 
+    constructor(private serviceCarrier: CarrierControllerService,
+        private messages: AppValidationMessagesService,
+        public serviceModelColor: ModelColorControllerService,
+        public messageServices: MessageService,
+        private fb: FormBuilder,
+        private servicesModel: ModelControllerService,
         private serviceSale: SaleContractControllerService) {
-        
+
         this.buildForm();
         this.fill();
         this.messages.messagesRequired = 'true';
@@ -64,11 +59,11 @@ export class EditAddDetailComponent implements OnInit {
         this.validations.push(this.messages.getValidationMessagesWithName('quantity'));
     }
 
-    ngOnInit(): void {}
-    
+    ngOnInit(): void { }
+
     fill() {
         for (let cType in CarrierType) {
-            this.carrierType.push({label: cType, value:CarrierType[''+cType+'']});
+            this.carrierType.push({ label: cType, value: CarrierType['' + cType + ''] });
         }
         this.servicesModel.get(true).subscribe((response) => {
             this.model = response.map(r => (
@@ -78,8 +73,7 @@ export class EditAddDetailComponent implements OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-
-        if(this.detail && this.edit){
+        if (this.detail && this.edit) {
             this.addModel.get('model').setValue(this.detail.model);
             this.addModel.get('modelType').setValue(this.detail.model.type.type);
             this.addModel.get('carrierType').setValue(this.detail.carrier.carrierType);
@@ -185,10 +179,9 @@ export class EditAddDetailComponent implements OnInit {
             carrier: ['', [Validators.required]],
             colorInterior: new FormControl({ value: '', disabled: true }),
             modelType: new FormControl({ value: '', disabled: true }),
-            contractNumber : new FormControl({ value: '', disabled: true }),
+            contractNumber: new FormControl({ value: '', disabled: true }),
             carrierName: new FormControl({ value: '', disabled: true }),
             totalUnitsAssigned: new FormControl({ value: 0, disabled: true }),
-
         });
     }
 
@@ -239,7 +232,7 @@ export class EditAddDetailComponent implements OnInit {
             let validPromise = new Promise((resolved) => {
                 this.serviceSale.get(null, null, null, this.saleContractId).subscribe((response) => {
                     let array = response[0].detail;
-                    if(array){
+                    if (array) {
                         array.forEach(element => {
                             if (element.color.id === this.addModel.value.color.id && element.model.id === this.addModel.value.model.id) {
                                 resolved(false)
@@ -249,25 +242,25 @@ export class EditAddDetailComponent implements OnInit {
                     resolved(true)
                 });
             });
-                validPromise.then((rs) => {
-                    if (rs) {
-                        this.serviceSale.postCreateDetail({
-                            carrier: {
-                                id: this.addModel.get('carrier').value.id
-                            },
-                            color: {
-                                id: this.addModel.get('color').value.id
-                            },
-                            model: {
-                                id: this.addModel.get('model').value.id
-                            },
-                            quantity: this.addModel.get('quantity').value,
-                            saleContractId: this.saleContractId,
-                            totalUnitsAssigned: 0
-                        }).subscribe((response) => {
-                            this.messageServices.add({ key: 'success', severity: 'success', summary: 'Guardado con éxito' });
-                            this.closedRefresh();
-                        });
+            validPromise.then((rs) => {
+                if (rs) {
+                    this.serviceSale.postCreateDetail({
+                        carrier: {
+                            id: this.addModel.get('carrier').value.id
+                        },
+                        color: {
+                            id: this.addModel.get('color').value.id
+                        },
+                        model: {
+                            id: this.addModel.get('model').value.id
+                        },
+                        quantity: this.addModel.get('quantity').value,
+                        saleContractId: this.saleContractId,
+                        totalUnitsAssigned: 0
+                    }).subscribe((response) => {
+                        this.messageServices.add({ key: 'success', severity: 'success', summary: 'Guardado con éxito' });
+                        this.closedRefresh();
+                    });
                 }
             });
         }
@@ -280,11 +273,12 @@ export class EditAddDetailComponent implements OnInit {
         this.close.emit(false);
     }
 
-    closedRefresh(){
+    closedRefresh() {
         this.addModel.reset();
         this.color = [];
         this.carrier = [];
         this.close.emit(true);
     }
+
 }
 
