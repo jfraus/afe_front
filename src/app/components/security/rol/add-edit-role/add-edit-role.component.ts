@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TreeNode } from 'primeng/api';
+import { PermissionsController } from 'src/app/services/permissions-controller.service';
 
 @Component({
   selector: 'app-add-edit-role',
@@ -7,12 +9,11 @@ import { Component, OnInit } from '@angular/core';
 export class AddEditRoleComponent implements OnInit {
 
   title: string;
+  files1: TreeNode[] = [];
 
   constructor() { }
 
   ngOnInit() {
-    this.title = 'Agregar Rol';
-
+    this.title = 'Agregar Rol';    
   }
-
 }
