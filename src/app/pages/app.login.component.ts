@@ -14,7 +14,7 @@ import { AuthService } from '../utils/auth.service';
 export class AppLoginComponent {
   formGroup:  FormGroup;
   validations: any = [];
-  btnLogin: boolean = false;
+  
   constructor(private router: Router,private AuthService: AuthService,private fb: FormBuilder,private messages: AppValidationMessagesService,public messageServices: MessageService){
     this.BuildForm();
     this.messages.messagesRequired = 'true';
@@ -33,9 +33,7 @@ export class AppLoginComponent {
 }
 login(){
   if(this.formGroup.valid){ 
-    this.btnLogin = true;
     this.AuthService.login(this.formGroup.get('username').value,this.formGroup.get('password').value)
-    this.btnLogin = false;
   }
 }
 
