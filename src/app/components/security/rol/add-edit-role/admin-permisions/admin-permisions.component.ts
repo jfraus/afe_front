@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LazyLoadEvent, TreeNode } from 'primeng/api';
+import { LazyLoadEvent, MessageService, TreeNode } from 'primeng/api';
+import { RoleAction } from 'src/app/models/roleAction.model';
 import { PermissionsController } from 'src/app/services/permissions-controller.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-admin-permisions',
@@ -14,62 +16,84 @@ export class AdminPermisionsComponent implements OnInit {
   selectedNodes3: TreeNode[] = [];
   selectedNodes1: TreeNode[] = [];
   selectedNodes: TreeNode[] = [];
+  selected: any[] = [];
   bandera: Boolean = true;
   cols: any[];
+  roleId: number;
 
   constructor(private permissionsService: PermissionsController,
-    private router: ActivatedRoute) { }
+    private router: ActivatedRoute,
+    public messageServices: MessageService) { }
 
   ngOnInit() {
     this.loading = true;
-    this.permissionsService.getFilesystem().subscribe(response => {
-      this.selectedNodes3 = response;
-      this.router.params.subscribe(data => {
-        this.permissionsService.getActionsByRole(data['id']).subscribe(data => {
-          this.selectedNodes1 = data;
-          /*console.log(this.selectedNodes1[1].children[1]);
-          console.log(this.selectedNodes3[1].children[1].data.view);
-          console.log(this.selectedNodes3[1].children[1].data.viewActionId);
-          console.log(this.selectedNodes3[1].children[1].data.viewId);*/
-          if(this.selectedNodes3[1].children[1].data.view &&
-          this.selectedNodes3[1].children[1].data.viewActionId &&
-          this.selectedNodes3[1].children[1].data.viewId) {
-            console.log(this.selectedNodes3[1].children.includes(this.selectedNodes1[1].children[1]));
-            this.selectedNodes.push(this.selectedNodes3[1].children[1]);
-            this.selectedNodes.push(this.selectedNodes3[1]);
-            this.selectedNodes[1].children[1].partialSelected = true;
-            this.selectedNodes[1].partialSelected = true;
-          }
-          this.loading = false;
-        });
-      });
+    this.router.params.subscribe(data => {
+      this.roleId = data['id'];
     });
-      this.cols = [
-          { field: 'view', header: 'View' }
-      ];
+
+    if(!isNullOrUndefined(this.roleId)) {
+      this.loadPermisionsByRole();
+    }
+    this.cols = [
+        { field: 'view', header: 'View' }
+    ];
   }
 
-  checkNode(nodes:TreeNode[], nodes1: TreeNode[]) {
+  loadPermisionsByRole() {
+    this.permissionsService.getFilesystem().subscribe(response => {
+      this.selectedNodes3 = response;
+      this.permissionsService.getActionsByRole(this.roleId).subscribe(data => {
+        this.selectedNodes1 = data;
+        this.selectedNodes1.forEach(item1 => {
+          item1.children.forEach(item2 => {
+            this.selected.push({view: item2.data.view, viewActionId: item2.data.viewActionId, viewId: item2.data.viewId});
+          });
+        });
+        this.checkNode(this.selectedNodes3);
+        this.loading = false;
+      });
+    });
+  }
+
+  checkNode(nodes:TreeNode[]) {
     for(let i=0 ; i < nodes.length ; i++) {
       if(nodes[i].children) {
         for(let j=0; j < nodes[i].children.length; j++) {
-          nodes[i].children[j].partialSelected = true;
-          console.log(nodes[i].children[j].parent);
-          this.selectedNodes.push(nodes[i][j]);
+          const result = this.selected.filter(data => data.view === nodes[i].children[j].data.view && 
+            data.viewActionId === nodes[i].children[j].data.viewActionId &&
+            data.viewId === nodes[i].children[j].data.viewId);
+            if(result.length > 0) {             
+              nodes[i].children[j].partialSelected = true;
+              nodes[i].partialSelected = true;
+              this.selectedNodes.push(nodes[i].children[j]);
+            }            
         }
-        nodes[i].partialSelected = true;
       }
     }
   }
 
   nodeSelect(event) {
-
-    console.log(event.node, ' : ', event.node.data.viewActionId);
+    const roleAction: RoleAction = {
+    viewActionId: event.node.data.viewActionId,
+    viewId: event.node.data.viewId,
+    roleId: Number(this.roleId),
+    }
     
+    this.permissionsService.postSaveActionsByRole(roleAction).subscribe(data => {
+      this.messageServices.add({ key: 'error', severity: 'success', summary: 'Se ha agregado la acción exitosamente' });   
+    });
+     
   }
 
   nodeUnselect(event) {
-    console.log('unselect');
+    const roleAction: RoleAction = {
+      viewActionId: event.node.data.viewActionId,
+      viewId: event.node.data.viewId,
+      roleId: Number(this.roleId),
+    }
     
+    this.permissionsService.deleteSaveActionsByRole(event.node.data.viewId, Number(this.roleId), event.node.data.viewActionId).subscribe(data => {
+      this.messageServices.add({ key: 'error', severity: 'success', summary: 'Se ha eliminado la acción exitosamente' });   
+    });
   }
 }

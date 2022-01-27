@@ -1,10 +1,6 @@
-<!--p-treeTable [value]="files1" [columns]="cols" selectionMode="checkbox" [(selection)]="selectedNodes3" >
-    <ng-template pTemplate="caption">
-        <div class="p-d-flex">
-            <p-treeTableHeaderCheckbox></p-treeTableHeaderCheckbox>
-            <span class="p-ml-2">Toggle All</span>
-        </div>
-    </ng-template>
+<p-treeTable [value]="selectedNodes3" [columns]="cols" selectionMode="multiple" selectionMode="checkbox" 
+    [(selection)]="selectedNodes" [loading]=loading (onNodeSelect)="nodeSelect($event)"
+    (onNodeUnselect)="nodeUnselect($event)">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th *ngFor="let col of columns">
@@ -16,14 +12,14 @@
         <tr [ttSelectableRow]="rowNode">
             <td *ngFor="let col of columns; let i = index">
                 <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-                <p-treeTableCheckbox [value]="rowNode" *ngIf="i == 0" (click)="nodeSelect(rowNode)"></p-treeTableCheckbox>
+                <p-treeTableCheckbox [value]="rowNode" *ngIf="i == 0"></p-treeTableCheckbox>
                 {{rowData[col.field]}}
             </td>
         </tr>
     </ng-template>
-</p-treeTable-->
+</p-treeTable>
 
-<p-treeTable [value]="selectedNodes3" selectionMode="multiple" [columns]="cols" [(selection)]="selectedNodes" dataKey="view"
+<!--p-treeTable [value]="selectedNodes3" selectionMode="multiple" [columns]="cols" [(selection)]="selectedNodes" dataKey="view"
 (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)" [loading]=loading>
     <ng-template pTemplate="header" let-columns>
         <tr>
@@ -40,4 +36,4 @@
             </td>
         </tr>
     </ng-template>
-</p-treeTable>
+</p-treeTable-->

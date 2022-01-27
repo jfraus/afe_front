@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TreeNode } from 'primeng/api';
 import { PermissionsController } from 'src/app/services/permissions-controller.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-add-edit-role',
@@ -9,11 +11,14 @@ import { PermissionsController } from 'src/app/services/permissions-controller.s
 export class AddEditRoleComponent implements OnInit {
 
   title: string;
-  files1: TreeNode[] = [];
-
-  constructor() { }
+  disabledPermissionTab: Boolean = true;
+  constructor(private router: ActivatedRoute) { }
 
   ngOnInit() {
-    this.title = 'Agregar Rol';    
+    this.router.params.subscribe(data => {
+      if(!isNullOrUndefined(data['id'])) {
+        this.disabledPermissionTab = false;
+      }
+    });
   }
 }
