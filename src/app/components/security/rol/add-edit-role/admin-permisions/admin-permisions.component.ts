@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LazyLoadEvent, MessageService, TreeNode } from 'primeng/api';
+import { ActivatedRoute } from '@angular/router';
+import { MessageService, TreeNode } from 'primeng/api';
 import { RoleAction } from 'src/app/models/roleAction.model';
 import { PermissionsController } from 'src/app/services/permissions-controller.service';
 import { isNullOrUndefined } from 'util';
@@ -13,11 +13,10 @@ import { isNullOrUndefined } from 'util';
 export class AdminPermisionsComponent implements OnInit {
 
   loading: boolean = true;
-  selectedNodes3: TreeNode[] = [];
+  nodesRoleAction: TreeNode[] = [];
   selectedNodes1: TreeNode[] = [];
   selectedNodes: TreeNode[] = [];
   selected: any[] = [];
-  bandera: Boolean = true;
   cols: any[];
   roleId: number;
 
@@ -41,7 +40,7 @@ export class AdminPermisionsComponent implements OnInit {
 
   loadPermisionsByRole() {
     this.permissionsService.getFilesystem().subscribe(response => {
-      this.selectedNodes3 = response;
+      this.nodesRoleAction = response;
       this.permissionsService.getActionsByRole(this.roleId).subscribe(data => {
         this.selectedNodes1 = data;
         this.selectedNodes1.forEach(item1 => {
@@ -49,7 +48,7 @@ export class AdminPermisionsComponent implements OnInit {
             this.selected.push({view: item2.data.view, viewActionId: item2.data.viewActionId, viewId: item2.data.viewId});
           });
         });
-        this.checkNode(this.selectedNodes3);
+        this.checkNode(this.nodesRoleAction);
         this.loading = false;
       });
     });
