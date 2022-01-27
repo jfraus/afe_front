@@ -14,6 +14,7 @@ export class CanUse {
 
   ngOnInit() {
     let url = this.router.url.split('/')[1];
+    
     if (!this.can(url, this.typeAction)) {
       this.element.nativeElement.style.display = 'none';
     }

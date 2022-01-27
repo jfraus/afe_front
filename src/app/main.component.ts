@@ -246,8 +246,6 @@ export class AppMainComponent implements OnDestroy, OnInit {
                 this.unblockBodyScroll();
             }
         }
-
-        event.preventDefault();
     }
 
     onTopbarUserMenuButtonClick(event) {
