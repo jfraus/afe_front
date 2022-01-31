@@ -35,10 +35,6 @@ export class RolComponent implements OnInit {
     this.loadingRoles = false;
   }
 
-  addRol() {
-
-  }
-
   deleteRole(role: Roles) {
     this.confirmationService.confirm({
       message: '¿Deseas eliminar el rol "' + role.name + '"?',
