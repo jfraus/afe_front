@@ -32,8 +32,6 @@ export class AppMenuComponent implements OnInit {
 
     closeMenu(event) {
         this.app.onMenuButtonClick(event);
-        console.log("success close");
-        
     }
 }
 

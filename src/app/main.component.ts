@@ -205,8 +205,6 @@ export class AppMainComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-        console.log("destroy");
-        
         this.unbindRipple();
     }
 
@@ -235,11 +233,8 @@ export class AppMainComponent implements OnDestroy, OnInit {
     onMenuButtonClick(event: Event) {
         this.menuClick = true;
         this.hideShowImgMain = false;
-        console.log(this.hideShowImgMain);
-        
         if (!this.horizontal || this.isMobile()) {
             this.menuActive = !this.menuActive;
-
             if (this.menuActive) {
                 this.blockBodyScroll();
             } else {
