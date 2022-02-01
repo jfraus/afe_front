@@ -69,8 +69,7 @@ export class GeneratePurchaseOrderComponent implements OnInit {
             this.purchaseOrderId = response.id;
             this.formGroup.get('orderCode').setValue(response.orderNumber);
             this.formGroup.get('unitsQuantity').setValue(response.unitsQuantity); 
-            this.order = response;          
-            console.log(this.order);
+            this.order = response;
         });
     }
 

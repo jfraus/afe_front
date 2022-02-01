@@ -55,7 +55,6 @@ export class PurchaseOrdenControllerService {
 
   enviarPurchaseOrder(purchaseOrderId: string){
     return this.http.put<any>(`${environment.apiUrl}purchase/orders/change-status?purchaseOrderId=${purchaseOrderId}`,null).pipe(); 
-
   }
 
   sendAssignment(){
