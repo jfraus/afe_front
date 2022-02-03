@@ -7,6 +7,7 @@ import { ModelColorControllerService } from 'src/app/services/model-color-contro
 import { PurchaseOrdenControllerService } from 'src/app/services/purchase-orden-controller.service';
 import { PurchaseOrderDetail } from 'src/app/models/purchase-order-detail.model';
 import { isNullOrUndefined } from 'util';
+import { PurchaseOrderMaintenance } from 'src/app/models/PurchaseOrderMaintenance';
 
 @Component({
   selector: 'app-add-edit-maintenance',
@@ -48,7 +49,7 @@ export class AddEditMaintenanceComponent implements OnInit {
       if(this.purchaseOrder.startsWith("12L")) {
         this.loadData12L();
       }else{
-        this.loadData12C();
+        this.loadData12C();        
       }      
       this.actualPedido = this.maintenance.order;
       this.addMaintenance.get('cantidad').setValue(this.maintenance.order);
@@ -66,6 +67,7 @@ export class AddEditMaintenanceComponent implements OnInit {
   }
 
   private loadData12L(){
+    this.blockModal();
     let type = this.modelTypes.find(d => d.value == 'KK').label;      
     this.addMaintenance.get('modelType').setValue(type);
     this.addMaintenance.get('modelType').disable();
@@ -75,18 +77,27 @@ export class AddEditMaintenanceComponent implements OnInit {
       let color = this.colors.find(data => data.label == this.maintenance.color);
       this.addMaintenance.get('color').setValue(color.value);      
       this.addMaintenance.get('interiorColor').setValue(color.value.interiorCode);
-    }, 1000);
+    }, 1000);    
   }
 
   private loadData12C(){
-    let type = this.modelTypes.find(d => d.value == this.maintenance.type).label;  
-    this.addMaintenance.get('modelType').setValue(type);
-    let model = this.models.find(data => data.label == this.maintenance.model);
-    this.addMaintenance.get('model').setValue(model.value);
-    let color = this.colors.find(data => data.label == this.maintenance.color);
-    this.addMaintenance.get('color').setValue(color.value);      
-    this.addMaintenance.get('interiorColor').setValue(color.value.interiorCode); 
+    this.blockModal();
+    setTimeout(() => { 
+      let type = this.modelTypes.find(d => d.value == this.maintenance.type).label;  
+      this.addMaintenance.get('modelType').setValue(type);
+      let model = this.models.find(data => data.label == this.maintenance.model);
+      this.addMaintenance.get('model').setValue(model.value);
+      let color = this.colors.find(data => data.label == this.maintenance.color);
+      this.addMaintenance.get('color').setValue(color.value);      
+      this.addMaintenance.get('interiorColor').setValue(color.value.interiorCode);     
+  }, 1000);    
+  }
 
+  private blockModal(){
+    this.addMaintenance.get('modelType').disable();
+    this.addMaintenance.get('model').disable();
+    this.addMaintenance.get('color').disable();
+    this.addMaintenance.get('interiorColor').disable();
   }
 
   private loadModel(modelType: String, modelExclude: boolean): void { 
@@ -131,31 +142,39 @@ export class AddEditMaintenanceComponent implements OnInit {
   }
 
   add(maintenance: Maintenance) {    
-    if (this.addMaintenance.valid) {
-      let addDetail: PurchaseOrderDetail = {
-        id: this.addMaintenance.value.id,
-        purchaseOrderId: this.purchaseOrderId,
-        model: {
-          id: this.addMaintenance.value.model
-        },
-        color: this.addMaintenance.value.color,
-        quantity: this.addMaintenance.value.cantidad
-      };
+    if (this.addMaintenance.valid) {      
       if(!isNullOrUndefined(this.maintenance)) {
         if(this.addMaintenance.value.cantidad < this.actualPedido){
           this.messageServices.add({ key: 'error', severity: 'info', summary: 'La cantidad no puede ser menor a la original' });          
         }else{
-          this.servicesPurchase.putPurchaseOrderDetail(addDetail).subscribe((response) => {
+          let addDetail: PurchaseOrderMaintenance = {
+            id: this.addMaintenance.value.id,            
+            quantity: this.addMaintenance.value.cantidad
+          };
+          this.servicesPurchase.putPurchaseOrderMaintenanceDetails(addDetail).subscribe(() => {
             this.messageServices.add({ key: 'error', severity: 'success', summary: 'Actualizado con éxito' });
             this.changeStatus(this.purchaseOrderId);
-            this.closed();
+            setTimeout(() => { 
+              this.closed();
+            }, 1000);    
           });
         }
       }else{
+        let addDetail: PurchaseOrderDetail = {
+          id: this.addMaintenance.value.id,
+          purchaseOrderId: this.purchaseOrderId,
+          model: {
+            id: this.addMaintenance.value.model
+          },
+          color: this.addMaintenance.value.color,
+          quantity: this.addMaintenance.value.cantidad
+        };
         this.servicesPurchase.postPurchaseOrderDetail(addDetail).subscribe((response) => {
           this.messageServices.add({ key: 'error', severity: 'success', summary: 'Guardado con éxito' });
           this.changeStatus(this.purchaseOrderId);
-          this.closed();
+          setTimeout(() => { 
+            this.closed();
+          }, 1000);    
         });
       }
     }
