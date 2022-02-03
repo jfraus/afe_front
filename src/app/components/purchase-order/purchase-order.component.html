@@ -106,36 +106,27 @@
               }}</span>
             <ng-template #elseAction>
               <div *ngIf="rowData.status === 'Creada'">
-                <div *ngIf="rowData.dueDate && rowData.productionMonth">
-                  <div can-use [typeAction]="'Edit'">
-                    <button pButton type="button" icon="ui-icon-edit" (click)="editOrden(rowData)" class="blue-grey-btn"
+                <div *ngIf="rowData.dueDate && rowData.productionMonth">                  
+                    <button can-use [typeAction]="'Edit'" pButton type="button" icon="ui-icon-edit" (click)="editOrden(rowData)" class="blue-grey-btn"
                       pTooltip="Editar"></button>
-                  </div>
-                  <div can-use [typeAction]="'Send'">
-                    <button pButton type="button" (click)="sendOC(rowData)" icon="pi pi-check" style="margin-left: 3px"
-                      class="blue-btn" pTooltip="Enviar"></button>
-                  </div>
+                      
+                    <button can-use [typeAction]="'Send'" pButton type="button" (click)="sendOC(rowData)" icon="pi pi-check" style="margin-left: 3px"
+                      class="blue-btn" pTooltip="Enviar"></button>                  
                 </div>
-                <div *ngIf="!rowData.dueDate || !rowData.productionMonth">
-                  <div can-use [typeAction]="'Edit'">
-                    <button pButton type="button" icon="ui-icon-edit" (click)="editOrden(rowData)" class="blue-grey-btn"
-                      pTooltip="Editar"></button>
-                  </div>
-                  <div can-use [typeAction]="'Send'">
-                    <button pButton type="button" [disabled]="true" (click)="sendOC(rowData)" icon="pi pi-check"
-                      style="margin-left: 3px" class="blue-btn"></button>
-                  </div>
+                <div *ngIf="!rowData.dueDate || !rowData.productionMonth">                  
+                    <button can-use [typeAction]="'Edit'" pButton type="button" icon="ui-icon-edit" (click)="editOrden(rowData)" class="blue-grey-btn"
+                      pTooltip="Editar"></button>         
+
+                    <button can-use [typeAction]="'Send'" pButton type="button" [disabled]="true" (click)="sendOC(rowData)" icon="pi pi-check"
+                      style="margin-left: 3px" class="blue-btn"></button>                  
                 </div>
               </div>
-              <div *ngIf="rowData.status === 'Abierta' || rowData.status === 'Cerrada'">
-                <div can-use [typeAction]="'Detail'">
-                  <button pButton type="button" style="margin-left: 3px" icon="ui-icon-format-list-bulleted"
+              <div *ngIf="rowData.status === 'Abierta' || rowData.status === 'Cerrada'">                
+                  <button can-use [typeAction]="'Detail'" pButton type="button" style="margin-left: 3px" icon="ui-icon-format-list-bulleted"
                     class="blue-grey-btn space-btn" (click)="showDetails(rowData)" pTooltip="Detalle"></button>
-                </div>
-                <div can-use [typeAction]="'Maintenance'">
-                  <button pButton type="button" style="margin-left: 3px" icon="pi pi-exclamation-triangle"
-                    class="amber-btn" (click)=maintenance(rowData) pTooltip="Mantenimiento"></button>
-                </div>
+
+                  <button can-use [typeAction]="'Maintenance'" pButton type="button" style="margin-left: 3px" icon="pi pi-exclamation-triangle"
+                    class="amber-btn" (click)=maintenance(rowData) pTooltip="Mantenimiento"></button>                
               </div>
             </ng-template>
           </td>
