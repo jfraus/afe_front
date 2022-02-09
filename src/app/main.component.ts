@@ -1,8 +1,10 @@
-import { Component, OnDestroy, Renderer2, OnInit, NgZone } from '@angular/core';
+import { Component, OnDestroy, Renderer2, OnInit, NgZone, AfterViewChecked } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AuthService } from './utils/auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+
 
 @Component({
     selector: 'app-main',
@@ -19,7 +21,7 @@ import { MessageService } from 'primeng/api';
         ])
     ]
 })
-export class AppMainComponent implements OnDestroy, OnInit {
+export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
 
     menuClick: boolean;
 
@@ -51,7 +53,8 @@ export class AppMainComponent implements OnDestroy, OnInit {
 
     configDialogActive: boolean;
 
-    //hideShowImgMain: boolean = true;
+    hideShowImgMain: boolean = true;
+    blockedScreen: boolean = true;
 
     constructor(public messageServices: MessageService,
         private router: Router, 
@@ -65,11 +68,15 @@ export class AppMainComponent implements OnDestroy, OnInit {
         if (!localStorage.getItem("token")) {
             this.router.navigateByUrl("/accessdenied")
         }else{
+            if(sessionStorage.getItem("menu")) {
+                this.blockedScreen = false;
+            }
             setTimeout(() => {
                 if(localStorage.getItem("fullname")){
                     this.messageServices.add({key: 'error',severity: 'success', summary: 'Bienvenido', detail: `${localStorage.getItem("fullname")}`});
                 }
-            }, 3600);
+                this.blockedScreen = false;
+            }, 15600);
         }        
     }
 
@@ -208,6 +215,10 @@ export class AppMainComponent implements OnDestroy, OnInit {
         this.unbindRipple();
     }
 
+    ngAfterViewChecked() {
+        this.hideShowImgMain = this.route.url === "/" ? true : false;
+      }
+
     onWrapperClick() {
         if (!this.menuClick) {
             this.menuActive = false;
@@ -232,10 +243,8 @@ export class AppMainComponent implements OnDestroy, OnInit {
 
     onMenuButtonClick(event: Event) {
         this.menuClick = true;
-        
         if (!this.horizontal || this.isMobile()) {
             this.menuActive = !this.menuActive;
-
             if (this.menuActive) {
                 this.blockBodyScroll();
             } else {

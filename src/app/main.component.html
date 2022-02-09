@@ -21,9 +21,13 @@
         <router-outlet></router-outlet>
     </div>
 
-    <!--div *ngIf="hideShowImgMain">
+    <div class="progress-spinner" *ngIf="blockedScreen">
+        <p-progressSpinner animationDuration=".15s"></p-progressSpinner>
+    </div>
+
+    <div *ngIf="hideShowImgMain">
        <img class="imgMain" src="assets/layout/images/home_afe.jpg" alt="Image" width="250" />
-    </div-->
+    </div>
 
     <div class="layout-mask" *ngIf="menuActive" [@mask-anim]="'visible'"></div>
     <br />

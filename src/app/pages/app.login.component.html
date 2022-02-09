@@ -27,7 +27,7 @@
             <button
               pButton
               type="button"
-              [disabled]="!this.formGroup.valid"
+              [disabled]="!this.formGroup.valid || loginbtn"
               (click)="login()"
               label="Iniciar sesión"
               style="width: 100%">

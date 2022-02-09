@@ -10,7 +10,10 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-    constructor(private router: Router, private http: HttpClient, public messageServices: MessageService) { }
+    constructor(private router: Router, 
+        private http: HttpClient, 
+        private messageServices: MessageService) { }
+        
     getLogin(username: string, password: string) {
         const httpOptions = {
             headers: new HttpHeaders({
@@ -28,16 +31,17 @@ export class AuthService {
                 password: password,
             }
         });
-        return this.http.post<any>(`${environment.apiUrlSecurity}`, params.toString(), httpOptions);
+        return this.http.post<any>(`${environment.apiUrlSecurity}`, params.toString(), httpOptions).toPromise();
     }
 
-    login(username: string, password: string) {
-        this.getLogin(username, password).subscribe(response => {
+    login(username: string, password: string) : Promise<any> {
+        return this.getLogin(username, password).then(response => {
             localStorage.setItem('isLoggedIn', "true");
             localStorage.setItem('token', response.access_token);
             localStorage.setItem("fullname", response.fullName);
             this.router.navigate(["/"]);
             this.messageServices.add({ key: 'error', severity: 'success', summary: "Bienvenido", detail: `${response.fullName}` });
+            return true;
         });
     }
 

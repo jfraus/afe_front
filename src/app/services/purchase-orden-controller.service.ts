@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { PurchaseOrderDetail } from '../models/purchase-order-detail.model';
 import { Maintenance } from '../models/maintenance.model';
 import { PurchaseOrder } from '../models/purchase-order.model';
+import { PurchaseOrderMaintenance } from '../models/PurchaseOrderMaintenance';
 
 @Injectable()
 export class PurchaseOrdenControllerService {
@@ -55,7 +56,6 @@ export class PurchaseOrdenControllerService {
 
   enviarPurchaseOrder(purchaseOrderId: string){
     return this.http.put<any>(`${environment.apiUrl}purchase/orders/change-status?purchaseOrderId=${purchaseOrderId}`,null).pipe(); 
-
   }
 
   sendAssignment(){
@@ -69,4 +69,7 @@ export class PurchaseOrdenControllerService {
   changeStatusPurchaseOrderMaintenance(purchaseOrderId: string) {
     return this.http.put<any>(`${environment.apiUrl}purchase/orders/change-status-maintenance?purchaseOrderId=${purchaseOrderId}`,null).pipe(); 
   } 
+  putPurchaseOrderMaintenanceDetails(purchaseOrderMaintenance: PurchaseOrderMaintenance){
+    return this.http.put<any>(`${environment.apiUrl}purchase/orders/update-maintenance-detail`,purchaseOrderMaintenance).pipe(); 
+  }
 }
