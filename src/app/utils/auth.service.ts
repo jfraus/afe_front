@@ -41,7 +41,6 @@ export class AuthService {
             localStorage.setItem("fullname", response.fullName);
             this.router.navigate(["/"]);
             this.messageServices.add({ key: 'error', severity: 'success', summary: "Bienvenido", detail: `${response.fullName}` });
-            return true;
         });
     }
 
