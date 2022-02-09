@@ -15,7 +15,6 @@ export class AuthGuardService implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): boolean {
-
         if (!this.isLoggedIn() || !this.checkPermissions(state)) {
             //redirect to login/home page etc
             //return false to cancel the navigation
@@ -30,11 +29,11 @@ export class AuthGuardService implements CanActivate {
     }
 
     public checkPermissions(state): boolean {
-        let menu = JSON.parse(sessionStorage.getItem("menu"));
+        let menu = JSON.parse(localStorage.getItem('authorities'));
         if (state.url === "/") {
             return true;
         } else {
-            if (menu.find(element => element.routerLink[0] === state.url)) {
+            if (menu.find(element => "/".concat(element.authority) === state.url)) {
                 return true;
             }
         }

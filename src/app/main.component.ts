@@ -51,7 +51,7 @@ export class AppMainComponent implements OnDestroy, OnInit {
 
     configDialogActive: boolean;
 
-    hideShowImgMain: boolean = true;
+    //hideShowImgMain: boolean = true;
 
     constructor(public messageServices: MessageService,
         private router: Router, 
@@ -205,8 +205,6 @@ export class AppMainComponent implements OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-        console.log("destroy");
-        
         this.unbindRipple();
     }
 
@@ -234,8 +232,6 @@ export class AppMainComponent implements OnDestroy, OnInit {
 
     onMenuButtonClick(event: Event) {
         this.menuClick = true;
-        this.hideShowImgMain = false;
-        console.log(this.hideShowImgMain);
         
         if (!this.horizontal || this.isMobile()) {
             this.menuActive = !this.menuActive;
@@ -246,6 +242,7 @@ export class AppMainComponent implements OnDestroy, OnInit {
                 this.unblockBodyScroll();
             }
         }
+        event.preventDefault();
     }
 
     onTopbarUserMenuButtonClick(event) {
@@ -271,6 +268,7 @@ export class AppMainComponent implements OnDestroy, OnInit {
     onSidebarClick(event: Event) {
         this.menuClick = true;
         this.resetMenu = false;
+        event.preventDefault();
     }
 
     isMobile() {

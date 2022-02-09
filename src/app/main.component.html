@@ -1,4 +1,4 @@
-<div class="layout-container" (click)="onWrapperClick()"
+<div class="layout-container"
      [ngClass]="{'layout-menu-horizontal': horizontal,
                 'layout-menu-active': menuActive,
                 'layout-top-small': topbarSize === 'small',
@@ -21,9 +21,9 @@
         <router-outlet></router-outlet>
     </div>
 
-    <div *ngIf="hideShowImgMain">
+    <!--div *ngIf="hideShowImgMain">
        <img class="imgMain" src="assets/layout/images/home_afe.jpg" alt="Image" width="250" />
-    </div>
+    </div-->
 
     <div class="layout-mask" *ngIf="menuActive" [@mask-anim]="'visible'"></div>
     <br />

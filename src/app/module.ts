@@ -94,7 +94,6 @@ import { ErrorToastService } from './utils/app-error-toast.service';
 import { ReactiveFormsModule } from '@angular/forms'
 import { AppValidationMessagesService } from './utils/app-validation-messages.service';
 import { MessageService } from 'primeng/api';
-import { AppSubMenuComponent } from './template/menu/submenu/submenu.component';
 import { GeneratePurchaseOrderComponent } from './components/purchase-order/generate-purchase-order/generate-purchase-order.component';
 import { DetailPurchaseOrderComponent } from './components/purchase-order/detail-purchase-order/detail-purchase-order.component';
 import { EditPurchaseOrderComponent } from './components/purchase-order/edit-purchase-order/edit-purchase-order.component';
@@ -234,7 +233,6 @@ const sharedComponents = [
         AppComponent,
         AppMainComponent,
         AppMenuComponent,
-        AppSubMenuComponent,
         AppBreadcrumbComponent,
         AppConfigComponent,
         AppTopBarComponent,
