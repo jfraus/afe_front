@@ -127,8 +127,8 @@ export class InvoiceCancellationComponent implements OnInit {
     }
   }
 
-  cancellInvoiceInformation(): void {
-    let invoice = this.invoices.find(d => d.value = this.formGroup.get('invoice').value).label;        
+  cancellInvoiceInformation(): void {    
+    let invoice = this.cancellationInvoices[0].invoice;        
     this.confirmationService.confirm({
       message: '¿Desea cancelar la factura '+invoice+'?',
       accept: () => {
@@ -166,7 +166,7 @@ export class InvoiceCancellationComponent implements OnInit {
         });
       }               
     }else{
-      this.messageServices.add({key: 'error', severity:'error', summary: 'Por favor ingresar la información requerida'});
+      this.messageServices.add({key: 'error', severity:'error', summary: 'Por favor ingrese la información requerida'});
     } 
   }
 
@@ -174,7 +174,7 @@ export class InvoiceCancellationComponent implements OnInit {
     this.cancellationService.getCancellationType().subscribe(data => {
       if(data.length > 0){
         this.typesCancellation = data.map(p =>(
-          { label: p.description, value: p.cancellationType }
+          { label: p.cancellationType +' '+ p.description, value: p.cancellationType }
         ));
       }
     });    
@@ -217,13 +217,17 @@ export class InvoiceCancellationComponent implements OnInit {
   }
 
   selectedTypeChange(e) :void {
-    let d = this.typesCancellation.find(d => d.value == this.formGroupInformation.get('typeCancellation').value);    
-    if(d.label =='Nota Crédito' || d.label =='Nota Débito'){
+    let d = this.typesCancellation.find(d => d.value == this.formGroupInformation.get('typeCancellation').value);        
+    if(d.label =='01 Nota Crédito' || d.label =='02 Nota Débito'){
       this.fileUploadDisable = true;
+      this.formGroupInformation.get('cofidiInvoice').enable();      
     }else{
       this.fileUploadDisable = false;
-      this.formGroupInformationInvoice.reset();
+      this.formGroupInformationInvoice.reset();      
+      this.formGroupInformation.get('cofidiInvoice').reset();
       this.formGroupInformation.get('cofidiInvoice').disable();
+      this.formGroupInformation.get('manualInvoice').disable()
+      this.formGroupInformation.get('manualInvoice').reset();
     }
   }
 
