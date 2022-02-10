@@ -1,4 +1,4 @@
-<div class="layout-container" (click)="onWrapperClick()"
+<div class="layout-container"
      [ngClass]="{'layout-menu-horizontal': horizontal,
                 'layout-menu-active': menuActive,
                 'layout-top-small': topbarSize === 'small',
@@ -19,6 +19,10 @@
 
     <div class="layout-content">
         <router-outlet></router-outlet>
+    </div>
+
+    <div class="progress-spinner" *ngIf="blockedScreen">
+        <p-progressSpinner animationDuration=".15s"></p-progressSpinner>
     </div>
 
     <div *ngIf="hideShowImgMain">
