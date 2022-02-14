@@ -27,6 +27,7 @@ export class MaintenanceToVinComponent implements OnInit {
   carrierTypes: SelectItem[] = [];
   seals: Seal[] = [];
   maintenanceVinDetails: MaintenanceVinDetails;
+  loadingMaintenance: boolean = false;
 
   constructor(private fb: FormBuilder, private invoiceService: InvoiceService, private formatDate: FormatDate,
     private messageServices: MessageService, private carrierControllerService: CarrierControllerService, private confirmationService :ConfirmationService) { }
@@ -156,9 +157,9 @@ export class MaintenanceToVinComponent implements OnInit {
   }
 
   getCarrier(carrierType: string) {
-    this.carrierControllerService.get(carrierType).subscribe(response => {
+    this.carrierControllerService.get(carrierType).subscribe(response => {      
       this.carrier = response.map(r => (
-        { label: r.name, value: r.id }
+        { label: r.name, value: r.carrierCode }
       ));
     });
   }
