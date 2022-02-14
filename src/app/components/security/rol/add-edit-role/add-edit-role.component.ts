@@ -13,7 +13,7 @@ export class AddEditRoleComponent implements OnInit {
   constructor(private router: ActivatedRoute) { }
 
   ngOnInit() {
-    this.title = 'Agregar Rol';
+    this.title = 'Roles y Permisos';
     this.router.params.subscribe(data => {
       if(!isNullOrUndefined(data['id'])) {
         this.disabledPermissionTab = false;
