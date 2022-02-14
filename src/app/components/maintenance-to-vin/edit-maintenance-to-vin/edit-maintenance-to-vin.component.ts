@@ -128,8 +128,7 @@ export class EditMaintenanceToVinComponent implements OnInit {
           sealList : sealList
         };
         vinSeal.push(vin);
-      });      
-      console.log(this.carrier.find(data => data.value == this.formGroupInformation.get('carrier').value).value);
+      });
       this.maintenanceVinUpdate={        
         carrier : this.carrier.find(data => data.value == this.formGroupInformation.get('carrier').value).value,
         carrierType : this.formGroupInformation.get('carrierType').value,
@@ -147,7 +146,6 @@ export class EditMaintenanceToVinComponent implements OnInit {
 
   getCarrier(carrierType: string) {
     this.carrierControllerService.get(carrierType).subscribe(response => {
-      console.log(response);
       this.carrier = response.map(r => (
         { label: r.name, value: r.r.carrierCode }
       ));
