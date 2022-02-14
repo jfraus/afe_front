@@ -17,4 +17,11 @@
             </td>
         </tr>
     </ng-template>
+    <ng-template pTemplate="footer" let-columns>
+        <div class="ui-g-6 ui-lg-3">
+            <button pButton class="ui-button-danger" type="button" label="Salir" icon="pi pi-times"
+                (click)="locationBack()" style="width: auto">
+            </button>
+        </div>
+    </ng-template>
 </p-treeTable>

@@ -25,6 +25,7 @@ export class AppMenuComponent implements OnInit {
         } else {
             this.aut.logout();
         }
+        this.getActions();
     }
 
     convertMenu() {
@@ -37,12 +38,6 @@ export class AppMenuComponent implements OnInit {
             }));
             
             sessionStorage.setItem("menu", JSON.stringify(cate));
-
-            let actionData = response.view;
-            actionData = actionData.map(action => ({
-                authority: action.route, can: [action.action]
-            }));
-            localStorage.setItem("authorities", JSON.stringify(actionData));
             this.setMenu();
         });
     }
@@ -65,6 +60,16 @@ export class AppMenuComponent implements OnInit {
 
     closeMenu(event) {
         this.app.onMenuButtonClick(event);
+    }
+
+    getActions() {
+        this.menuServices.getActions().subscribe(response => {
+            let actionData = response.view;
+            actionData = response.map(action => ({
+                authority: action.route, can: [action.action]
+            }));
+            localStorage.setItem("authorities", JSON.stringify(actionData));            
+        });
     }
 }
 
