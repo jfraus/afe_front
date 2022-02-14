@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService, TreeNode } from 'primeng/api';
@@ -22,7 +23,8 @@ export class AdminPermisionsComponent implements OnInit {
 
   constructor(private permissionsService: PermissionsController,
     private router: ActivatedRoute,
-    public messageServices: MessageService) { }
+    private messageServices: MessageService,
+    private location: Location) { }
 
   ngOnInit() {
     this.loading = true;
@@ -94,5 +96,9 @@ export class AdminPermisionsComponent implements OnInit {
     this.permissionsService.deleteSaveActionsByRole(event.node.data.viewId, Number(this.roleId), event.node.data.viewActionId).subscribe(data => {
       this.messageServices.add({ key: 'error', severity: 'success', summary: 'Se ha eliminado la acción exitosamente' });   
     });
+  }
+
+  locationBack() {
+    this.location.back();
   }
 }
