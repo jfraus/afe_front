@@ -1,4 +1,4 @@
-import { Component, OnDestroy, Renderer2, OnInit, NgZone, AfterViewChecked } from '@angular/core';
+import { Component, OnDestroy, OnInit, NgZone, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AuthService } from './utils/auth.service';
 import { Router } from '@angular/router';
@@ -56,12 +56,12 @@ export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
     hideShowImgMain: boolean = true;
     blockedScreen: boolean = true;
 
-    constructor(public messageServices: MessageService,
-        private router: Router, 
-        public renderer: Renderer2, 
-        public zone: NgZone, 
-        public aut: AuthService,
-        private route: Router) { }
+    constructor(private messageServices: MessageService,
+        private router: Router,
+        private zone: NgZone, 
+        private aut: AuthService,
+        private route: Router,
+        private cdref: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.zone.runOutsideAngular(() => { this.bindRipple(); });
@@ -217,6 +217,7 @@ export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
 
     ngAfterViewChecked() {
         this.hideShowImgMain = this.route.url === "/" ? true : false;
+        this.cdref.detectChanges();
       }
 
     onWrapperClick() {
@@ -251,7 +252,7 @@ export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
                 this.unblockBodyScroll();
             }
         }
-        event.preventDefault();
+        return false;
     }
 
     onTopbarUserMenuButtonClick(event) {

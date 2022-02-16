@@ -784,7 +784,7 @@
 .pi.pi-circle-on:before {
   content: "radio_button_checked";
 }
-.pi.pi-minus {
+/*.pi.pi-minus {
   font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
@@ -797,19 +797,19 @@
   letter-spacing: normal;
   word-wrap: normal;
   white-space: nowrap;
-  direction: ltr;
+  direction: ltr;*/
   /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
+  /* -webkit-font-smoothing: antialiased;
   /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
+  /* text-rendering: optimizeLegibility;
   /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
+  /* -moz-osx-font-smoothing: grayscale;
   /* Support for IE. */
-  font-feature-settings: "liga";
-}
+  /* font-feature-settings: "liga";
+/*}
 .pi.pi-minus:before {
   content: "remove";
-}
+}*/
 .pi.pi-plus {
   font-family: "Material Icons";
   font-weight: normal;

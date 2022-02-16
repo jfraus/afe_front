@@ -1,4 +1,3 @@
-import { SecureSessionStorage } from "./secure-session-storage";
 import { Injectable } from '@angular/core';
 
 @Injectable({
