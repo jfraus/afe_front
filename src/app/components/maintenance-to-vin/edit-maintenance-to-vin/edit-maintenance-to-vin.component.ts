@@ -127,13 +127,10 @@ export class EditMaintenanceToVinComponent implements OnInit {
           vin : d.vin,
           sealList : sealList
         };
-
         vinSeal.push(vin);
-
-      }); 
-           
-      this.maintenanceVinUpdate={
-        carrier : this.carrier.find(data => data.value = this.formGroupInformation.get('carrier').value).label,
+      });
+      this.maintenanceVinUpdate={        
+        carrier : this.carrier.find(data => data.value == this.formGroupInformation.get('carrier').value).value,
         carrierType : this.formGroupInformation.get('carrierType').value,
         platform : this.formGroupInformation.get('platform').value,
         vinSeal :vinSeal
@@ -150,7 +147,7 @@ export class EditMaintenanceToVinComponent implements OnInit {
   getCarrier(carrierType: string) {
     this.carrierControllerService.get(carrierType).subscribe(response => {
       this.carrier = response.map(r => (
-        { label: r.name, value: r.id }
+        { label: r.name, value: r.r.carrierCode }
       ));
     });
   }
@@ -180,7 +177,6 @@ export class EditMaintenanceToVinComponent implements OnInit {
     this.validationMessages.messagesRequired = 'true';
     this.validationMessages.messagesMaxLenght = '10';
     this.validations.push(this.validationMessages.getValidationMessagesWithName('seal4'));
-
   }
 
 }
