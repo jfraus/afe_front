@@ -28,7 +28,7 @@
     &.pi-chevron-up {@include icon-override("keyboard_arrow_up");}
     &.pi-circle-off{@include icon-override("radio_button_unchecked");}
     &.pi-circle-on{@include icon-override("radio_button_checked");}
-    &.pi-minus {@include icon-override("remove");}
+    /*&.pi-minus {@include icon-override("remove");}*/
     &.pi-plus {@include icon-override("add");}
     &.pi-info-circle {@include icon-override("info");}
     &.pi-upload  {@include icon-override("file_upload");}

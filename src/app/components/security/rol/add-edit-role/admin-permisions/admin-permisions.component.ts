@@ -49,7 +49,7 @@ export class AdminPermisionsComponent implements OnInit {
           item1.children.forEach(item2 => {
             this.selected.push({view: item2.data.view, viewActionId: item2.data.viewActionId, viewId: item2.data.viewId});
           });
-        });
+        });        
         this.checkNode(this.nodesRoleAction);
         this.loading = false;
       });
