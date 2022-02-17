@@ -31,6 +31,7 @@ export class InvoiceCancellationComponent implements OnInit {
   contents: any = null;
   filename: string;
   validations = [];
+  InvoiceWanted: string;
   
 
   constructor(private fb: FormBuilder, private confirmationService :ConfirmationService, private cancellationService: CancellationInvoiceService,
@@ -113,7 +114,8 @@ export class InvoiceCancellationComponent implements OnInit {
           this.formGroupInformation.enable();
           this.formGroupInformation.get('manualInvoice').disable()
           this.cancellButtonDisable = true;
-          this.filterTypeCancellation( this.cancellationInvoices[0].invoiceDate);
+          this.filterTypeCancellation(this.cancellationInvoices[0].invoiceDate);
+          this.InvoiceWanted = this.cancellationInvoices[0].invoice;
         }
       });
     }
@@ -123,7 +125,7 @@ export class InvoiceCancellationComponent implements OnInit {
     let currentMonth = this.formatDate.getMonth(new Date());    
     let invoiceMonth = this.formatDate.getMonth(new Date(invoiceDate));
     if(currentMonth != invoiceMonth){      
-     this.typesCancellation = this.typesCancellation.filter(obj => obj.label != 'Sustitución Factura');
+     this.typesCancellation = this.typesCancellation.filter(obj => obj.label != '04 Sustitución Factura');
     }
   }
 
@@ -139,7 +141,7 @@ export class InvoiceCancellationComponent implements OnInit {
 
   cancellInvoice(invoice: any): void{    
     if(this.formGroupInformation.get('motive').value && this.formGroupInformation.get('typeCancellation').value){
-     if(this.formGroupInformation.get('typeCancellation').value != '04' && this.formGroupInformationInvoice.get('serie').value == ''){
+     if(this.formGroupInformation.get('typeCancellation').value != '04' && this.formGroupInformationInvoice.get('serie').value == null){
       this.messageServices.add({key: 'error', severity:'error', summary: 'Por favor ingresar la información de la factura requerida'});
       }else{
         let cancelledInvoice ={
@@ -210,7 +212,15 @@ export class InvoiceCancellationComponent implements OnInit {
   selectedChange(e) :void {
     let invoice = this.formGroup.get('invoice').value
     if (invoice != null) {
-      this.searchButtonDisable = true;
+      if(invoice != this.InvoiceWanted){
+        this.searchButtonDisable = true;
+        this.cancellationInvoices=null;
+        this.cancellButtonDisable =false;  
+        this.formGroupInformation.reset();
+        this.formGroupInformationInvoice.reset();
+      }else{
+        this.searchButtonDisable = false;
+      }
     } else {
       this.resetView();
     }
@@ -223,11 +233,11 @@ export class InvoiceCancellationComponent implements OnInit {
       this.formGroupInformation.get('cofidiInvoice').enable();      
     }else{
       this.fileUploadDisable = false;
-      this.formGroupInformationInvoice.reset();      
+      this.formGroupInformationInvoice.reset();
       this.formGroupInformation.get('cofidiInvoice').reset();
       this.formGroupInformation.get('cofidiInvoice').disable();
-      this.formGroupInformation.get('manualInvoice').disable()
       this.formGroupInformation.get('manualInvoice').reset();
+      this.formGroupInformation.get('manualInvoice').disable();
     }
   }
 

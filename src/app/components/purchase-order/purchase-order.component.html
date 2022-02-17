@@ -110,14 +110,14 @@
                     <button can-use [typeAction]="'Edit'" pButton type="button" icon="ui-icon-edit" (click)="editOrden(rowData)" class="blue-grey-btn"
                       pTooltip="Editar"></button>
                       
-                    <button can-use [typeAction]="'Send'" pButton type="button" (click)="sendOC(rowData)" icon="pi pi-check" style="margin-left: 3px"
+                    <button can-use [typeAction]="'Send-oc'" pButton type="button" (click)="sendOC(rowData)" icon="pi pi-check" style="margin-left: 3px"
                       class="blue-btn" pTooltip="Enviar"></button>                  
                 </div>
                 <div *ngIf="!rowData.dueDate || !rowData.productionMonth">                  
                     <button can-use [typeAction]="'Edit'" pButton type="button" icon="ui-icon-edit" (click)="editOrden(rowData)" class="blue-grey-btn"
                       pTooltip="Editar"></button>         
 
-                    <button can-use [typeAction]="'Send'" pButton type="button" [disabled]="true" (click)="sendOC(rowData)" icon="pi pi-check"
+                    <button can-use [typeAction]="'Send-oc'" pButton type="button" [disabled]="true" (click)="sendOC(rowData)" icon="pi pi-check"
                       style="margin-left: 3px" class="blue-btn"></button>                  
                 </div>
               </div>
