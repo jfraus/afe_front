@@ -47,7 +47,7 @@ export const routes: Routes = [
         {path: 'client', component: ClientComponent, canActivate: [AuthGuardService]},        
         {path: 'client-add', component: AddClientComponent },
         {path: 'client-edit/:id', component: AddClientComponent },
-        {path: 'client-view/:id', component: AddClientComponent, canActivate: [AuthGuardService]},
+        {path: 'client-view/:id', component: AddClientComponent },
         {path: 'invoice', component: InvoiceComponent, canActivate: [AuthGuardService]}, 
         {path: 'invoice-detail', component: InvoiceDetailComponent, canActivate: [AuthGuardService]},
         {path: 'invoice-detail-buque', component: InvoiceDetailBuqueComponent, canActivate: [AuthGuardService]},
