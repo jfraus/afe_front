@@ -147,7 +147,7 @@ export class EditMaintenanceToVinComponent implements OnInit {
   getCarrier(carrierType: string) {
     this.carrierControllerService.get(carrierType).subscribe(response => {
       this.carrier = response.map(r => (
-        { label: r.name, value: r.r.carrierCode }
+        { label: r.name, value: r.carrierCode }
       ));
     });
   }
