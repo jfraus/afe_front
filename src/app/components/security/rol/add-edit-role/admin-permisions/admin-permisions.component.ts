@@ -46,8 +46,6 @@ export class AdminPermisionsComponent implements OnInit {
       this.permissionsService.getActionsByRole(this.roleId).subscribe(data => {
         this.selectedNodes1 = data;
         this.selectedNodes1.forEach(item1 => {
-          console.log(item1.data.view);
-          
           item1.children.forEach(item2 => {
             this.selected.push({view: item2.data.view, viewActionId: item2.data.viewActionId, viewId: item2.data.viewId});
           });
@@ -65,7 +63,6 @@ export class AdminPermisionsComponent implements OnInit {
           const result = this.selected.filter(data => data.view === nodes[i].children[j].data.view && 
             data.viewActionId === nodes[i].children[j].data.viewActionId &&
             data.viewId === nodes[i].children[j].data.viewId);
-            //console.log(nodes[i].children[j].data.view + ' ' + nodes[i].children[j].data.viewActionId + ' ' + nodes[i].children[j].data.viewId);
             if(result.length > 0) {             
               nodes[i].children[j].partialSelected = true;
               nodes[i].partialSelected = true;

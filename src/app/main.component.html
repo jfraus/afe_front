@@ -26,6 +26,7 @@
     </div>
 
     <div *ngIf="hideShowImgMain">
+        <p-message style="display: flex; justify-content: center;" *ngIf="!emptyMenu" severity="error" text="El usuario no tiene permisos para interactuar con el sistema de AFE"></p-message>
        <img class="imgMain" src="assets/layout/images/home_afe.jpg" alt="Image" width="250" />
     </div>
 

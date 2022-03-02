@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { MenuControllerService } from 'src/app/services/menu-controller.service';
 import { AuthService } from 'src/app/utils/auth.service';
+import { isNullOrUndefined } from 'util';
 import { AppMainComponent } from './../../main.component';
 
 @Component({
@@ -17,7 +19,8 @@ export class AppMenuComponent implements OnInit {
 
     constructor(private app: AppMainComponent, 
         private aut: AuthService,
-        private menuServices: MenuControllerService) {}
+        private menuServices: MenuControllerService,
+        private router: Router) {}
 
     ngOnInit() {
         if(localStorage.getItem("isLoggedIn")) {
@@ -37,8 +40,18 @@ export class AppMenuComponent implements OnInit {
                 label: cate, items: this.filterCategory(cate, menuData)
             }));
             
+            cate.forEach((value, index) => {
+                if(value.items.length === 0) {
+                    cate.splice(index);
+                }
+            });
+            
+            if(cate.length === 0) {
+                this.router.navigateByUrl("/accessdenied");
+            }
             sessionStorage.setItem("menu", JSON.stringify(cate));
             this.setMenu();
+
         });
     }
 
