@@ -105,8 +105,8 @@ export class MaintenanceToVinComponent implements OnInit {
     }
   }
 
-  searchInformation() {
-    let invoice = this.invoices.find(data => data.value = this.formGroup.get('invoice').value).label
+  searchInformation() {    
+    let invoice = this.invoices.find(data => data.value == this.formGroup.get('invoice').value).label        
     if (this.searchButtonDisable) {
       this.invoiceService.getMaintenanceDetailsInformation(invoice).subscribe(data => {
         if (data != null) {
