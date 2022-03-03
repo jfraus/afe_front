@@ -42,7 +42,6 @@ export class AppMenuComponent implements OnInit {
             
             cate.forEach(element => {
                 if(element.items.length > 0) {
-                    console.log(JSON.stringify(element));
                     cateNew.push(element);
                 }                
             });
