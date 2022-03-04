@@ -221,10 +221,6 @@ export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
 
     ngAfterViewChecked() {
         this.hideShowImgMain = this.route.url === "/" ? true : false;
-                
-        /*if(JSON.stringify(localStorage.getItem('authorities')).length < 5) {
-            this.emptyMenu = false;
-        }*/
         this.cdref.detectChanges();
       }
 
