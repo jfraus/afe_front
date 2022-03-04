@@ -55,7 +55,6 @@ export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
 
     hideShowImgMain: boolean = true;
     blockedScreen: boolean = true;
-    emptyMenu: boolean = false;
 
     constructor(private messageServices: MessageService,
         private router: Router,
@@ -79,7 +78,6 @@ export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
                 }
                 this.blockedScreen = false;
                 if(JSON.stringify(localStorage.getItem('authorities')).length < 5) {
-                    this.emptyMenu = true;
                     this.router.navigateByUrl("/accessdenied");
                 }
             }, 16000);
