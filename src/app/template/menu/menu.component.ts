@@ -33,25 +33,24 @@ export class AppMenuComponent implements OnInit {
 
     convertMenu() {
         this.menuServices.get().subscribe(response => {
-            let menuData = response.view;
-            
+            let menuData = response.view;            
             let cate = response.category;
+            let cateNew:any[]=[];
             cate = cate.map(cate => ({
                 label: cate, items: this.filterCategory(cate, menuData)
             }));
             
-            cate.forEach((value, index) => {
-                if(value.items.length === 0) {
-                    cate.splice(index);
-                }
+            cate.forEach(element => {
+                if(element.items.length > 0) {
+                    cateNew.push(element);
+                }                
             });
-            
-            /*if(cate.length === 0) {
-                this.router.navigateByUrl("/accessdenied");
-            }*/
-            sessionStorage.setItem("menu", JSON.stringify(cate));
-            this.setMenu();
 
+            if(cateNew.length === 0) {
+                this.router.navigateByUrl("/accessdenied");
+            }
+            sessionStorage.setItem("menu", JSON.stringify(cateNew));
+            this.setMenu();
         });
     }
 
