@@ -46,9 +46,9 @@ export class AppMenuComponent implements OnInit {
                 }
             });
             
-            if(cate.length === 0) {
+            /*if(cate.length === 0) {
                 this.router.navigateByUrl("/accessdenied");
-            }
+            }*/
             sessionStorage.setItem("menu", JSON.stringify(cate));
             this.setMenu();
 

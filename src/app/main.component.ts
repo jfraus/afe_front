@@ -55,7 +55,7 @@ export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
 
     hideShowImgMain: boolean = true;
     blockedScreen: boolean = true;
-    emptyMenu: boolean = true;
+    emptyMenu: boolean = false;
 
     constructor(private messageServices: MessageService,
         private router: Router,
@@ -78,6 +78,10 @@ export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
                     this.messageServices.add({key: 'error',severity: 'success', summary: 'Bienvenido', detail: `${localStorage.getItem("fullname")}`});
                 }
                 this.blockedScreen = false;
+                if(JSON.stringify(localStorage.getItem('authorities')).length < 5) {
+                    this.emptyMenu = true;
+                    this.router.navigateByUrl("/accessdenied");
+                }
             }, 16000);
         }        
     }
@@ -220,11 +224,9 @@ export class AppMainComponent implements OnDestroy, OnInit, AfterViewChecked  {
     ngAfterViewChecked() {
         this.hideShowImgMain = this.route.url === "/" ? true : false;
                 
-        if(JSON.stringify(localStorage.getItem('authorities')).length < 5) {
+        /*if(JSON.stringify(localStorage.getItem('authorities')).length < 5) {
             this.emptyMenu = false;
-        } else {
-            this.emptyMenu = true;
-        }
+        }*/
         this.cdref.detectChanges();
       }
 
