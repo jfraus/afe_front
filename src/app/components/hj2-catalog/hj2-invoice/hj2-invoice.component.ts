@@ -51,14 +51,4 @@ export class Hj2InvoiceComponent implements OnInit {
     });
   }
 
-  sendInvoice(invoices: Hj2Invoice){
-    this.loadingInvoice = true;
-    this.hj2Service.createHj2ByInvoice(invoices.invoice, true, null).subscribe(data => {  });
-    this.hj2Service.getSendTravel(invoices.travelNumber, true).subscribe(data =>{   });    
-    setTimeout(() => {
-      this.loading();
-      this.messageServices.add({ key: 'success', severity: 'success', summary: 'Archivo HJ2 Y IDD1125 enviado con éxito a AHM' }); 
-      this.loadingInvoice = false;
-    }, 6000);
-  }
 }

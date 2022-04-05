@@ -42,15 +42,10 @@
           {{rowData[col.field] [col.subfield]}}
         </ng-template>
       </td>
-      <td>
-        <button pButton type="button" icon="pi pi-send" class="blue-grey-btn" style="margin-left: 3px"
-          (click)="sendInvoice(rowData)" [disabled]="rowData.hj2 == 'Si' && rowData.idd1125  == 'Si'" pTooltip="Enviar">
-        </button>
-
-        <button pButton type="button" icon="pi pi-arrow-circle-down" class="blue-btn" style="margin-left: 3px"
+      <td>    
+      <button pButton type="button" icon="pi pi-arrow-circle-down" class="blue-btn" style="margin-left: 3px"
         (click)="downloadInvoice(rowData)" pTooltip="Descargar">
       </button>
-
       </td>
     </tr>
   </ng-template>

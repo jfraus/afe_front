@@ -52,11 +52,7 @@
           </ng-template>
         </td>
         <td>
-          <button pButton type="button" icon="pi pi-send" class="blue-grey-btn" style="margin-left: 3px"
-            (click)="sendTravel(rowData)" [disabled]="rowData.hj2 == 'Si' && rowData.idd1125  == 'Si'"
-            pTooltip="Enviar">
-          </button>
-          <button pButton type="button" icon="pi pi-arrow-circle-down" class="blue-btn" style="margin-left: 3px"
+         <button pButton type="button" icon="pi pi-arrow-circle-down" class="blue-btn" style="margin-left: 3px"
             (click)="downloadTravel(rowData)" pTooltip="Descargar">
           </button>
         </td>
