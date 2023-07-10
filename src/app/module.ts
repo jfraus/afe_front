@@ -148,6 +148,7 @@ import { AddEditRoleComponent } from './components/security/rol/add-edit-role/ad
 import { AdminRoleComponent } from './components/security/rol/add-edit-role/admin-role/admin-role.component';
 import { AdminPermisionsComponent } from './components/security/rol/add-edit-role/admin-permisions/admin-permisions.component';
 import { CanUse } from './utils/can-use.directive';
+import { FreightComponent } from './components/freight/freight.component';
 
 const sharedComponents = [
     ValidationsInputComponent,GeneratePurchaseOrderComponent,pipeStringDate
@@ -291,6 +292,7 @@ const sharedComponents = [
         AdminPermisionsComponent, 
         AdminRoleComponent,
         CanUse,
+        FreightComponent,
         ...sharedComponents,
     ],
     providers: [

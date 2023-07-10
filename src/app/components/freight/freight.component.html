@@ -1,0 +1,150 @@
+<div class="card">
+    <div class="card-title">Catálogo Flete</div>
+    <div class="ui-g ui-fluid">
+    <form class="form-group ui-g-12" [formGroup]="formGroup">
+        <div class="p-fluid p-formgrid p-grid">
+        <div class="ui-g-12 ui-lg-12">
+            <div class="ui-g-12 ui-lg-4">
+                <div class="p-inputgroup">
+                    <span class="md-inputfield">
+                    <p-calendar dateFormat="yy-mm-dd" name="heightDateIni" [showButtonBar]="true"
+                        formControlName="heightDateIni" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
+                    <label>Fecha de alta inicio</label>
+                    <validations-input-component [formGroup]="formGroup" formInputName="heightDateIni" [validation_messages]="validations"></validations-input-component>
+                </span>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+                <div class="p-inputgroup">
+                    <span class="md-inputfield">
+                    <p-calendar dateFormat="yy-mm-dd" name="heightDateEnd" [showButtonBar]="true"
+                        formControlName="heightDateEnd" [inputStyle]="{ width: '100%' }" [showIcon]="true"></p-calendar>
+                    <label>Fecha de alta final</label>
+                    <validations-input-component [formGroup]="formGroup" formInputName="heightDateEnd" [validation_messages]="validations"> </validations-input-component>
+                </span>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-lg-4">
+            <button pButton type="button" label="Buscar" icon="pi pi-search" class="teal-btn"
+                style="width: auto" (click)="search()" [disabled]="!formGroup.valid"></button>
+            </div>
+        </div>
+        </div>
+    </form>
+    </div>
+</div>
+<p-messages [(value)]="msgs" [enableService]="true"></p-messages>
+<div class="card">
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="ui-g-12 ui-lg-3">
+        <a class="ui-button-success" type="button" pButton icon="pi pi-plus" (click)="addFreight()" label="Agregar">
+        </a>
+        </div>
+    </div>
+    <p-table [columns]="cols" selectionMode="single" dataKey="idTabla" [value]="freight" [loading]="loadingFreight"
+        sortMode="multiple" [style]="{ 'margin-bottom': '20px' }" [responsive]="true" [rowHover]="true"
+        [paginator]="true" [responsive]="true" [rowsPerPageOptions]="[10, 20, 30]" [autoLayout]="true" [rows]="20"
+        [pageLinks]="20">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{ col.header }}
+                </th>
+                <th>
+                    Acción
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+                <td style="text-align: center" [attr.colspan]="columns.length + 2">
+                    No se encontró información
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    <span *ngIf="col.subfield === undefined; else elseBlock">
+                        {{rowData[col.field]}}
+                    </span>
+                    <ng-template #elseBlock>
+                        {{rowData[col.field] [col.subfield]}}
+                    </ng-template>
+                </td>
+                <td>
+                    <div>
+                        <button pButton type="button" style="margin-left: 3px" class="blue-grey-btn"
+                        pTooltip="Editar flete" icon="pi pi-pencil" (click)="updateFreight(rowData)"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="caption">
+            <div class="ui-helper-clearfix" style="text-align: left">
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="Exportar a Excel" class="ui-button-success" style="float:right" (click)="downloadExcel()"></button>
+            </div>
+          </ng-template>
+    </p-table>
+</div>
+
+<p-dialog header="{{titleAddOrUpdate}}" (onHide)="cancelAddOrUpdate()" [(visible)]="displayAddOrUpdate">
+    <div class="ui-g ui-fluid">
+        <form [(formGroup)]="addOrUpdate" class="ui-g-12">
+            <div class="ui-g form-group">
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield"  >
+                        <input type="text" formControlName="freightNo" pInputText disabled="true">
+                        <label>No. Flete</label>
+                        <validations-input-component [formGroup]="addOrUpdate" formInputName="freightNo" [validation_messages]="validations"></validations-input-component>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <p-dropdown #dd formControlName="country" [resetFilterOnHide]="true" [options]="countries" [filter]="true" 
+                        [autoDisplayFirst]="false" [showClear]="true" optionLabel="name" appendTo="body"></p-dropdown>
+                        <label>País</label>
+                        <validations-input-component [formGroup]="addOrUpdate" formInputName="country" [validation_messages]="validations"></validations-input-component>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <input type="number" formControlName="price" pInputText>
+                        <label>Precio</label>
+                        <validations-input-component [formGroup]="addOrUpdate" formInputName="price" [validation_messages]="validations"></validations-input-component>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield"  >
+                        <input type="text" formControlName="currency" pInputText disabled="true">
+                        <label>Moneda</label>
+                        <validations-input-component [formGroup]="addOrUpdate" formInputName="currency" [validation_messages]="validations"></validations-input-component>
+                    </span>
+                </div>
+                <div class="ui-g-12 ui-lg-4">
+                    <span class="md-inputfield ">
+                        <p-calendar dateFormat="dd-mm-yy" name="dateIni" formControlName="dateIni" disabled="true"
+                        [showButtonBar]="true" [inputStyle]="{ width: '100%' }" [showIcon]="true" appendTo="body"></p-calendar>
+                        <label>Fecha alta</label>
+                        <validations-input-component [formGroup]="addOrUpdate" formInputName="dateIni" [validation_messages]="validations"></validations-input-component>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <p-footer>
+        <button class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Agregar" [disabled]="!addOrUpdate.valid"
+        (click)="saveOrUpdate()"></button>
+        <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+        (click)="cancelAddOrUpdate()"></button>
+    </p-footer>
+</p-dialog>
+
+<p-confirmDialog #cd header="Confirmation" icon="pi pi-exclamation-triangle">
+    <p-footer>
+        <button class="ui-button-success" type="button" pButton icon="pi pi-check" label="Aceptar" 
+        (click)="cd.accept()"></button>
+        <button class= "ui-button-danger" type="button" pButton icon="pi pi-times" label="Cancelar" 
+        (click)="cd.reject()"></button>
+    </p-footer>
+  </p-confirmDialog>

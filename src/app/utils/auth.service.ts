@@ -31,6 +31,7 @@ export class AuthService {
                 password: password,
             }
         });
+        ;
         return this.http.post<any>(`${environment.apiUrlSecurity}`, params.toString(), httpOptions).toPromise();
     }
 
