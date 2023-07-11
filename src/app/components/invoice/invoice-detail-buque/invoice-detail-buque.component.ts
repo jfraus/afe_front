@@ -29,6 +29,7 @@ export class InvoiceDetailBuqueComponent implements OnInit {
   canInvoice = false;
   msgs = [];
   purchageOrderMsg = [];
+  fleteMsg = [];
   visibleBuqueDetails: boolean = true;    
   invoiceNumber:string;
 
@@ -47,6 +48,8 @@ export class InvoiceDetailBuqueComponent implements OnInit {
       { field: 'tipo', header: 'Tipo' },
       { field: 'unitPrice', header: 'Precio Unitario' },
       { field: 'quotation', header: 'Cotización' },
+      { field: 'priceFreight', header: 'Precio Flete' },
+      { field: 'numberFreight', header: 'No. Flete' },
       { field: 'purchaseOrder', header: 'Orden de Compra' }
     ];
 
@@ -77,7 +80,9 @@ export class InvoiceDetailBuqueComponent implements OnInit {
     this.invoiceDetailController.getInvoiceBuqueDetail(buque, client, destino).subscribe(data => {
       this.invoiceBuqueDetails = data;
       this.purchageOrderMsg.push("No se puede generar la factura por que las siguientes unidades no tienen Orden de Compra VINS:");
+      this.fleteMsg.push("No se puede generar la factura por que las siguientes unidades no tienen Flete VINS:");
       let showValidation = false;
+      let showValidationFlete = false;
       this.invoiceBuqueDetails.forEach(element => {       
         this.canInvoice = true;
         if (isNullOrUndefined(element.purchaseOrder) || element.purchaseOrder === "") {
@@ -85,10 +90,18 @@ export class InvoiceDetailBuqueComponent implements OnInit {
           this.purchageOrderMsg.push(" " + element.vin);
           this.canInvoice = false;
         }
+        if (isNullOrUndefined(element.numberFreight) || element.numberFreight === "") {
+          showValidationFlete = true;
+          this.fleteMsg.push(" " + element.vin);
+          this.canInvoice = false;
+        }
       });
       if (showValidation) {
         this.msgs.push({ severity: 'warn', summary: 'Información: ', detail: this.purchageOrderMsg });
-      }        
+      }
+      if(showValidationFlete) {
+        this.msgs.push({ severity: 'warn', summary: 'Información: ', detail: this.fleteMsg });
+      }     
     });    
     this.loadingInvoice = false;
   }

@@ -42,6 +42,7 @@ export class InvoiceReportComponent implements OnInit {
       { field: 'invoiceNumber', header: 'No. Factura' },
       { field: 'invoiceDate', header: 'Fecha Factura' },
       { field: 'price', header: 'Precio' },
+      { field: 'freight', header: 'Flete' },
       { field: 'travelNumber', header: 'No. de Viaje' },
       { field: 'platform', header: 'Plataforma' },
       { field: 'buque', header: 'Buque' },
@@ -125,6 +126,7 @@ export class InvoiceReportComponent implements OnInit {
       { key: 'InvoiceNumber: ', header: 'No. Factura', center: { left:0.5, top:0.5 }, width: 20 },
       { key: 'invoiceDate: ', header: 'Fecha Factura', center: { left:0.5, top:0.5 }, width: 20 },
       { key: 'price: ', header: 'Costo', center: { left:0.5, top:0.5 }, width: 20 },
+      { key: 'freight: ', header: 'Flete', center: { left:0.5, top:0.5 }, width: 20 },
       { key: 'travelNumber: ', header: 'No. Viaje', center: { left:0.5, top:0.5 }, width: 20 },
       { key: 'platform: ', header: 'Plafaforma', center: { left:0.5, top:0.5 }, width: 20 },
       { key: 'buque: ', header: 'Buque', center: { left:0.5, top:0.5 }, width: 20 },
@@ -196,6 +198,9 @@ export class InvoiceReportComponent implements OnInit {
     worksheet.getCell('T1').fill = { type: 'pattern', pattern:'solid', fgColor:{argb:'145DA0'} };
     worksheet.getCell('T1').font = { color: { argb: 'FFFFFFFF' }, size: 12 };
     worksheet.getCell('T1').alignment = { vertical: 'middle', horizontal: 'center' };
+    worksheet.getCell('U1').fill = { type: 'pattern', pattern:'solid', fgColor:{argb:'145DA0'} };
+    worksheet.getCell('U1').font = { color: { argb: 'FFFFFFFF' }, size: 12 };
+    worksheet.getCell('U1').alignment = { vertical: 'middle', horizontal: 'center' };
 
     workbook.xlsx.writeBuffer().then((data) => {
       const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

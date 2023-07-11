@@ -7,5 +7,7 @@ export interface BuqueDetails {
 	quote: String, 
 	purchaseOrder: String,
 	endDate:String,
-	effectiveDate: String
+	effectiveDate: String,
+	priceFreight: string,
+	numberFreight: string
 }

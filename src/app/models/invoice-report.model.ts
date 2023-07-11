@@ -14,6 +14,7 @@ export interface InvoiceReport{
     InvoiceNumber: string, 
     invoiceDate: string, 
     price: number, 
+    freight: string,
     travelNumber: number,
     platform: string, 
     buque: string, 
