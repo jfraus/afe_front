@@ -25,6 +25,7 @@ export class FreightComponent implements OnInit {
     countries: Country[] = [];
     validations = [];
     titleAddOrUpdate = '';
+    today: string;
 
     constructor(private formBuilder: FormBuilder,
                 private freightService: FreightService,
@@ -71,8 +72,9 @@ export class FreightComponent implements OnInit {
     }
 
     search() {
+        this.today = this.datePipe.transform(new Date, 'dd-MM-yyyy');
         this.freightService.getFreight(this.formGroup.get('heightDateIni').value, this.formGroup.get('heightDateEnd').value).subscribe({
-            next: (v) => {this.freight = v; },
+            next: (v) => {this.freight = v;},
             error: () => {},
             complete: () => {}
         });
