@@ -73,7 +73,7 @@
                     </ng-template>
                 </td>
                 <td>
-                    <div>
+                    <div *ngIf="today === rowData.dateIni">
                         <button pButton type="button" style="margin-left: 3px" class="blue-grey-btn"
                         pTooltip="Editar flete" icon="pi pi-pencil" (click)="updateFreight(rowData)"></button>
                     </div>
