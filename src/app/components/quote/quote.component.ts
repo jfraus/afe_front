@@ -3,7 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as Excel from "exceljs/dist/exceljs.min.js";
 import * as fs from 'file-saver';
+import * as moment from 'moment';
+import { MessageService } from 'primeng/api';
 import { QuoteService } from 'src/app/services/quote-controller.service';
+import { AppValidationMessagesService } from 'src/app/utils/app-validation-messages.service';
+
 @Component({
     selector: 'app-quote',
     templateUrl: './quote.component.html',
@@ -15,10 +19,16 @@ export class QuoteComponent implements OnInit {
     cols = [];
     dataTable = [];
     excelData = [];
+    validations = [];
     formGroup: FormGroup;
+    formQuote: FormGroup;
     date = new Date();
+    isEditQuote: boolean = false;
+    blockedScreen: boolean = false;
+    
+    regexNumeric: string = "^(0|[0-9.][0-9.]*)$";
 
-    constructor(private fb: FormBuilder, private datePipe: DatePipe, private quoteService: QuoteService) {
+    constructor(private fb: FormBuilder, private datePipe: DatePipe, private quoteService: QuoteService, public messageServices: MessageService, private validationMessages: AppValidationMessagesService) {
         this.cols = [
             { field: 'numberQuotation', header: 'No. de cotización' },
             { field: 'plant', header: 'Planta' },
@@ -29,9 +39,11 @@ export class QuoteComponent implements OnInit {
             { field: 'createDate', header: 'Fecha de cotización' },
             { field: 'effectiveDate', header: 'Fecha inicial' },
             { field: 'endDate', header: 'Fecha final' },
+            { field: 'action', header: 'Acción' },
         ];
         
         this.buildForm();
+        this.formValidations();
     }
 
     ngOnInit() {
@@ -42,15 +54,35 @@ export class QuoteComponent implements OnInit {
         this.formGroup = this.fb.group({
             fechaInicio: ['', [Validators.required]],
         });
+
+        this.formQuote = this.fb.group({
+            numberQuotation: [{ value: '', disabled: true }],
+            model: [{ value: '', disabled: true }],
+            plant: [{ value: '', disabled: true }],
+            price: [{ value: '', disabled: false }, [Validators.required, Validators.pattern(this.regexNumeric)]],
+            modelType: [{ value: '', disabled: true }],
+            currency: [{ value: '', disabled: true }],
+            effectiveDate: [{ value: '', disabled: true }],
+        });
+    }
+
+    formValidations():void {
+        this.validationMessages.messagesRequired = 'true';
+        this.validationMessages.messagesPattern = 'que no sean numéricos'
+        this.validations.push(this.validationMessages.getValidationMessagesWithName('price'));
     }
 
     search() {
+        this.blockedScreen = true;
         const dateString = this.datePipe.transform(this.formGroup.get('fechaInicio').value, 'yyyy-MM-dd');
         this.dataTable = [];
         this.quoteService.getAllQuotes(dateString).subscribe(data => {
             if(data !== null) {
                 this.dataTable = data;
             }
+            this.blockedScreen = false;
+        }, (error) => {
+            this.blockedScreen = false;
         });
     }
 
@@ -112,4 +144,45 @@ export class QuoteComponent implements OnInit {
     downloadExcel() {
         this.saveExcel(this.dataTable);
     }
+
+    openQuote(quote: any) {
+        this.isEditQuote = true;
+        this.formQuote.controls['numberQuotation'].setValue(quote.numberQuotation);
+        this.formQuote.controls['currency'].setValue(quote.currency);
+        this.formQuote.controls['model'].setValue(quote.model);
+        this.formQuote.controls['plant'].setValue(quote.plant);
+        this.formQuote.controls['price'].setValue(quote.price);
+        this.formQuote.controls['modelType'].setValue(quote.typeModel);
+        this.formQuote.controls['effectiveDate'].setValue(quote.createDate);
+    }
+
+    updateQuote() {
+        this.blockedScreen = true;
+        let numberQuotation = this.formQuote.get("numberQuotation").value;
+        let plant = this.formQuote.get("plant").value;
+        let model = this.formQuote.get("model").value;
+        let typeModel = this.formQuote.get("modelType").value;
+        let price = this.formQuote.get("price").value;
+        let currency = this.formQuote.get("currency").value;
+        let effectiveDate = this.formQuote.get("effectiveDate").value;
+        let quote = { numberQuotation: numberQuotation, plant: plant, model: model, typeModel: typeModel,
+            price: price, currency: currency, effectiveDate: effectiveDate };
+        this.quoteService.updateQuote(quote).subscribe((quoteResponse) => {
+            this.messageServices.add({ key: 'success', severity: 'success', summary: 'Guardado con éxito' });
+            this.isEditQuote = false;
+            this.blockedScreen = false;
+            this.search();
+        }, (error) => {
+            this.isEditQuote = false;
+            this.blockedScreen = false;
+            console.log(error);
+            this.messageServices.add({ key: 'error', severity: 'error', summary: `${error}` });
+        });
+    }
+
+    isEffectiveDate(effectiveDate: Date): Boolean {
+        let currentDate = moment().format('YYYY-MM-DD');  
+        return moment(effectiveDate).isSame(currentDate); 
+    }
+
 }

@@ -11,4 +11,8 @@ export class QuoteService {
     return this.http.get<any>(`${environment.apiUrl}quote/?date=${date}`).pipe();
   }
 
+  updateQuote(quote: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}quote/`,quote).pipe();
+  }
+
 }

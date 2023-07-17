@@ -25,6 +25,10 @@
     </div>
   </div>
 
+  <div class="progress-spinner" *ngIf="blockedScreen">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+
   <div class="card">    
     <p-table [columns]="cols" [value]="dataTable" selectionMode="single" dataKey="idTabla" sortMode="multiple"
       [style]="{ 'margin-bottom': '20px' }" [responsive]="true" [rowHover]="true" [paginator]="true" [responsive]="true"
@@ -57,9 +61,14 @@
               </ng-template>
             </span>
             <ng-template #elseAction>
-
-              <button pButton type="button" icon="pi pi-file-excel" style="margin-left: 3px"
-                class="ui-button-success"></button>
+              <!-- VALIDAR SI EL EFFECTIVE DATE ES IGUAL AL DIA ACTUAL PARA MOSTRAR EL BOTON
+              rowData.effectiveDate === currentDate -->
+              <div *ngIf="rowData.plant === 'GMM'">
+                <button pButton pRipple type="button" pTooltip="El boton solo se mostrara cuando la fecha efectiva corresponda a la fecha actual y/o la plata de este modelo sea GMM"
+                [disabled]="!isEffectiveDate(rowData.createDate)" class="p-button-rounded p-button-warning p-mr-2 p-mb-2" icon="pi pi-pencil" (click)="openQuote(rowData)"></button>
+              </div>
+              <!-- <button pButton type="button" icon="pi pi-file-excel" style="margin-left: 3px"
+                class="ui-button-success"></button> -->
             </ng-template>
           </td>
         </tr>
@@ -73,3 +82,72 @@
 
   </div>
 </div>
+
+<p-dialog header="Editar Cotización" [(visible)]="isEditQuote" [style]="{width: '50vw'}">
+  <form [(formGroup)]="formQuote">
+    <div class="ui-g form-group">
+      <div class="ui-g-4 ui-lg-4">
+        <span class="md-inputfield ">
+          <input type="text" formControlName="numberQuotation" pInputText>
+          <label>No. De Cotización</label>
+          <validations-input-component [formGroup]="formQuote" formInputName="numberQuotation"
+            [validation_messages]="validations"></validations-input-component>
+        </span>
+      </div>
+      <div class="ui-g-4 ui-lg-4">
+        <span class="md-inputfield ">
+          <input type="text" formControlName="model" pInputText>
+          <label>Modelo</label>
+          <validations-input-component [formGroup]="formQuote" formInputName="model"
+            [validation_messages]="validations"></validations-input-component>
+        </span>
+      </div>
+      <div class="ui-g-4 ui-lg-4">
+        <span class="md-inputfield ">
+          <input type="text" formControlName="plant" pInputText>
+          <label>Planta</label>
+          <validations-input-component [formGroup]="formQuote" formInputName="plant"
+            [validation_messages]="validations"></validations-input-component>
+        </span>
+      </div>
+      <div class="ui-g-4 ui-lg-4">
+        <span class="md-inputfield">
+          <input type="text" formControlName="price" pInputText>
+          <label>Precio</label>
+          <validations-input-component [formGroup]="formQuote" formInputName="price"
+            [validation_messages]="validations"></validations-input-component>
+        </span>
+      </div>
+      <div class="ui-g-4 ui-lg-4">
+        <span class="md-inputfield ">
+          <input type="text" formControlName="modelType" pInputText>
+          <label>Tipo Modelo</label>
+          <validations-input-component [formGroup]="formQuote" formInputName="modelType"
+            [validation_messages]="validations"></validations-input-component>
+        </span>
+      </div>
+      <div class="ui-g-4 ui-lg-4">
+        <span class="md-inputfield ">
+          <input type="text" formControlName="currency" pInputText>
+          <label>Moneda</label>
+          <validations-input-component [formGroup]="formQuote" formInputName="currency"
+            [validation_messages]="validations"></validations-input-component>
+        </span>
+      </div>
+      <div class="ui-g-4 ui-lg-4">
+        <span class="md-inputfield ">
+          <input type="text" formControlName="effectiveDate" pInputText>
+          <label>Fecha De Cotización</label>
+          <validations-input-component [formGroup]="formQuote" formInputName="effectiveDate"
+            [validation_messages]="validations"></validations-input-component>
+        </span>
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <button [disabled]="!formQuote.valid" class= "ui-button-success" type="button" pButton icon="ui-icon-save" label="Guardar"
+    (click)="updateQuote()"></button>
+    <button class="ui-button-danger" type="button" pButton icon="ui-icon-close" label="Cancelar" 
+    (click)="isEditQuote = false"></button>
+  </p-footer> 
+</p-dialog>
